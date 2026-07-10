@@ -13,3 +13,5 @@ jobs:
       - run: pip install -r requirements/local.txt
       - run: ruff check .
       - run: pytest
+        env:
+          SECRET_KEY: "dummy-key-for-github-actions"
