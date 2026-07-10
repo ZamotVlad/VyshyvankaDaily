@@ -98,3 +98,29 @@
 ---
 
 *Кінець файлу рішень. Оновлюється протягом усього життя проєкту, не лише на етапі розробки.*
+
+## 🏁 Stage 0: Фундамент, інфраструктура і якість коду — ЗАВЕРШЕНО
+**Дата закриття:** 10.07.2026
+
+### Що зроблено й перевірено:
+1. Git-репозиторій, `.gitignore`, venv (Python 3.12).
+2. `requirements/` розбито на `base`/`local`/`production`; **Django 5.2 LTS** (не 5.0/5.1 — обидва без security-патчів на момент старту).
+3. Ruff + pre-commit (`ruff-check`/`ruff-format`, `rev: v0.15.20` — актуальна назва хука в новіших версіях `ruff-pre-commit`).
+4. Конфігураційний пакет `config` розбитий на `settings/base|local|test|production`; `DEBUG`/`SECRET_KEY`/`ALLOWED_HOSTS` читаються через `django-environ`, без хардкоду.
+5. `BASE_DIR` з трьома `.parent` (файл лежить у `config/settings/base.py`).
+6. 5 доменних застосунків у `apps/` (`core`, `accounts`, `patterns`, `blog`, `pages`), зареєстровані з префіксом `apps.` в `INSTALLED_APPS` і в `name` кожного `apps.py`.
+7. Абстрактні моделі `core` (`TimeStampedModel`, `SlugModel` з явним `allow_unicode=False`, розділ 3.1 ТЗ), `translation.py`-заглушка.
+8. `django-modeltranslation` з нульового дня; `LANGUAGE_CODE="uk"`, `LANGUAGES=[uk, en]`, `LocaleMiddleware`.
+9. Локалізація: `locale/uk`, `locale/en` згенеровані й скомпільовані (gettext через Docker-образ — на Windows-хості системний gettext ставити не знадобилось).
+10. Docker: `Dockerfile` (з системним `gettext`), `docker-compose.yml`, `.dockerignore`.
+11. CI (`.github/workflows/ci.yml`): `ruff`/`pre-commit` додані в `requirements/local.txt`, щоб CI міг їх знайти; фіктивний `SECRET_KEY` через `env:` у кроці `pytest`, бо `.env` навмисно не в git.
+12. `pytest` налаштований на `config.settings.test` (MD5-хешер паролів для швидкості — розділ 21.2 ТЗ).
+13. Фінальна перевірка: `manage.py check`, `migrate`, `showmigrations` (усі 5 застосунків зареєстровані), `docker compose up` — сайт піднявся й показав стандартну сторінку Django 5.2.
+14. CI на GitHub Actions — зелений після фінального пуша.
+
+### На що звернути увагу далі:
+- Локальний порт для Docker — **9000:8000**, не 8000/8080: Windows Hyper-V резервує діапазони `7969–8168` і сусідні під NAT, тому стандартний 8000 недоступний саме на цій машині.
+- `django.contrib.sites` ще не доданий — потрібен перед Stage 3 (Allauth).
+- `STATICFILES_DIRS` вказує на `static/` — створена порожньою, реального вмісту ще немає.
+- `LocaleMiddleware` доданий заздалегідь, свідомо, не через недогляд: Roadmap Stage 0 буквально вимагає лише підключення `django-modeltranslation`, без middleware — але оскільки проєкт двомовний за задумом ТЗ з першого дня, а `LocaleMiddleware` не залежить від наявності реальних моделей чи шаблонів, доданий одразу, щоб не переписувати `MIDDLEWARE` і не ризикувати порядком middleware вдруге в Stage 2.
+- `apps/core/tests.py` містить лише заглушку `test_dummy_for_ci()` (`assert True`) — потрібна виключно щоб CI (`pytest`) не падав з Exit code 5 через відсутність тестів на порожньому проєкті. **Прибрати цю заглушку одразу, як тільки в Stage 1 з'явиться перша реальна модель** (`Region` або `SlugModel`-нащадок) — замінити на справжній тест транслітерації (кирилична назва → латинський slug) чи логіки симетрії генератора, залежно від того що буде готове раніше.
