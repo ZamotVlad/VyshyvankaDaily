@@ -13,7 +13,7 @@ media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
-# <django-project-name>/staticfiles/
+staticfiles/
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
@@ -406,21 +406,6 @@ pip-selfcheck.json
 # Ignore all local history of files
 .history
 .ionide
-
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.wasm
-*.wat
-*.xhtml
 
 ### Windows ###
 # Windows thumbnail cache files
