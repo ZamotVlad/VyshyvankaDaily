@@ -1,6 +1,16 @@
-# Create your tests here.
+from django.test import TestCase
+
+from apps.patterns.models import Region
 
 
-def test_dummy_for_ci():
-    """Заглушка, щоб pytest не падав з помилкою 5 на Stage 0."""
-    assert True
+class SlugTransliterationTests(TestCase):
+    def test_cyrillic_name_produces_latin_slug(self):
+        region = Region.objects.create(
+            name="Полтавщина",
+            symbolism_description="Тест.",
+            dominant_colors=["#000000"],
+            shirt_cut_type="Тест",
+            rotation_order=99,
+        )
+        self.assertTrue(region.slug.isascii())
+        self.assertTrue(region.slug)

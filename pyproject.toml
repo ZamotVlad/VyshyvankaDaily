@@ -13,5 +13,5 @@ known-first-party = ["apps", "config"]
 quote-style = "double"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "config.settings.test"
+addopts = "--ds=config.settings.test"
 python_files = ["test_*.py", "*_tests.py", "tests.py"]

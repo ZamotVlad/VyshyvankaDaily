@@ -95,6 +95,10 @@ LANGUAGES = [
     ("en", _("English")),
 ]
 
+# Налаштування django-modeltranslation
+MODELTRANSLATION_DEFAULT_LANGUAGE = "uk"
+MODELTRANSLATION_LANGUAGES = ("uk", "en")
+
 LOCALE_PATHS = [
     BASE_DIR / "locale",
 ]
