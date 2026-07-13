@@ -1,10 +1,39 @@
-from datetime import date
+from datetime import date, timedelta
 
 from django.conf import settings
 from django.http import Http404, HttpResponse
+from django.shortcuts import render
 
+from apps.patterns.models import DailyPattern
 from apps.patterns.services.generation import CURRENT_ALGORITHM_VERSION, generate_daily_pattern
 from apps.patterns.services.pattern_builder import build_svg_for_date
+
+RIBBON_DAYS = 7
+
+
+def home_view(request):
+    """
+    Головна сторінка (розділ 5.1 ТЗ) — лінива генерація патерну на сьогодні.
+    """
+    today = date.today()
+    pattern = generate_daily_pattern(
+        today,
+        algorithm_version=CURRENT_ALGORITHM_VERSION,
+        generate_fn=build_svg_for_date,
+    )
+
+    ribbon = (
+        DailyPattern.objects.filter(date__lte=today, date__gt=today - timedelta(days=RIBBON_DAYS))
+        .select_related("region")
+        .order_by("-date")
+    )
+
+    context = {
+        "pattern": pattern,
+        "claim_type": pattern.region.get_claim_type(),
+        "ribbon": ribbon,
+    }
+    return render(request, "patterns/home.html", context)
 
 
 def debug_pattern_view(request, iso_date):

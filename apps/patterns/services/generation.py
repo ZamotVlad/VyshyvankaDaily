@@ -2,6 +2,8 @@ import logging
 from collections.abc import Callable
 from datetime import date
 
+from django.db import IntegrityError, transaction
+
 from apps.patterns.models import DailyPattern, Region
 from apps.patterns.services.rotation import get_region_for_date
 from apps.patterns.services.seed import date_to_seed
@@ -17,27 +19,14 @@ class NoFallbackAvailable(Exception):
     """Немає жодного попереднього успішного патерну для резервного сценарію."""
 
 
-def generate_daily_pattern(
-    pattern_date: date,
-    algorithm_version: int,
-    generate_fn: GenerateFn,
+def _get_existing_pattern(pattern_date: date) -> DailyPattern | None:
+    return DailyPattern.objects.filter(date=pattern_date).first()
+
+
+def _create_success(
+    pattern_date: date, region: Region, seed: str, algorithm_version: int, svg_content, motifs
 ) -> DailyPattern:
-    """
-    Отримати чи згенерувати DailyPattern на дату (розділ 8.1, 8.6 ТЗ).
-
-    generate_fn(pattern_date, region) -> (svg_content, motifs_iterable) —
-    підставляється ззовні: реальна геометрія (Блок Г) ще не готова,
-    цей сервіс стійкості від неї не залежить.
-    """
-    existing = DailyPattern.objects.filter(date=pattern_date).first()
-    if existing:
-        return existing
-
-    region = get_region_for_date(pattern_date)
-    seed = date_to_seed(pattern_date)
-
-    try:
-        svg_content, motifs = generate_fn(pattern_date, region)
+    with transaction.atomic():
         pattern = DailyPattern.objects.create(
             date=pattern_date,
             region=region,
@@ -47,20 +36,22 @@ def generate_daily_pattern(
             generation_status=DailyPattern.GenerationStatus.SUCCESS,
         )
         pattern.motifs_used.set(motifs)
-        return pattern
-    except Exception:
-        logger.exception("Генерація патерну на %s завершилась помилкою", pattern_date)
-        fallback_source = (
-            DailyPattern.objects.filter(generation_status=DailyPattern.GenerationStatus.SUCCESS)
-            .order_by("-date")
-            .first()
-        )
-        if fallback_source is None:
-            raise NoFallbackAvailable(
-                f"Генерація на {pattern_date} провалилась, і немає жодного "
-                "попереднього успішного патерну для резервного сценарію."
-            ) from None
+    return pattern
 
+
+def _create_fallback(pattern_date: date, seed: str) -> DailyPattern:
+    fallback_source = (
+        DailyPattern.objects.filter(generation_status=DailyPattern.GenerationStatus.SUCCESS)
+        .order_by("-date")
+        .first()
+    )
+    if fallback_source is None:
+        raise NoFallbackAvailable(
+            f"Генерація на {pattern_date} провалилась, і немає жодного "
+            "попереднього успішного патерну для резервного сценарію."
+        ) from None
+
+    with transaction.atomic():
         pattern = DailyPattern.objects.create(
             date=pattern_date,
             region=fallback_source.region,
@@ -70,4 +61,39 @@ def generate_daily_pattern(
             generation_status=DailyPattern.GenerationStatus.FALLBACK,
         )
         pattern.motifs_used.set(fallback_source.motifs_used.all())
-        return pattern
+    return pattern
+
+
+def generate_daily_pattern(
+    pattern_date: date,
+    algorithm_version: int,
+    generate_fn: GenerateFn,
+) -> DailyPattern:
+    """
+    Отримати чи згенерувати DailyPattern на дату (розділ 8.1, 8.6, 11.2 ТЗ).
+
+    Захист від гонки запитів (розділ 11.2): якщо між першою перевіркою й
+    create() інший паралельний запит уже вставив запис на цю дату —
+    UniqueConstraint на полі date кине IntegrityError, ми його ловимо й
+    просто читаємо вже створений запис, не намагаючись створити другий.
+    """
+    existing = _get_existing_pattern(pattern_date)
+    if existing:
+        return existing
+
+    region = get_region_for_date(pattern_date)
+    seed = date_to_seed(pattern_date)
+
+    try:
+        svg_content, motifs = generate_fn(pattern_date, region)
+    except Exception:
+        logger.exception("Генерація патерну на %s завершилась помилкою", pattern_date)
+        try:
+            return _create_fallback(pattern_date, seed)
+        except IntegrityError:
+            return _get_existing_pattern(pattern_date)
+
+    try:
+        return _create_success(pattern_date, region, seed, algorithm_version, svg_content, motifs)
+    except IntegrityError:
+        return _get_existing_pattern(pattern_date)

@@ -125,6 +125,23 @@ class Region(TimeStampedModel, SlugModel):
         verbose_name_plural = "Регіони"
         ordering = ["rotation_order"]
 
+    def get_claim_type(self) -> str:
+        """
+        Тип твердження для позначки на сторінці (розділ 4.3 ТЗ):
+        "задокументоване", якщо є хоча б одне джерело високого рівня
+        довіри; інакше "за усною традицією". Не окреме поле моделі —
+        виводиться з наявних Source, щоб уникнути розсинхронізації
+        між полем і реальними джерелами.
+        """
+        high_trust_types = {
+            Source.SourceType.ACADEMIC,
+            Source.SourceType.MUSEUM,
+            Source.SourceType.INSTITUTION,
+        }
+        if self.sources.filter(source_type__in=high_trust_types).exists():
+            return "documented"
+        return "oral_tradition"
+
     def __str__(self):
         return self.name
 

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}VyshyvankaDaily — {{ pattern.date }}{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+  <div class="mx-auto" style="max-width: 500px;">
+    {{ pattern.svg_content|safe }}
+  </div>
+</div>
+
+<div class="text-center mb-4">
+  <h2>{{ pattern.region.name }}</h2>
+  <span class="badge {% if claim_type == 'documented' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-2">
+    {% if claim_type == "documented" %}
+      {% translate "Задокументовано" %}
+    {% else %}
+      {% translate "За усною традицією" %}
+    {% endif %}
+  </span>
+  <p class="mx-auto" style="max-width: 600px;">
+    {{ pattern.region.symbolism_description|truncatewords:40 }}
+  </p>
+
+  {% if user.is_authenticated %}
+    <!-- TODO: реальне збереження - Stage 3 -->
+    <button class="btn btn-outline-primary" disabled>{% translate "Зберегти в колекцію" %}</button>
+  {% else %}
+    <!-- TODO: посилання на вхід зі збереженням наміру - Stage 3 -->
+    <a href="#" class="btn btn-outline-primary disabled">{% translate "Зберегти в колекцію" %}</a>
+  {% endif %}
+</div>
+
+<div class="mb-4">
+  <h5>{% translate "Останні дні" %}</h5>
+  <div class="d-flex gap-2 flex-wrap">
+    {% for day in ribbon %}
+      <!-- TODO: посилання на /pattern/<дата>/ - Блок Г цієї ж стадії -->
+      <a href="#" class="border rounded p-2 text-decoration-none text-dark" style="width: 90px;">
+        <div style="width: 70px; height: 70px; overflow: hidden;">{{ day.svg_content|safe }}</div>
+        <small class="d-block text-center">{{ day.date }}</small>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<div>
+  <h5>{% translate "З блогу" %}</h5>
+  <!-- TODO: блог - Stage 4 -->
+  <p class="text-muted">{% translate "Незабаром" %}</p>
+</div>
+{% endblock %}

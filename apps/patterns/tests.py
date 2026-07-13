@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from unittest.mock import patch
 
 from django.test import TestCase
 
@@ -148,3 +149,37 @@ class RealGenerationDeterminismTests(TestCase):
         svg2, motifs2 = build_svg_for_date(date(2026, 9, 1), self.region)
         self.assertEqual(svg1, svg2)
         self.assertEqual([m.pk for m in motifs1], [m.pk for m in motifs2])
+
+
+class RaceConditionTests(TestCase):
+    """
+    Розділ 11.2 ТЗ: одночасні запити на одну дату мають створити рівно
+    один запис. Симулюємо гонку: інший "паралельний запит" уже вставив
+    запис у базу, поки наша перша перевірка (_get_existing_pattern)
+    застаріло каже що запису ще нема — реалістичний race window без
+    потреби піднімати реальні потоки в тесті.
+    """
+
+    def setUp(self):
+        self.region = make_region("Регіон А", rotation_order=1)
+
+    def test_concurrent_creation_returns_existing_not_error(self):
+        pre_existing = DailyPattern.objects.create(
+            date=ROTATION_EPOCH,
+            region=self.region,
+            seed="already-there",
+            algorithm_version=1,
+            svg_content="<svg>already-there</svg>",
+            generation_status=DailyPattern.GenerationStatus.SUCCESS,
+        )
+
+        with patch("apps.patterns.services.generation._get_existing_pattern") as mock_get_existing:
+            # Перший виклик - "застаріла" перевірка на початку generate_daily_pattern
+            # (симулює момент ДО того, як паралельний запит устиг закомітити запис).
+            # Другий виклик - повторне читання ПІСЛЯ пійманого IntegrityError,
+            # де має повернутись уже реальний існуючий запис, не підмінений мок.
+            mock_get_existing.side_effect = [None, pre_existing]
+            result = generate_daily_pattern(ROTATION_EPOCH, 1, fake_success)
+
+        self.assertEqual(result.pk, pre_existing.pk)
+        self.assertEqual(DailyPattern.objects.filter(date=ROTATION_EPOCH).count(), 1)

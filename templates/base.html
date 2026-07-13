@@ -1,0 +1,79 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}VyshyvankaDaily{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header class="border-bottom py-3">
+  <div class="container">
+    <a href="/" class="text-decoration-none fs-4 fw-bold">VyshyvankaDaily</a>
+  </div>
+</header>
+
+<main class="flex-grow-1 container py-4">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="bg-dark text-light mt-auto py-4">
+<div class="container">
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <h5>VyshyvankaDaily</h5>
+    <p>{% translate "Щодня — новий орнамент твоєї землі." %}</p>
+  </div>
+  <div class="col-md-3 mb-3">
+    <h6>{% translate "Навігація" %}</h6>
+    <ul class="list-unstyled">
+      <li><a href="#" class="text-light">{% translate "Архів" %}</a></li>
+      <li><a href="#" class="text-light">{% translate "Моя колекція" %}</a></li>
+      <li><a href="#" class="text-light">{% translate "Блог" %}</a></li>
+    </ul>
+  </div>
+  <div class="col-md-2 mb-3">
+    <h6>{% translate "Регіони" %}</h6>
+    <ul class="list-unstyled">
+      <li><a href="#" class="text-light">{% translate "Незабаром" %}</a></li>
+    </ul>
+  </div>
+  <div class="col-md-2 mb-3">
+    <h6>{% translate "Компанія" %}</h6>
+    <ul class="list-unstyled">
+      <li><a href="#" class="text-light">{% translate "Про нас" %}</a></li>
+      <li><a href="#" class="text-light">FAQ</a></li>
+      <li><a href="#" class="text-light">{% translate "Контакти" %}</a></li>
+    </ul>
+  </div>
+  <div class="col-md-2 mb-3">
+    <h6>{% translate "Правове" %}</h6>
+    <ul class="list-unstyled">
+      <li><a href="#" class="text-light">{% translate "Умови використання" %}</a></li>
+      <li><a href="#" class="text-light">{% translate "Політика конфіденційності" %}</a></li>
+    </ul>
+  </div>
+</div>
+<div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3">
+  <small>&copy; {% now "Y" %} VyshyvankaDaily</small>
+  <form action="{% url 'set_language' %}" method="post" class="d-flex gap-2 mb-0">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.path }}">
+    {% get_current_language as CURRENT_LANGUAGE %}
+    {% get_available_languages as LANGUAGES %}
+    <select name="language" class="form-select form-select-sm" onchange="this.form.submit()">
+      {% for lang_code, lang_name in LANGUAGES %}
+        <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>{{ lang_name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+</div>
+</div>
+</footer>
+
+<script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
