@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ region.name }} — VyshyvankaDaily{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="max-width: 700px;">
+  <h1>{{ region.name }}</h1>
+  <span class="badge {% if claim_type == 'documented' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-3">
+    {% if claim_type == "documented" %}
+      {% translate "Задокументовано" %}
+    {% else %}
+      {% translate "За усною традицією" %}
+    {% endif %}
+  </span>
+  <p>{{ region.symbolism_description }}</p>
+
+  <h5>{% translate "Палітра кольорів" %}</h5>
+  <div class="d-flex gap-2 mb-3">
+    {% for color in region.dominant_colors %}
+      <div style="width: 40px; height: 40px; background-color: {{ color }}; border-radius: 4px;" title="{{ color }}"></div>
+    {% endfor %}
+  </div>
+
+  <h5>{% translate "Джерела" %}</h5>
+  <ul>
+    {% for source in region.sources.all %}
+      <li>{{ source.name }}{% if source.author_or_institution %} — {{ source.author_or_institution }}{% endif %}</li>
+    {% endfor %}
+  </ul>
+
+  <h5>{% translate "Усі патерни цього регіону" %}</h5>
+  <div class="d-flex gap-2 flex-wrap">
+    {% for pattern in patterns %}
+      <a href="{% url 'patterns:pattern_detail' pattern.date|date:'Y-m-d' %}" class="border rounded p-2 text-decoration-none text-dark" style="width: 90px;">
+        <div style="width: 70px; height: 70px; overflow: hidden;">{{ pattern.svg_content|safe }}</div>
+        <small class="d-block text-center">{{ pattern.date }}</small>
+      </a>
+    {% empty %}
+      <p class="text-muted">{% translate "Ще немає жодного патерну для цього регіону." %}</p>
+    {% endfor %}
+  </div>
+
+  <!-- TODO: пов'язані статті блогу - Stage 4 -->
+</div>
+{% endblock %}

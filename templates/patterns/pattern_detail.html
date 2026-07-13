@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ pattern.region.name }} — {{ pattern.date }} — VyshyvankaDaily{% endblock %}
+
+{% block extra_head %}
+<meta property="og:title" content="{{ pattern.region.name }} — {{ pattern.date }}">
+<meta property="og:description" content="{{ pattern.region.symbolism_description|truncatewords:20 }}">
+<!-- TODO: реальне зображення орнаменту - SEO_VYSHYVANKA.md п.2.6, окремий Stage -->
+<meta property="og:image" content="{% static 'og/fallback.svg' %}">
+<meta property="og:type" content="article">
+{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+  <div class="mx-auto" style="max-width: 500px;">
+    {{ pattern.svg_content|safe }}
+  </div>
+</div>
+
+<div class="mx-auto" style="max-width: 700px;">
+  <h1 class="text-center">{{ pattern.region.name }} — {{ pattern.date }}</h1>
+  <span class="badge {% if claim_type == 'documented' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-3">
+    {% if claim_type == "documented" %}
+      {% translate "Задокументовано" %}
+    {% else %}
+      {% translate "За усною традицією" %}
+    {% endif %}
+  </span>
+  <p>{{ pattern.region.symbolism_description }}</p>
+
+  <h5>{% translate "Джерела" %}</h5>
+  <ul>
+    {% for source in pattern.region.sources.all %}
+      <li>{{ source.name }}{% if source.author_or_institution %} — {{ source.author_or_institution }}{% endif %}</li>
+    {% endfor %}
+  </ul>
+
+  <h5>{% translate "Мотиви в композиції" %}</h5>
+  <ul>
+    {% for motif in pattern.motifs_used.all %}
+      <li><strong>{{ motif.name }}</strong> — {{ motif.meaning_description }}</li>
+    {% endfor %}
+  </ul>
+
+  <div class="d-flex justify-content-between mt-4">
+    {% if previous_pattern %}
+      <a href="{% url 'patterns:pattern_detail' previous_pattern.date|date:'Y-m-d' %}" class="btn btn-outline-secondary">
+        &larr; {{ previous_pattern.date }}
+      </a>
+    {% else %}
+      <span></span>
+    {% endif %}
+    {% if next_pattern %}
+      <a href="{% url 'patterns:pattern_detail' next_pattern.date|date:'Y-m-d' %}" class="btn btn-outline-secondary">
+        {{ next_pattern.date }} &rarr;
+      </a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -36,8 +36,7 @@
   <h5>{% translate "Останні дні" %}</h5>
   <div class="d-flex gap-2 flex-wrap">
     {% for day in ribbon %}
-      <!-- TODO: посилання на /pattern/<дата>/ - Блок Г цієї ж стадії -->
-      <a href="#" class="border rounded p-2 text-decoration-none text-dark" style="width: 90px;">
+      <a href="{% url 'patterns:pattern_detail' day.date|date:'Y-m-d' %}" class="border rounded p-2 text-decoration-none text-dark" style="width: 90px;">
         <div style="width: 70px; height: 70px; overflow: hidden;">{{ day.svg_content|safe }}</div>
         <small class="d-block text-center">{{ day.date }}</small>
       </a>
