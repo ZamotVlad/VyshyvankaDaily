@@ -183,3 +183,31 @@ class RaceConditionTests(TestCase):
 
         self.assertEqual(result.pk, pre_existing.pk)
         self.assertEqual(DailyPattern.objects.filter(date=ROTATION_EPOCH).count(), 1)
+
+
+class ArchiveViewTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон А", rotation_order=1)
+        DailyPattern.objects.create(
+            date=date(2026, 6, 1),
+            region=self.region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+
+    def test_archive_returns_200(self):
+        response = self.client.get("/archive/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_by_nonexistent_region_gives_empty_state(self):
+        response = self.client.get("/archive/?region=does-not-exist")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context["invalid_region_filter"])
+        self.assertEqual(len(response.context["page_obj"].object_list), 0)
+
+    def test_filter_by_deactivated_region_gives_empty_state(self):
+        self.region.is_active = False
+        self.region.save()
+        response = self.client.get(f"/archive/?region={self.region.slug}")
+        self.assertTrue(response.context["invalid_region_filter"])

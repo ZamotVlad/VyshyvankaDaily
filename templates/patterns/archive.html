@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Архів" %} — VyshyvankaDaily{% endblock %}
+
+{% block content %}
+<h1>{% translate "Архів" %}</h1>
+
+<form method="get" class="row g-2 mb-4">
+  <div class="col-auto">
+    <select name="region" class="form-select">
+      <option value="">{% translate "Усі регіони" %}</option>
+      {% for region in regions %}
+        <option value="{{ region.slug }}" {% if region.slug == selected_region_slug %}selected{% endif %}>
+          {{ region.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto">
+    <input type="date" name="date_from" value="{{ date_from }}" class="form-control" placeholder="{% translate 'Від' %}">
+  </div>
+  <div class="col-auto">
+    <input type="date" name="date_to" value="{{ date_to }}" class="form-control" placeholder="{% translate 'До' %}">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">{% translate "Фільтрувати" %}</button>
+  </div>
+</form>
+
+{% if invalid_region_filter %}
+  <p class="text-muted">
+    {% translate "Регіон не знайдено або він наразі не бере участі в ротації." %}
+  </p>
+{% elif not page_obj.object_list %}
+  <p class="text-muted">{% translate "За обраними фільтрами нічого не знайдено." %}</p>
+{% else %}
+  <div class="d-flex gap-2 flex-wrap mb-4">
+    {% for pattern in page_obj %}
+      <a href="{% url 'patterns:pattern_detail' pattern.date|date:'Y-m-d' %}" class="border rounded p-2 text-decoration-none text-dark" style="width: 90px;">
+        <div style="width: 70px; height: 70px; overflow: hidden;">{{ pattern.svg_content|safe }}</div>
+        <small class="d-block text-center">{{ pattern.date }}</small>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if page_obj.has_other_pages %}
+    <nav>
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&region={{ selected_region_slug }}&date_from={{ date_from }}&date_to={{ date_to }}">&laquo;</a>
+          </li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}&region={{ selected_region_slug }}&date_from={{ date_from }}&date_to={{ date_to }}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endif %}
+{% endblock %}

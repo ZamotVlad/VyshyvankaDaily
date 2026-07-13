@@ -1,6 +1,7 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from django.conf import settings
+from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
@@ -9,6 +10,7 @@ from apps.patterns.services.generation import CURRENT_ALGORITHM_VERSION, generat
 from apps.patterns.services.pattern_builder import build_svg_for_date
 
 RIBBON_DAYS = 7
+ARCHIVE_PAGE_SIZE = 12
 
 
 def home_view(request):
@@ -77,13 +79,9 @@ def region_detail_view(request, slug):
     """
     Сторінка регіону (розділ 5.4 ТЗ) — публічна освітня сторінка, SEO-актив.
 
-    get_object_or_404 без .verified() навмисно: якщо регіон існував і
-    мав опубліковані патерни, але потім деактивований чи знятий з
-    верифікації — стара сторінка не повинна раптом стати 404 (посилання
-    в соцмережах/пошуку лишаються живими), контент лишається доступним
-    для читання, просто регіон більше не бере участі в новій ротації
-    (розділ 8.3 стосується лише вибору для НОВИХ патернів, не видимості
-    вже опублікованої сторінки).
+    get_object_or_404 без .verified() навмисно: стара пряма адреса регіону
+    лишається живою навіть після деактивації (розділ 8.3 стосується лише
+    вибору для НОВИХ патернів, не видимості вже опублікованої сторінки).
     """
     region = get_object_or_404(Region, slug=slug)
 
@@ -95,6 +93,62 @@ def region_detail_view(request, slug):
         "patterns": patterns,
     }
     return render(request, "patterns/region_detail.html", context)
+
+
+def _parse_date_param(value: str | None) -> date | None:
+    if not value:
+        return None
+    try:
+        return datetime.strptime(value, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def archive_view(request):
+    """
+    Архів (розділ 5.2 ТЗ): фільтр за регіоном і діапазоном дат, пагінація.
+
+    Фільтр за регіоном приймає лише slug активного верифікованого регіону
+    (Region.objects.verified()) — неіснуючий slug чи slug деактивованого
+    регіону дають порожній стан із поясненням, а не помилку й не повний
+    історичний список (на відміну від прямої сторінки регіону, Блок Д).
+    """
+    today = date.today()
+    patterns = (
+        DailyPattern.objects.filter(date__lte=today).select_related("region").order_by("-date")
+    )
+
+    region_slug = request.GET.get("region", "")
+    selected_region = None
+    invalid_region_filter = False
+
+    if region_slug:
+        selected_region = Region.objects.verified().filter(slug=region_slug).first()
+        if selected_region is None:
+            invalid_region_filter = True
+            patterns = DailyPattern.objects.none()
+        else:
+            patterns = patterns.filter(region=selected_region)
+
+    date_from = _parse_date_param(request.GET.get("date_from"))
+    date_to = _parse_date_param(request.GET.get("date_to"))
+    if date_from:
+        patterns = patterns.filter(date__gte=date_from)
+    if date_to:
+        patterns = patterns.filter(date__lte=date_to)
+
+    paginator = Paginator(patterns, ARCHIVE_PAGE_SIZE)
+    page_obj = paginator.get_page(request.GET.get("page"))
+
+    context = {
+        "page_obj": page_obj,
+        "regions": Region.objects.verified().order_by("name"),
+        "selected_region_slug": region_slug,
+        "invalid_region_filter": invalid_region_filter,
+        "date_from": request.GET.get("date_from", ""),
+        "date_to": request.GET.get("date_to", ""),
+    }
+    return render(request, "patterns/archive.html", context)
 
 
 def debug_pattern_view(request, iso_date):
