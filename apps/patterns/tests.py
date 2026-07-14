@@ -233,3 +233,43 @@ class ErrorPagesTests(TestCase):
     def test_unknown_url_returns_404_not_500(self):
         response = self.client.get("/this-page-does-not-exist/")
         self.assertEqual(response.status_code, 404)
+
+
+class MissingCoverageTests(TestCase):
+    """
+    Пункт 22 плану Stage 2, буквально: "неіснуюча дата/регіон, коректний
+    404" — три конкретні сценарії, виявлені зовнішньою рецензією,
+    відсутні в попередній версії файлу.
+    """
+
+    def setUp(self):
+        self.region = make_region("Регіон А", rotation_order=1)
+        DailyPattern.objects.create(
+            date=date(2026, 6, 1),
+            region=self.region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+        DailyPattern.objects.create(
+            date=date(2026, 6, 10),
+            region=self.region,
+            seed="s2",
+            algorithm_version=1,
+            svg_content="<svg>2</svg>",
+        )
+
+    def test_pattern_detail_future_date_returns_404(self):
+        future = date.today() + timedelta(days=5)
+        response = self.client.get(f"/pattern/{future.isoformat()}/")
+        self.assertEqual(response.status_code, 404)
+
+    def test_region_detail_nonexistent_slug_returns_404(self):
+        response = self.client.get("/regions/does-not-exist/")
+        self.assertEqual(response.status_code, 404)
+
+    def test_archive_date_range_filter(self):
+        response = self.client.get("/archive/?date_from=2026-06-05&date_to=2026-06-15")
+        self.assertEqual(response.status_code, 200)
+        dates_in_result = [p.date for p in response.context["page_obj"]]
+        self.assertEqual(dates_in_result, [date(2026, 6, 10)])
