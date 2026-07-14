@@ -120,6 +120,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
@@ -136,3 +137,6 @@ ANYMAIL = {
     "POSTMARK_SERVER_TOKEN": env("POSTMARK_SERVER_TOKEN", default=""),
 }
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@vyshyvankadaily.local")
+
+
+LOGIN_REDIRECT_URL = "patterns:home"
