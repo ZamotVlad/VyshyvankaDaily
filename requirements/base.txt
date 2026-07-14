@@ -2,3 +2,5 @@ Django==5.2.*
 django-modeltranslation
 django-environ
 python-slugify
+django-allauth
+django-anymail[postmark]
