@@ -1,7 +1,8 @@
 from datetime import date, timedelta
 from unittest.mock import patch
 
-from django.test import TestCase
+from django.template.loader import render_to_string
+from django.test import TestCase, override_settings
 
 from apps.patterns.models import DailyPattern, Motif, Region
 from apps.patterns.services.generation import NoFallbackAvailable, generate_daily_pattern
@@ -211,3 +212,24 @@ class ArchiveViewTests(TestCase):
         self.region.save()
         response = self.client.get(f"/archive/?region={self.region.slug}")
         self.assertTrue(response.context["invalid_region_filter"])
+
+
+class ErrorPagesTests(TestCase):
+    """
+    Розділ 5.14 ТЗ: 500-сторінка не залежить від бази даних/контексту
+    запиту. Найточніший тест — відтворити РЕАЛЬНИЙ виклик Django
+    (django.views.defaults.server_error робить template.render() БЕЗ
+    аргументів: без request, без context processors) — а не імітувати
+    "відключену БД" мокуванням, яке легко дало б хибний результат
+    залежно від того, що саме замокано, і не довело б головного:
+    чи шаблон взагалі не потребує контексту для рендеру.
+    """
+
+    def test_500_template_renders_without_request_or_db_context(self):
+        html = render_to_string("500.html")
+        self.assertIn("500", html)
+
+    @override_settings(DEBUG=False)
+    def test_unknown_url_returns_404_not_500(self):
+        response = self.client.get("/this-page-does-not-exist/")
+        self.assertEqual(response.status_code, 404)

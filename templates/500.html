@@ -1,0 +1,19 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% translate "Помилка сервера" %}</title>
+<style>
+  body { font-family: sans-serif; text-align: center; padding: 80px 20px; color: #333; }
+  h1 { font-size: 48px; margin-bottom: 10px; }
+  a { color: #0F6E56; }
+</style>
+</head>
+<body>
+  <h1>500</h1>
+  <p>{% translate "Щось пішло не так. Спробуйте, будь ласка, пізніше." %}</p>
+  <a href="/">{% translate "На головну" %}</a>
+</body>
+</html>
