@@ -14,9 +14,6 @@ ARCHIVE_PAGE_SIZE = 12
 
 
 def home_view(request):
-    """
-    Головна сторінка (розділ 5.1 ТЗ) — лінива генерація патерну на сьогодні.
-    """
     today = date.today()
     pattern = generate_daily_pattern(
         today,
@@ -39,13 +36,6 @@ def home_view(request):
 
 
 def pattern_detail_view(request, iso_date):
-    """
-    Сторінка конкретного патерну (розділ 5.3 ТЗ).
-
-    Захист від запиту майбутньої дати — 404, не 500. Читає вже існуючий
-    запис (get_object_or_404), не генерує сам — генерація лише через
-    головну сторінку (розділ 11.2).
-    """
     try:
         pattern_date = date.fromisoformat(iso_date)
     except ValueError as exc:
@@ -76,13 +66,6 @@ def pattern_detail_view(request, iso_date):
 
 
 def region_detail_view(request, slug):
-    """
-    Сторінка регіону (розділ 5.4 ТЗ) — публічна освітня сторінка, SEO-актив.
-
-    get_object_or_404 без .verified() навмисно: стара пряма адреса регіону
-    лишається живою навіть після деактивації (розділ 8.3 стосується лише
-    вибору для НОВИХ патернів, не видимості вже опублікованої сторінки).
-    """
     region = get_object_or_404(Region, slug=slug)
 
     patterns = DailyPattern.objects.filter(region=region, date__lte=date.today()).order_by("-date")
@@ -106,29 +89,26 @@ def _parse_date_param(value: str | None) -> date | None:
 
 def archive_view(request):
     """
-    Архів (розділ 5.2 ТЗ): фільтр за регіоном і діапазоном дат, пагінація.
+    Архів (розділ 5.2 Roadmap, розділ 10 ТЗ).
 
-    Фільтр за регіоном приймає лише slug активного верифікованого регіону
-    (Region.objects.verified()) — неіснуючий slug чи slug деактивованого
-    регіону дають порожній стан із поясненням, а не помилку й не повний
-    історичний список (на відміну від прямої сторінки регіону, Блок Д).
+    Розділ 10.1 ТЗ: "невалідне значення [регіону] ігнорується" — на
+    відміну від першої версії Stage 2 (виправлено за результатами
+    звірки з ТЗ, задокументовано в Частині 2 DECISIONS.md), некоректний
+    чи деактивований slug просто не застосовує фільтр, а не показує
+    порожній стан.
+
+    Розділ 10.2 ТЗ: два варіанти сортування — за замовчуванням зворотний
+    хронологічний, альтернативно за алфавітом регіону (?sort=region).
     """
     today = date.today()
-    patterns = (
-        DailyPattern.objects.filter(date__lte=today).select_related("region").order_by("-date")
-    )
+    patterns = DailyPattern.objects.filter(date__lte=today).select_related("region")
 
     region_slug = request.GET.get("region", "")
-    selected_region = None
-    invalid_region_filter = False
-
     if region_slug:
-        selected_region = Region.objects.verified().filter(slug=region_slug).first()
-        if selected_region is None:
-            invalid_region_filter = True
-            patterns = DailyPattern.objects.none()
-        else:
-            patterns = patterns.filter(region=selected_region)
+        region = Region.objects.verified().filter(slug=region_slug).first()
+        if region is not None:
+            patterns = patterns.filter(region=region)
+        # інакше - невалідне значення ігнорується, фільтр не застосовується
 
     date_from = _parse_date_param(request.GET.get("date_from"))
     date_to = _parse_date_param(request.GET.get("date_to"))
@@ -137,6 +117,13 @@ def archive_view(request):
     if date_to:
         patterns = patterns.filter(date__lte=date_to)
 
+    sort = request.GET.get("sort")
+    if sort == "region":
+        patterns = patterns.order_by("region__name", "-date")
+    else:
+        sort = "date"
+        patterns = patterns.order_by("-date")
+
     paginator = Paginator(patterns, ARCHIVE_PAGE_SIZE)
     page_obj = paginator.get_page(request.GET.get("page"))
 
@@ -144,18 +131,14 @@ def archive_view(request):
         "page_obj": page_obj,
         "regions": Region.objects.verified().order_by("name"),
         "selected_region_slug": region_slug,
-        "invalid_region_filter": invalid_region_filter,
         "date_from": request.GET.get("date_from", ""),
         "date_to": request.GET.get("date_to", ""),
+        "sort": sort,
     }
     return render(request, "patterns/archive.html", context)
 
 
 def debug_pattern_view(request, iso_date):
-    """
-    Тимчасова debug-сторінка (пункт "емоційний чекпоінт", Stage 1 Roadmap).
-    Не публічний view — лише для власної перевірки під час розробки.
-    """
     if not settings.DEBUG:
         raise Http404
 

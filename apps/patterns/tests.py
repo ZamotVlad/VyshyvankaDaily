@@ -186,34 +186,6 @@ class RaceConditionTests(TestCase):
         self.assertEqual(DailyPattern.objects.filter(date=ROTATION_EPOCH).count(), 1)
 
 
-class ArchiveViewTests(TestCase):
-    def setUp(self):
-        self.region = make_region("Регіон А", rotation_order=1)
-        DailyPattern.objects.create(
-            date=date(2026, 6, 1),
-            region=self.region,
-            seed="s1",
-            algorithm_version=1,
-            svg_content="<svg>1</svg>",
-        )
-
-    def test_archive_returns_200(self):
-        response = self.client.get("/archive/")
-        self.assertEqual(response.status_code, 200)
-
-    def test_filter_by_nonexistent_region_gives_empty_state(self):
-        response = self.client.get("/archive/?region=does-not-exist")
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context["invalid_region_filter"])
-        self.assertEqual(len(response.context["page_obj"].object_list), 0)
-
-    def test_filter_by_deactivated_region_gives_empty_state(self):
-        self.region.is_active = False
-        self.region.save()
-        response = self.client.get(f"/archive/?region={self.region.slug}")
-        self.assertTrue(response.context["invalid_region_filter"])
-
-
 class ErrorPagesTests(TestCase):
     """
     Розділ 5.14 ТЗ: 500-сторінка не залежить від бази даних/контексту
@@ -273,3 +245,45 @@ class MissingCoverageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         dates_in_result = [p.date for p in response.context["page_obj"]]
         self.assertEqual(dates_in_result, [date(2026, 6, 10)])
+
+
+class ArchiveViewTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон А", rotation_order=1)
+        self.other_region = make_region("Регіон Я", rotation_order=2)
+        DailyPattern.objects.create(
+            date=date(2026, 6, 1),
+            region=self.region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+        DailyPattern.objects.create(
+            date=date(2026, 6, 5),
+            region=self.other_region,
+            seed="s2",
+            algorithm_version=1,
+            svg_content="<svg>2</svg>",
+        )
+
+    def test_archive_returns_200(self):
+        response = self.client.get("/archive/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_nonexistent_region_filter_is_ignored_not_empty(self):
+        """Розділ 10.1 ТЗ: невалідне значення ігнорується, показує ВСІ
+        патерни (обидва регіони), не порожній стан і не лише один."""
+        response = self.client.get("/archive/?region=does-not-exist")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context["page_obj"].object_list), 2)
+
+    def test_deactivated_region_filter_is_ignored_not_empty(self):
+        self.region.is_active = False
+        self.region.save()
+        response = self.client.get(f"/archive/?region={self.region.slug}")
+        self.assertEqual(len(response.context["page_obj"].object_list), 2)
+
+    def test_sort_by_region_name(self):
+        response = self.client.get("/archive/?sort=region")
+        regions_in_order = [p.region.name for p in response.context["page_obj"]]
+        self.assertEqual(regions_in_order, sorted(regions_in_order))
