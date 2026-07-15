@@ -23,13 +23,7 @@
     {{ pattern.region.symbolism_description|truncatewords:40 }}
   </p>
 
-  {% if user.is_authenticated %}
-    <!-- TODO: реальне збереження - Stage 3 -->
-    <button class="btn btn-outline-primary" disabled>{% translate "Зберегти в колекцію" %}</button>
-  {% else %}
-    <!-- TODO: посилання на вхід зі збереженням наміру - Stage 3 -->
-    <a href="#" class="btn btn-outline-primary disabled">{% translate "Зберегти в колекцію" %}</a>
-  {% endif %}
+  {% include "patterns/_save_button.html" %}
 </div>
 
 <div class="mb-4">

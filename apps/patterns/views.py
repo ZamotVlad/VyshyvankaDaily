@@ -1,12 +1,16 @@
 from datetime import date, datetime, timedelta
 
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
-from apps.patterns.models import DailyPattern, Region
+from apps.patterns.models import DailyPattern, Region, SavedPattern
 from apps.patterns.services.generation import CURRENT_ALGORITHM_VERSION, generate_daily_pattern
 from apps.patterns.services.pattern_builder import build_svg_for_date
 
@@ -14,14 +18,13 @@ RIBBON_DAYS = 7
 ARCHIVE_PAGE_SIZE = 12
 
 
-def home_view(request):
-    """
-    Головна сторінка (розділ 5.1 ТЗ) — лінива генерація патерну на сьогодні.
+def _is_saved_by(user, pattern):
+    if not user.is_authenticated:
+        return False
+    return SavedPattern.objects.filter(user=user, pattern=pattern).exists()
 
-    timezone.localdate() замість datetime.date.today() — офіційний
-    Django-спосіб отримати "сьогодні" з урахуванням TIME_ZONE, не
-    залежить від платформо-специфічного побічного ефекту time.tzset().
-    """
+
+def home_view(request):
     today = timezone.localdate()
     pattern = generate_daily_pattern(
         today,
@@ -39,18 +42,12 @@ def home_view(request):
         "pattern": pattern,
         "claim_type": pattern.region.get_claim_type(),
         "ribbon": ribbon,
+        "is_saved": _is_saved_by(request.user, pattern),
     }
     return render(request, "patterns/home.html", context)
 
 
 def pattern_detail_view(request, iso_date):
-    """
-    Сторінка конкретного патерну (розділ 5.3 ТЗ).
-
-    Захист від запиту майбутньої дати — 404, не 500. Читає вже існуючий
-    запис (get_object_or_404), не генерує сам — генерація лише через
-    головну сторінку (розділ 11.2).
-    """
     try:
         pattern_date = date.fromisoformat(iso_date)
     except ValueError as exc:
@@ -76,18 +73,59 @@ def pattern_detail_view(request, iso_date):
         "claim_type": pattern.region.get_claim_type(),
         "previous_pattern": previous_pattern,
         "next_pattern": next_pattern,
+        "is_saved": _is_saved_by(request.user, pattern),
     }
     return render(request, "patterns/pattern_detail.html", context)
 
 
-def region_detail_view(request, slug):
+@login_required
+@require_POST
+def toggle_save_view(request, iso_date):
     """
-    Сторінка регіону (розділ 5.4 ТЗ) — публічна освітня сторінка, SEO-актив.
+    Збереження/видалення патерну з колекції (розділ 5.1, 5.3, 9.1 ТЗ).
 
-    get_object_or_404 без .verified() навмисно: стара пряма адреса регіону
-    лишається живою навіть після деактивації (розділ 8.3 стосується лише
-    вибору для НОВИХ патернів, не видимості вже опублікованої сторінки).
+    Toggle через get_or_create/delete — покладаємось на UniqueConstraint
+    (user, pattern) із Stage 1, не перевіряємо існування вручну заздалегідь.
     """
+    try:
+        pattern_date = date.fromisoformat(iso_date)
+    except ValueError as exc:
+        raise Http404("Формат дати: YYYY-MM-DD") from exc
+
+    pattern = get_object_or_404(DailyPattern, date=pattern_date)
+
+    saved, created = SavedPattern.objects.get_or_create(user=request.user, pattern=pattern)
+    if not created:
+        saved.delete()
+        messages.info(request, "Видалено з колекції.")
+    else:
+        messages.success(request, "Збережено в колекцію.")
+
+    next_url = request.POST.get("next") or reverse("patterns:pattern_detail", args=[iso_date])
+    return redirect(next_url)
+
+
+@login_required
+def my_collection_view(request):
+    """
+    Моя колекція (розділ 9.1, 9.3 ТЗ) — виключно приватна: фільтр за
+    request.user завжди, немає жодного URL-параметра з ідентифікатором
+    іншого користувача, тому "чужа колекція" фізично недосяжна за
+    дизайном, не лише перевіркою прав.
+    """
+    saved_patterns = (
+        SavedPattern.objects.filter(user=request.user)
+        .select_related("pattern", "pattern__region")
+        .order_by("-created_at")
+    )
+    context = {
+        "saved_patterns": saved_patterns,
+        "total_saved": saved_patterns.count(),
+    }
+    return render(request, "patterns/my_collection.html", context)
+
+
+def region_detail_view(request, slug):
     region = get_object_or_404(Region, slug=slug)
 
     patterns = DailyPattern.objects.filter(region=region, date__lte=timezone.localdate()).order_by(
@@ -112,17 +150,6 @@ def _parse_date_param(value: str | None) -> date | None:
 
 
 def archive_view(request):
-    """
-    Архів (розділ 5.2 Roadmap, розділ 10 ТЗ).
-
-    Розділ 10.1 ТЗ: "невалідне значення [регіону] ігнорується" — некоректний
-    чи деактивований slug просто не застосовує фільтр, а не показує
-    порожній стан (виправлено за результатами звірки з ТЗ, Частина 2
-    DECISIONS.md).
-
-    Розділ 10.2 ТЗ: два варіанти сортування — за замовчуванням зворотний
-    хронологічний, альтернативно за алфавітом регіону (?sort=region).
-    """
     today = timezone.localdate()
     patterns = DailyPattern.objects.filter(date__lte=today).select_related("region")
 
@@ -131,7 +158,6 @@ def archive_view(request):
         region = Region.objects.verified().filter(slug=region_slug).first()
         if region is not None:
             patterns = patterns.filter(region=region)
-        # інакше - невалідне значення ігнорується, фільтр не застосовується
 
     date_from = _parse_date_param(request.GET.get("date_from"))
     date_to = _parse_date_param(request.GET.get("date_to"))
@@ -162,10 +188,6 @@ def archive_view(request):
 
 
 def debug_pattern_view(request, iso_date):
-    """
-    Тимчасова debug-сторінка (пункт "емоційний чекпоінт", Stage 1 Roadmap).
-    Не публічний view — лише для власної перевірки під час розробки.
-    """
     if not settings.DEBUG:
         raise Http404
 

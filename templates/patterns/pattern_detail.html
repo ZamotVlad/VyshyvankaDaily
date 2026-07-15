@@ -44,6 +44,9 @@
     {% endfor %}
   </ul>
 
+  <div class="mb-3">
+    {% include "patterns/_save_button.html" %}
+  </div>
   <div class="d-flex justify-content-between mt-4">
     {% if previous_pattern %}
       <a href="{% url 'patterns:pattern_detail' previous_pattern.date|date:'Y-m-d' %}" class="btn btn-outline-secondary">

@@ -1,0 +1,16 @@
+{% load i18n %}
+{% if user.is_authenticated %}
+  <form method="post" action="{% url 'patterns:toggle_save' pattern.date|date:'Y-m-d' %}" class="d-inline">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    {% if is_saved %}
+      <button type="submit" class="btn btn-outline-danger">{% translate "Прибрати з колекції" %}</button>
+    {% else %}
+      <button type="submit" class="btn btn-outline-primary">{% translate "Зберегти в колекцію" %}</button>
+    {% endif %}
+  </form>
+{% else %}
+  <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-outline-primary">
+    {% translate "Увійти, щоб зберегти" %}
+  </a>
+{% endif %}

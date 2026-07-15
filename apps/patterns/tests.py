@@ -1,10 +1,11 @@
 from datetime import date, timedelta
 from unittest.mock import patch
 
+from django.contrib.auth import get_user_model
 from django.template.loader import render_to_string
 from django.test import TestCase, override_settings
 
-from apps.patterns.models import DailyPattern, Motif, Region
+from apps.patterns.models import DailyPattern, Motif, Region, SavedPattern
 from apps.patterns.services.generation import NoFallbackAvailable, generate_daily_pattern
 from apps.patterns.services.pattern_builder import build_svg_for_date
 from apps.patterns.services.rotation import ROTATION_EPOCH, get_region_for_date
@@ -287,3 +288,42 @@ class ArchiveViewTests(TestCase):
         response = self.client.get("/archive/?sort=region")
         regions_in_order = [p.region.name for p in response.context["page_obj"]]
         self.assertEqual(regions_in_order, sorted(regions_in_order))
+
+
+class SavedPatternToggleTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон А", rotation_order=1)
+        self.pattern = DailyPattern.objects.create(
+            date=date(2026, 6, 1),
+            region=self.region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+        self.user = get_user_model().objects.create_user(username="collector", password="pass12345")
+
+    def test_anonymous_cannot_toggle_save(self):
+        response = self.client.post(f"/pattern/{self.pattern.date}/save/")
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("/accounts/login/", response.url)
+
+    def test_authenticated_can_save_and_unsave(self):
+        self.client.force_login(self.user)
+        self.client.post(f"/pattern/{self.pattern.date}/save/")
+        self.assertTrue(SavedPattern.objects.filter(user=self.user, pattern=self.pattern).exists())
+
+        self.client.post(f"/pattern/{self.pattern.date}/save/")
+        self.assertFalse(SavedPattern.objects.filter(user=self.user, pattern=self.pattern).exists())
+
+    def test_collection_shows_only_own_saved_patterns(self):
+        other_user = get_user_model().objects.create_user(username="other", password="pass12345")
+        SavedPattern.objects.create(user=other_user, pattern=self.pattern)
+
+        self.client.force_login(self.user)
+        response = self.client.get("/collection/")
+        self.assertEqual(len(response.context["saved_patterns"]), 0)
+
+    def test_anonymous_redirected_from_collection(self):
+        response = self.client.get("/collection/")
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("/accounts/login/", response.url)

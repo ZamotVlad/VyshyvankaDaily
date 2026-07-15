@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Моя колекція" %} — VyshyvankaDaily{% endblock %}
+
+{% block content %}
+<h1>{% translate "Моя колекція" %}</h1>
+<p>{% blocktranslate count counter=total_saved %}Збережено {{ total_saved }} орнамент.{% plural %}Збережено {{ total_saved }} орнаментів.{% endblocktranslate %}</p>
+
+<div class="d-flex gap-2 flex-wrap">
+  {% for saved in saved_patterns %}
+    <div class="border rounded p-2" style="width: 100px;">
+      <a href="{% url 'patterns:pattern_detail' saved.pattern.date|date:'Y-m-d' %}" class="text-decoration-none text-dark">
+        <div style="width: 80px; height: 80px; overflow: hidden;">{{ saved.pattern.svg_content|safe }}</div>
+        <small class="d-block text-center">{{ saved.pattern.date }}</small>
+      </a>
+    </div>
+  {% empty %}
+    <p class="text-muted">{% translate "Колекція поки порожня." %}</p>
+  {% endfor %}
+</div>
+{% endblock %}
