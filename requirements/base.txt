@@ -4,3 +4,4 @@ django-environ
 python-slugify
 django-allauth
 django-anymail[postmark]
+PyJWT[crypto]
