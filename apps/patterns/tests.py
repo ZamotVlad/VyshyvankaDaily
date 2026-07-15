@@ -4,6 +4,7 @@ from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from django.template.loader import render_to_string
 from django.test import TestCase, override_settings
+from django.utils import timezone
 
 from apps.patterns.models import DailyPattern, Motif, Region, SavedPattern
 from apps.patterns.services.generation import NoFallbackAvailable, generate_daily_pattern
@@ -327,3 +328,65 @@ class SavedPatternToggleTests(TestCase):
         response = self.client.get("/collection/")
         self.assertEqual(response.status_code, 302)
         self.assertIn("/accounts/login/", response.url)
+
+
+class TourIndicatorTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон А", rotation_order=1)
+        self.user = get_user_model().objects.create_user(username="tourist", password="pass12345")
+
+    def test_same_day_save_counts_toward_tour(self):
+        pattern = DailyPattern.objects.create(
+            date=timezone.localdate(),
+            region=self.region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+        SavedPattern.objects.create(user=self.user, pattern=pattern)
+
+        self.client.force_login(self.user)
+        response = self.client.get("/collection/")
+        self.assertEqual(response.context["tour_completed"], 1)
+
+    def test_backdated_archive_save_does_not_count_toward_tour(self):
+        old_pattern = DailyPattern.objects.create(
+            date=date(2026, 1, 1),
+            region=self.region,
+            seed="s2",
+            algorithm_version=1,
+            svg_content="<svg>2</svg>",
+        )
+        SavedPattern.objects.create(user=self.user, pattern=old_pattern)
+
+        self.client.force_login(self.user)
+        response = self.client.get("/collection/")
+        self.assertEqual(response.context["total_saved"], 1)
+        self.assertEqual(response.context["tour_completed"], 0)
+
+    def test_mixed_saves_count_only_valid_tour_entries(self):
+        """Один користувач має і 'живе' збереження, і заднім числом —
+        tour_completed рахує лише перше, не змішує й не подвоює."""
+        other_region = make_region("Регіон Б", rotation_order=2)
+
+        live_pattern = DailyPattern.objects.create(
+            date=timezone.localdate(),
+            region=self.region,
+            seed="s3",
+            algorithm_version=1,
+            svg_content="<svg>3</svg>",
+        )
+        backdated_pattern = DailyPattern.objects.create(
+            date=date(2026, 1, 1),
+            region=other_region,
+            seed="s4",
+            algorithm_version=1,
+            svg_content="<svg>4</svg>",
+        )
+        SavedPattern.objects.create(user=self.user, pattern=live_pattern)
+        SavedPattern.objects.create(user=self.user, pattern=backdated_pattern)
+
+        self.client.force_login(self.user)
+        response = self.client.get("/collection/")
+        self.assertEqual(response.context["total_saved"], 2)
+        self.assertEqual(response.context["tour_completed"], 1)

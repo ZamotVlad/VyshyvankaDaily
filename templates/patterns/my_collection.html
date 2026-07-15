@@ -6,6 +6,9 @@
 {% block content %}
 <h1>{% translate "Моя колекція" %}</h1>
 <p>{% blocktranslate count counter=total_saved %}Збережено {{ total_saved }} орнамент.{% plural %}Збережено {{ total_saved }} орнаментів.{% endblocktranslate %}</p>
+<p class="text-muted">
+  {% blocktranslate %}Пройдено живих днів: {{ tour_completed }} з {{ tour_total }} регіонів.{% endblocktranslate %}
+</p>
 
 <div class="d-flex gap-2 flex-wrap">
   {% for saved in saved_patterns %}

@@ -4,6 +4,8 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import F
+from django.db.models.functions import TruncDate
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -108,19 +110,35 @@ def toggle_save_view(request, iso_date):
 @login_required
 def my_collection_view(request):
     """
-    Моя колекція (розділ 9.1, 9.3 ТЗ) — виключно приватна: фільтр за
-    request.user завжди, немає жодного URL-параметра з ідентифікатором
-    іншого користувача, тому "чужа колекція" фізично недосяжна за
-    дизайном, не лише перевіркою прав.
+    Моя колекція (розділ 9.1, 9.3 ТЗ) — виключно приватна.
+
+    Розділ 9.2 ТЗ + уточнення: "пройдений тур" рахує лише збереження
+    день-в-день (SavedPattern.created_at, обрізане до дати за поточним
+    часовим поясом, == DailyPattern.date) — не всі збереження підряд.
+    Інакше людина могла б пройти "100% туру" за один прохід архіву,
+    що суперечить суті щоденного ритуалу.
     """
     saved_patterns = (
         SavedPattern.objects.filter(user=request.user)
         .select_related("pattern", "pattern__region")
         .order_by("-created_at")
     )
+
+    tour_region_ids = (
+        SavedPattern.objects.filter(user=request.user)
+        .annotate(saved_date=TruncDate("created_at"))
+        .filter(saved_date=F("pattern__date"))
+        .values_list("pattern__region_id", flat=True)
+        .distinct()
+    )
+    tour_completed = len(tour_region_ids)
+    tour_total = Region.objects.verified().count()
+
     context = {
         "saved_patterns": saved_patterns,
         "total_saved": saved_patterns.count(),
+        "tour_completed": tour_completed,
+        "tour_total": tour_total,
     }
     return render(request, "patterns/my_collection.html", context)
 
