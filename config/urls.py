@@ -10,7 +10,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path("accounts/", include("allauth.urls")),
-    path("accounts/", include("apps.accounts.urls")),
+    path("", include("apps.accounts.urls")),
     path("", include("apps.patterns.urls")),
     prefix_default_language=False,
 )

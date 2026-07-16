@@ -31,19 +31,19 @@ class ProfileSettingsViewTests(TestCase):
         self.user = User.objects.create_user(username="settingsuser", password="pass12345")
 
     def test_anonymous_redirected_to_login(self):
-        response = self.client.get("/accounts/settings/")
+        response = self.client.get("/profile/settings/")
         self.assertEqual(response.status_code, 302)
         self.assertIn("/accounts/login/", response.url)
 
     def test_authenticated_can_view_settings(self):
         self.client.force_login(self.user)
-        response = self.client.get("/accounts/settings/")
+        response = self.client.get("/profile/settings/")
         self.assertEqual(response.status_code, 200)
 
     def test_authenticated_can_update_display_name(self):
         self.client.force_login(self.user)
         self.client.post(
-            "/accounts/settings/",
+            "/profile/settings/",
             {"display_name": "Тестове ім'я", "default_language": ""},
         )
         self.user.profile.refresh_from_db()
