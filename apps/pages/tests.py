@@ -1,1 +1,2 @@
-# Create your tests here.
+# Тестів наразі немає — форма контактів видалена (Частина 2 DECISIONS.md),
+# FAQ/about/terms/privacy без окремих тестових сценаріїв на цьому етапі.

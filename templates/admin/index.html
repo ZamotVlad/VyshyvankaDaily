@@ -1,0 +1,55 @@
+{% extends "unfold/layouts/base_simple.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-3">
+  <div class="p-4 bg-white border rounded-default dark:bg-base-900 dark:border-base-800">
+    <div class="text-sm text-base-500">{% translate "Користувачі" %}</div>
+    <div class="text-2xl font-semibold">{{ vd_total_users }}</div>
+    <div class="text-sm text-base-500">+{{ vd_new_users_week }} {% translate "за тиждень" %}</div>
+  </div>
+  <div class="p-4 bg-white border rounded-default dark:bg-base-900 dark:border-base-800">
+    <div class="text-sm text-base-500">{% translate "Заявки на гостьові пости" %}</div>
+    <div class="text-2xl font-semibold">{{ vd_pending_guest_posts }}</div>
+    <div class="text-sm text-base-500">{% translate "очікують розгляду" %}</div>
+  </div>
+  <div class="p-4 bg-white border rounded-default dark:bg-base-900 dark:border-base-800">
+    <div class="text-sm text-base-500">{% translate "Редакційний борг" %}</div>
+    <div class="text-2xl font-semibold">{{ vd_editorial_debt }}</div>
+    <div class="text-sm text-base-500">{% translate "регіонів/мотивів на перевірці" %}</div>
+  </div>
+  <div class="p-4 bg-white border rounded-default dark:bg-base-900 dark:border-base-800">
+    <div class="text-sm text-base-500">{% translate "Помилки генерації" %}</div>
+    <div class="text-2xl font-semibold">{{ vd_generation_errors }}</div>
+    <div class="text-sm text-base-500">{% translate "застосовано резервний варіант" %}</div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+  <div class="p-4 bg-white border rounded-default dark:bg-base-900 dark:border-base-800">
+    <div class="mb-2 font-semibold">{% translate "Збереження за регіонами" %}</div>
+    <ul class="text-sm">
+      {% for row in vd_saved_by_region %}
+        <li class="flex justify-between py-1 border-b border-base-100 dark:border-base-800">
+          <span>{{ row.pattern__region__name }}</span>
+          <span class="font-semibold">{{ row.total }}</span>
+        </li>
+      {% empty %}
+        <li class="text-base-500">{% translate "Ще немає збережень." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="p-4 bg-white border rounded-default dark:bg-base-900 dark:border-base-800">
+    <div class="mb-2 font-semibold">{% translate "Останні статті блогу" %}</div>
+    <ul class="text-sm">
+      {% for post in vd_recent_posts %}
+        <li class="py-1 border-b border-base-100 dark:border-base-800">
+          <a href="/admin/blog/blogpost/{{ post.pk }}/change/" class="text-primary-600">{{ post.title }}</a>
+        </li>
+      {% empty %}
+        <li class="text-base-500">{% translate "Ще немає опублікованих статей." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

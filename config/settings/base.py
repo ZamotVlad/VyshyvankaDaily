@@ -18,7 +18,7 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
-    # modeltranslation має бути ДО django.contrib.admin
+    "unfold",
     "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "apps.patterns",
     "apps.blog",
     "apps.pages",
+    "django_ckeditor_5",
 ]
 
 MIDDLEWARE = [
@@ -154,4 +155,137 @@ SOCIALACCOUNT_PROVIDERS = {
         "SCOPE": ["profile", "email"],
         "AUTH_PARAMS": {"access_type": "online"},
     }
+}
+
+
+UNFOLD = {
+    "DASHBOARD_CALLBACK": "apps.core.dashboard.dashboard_callback",
+    "SITE_TITLE": "VyshyvankaDaily",
+    "SITE_HEADER": "VyshyvankaDaily",
+    "COLORS": {
+        # Палітра на основі кольорів вишивки: червоний і чорний як акценти
+        # на нейтральному тлі (розділ 14.1 ТЗ).
+        "primary": {
+            "50": "254 242 242",
+            "100": "254 226 226",
+            "200": "254 202 202",
+            "300": "252 165 165",
+            "400": "248 113 113",
+            "500": "220 38 38",
+            "600": "185 28 28",
+            "700": "153 27 27",
+            "800": "127 29 29",
+            "900": "69 10 10",
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "navigation": [
+            {
+                "title": "Контент дня",
+                "items": [
+                    {"title": "Щоденні патерни", "link": "/admin/patterns/dailypattern/"},
+                ],
+            },
+            {
+                "title": "Довідники",
+                "items": [
+                    {"title": "Регіони", "link": "/admin/patterns/region/"},
+                    {"title": "Мотиви", "link": "/admin/patterns/motif/"},
+                    {"title": "Джерела", "link": "/admin/patterns/source/"},
+                ],
+            },
+            {
+                "title": "Блог",
+                "items": [
+                    {"title": "Статті", "link": "/admin/blog/blogpost/"},
+                    {"title": "Категорії статей", "link": "/admin/blog/blogcategory/"},
+                    {
+                        "title": "Заявки на гостьові пости",
+                        "link": "/admin/blog/guestpostsubmission/",
+                    },
+                ],
+            },
+            {
+                "title": "Спільнота",
+                "items": [
+                    {"title": "Користувачі", "link": "/admin/auth/user/"},
+                    {"title": "Профілі", "link": "/admin/accounts/profile/"},
+                    {"title": "Збережені патерни", "link": "/admin/patterns/savedpattern/"},
+                ],
+            },
+            {
+                "title": "Звернення",
+                "items": [
+                    {"title": "Контактні повідомлення", "link": "/admin/pages/contactmessage/"},
+                ],
+            },
+            {
+                "title": "Сторінки",
+                "items": [
+                    {"title": "Статичні сторінки", "link": "/admin/pages/staticpage/"},
+                    {"title": "Категорії FAQ", "link": "/admin/pages/faqcategory/"},
+                    {"title": "Пункти FAQ", "link": "/admin/pages/faqitem/"},
+                ],
+            },
+        ],
+    },
+}
+
+
+CKEDITOR_5_CONFIGS = {
+    "default": {
+        "toolbar": [
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "|",
+            "link",
+            "|",
+            "bulletedList",
+            "numberedList",
+            "|",
+            "blockQuote",
+            "|",
+            "insertTable",
+            "|",
+            "codeBlock",
+            "|",
+            "sourceEditing",
+        ],
+    },
+}
+CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "png"]
+CKEDITOR_5_MAX_FILE_SIZE = 5  # МБ (розділ 14.5 ТЗ — обмеження за розміром)
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+# Дозволений перелік HTML-тегів/атрибутів для санітизації тіла статті
+# (розділ 14.5 ТЗ) — навмисно обмежений, не весь HTML5.
+ALLOWED_BLOG_HTML_TAGS = [
+    "p",
+    "br",
+    "strong",
+    "em",
+    "a",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "h2",
+    "h3",
+    "h4",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+    "code",
+    "pre",
+]
+ALLOWED_BLOG_HTML_ATTRIBUTES = {
+    "a": ["href", "title"],
 }

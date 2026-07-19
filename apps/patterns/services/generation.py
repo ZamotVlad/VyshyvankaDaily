@@ -97,3 +97,22 @@ def generate_daily_pattern(
         return _create_success(pattern_date, region, seed, algorithm_version, svg_content, motifs)
     except IntegrityError:
         return _get_existing_pattern(pattern_date)
+
+
+def force_regenerate_pattern(
+    pattern: DailyPattern, algorithm_version: int, generate_fn: GenerateFn
+) -> DailyPattern:
+    """
+    Примусова перегенерація для адмінки (розділ 14.4 ТЗ) — виняткові
+    випадки. НЕ видаляє існуючий запис (щоб не каскадно видалити
+    SavedPattern користувачів) — перезаписує поля результату на тому
+    самому записі. Регіон лишається той, що вже призначений — ротація
+    стосується первинного призначення дня, не форс-перегенерації.
+    """
+    svg_content, motifs = generate_fn(pattern.date, pattern.region)
+    pattern.svg_content = svg_content
+    pattern.algorithm_version = algorithm_version
+    pattern.generation_status = DailyPattern.GenerationStatus.SUCCESS
+    pattern.save()
+    pattern.motifs_used.set(motifs)
+    return pattern

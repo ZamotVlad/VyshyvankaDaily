@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Блог" %} — VyshyvankaDaily{% endblock %}
+
+{% block content %}
+<h1>{% translate "Блог" %}</h1>
+
+<form method="get" class="mb-4">
+  <select name="category" class="form-select" style="max-width: 300px;" onchange="this.form.submit()">
+    <option value="">{% translate "Усі категорії" %}</option>
+    {% for category in categories %}
+      <option value="{{ category.slug }}" {% if category.slug == selected_category_slug %}selected{% endif %}>
+        {{ category.name }}
+      </option>
+    {% endfor %}
+  </select>
+</form>
+
+<div class="row g-3">
+  {% for post in page_obj %}
+    <div class="col-md-4">
+      <div class="card h-100">
+        {% if post.cover_image_url %}
+          <img src="{{ post.cover_image_url }}" class="card-img-top" alt="{{ post.title }}">
+        {% endif %}
+        <div class="card-body">
+          {% if post.post_type != "editorial" %}
+            <span class="badge bg-warning text-dark mb-2">{% translate "Партнерський матеріал" %}</span>
+          {% endif %}
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.excerpt|truncatewords:20 }}</p>
+          <a href="{% url 'blog:detail' post.slug %}" class="btn btn-sm btn-outline-primary">{% translate "Читати" %}</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted">{% translate "Статей поки немає." %}</p>
+  {% endfor %}
+</div>
+
+{% if page_obj.has_other_pages %}
+  <nav class="mt-4">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&category={{ selected_category_slug }}">&laquo;</a></li>
+      {% endif %}
+      <li class="page-item disabled"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&category={{ selected_category_slug }}">&raquo;</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+{% endblock %}

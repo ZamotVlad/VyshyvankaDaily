@@ -48,7 +48,7 @@
     <ul class="list-unstyled">
       <li><a href="{% url 'patterns:archive' %}" class="text-light">{% translate "Архів" %}</a></li>
       <li><a href="{% url 'patterns:my_collection' %}" class="text-light">{% translate "Моя колекція" %}</a></li>
-      <li><a href="#" class="text-light">{% translate "Блог" %}</a></li>
+      <li><a href="{% url 'blog:list' %}" class="text-light">{% translate "Блог" %}</a></li>
     </ul>
   </div>
   <div class="col-md-2 mb-3">
@@ -60,16 +60,17 @@
   <div class="col-md-2 mb-3">
     <h6>{% translate "Компанія" %}</h6>
     <ul class="list-unstyled">
-      <li><a href="#" class="text-light">{% translate "Про нас" %}</a></li>
-      <li><a href="#" class="text-light">FAQ</a></li>
-      <li><a href="#" class="text-light">{% translate "Контакти" %}</a></li>
+      <li><a href="{% url 'blog:propose' %}" class="text-light">{% translate "Запропонувати матеріал" %}</a></li>
+      <li><a href="{% url 'pages:about' %}" class="text-light">{% translate "Про нас" %}</a></li>
+      <li><a href="{% url 'pages:faq' %}" class="text-light">FAQ</a></li>
+      <li><a href="{% url 'pages:contact' %}" class="text-light">{% translate "Контакти" %}</a></li>
     </ul>
   </div>
   <div class="col-md-2 mb-3">
     <h6>{% translate "Правове" %}</h6>
     <ul class="list-unstyled">
-      <li><a href="#" class="text-light">{% translate "Умови використання" %}</a></li>
-      <li><a href="#" class="text-light">{% translate "Політика конфіденційності" %}</a></li>
+      <li><a href="{% url 'pages:terms' %}" class="text-light">{% translate "Умови використання" %}</a></li>
+      <li><a href="{% url 'pages:privacy' %}" class="text-light">{% translate "Політика конфіденційності" %}</a></li>
     </ul>
   </div>
 </div>

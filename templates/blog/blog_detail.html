@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ post.title }} — VyshyvankaDaily{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
+    <li class="breadcrumb-item active">{{ post.title }}</li>
+  </ol>
+</nav>
+
+<article class="mx-auto" style="max-width: 700px;">
+  {% if post.cover_image_url %}
+    <img src="{{ post.cover_image_url }}" class="img-fluid mb-3" alt="{{ post.title }}">
+  {% endif %}
+
+  {% if is_partner_content %}
+    <span class="badge bg-warning text-dark mb-2">{% translate "Партнерський матеріал" %}</span>
+  {% endif %}
+
+  <h1>{{ post.title }}</h1>
+  <p class="text-muted">{{ post.category.name }} — {{ post.published_at|date:"d.m.Y" }}</p>
+
+  <div>{{ post.body|safe }}</div>
+
+  {% if post.sources.exists %}
+    <h5 class="mt-4">{% translate "Джерела" %}</h5>
+    <ul>
+      {% for source in post.sources.all %}
+        <li>{{ source.name }}{% if source.author_or_institution %} — {{ source.author_or_institution }}{% endif %}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if related_posts %}
+    <h5 class="mt-4">{% translate "Читайте також" %}</h5>
+    <ul>
+      {% for related in related_posts %}
+        <li><a href="{% url 'blog:detail' related.slug %}">{{ related.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</article>
+{% endblock %}

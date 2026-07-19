@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Запропонувати матеріал" %} — VyshyvankaDaily{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="max-width: 500px;">
+<h1>{% translate "Запропонувати гостьовий пост" %}</h1>
+<form method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    {% if field.name != "honeypot" %}
+      <div class="mb-3">
+        {{ field.label_tag }}
+        {{ field }}
+        {{ field.errors }}
+      </div>
+    {% endif %}
+  {% endfor %}
+  <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+    {{ form.honeypot }}
+  </div>
+  <button type="submit" class="btn btn-primary">{% translate "Надіслати" %}</button>
+</form>
+</div>
+{% endblock %}
