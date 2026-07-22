@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ region.name }} — VyshyvankaDaily{% endblock %}
+{% block title %}{{ region.name }} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
 <div class="mx-auto" style="max-width: 700px;">
   <h1>{{ region.name }}</h1>
   {% if region.slug == "ar-krym" or region.slug == "m-sevastopol" %}
-    <p class="fw-bold text-danger">Крим — це Україна ❤️</p>
+    <p class="fw-bold text-danger">Крим - це Україна ❤️</p>
   {% endif %}
   <span class="badge {% if claim_type == 'documented' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-3">
     {% if claim_type == "documented" %}
@@ -18,7 +18,8 @@
   </span>
   <p>{{ region.symbolism_description }}</p>
 
-  <h5>{% translate "Палітра кольорів" %}</h5>
+  <h5>{% translate "Домінуючі кольори" %}</h5>
+  <p class="text-muted small">{% translate "Основні кольори орнаменту цього регіону — не повний перелік усіх відтінків, що зустрічаються в реальній вишивці." %}</p>
   <div class="d-flex gap-2 mb-3">
     {% for color in region.dominant_colors %}
       <div style="width: 40px; height: 40px; background-color: {{ color }}; border-radius: 4px;" title="{{ color }}"></div>
