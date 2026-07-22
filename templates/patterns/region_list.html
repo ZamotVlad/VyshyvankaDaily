@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Усі регіони" %} — VyshyvankaDaily{% endblock %}
+
+{% block content %}
+<h1>{% translate "Усі регіони" %}</h1>
+<div class="row g-3">
+  {% for region in regions %}
+    <div class="col-md-4">
+      <a href="{% url 'patterns:region_detail' region.slug %}" class="card h-100 text-decoration-none text-dark">
+        <div class="card-body">
+          <div class="d-flex gap-1 mb-2">
+            {% for color in region.dominant_colors|slice:":4" %}
+              <div style="width: 20px; height: 20px; background-color: {{ color }}; border-radius: 3px; border: 1px solid #ddd;"></div>
+            {% endfor %}
+          </div>
+          <h5 class="card-title">{{ region.name }}</h5>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

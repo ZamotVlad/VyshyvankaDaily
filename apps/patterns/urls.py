@@ -10,6 +10,7 @@ urlpatterns = [
     path("collection/", views.my_collection_view, name="my_collection"),
     path("pattern/<str:iso_date>/", views.pattern_detail_view, name="pattern_detail"),
     path("pattern/<str:iso_date>/save/", views.toggle_save_view, name="toggle_save"),
+    path("regions/", views.region_list_view, name="region_list"),
     path("regions/<slug:slug>/", views.region_detail_view, name="region_detail"),
     path("patterns/debug/<str:iso_date>/", views.debug_pattern_view, name="debug_pattern"),
 ]

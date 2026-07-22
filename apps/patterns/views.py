@@ -239,3 +239,13 @@ def debug_pattern_view(request, iso_date):
 </body>
 </html>"""
     return HttpResponse(html)
+
+
+def region_list_view(request):
+    """
+    Перелік усіх верифікованих регіонів (не з ТЗ буквально — додано
+    для навігації, оскільки контент 27 регіонів готовий, а прямого
+    способу переглянути їх усі не було).
+    """
+    regions = Region.objects.verified().order_by("name")
+    return render(request, "patterns/region_list.html", {"regions": regions})

@@ -44,6 +44,11 @@ def make_region(name, rotation_order, is_active=True, verified=True):
 
 class RegionRotationTests(TestCase):
     def setUp(self):
+        # Ізоляція від реальних 27 регіонів (Stage 5, міграції 0003-0005) —
+        # без цього .verified() бачить усі активні регіони бази одночасно,
+        # ламаючи розрахунок ротації, що прицільно розрахований на рівно
+        # 2 тестові регіони.
+        Region.objects.all().update(is_active=False)
         self.region_a = make_region("Регіон А", rotation_order=1)
         self.region_b = make_region("Регіон Б", rotation_order=2)
 
