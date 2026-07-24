@@ -1,0 +1,4 @@
+/* Логотип VyshyvankaDaily (темна тема) */
+.site-logo { display:inline-flex; text-decoration:none; line-height:0; }
+.site-logo__svg { height:36px; width:auto; }   /* керуй розміром тут */
+@media (max-width:640px){ .site-logo__svg{ height:30px; } }
