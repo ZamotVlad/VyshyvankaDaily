@@ -9,3 +9,5 @@ django-ratelimit
 django-unfold
 django-ckeditor-5
 bleach
+shapely
+svgpathtools

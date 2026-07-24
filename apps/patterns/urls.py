@@ -12,5 +12,6 @@ urlpatterns = [
     path("pattern/<str:iso_date>/save/", views.toggle_save_view, name="toggle_save"),
     path("regions/", views.region_list_view, name="region_list"),
     path("regions/<slug:slug>/", views.region_detail_view, name="region_detail"),
+    path("patterns/debug/all-regions/", views.debug_all_regions_view, name="debug_all_regions"),
     path("patterns/debug/<str:iso_date>/", views.debug_pattern_view, name="debug_pattern"),
 ]

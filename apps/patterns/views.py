@@ -249,3 +249,26 @@ def region_list_view(request):
     """
     regions = Region.objects.verified().order_by("name")
     return render(request, "patterns/region_list.html", {"regions": regions})
+
+
+def debug_all_regions_view(request):
+    """
+    Галерея всіх регіонів одразу (не з ТЗ — зручність розробки для
+    Треку Б). Викликає build_svg_for_date напряму з конкретним
+    регіоном, минаючи ротацію й DailyPattern — нічого не зберігає
+    в базі, чистий перегляд.
+    """
+    if not settings.DEBUG:
+        raise Http404
+
+    today = timezone.localdate()
+    results = []
+    for region in Region.objects.all().order_by("rotation_order"):
+        try:
+            svg_content, motifs = build_svg_for_date(today, region)
+        except ValueError:
+            svg_content = None
+            motifs = []
+        results.append({"region": region, "svg": svg_content, "motifs": motifs})
+
+    return render(request, "patterns/debug_all_regions.html", {"results": results})

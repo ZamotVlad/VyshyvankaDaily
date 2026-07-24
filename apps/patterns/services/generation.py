@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 GenerateFn = Callable[[date, Region], tuple]
 
-CURRENT_ALGORITHM_VERSION = 1
+CURRENT_ALGORITHM_VERSION = 2
 
 
 class NoFallbackAvailable(Exception):

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debug: усі регіони</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .card { border: 1px solid #ccc; border-radius: 6px; padding: 10px; }
+  .card svg { width: 100%; height: 200px; display: block; }
+  .card h3 { font-size: 14px; margin: 8px 0 4px; }
+  .card small { color: #666; }
+  .missing { color: #c00; font-size: 13px; }
+</style>
+</head>
+<body>
+<h1>Усі регіони — {{ results|length }}</h1>
+<div class="grid">
+  {% for item in results %}
+    <div class="card">
+      {% if item.svg %}
+        {{ item.svg|safe }}
+      {% else %}
+        <p class="missing">Немає верифікованих мотивів</p>
+      {% endif %}
+      <h3>{{ item.region.name }}</h3>
+      <small>{{ item.region.verification_status }} · rotation {{ item.region.rotation_order }}</small>
+    </div>
+  {% endfor %}
+</div>
+</body>
+</html>
