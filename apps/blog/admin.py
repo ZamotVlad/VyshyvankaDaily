@@ -14,7 +14,15 @@ class BlogCategoryAdmin(TranslationAdmin, ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(TranslationAdmin, ModelAdmin):
-    list_display = ("title", "status", "post_type", "category", "published_at", "view_count")
+    list_display = (
+        "title",
+        "status",
+        "post_type",
+        "category",
+        "related_region",
+        "published_at",
+        "view_count",
+    )
     list_filter = ("status", "post_type", "category")
     search_fields = ("title",)
     filter_horizontal = ("sources",)

@@ -1,0 +1,712 @@
+/* ============================================================
+   VyshyvankaDaily - дизайн-система (Stage 5, Трек В, ADR 41)
+   Лише темна тема. Палітра Варіанту А.
+   ============================================================ */
+
+:root {
+  /* Кольори */
+  --vd-bg: #1c1815;
+  --vd-surface: #241f1b;
+  --vd-surface-2: #2c2621;
+  --vd-red: #c23b2e;
+  --vd-red-dim: #8e2c22;
+  --vd-cream: #ede6dc;
+  --vd-muted: #a69b8d;
+  --vd-border: #3a322d;
+
+  /* Типографіка */
+  --vd-font-display: "Unbounded", system-ui, sans-serif;
+  --vd-font-body: "PT Serif", Georgia, serif;
+
+  /* Простір */
+  --vd-gap: 24px;
+  --vd-radius: 6px;
+}
+
+/* ---------- Основа ---------- */
+
+body {
+  background: var(--vd-bg);
+  color: var(--vd-cream);
+  font-family: var(--vd-font-body);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--vd-font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--vd-cream);
+}
+
+h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  margin-bottom: 0.6em;
+}
+h2 {
+  font-size: clamp(22px, 3vw, 30px);
+}
+h3 {
+  font-size: 20px;
+}
+
+a {
+  color: var(--vd-red);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--vd-cream);
+}
+
+.vd-muted {
+  color: var(--vd-muted);
+}
+.vd-small {
+  font-size: 14px;
+}
+
+/* Заголовок секції з ромбом-роздільником */
+.vd-section-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  margin: 40px 0 20px;
+}
+.vd-section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--vd-border), transparent);
+}
+
+/* ---------- Хедер ---------- */
+
+.vd-header {
+  background: var(--vd-bg);
+  border-bottom: 1px solid var(--vd-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.vd-header > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+}
+
+.vd-nav {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.vd-nav li {
+  display: flex;
+  align-items: center;
+}
+.vd-nav a {
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vd-cream);
+  padding: 8px 18px;
+  position: relative;
+}
+.vd-nav a::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--vd-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.vd-nav a:hover::after,
+.vd-nav a.is-active::after {
+  transform: scaleX(1);
+}
+.vd-sep {
+  color: var(--vd-red);
+  font-size: 9px;
+  opacity: 0.55;
+}
+
+.vd-auth {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.vd-auth a {
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--vd-cream);
+  padding: 8px 12px;
+}
+.vd-auth a:hover {
+  color: var(--vd-red);
+}
+
+.vd-lang select {
+  background: var(--vd-surface);
+  color: var(--vd-cream);
+  border: 1px solid var(--vd-border);
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  border-radius: var(--vd-radius);
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+/* ---------- Кнопки ---------- */
+
+.vd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 11px 22px;
+  border-radius: var(--vd-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+.vd-btn--primary {
+  background: var(--vd-red);
+  color: var(--vd-cream);
+}
+.vd-btn--primary:hover {
+  background: var(--vd-red-dim);
+  color: var(--vd-cream);
+}
+.vd-btn--ghost {
+  background: transparent;
+  color: var(--vd-cream);
+  border-color: var(--vd-border);
+}
+.vd-btn--ghost:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-red);
+}
+.vd-btn--danger {
+  background: transparent;
+  color: var(--vd-muted);
+  border-color: var(--vd-border);
+}
+.vd-btn--danger:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-red);
+}
+
+/* ---------- Картки ---------- */
+
+.vd-card {
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  overflow: hidden;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+  display: block;
+  color: inherit;
+}
+a.vd-card:hover {
+  border-color: var(--vd-red);
+  transform: translateY(-2px);
+  color: inherit;
+}
+.vd-card__body {
+  padding: 16px 18px;
+}
+.vd-card__title {
+  font-family: var(--vd-font-display);
+  font-size: 15px;
+  color: var(--vd-cream);
+  margin: 0 0 4px;
+}
+.vd-card__meta {
+  font-size: 13px;
+  color: var(--vd-muted);
+}
+
+/* Картка з орнаментом */
+.vd-pattern-card__art {
+  background: var(--vd-surface-2);
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+}
+.vd-pattern-card__art svg {
+  width: 100%;
+  height: auto;
+  max-height: 260px;
+}
+
+/* ---------- Головна сторінка ---------- */
+
+.vd-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+  padding: 48px 0 32px;
+}
+@media (max-width: 900px) {
+  .vd-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 28px 0;
+  }
+}
+.vd-hero__art {
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  padding: 20px;
+}
+.vd-hero__art svg {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  display: block;
+}
+.vd-hero__date {
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vd-red);
+  margin-bottom: 10px;
+}
+.vd-hero__region {
+  font-size: clamp(30px, 5vw, 52px);
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+.vd-hero__desc {
+  color: var(--vd-muted);
+  margin-bottom: 22px;
+}
+
+/* Значок достовірності */
+.vd-claim {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--vd-border);
+  color: var(--vd-muted);
+  margin-bottom: 16px;
+}
+.vd-claim--documented {
+  border-color: var(--vd-red);
+  color: var(--vd-red);
+}
+
+/* Стрічка останніх днів */
+.vd-ribbon {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.vd-ribbon__item {
+  flex: 0 0 96px;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  padding: 8px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.vd-ribbon__item:hover {
+  border-color: var(--vd-red);
+}
+.vd-ribbon__item svg {
+  width: 100%;
+  height: 92px;
+}
+.vd-ribbon__date {
+  font-size: 11px;
+  color: var(--vd-muted);
+  margin-top: 6px;
+  display: block;
+}
+
+/* ---------- Форми ---------- */
+
+.vd-form {
+  max-width: 460px;
+}
+.vd-form p {
+  margin-bottom: 18px;
+}
+.vd-form label {
+  display: block;
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  margin-bottom: 6px;
+}
+.vd-form input[type="text"],
+.vd-form input[type="email"],
+.vd-form input[type="password"],
+.vd-form input[type="url"],
+.vd-form input[type="date"],
+.vd-form textarea,
+.vd-form select {
+  width: 100%;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  color: var(--vd-cream);
+  font-family: var(--vd-font-body);
+  font-size: 16px;
+  padding: 11px 14px;
+  transition: border-color 0.2s;
+}
+.vd-form input:focus,
+.vd-form textarea:focus,
+.vd-form select:focus {
+  outline: none;
+  border-color: var(--vd-red);
+}
+.vd-form .helptext,
+.vd-form ul.errorlist {
+  font-size: 13px;
+  color: var(--vd-muted);
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+}
+.vd-form ul.errorlist {
+  color: var(--vd-red);
+}
+
+/* ---------- Повідомлення ---------- */
+
+.vd-alert {
+  border: 1px solid var(--vd-border);
+  border-left: 3px solid var(--vd-red);
+  background: var(--vd-surface);
+  border-radius: var(--vd-radius);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+/* ---------- Сітки ---------- */
+
+.vd-grid {
+  display: grid;
+  gap: var(--vd-gap);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.vd-grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* Свотчі кольорів */
+.vd-swatches {
+  display: flex;
+  gap: 6px;
+}
+.vd-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: 1px solid var(--vd-border);
+}
+
+/* ---------- Проза (стаття, статичні сторінки) ---------- */
+
+.vd-prose {
+  max-width: 720px;
+}
+.vd-prose p {
+  margin-bottom: 1.1em;
+}
+.vd-prose h2 {
+  margin: 1.6em 0 0.6em;
+}
+.vd-prose ul,
+.vd-prose ol {
+  margin-bottom: 1.1em;
+  padding-left: 1.4em;
+}
+.vd-prose blockquote {
+  border-left: 3px solid var(--vd-red);
+  padding-left: 18px;
+  margin: 1.4em 0;
+  color: var(--vd-muted);
+  font-style: italic;
+}
+.vd-prose img {
+  max-width: 100%;
+  border-radius: var(--vd-radius);
+}
+.vd-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.2em;
+}
+.vd-prose th,
+.vd-prose td {
+  border: 1px solid var(--vd-border);
+  padding: 8px 12px;
+}
+
+/* ---------- Футер ---------- */
+
+.vd-footer {
+  background: var(--vd-surface);
+  border-top: 1px solid var(--vd-border);
+  margin-top: 64px;
+  padding: 44px 0 28px;
+  color: var(--vd-muted);
+  font-size: 15px;
+}
+.vd-footer h2 {
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vd-cream);
+  margin-bottom: 12px;
+}
+.vd-footer a {
+  color: var(--vd-muted);
+}
+.vd-footer a:hover {
+  color: var(--vd-red);
+}
+.vd-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.vd-footer li {
+  margin-bottom: 7px;
+}
+.vd-footer__bottom {
+  border-top: 1px solid var(--vd-border);
+  margin-top: 30px;
+  padding-top: 18px;
+  font-size: 13px;
+}
+
+/* ---------- Пагінація ---------- */
+
+.vd-pagination {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 36px;
+}
+.vd-pagination a,
+.vd-pagination span {
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  padding: 8px 14px;
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  color: var(--vd-cream);
+}
+.vd-pagination a:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-red);
+}
+.vd-pagination .is-current {
+  color: var(--vd-muted);
+  border-color: transparent;
+}
+
+/* ---------- Порожній стан ---------- */
+
+.vd-empty {
+  text-align: center;
+  padding: 56px 20px;
+  color: var(--vd-muted);
+  border: 1px dashed var(--vd-border);
+  border-radius: var(--vd-radius);
+}
+
+/* ---------- Дропдаун профілю (темний, коректний hover) ---------- */
+
+.dropdown-menu {
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  padding: 6px;
+  min-width: 200px;
+}
+
+.dropdown-item {
+  color: var(--vd-cream);
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  border-radius: 4px;
+  padding: 9px 12px;
+  background-color: transparent;
+}
+
+.dropdown-item--muted {
+  color: var(--vd-muted);
+}
+
+/* :hover і :focus окремо - Bootstrap застосовує їх через клас .active
+   теж, тому покриваємо всі три однаково */
+.dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item.active {
+  background-color: var(--vd-surface-2);
+  color: var(--vd-red);
+}
+
+.dropdown-divider {
+  border-color: var(--vd-border);
+  opacity: 1;
+}
+
+.dropdown-toggle::after {
+  border-top-color: var(--vd-muted);
+}
+
+/* ---------- Розгортка "Про проєкт" на головній ---------- */
+
+.vd-landing {
+  margin-top: 48px;
+  border-top: 1px solid var(--vd-border);
+  padding-top: 24px;
+}
+.vd-landing__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  color: var(--vd-muted);
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 0;
+  cursor: pointer;
+}
+.vd-landing__toggle:hover {
+  color: var(--vd-cream);
+}
+.vd-landing__arrow {
+  transition: transform 0.25s ease;
+}
+.vd-landing__toggle.is-open .vd-landing__arrow {
+  transform: rotate(180deg);
+}
+
+.vd-landing__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.vd-landing__body.is-open {
+  max-height: 800px;
+}
+
+/* ---------- Мобільна навігація і кнопка-бургер ---------- */
+
+.vd-burger {
+  display: none;
+  background: none;
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  color: var(--vd-cream);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+.vd-burger:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-red);
+}
+
+.vd-mobile-panel {
+  border-top: 1px solid var(--vd-border);
+  background: var(--vd-surface);
+  padding: 16px 0 20px;
+}
+.vd-mobile-panel .vd-nav {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+.vd-mobile-panel .vd-nav a {
+  padding: 12px 4px;
+  font-size: 14px;
+}
+.vd-mobile-panel .vd-nav a::after {
+  left: 4px;
+  right: 4px;
+}
+.vd-mobile-panel .vd-auth {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--vd-border);
+}
+.vd-mobile-panel .vd-auth a {
+  padding: 10px 4px;
+}
+
+/* До 900px - ховаємо десктопну навігацію, показуємо бургер */
+@media (max-width: 900px) {
+  .vd-burger {
+    display: block;
+  }
+  .vd-header__desktop {
+    display: none !important;
+  }
+}
+
+/* Від 901px - ховаємо мобільну панель повністю, незалежно від того,
+   розгорнута вона Bootstrap-класом collapse чи ні */
+@media (min-width: 901px) {
+  .vd-mobile-panel {
+    display: none !important;
+  }
+}

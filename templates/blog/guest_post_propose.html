@@ -1,26 +1,29 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "Запропонувати матеріал" %} — VyshyvankaDaily{% endblock %}
+{% block title %}{% translate "Запропонувати матеріал" %} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
-<div class="mx-auto" style="max-width: 500px;">
 <h1>{% translate "Запропонувати гостьовий пост" %}</h1>
-<form method="post">
+<p class="vd-muted mb-4" style="max-width: 460px;">
+  {% translate "Розкажіть коротко про тему, яку хочете розкрити. Ми відповімо, якщо матеріал підійде." %}
+</p>
+
+<form method="post" class="vd-form">
   {% csrf_token %}
   {% for field in form %}
     {% if field.name != "honeypot" %}
-      <div class="mb-3">
+      <p>
         {{ field.label_tag }}
         {{ field }}
         {{ field.errors }}
-      </div>
+        {% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}
+      </p>
     {% endif %}
   {% endfor %}
   <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
     {{ form.honeypot }}
   </div>
-  <button type="submit" class="btn btn-primary">{% translate "Надіслати" %}</button>
+  <button type="submit" class="vd-btn vd-btn--primary">{% translate "Надіслати" %}</button>
 </form>
-</div>
 {% endblock %}

@@ -4,92 +4,141 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" href="{% static 'favicon/favicon.png' %}">
-<link rel="stylesheet" href="{% static 'logo/logo.css' %}">
 <title>{% block title %}VyshyvankaDaily{% endblock %}</title>
+<link rel="canonical" href="{{ canonical_url }}">
+{% if alternate_url %}
+  <link rel="alternate" hreflang="{{ alternate_lang_code }}" href="{{ alternate_url }}">
+{% endif %}
+<meta name="robots" content="{% block robots %}index, follow{% endblock %}">
+<meta name="author" content="VyshyvankaDaily">
+<link rel="publisher" href="{% url 'patterns:home' %}">
+<link rel="icon" type="image/svg+xml" href="{% static 'logo/favicon.svg' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'logo/logo.css' %}">
+<link rel="stylesheet" href="{% static 'css/vd.css' %}">
 {% block extra_head %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-<header class="border-bottom py-3">
-  <div class="container d-flex justify-content-between align-items-center">
+<header class="vd-header">
+  <div class="container">
     {% include "includes/logo.html" %}
-    <nav>
+
+    <nav class="vd-header__desktop" aria-label="{% translate 'Основна навігація' %}">
+      <ul class="vd-nav">
+        <li><a href="{% url 'patterns:archive' %}">{% translate "Архів" %}</a></li>
+        <li><span class="vd-sep">◇</span></li>
+        <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
+        <li><span class="vd-sep">◇</span></li>
+        <li><a href="{% url 'patterns:region_list' %}">{% translate "Регіони" %}</a></li>
+        <li><span class="vd-sep">◇</span></li>
+        <li><a href="{% url 'pages:about' %}">{% translate "Про нас" %}</a></li>
+        <li><span class="vd-sep">◇</span></li>
+        <li><a href="{% url 'pages:contact' %}">{% translate "Контакти" %}</a></li>
+      </ul>
+    </nav>
+
+    <div class="vd-auth vd-header__desktop">
+      {% include "includes/lang_switcher.html" %}
+
       {% if user.is_authenticated %}
-        <a href="{% url 'accounts:profile_settings' %}" class="me-3">{{ user.profile.get_display_name }}</a>
-        <a href="{% url 'account_logout' %}">{% translate "Вийти" %}</a>
+        <div class="dropdown">
+          <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                  style="background: none; border: none; color: var(--vd-cream); font-family: var(--vd-font-display); font-size: 12px; padding: 8px 12px; cursor: pointer;">
+            {{ user.profile.get_display_name }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{% url 'patterns:my_collection' %}">{% translate "Моя колекція" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:profile_settings' %}">{% translate "Налаштування" %}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item dropdown-item--muted" href="{% url 'account_logout' %}">{% translate "Вийти" %}</a></li>
+          </ul>
+        </div>
       {% else %}
-        <a href="{% url 'account_login' %}" class="me-3">{% translate "Увійти" %}</a>
+        <a href="{% url 'account_login' %}">{% translate "Увійти" %}</a>
         <a href="{% url 'account_signup' %}">{% translate "Реєстрація" %}</a>
       {% endif %}
-    </nav>
+    </div>
+
+    <button class="vd-burger" type="button" data-bs-toggle="collapse" data-bs-target="#vdMobileNav"
+            aria-controls="vdMobileNav" aria-expanded="false" aria-label="{% translate 'Меню' %}">
+      ☰
+    </button>
+  </div>
+
+  <div class="collapse vd-mobile-panel" id="vdMobileNav">
+    <div class="container">
+      <ul class="vd-nav">
+        <li><a href="{% url 'patterns:archive' %}">{% translate "Архів" %}</a></li>
+        <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
+        <li><a href="{% url 'patterns:region_list' %}">{% translate "Регіони" %}</a></li>
+        <li><a href="{% url 'pages:about' %}">{% translate "Про нас" %}</a></li>
+        <li><a href="{% url 'pages:contact' %}">{% translate "Контакти" %}</a></li>
+      </ul>
+      <div class="vd-auth">
+        {% include "includes/lang_switcher.html" %}
+        {% if user.is_authenticated %}
+          <a href="{% url 'patterns:my_collection' %}">{% translate "Моя колекція" %}</a>
+          <a href="{% url 'accounts:profile_settings' %}">{% translate "Налаштування" %}</a>
+          <a href="{% url 'account_logout' %}">{% translate "Вийти" %}</a>
+        {% else %}
+          <a href="{% url 'account_login' %}">{% translate "Увійти" %}</a>
+          <a href="{% url 'account_signup' %}">{% translate "Реєстрація" %}</a>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </header>
 
 <main class="flex-grow-1 container py-4">
 {% if messages %}
-  <div class="mb-3">
+  <div class="mb-4">
     {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      <div class="vd-alert">{{ message }}</div>
     {% endfor %}
   </div>
 {% endif %}
 {% block content %}{% endblock %}
 </main>
 
-<footer class="bg-dark text-light mt-auto py-4">
+<footer class="vd-footer">
 <div class="container">
-<div class="row">
-  <div class="col-md-3 mb-3">
-    <h5>VyshyvankaDaily</h5>
-    <p>{% translate "Щодня — новий орнамент твоєї землі." %}</p>
+  <div class="row">
+    <div class="col-md-3 mb-4">
+      <h2>VyshyvankaDaily</h2>
+      <p class="mb-0">{% translate "Щодня - новий орнамент твоєї землі." %}</p>
+    </div>
+    <div class="col-md-3 mb-4">
+      <h2>{% translate "Регіони" %}</h2>
+      <ul>
+        <li><a href="{% url 'patterns:region_detail' 'poltavska-oblast' %}">{% translate "Полтавська область" %}</a></li>
+        <li><a href="{% url 'patterns:region_detail' 'khmelnytska-oblast' %}">{% translate "Хмельницька область" %}</a></li>
+        <li><a href="{% url 'patterns:region_detail' 'ar-krym' %}">{% translate "Автономна Республіка Крим" %}</a></li>
+        <li><a href="{% url 'patterns:region_detail' 'ivano-frankivska-oblast' %}">{% translate "Івано-Франківська область" %}</a></li>
+        <li><a href="{% url 'patterns:region_list' %}">{% translate "Усі 27 регіонів →" %}</a></li>
+      </ul>
+    </div>
+    <div class="col-md-3 mb-4">
+      <h2>{% translate "Компанія" %}</h2>
+      <ul>
+        <li><a href="{% url 'pages:faq' %}">FAQ</a></li>
+        <li><a href="{% url 'blog:propose' %}">{% translate "Запропонувати матеріал" %}</a></li>
+      </ul>
+    </div>
+    <div class="col-md-3 mb-4">
+      <h2>{% translate "Правове" %}</h2>
+      <ul>
+        <li><a href="{% url 'pages:terms' %}">{% translate "Умови використання" %}</a></li>
+        <li><a href="{% url 'pages:privacy' %}">{% translate "Політика конфіденційності" %}</a></li>
+      </ul>
+    </div>
   </div>
-  <div class="col-md-3 mb-3">
-    <h6>{% translate "Навігація" %}</h6>
-    <ul class="list-unstyled">
-      <li><a href="{% url 'patterns:archive' %}" class="text-light">{% translate "Архів" %}</a></li>
-      <li><a href="{% url 'patterns:my_collection' %}" class="text-light">{% translate "Моя колекція" %}</a></li>
-      <li><a href="{% url 'blog:list' %}" class="text-light">{% translate "Блог" %}</a></li>
-    </ul>
+  <div class="vd-footer__bottom">
+    &copy; {% now "Y" %} VyshyvankaDaily · <span class="vd-muted">Beta 1.0</span>
   </div>
-  <div class="col-md-2 mb-3">
-    <h6>{% translate "Регіони" %}</h6>
-    <ul class="list-unstyled">
-      <li><a href="{% url 'patterns:region_list' %}" class="text-light">{% translate "Усі регіони" %}</a></li>
-    </ul>
-  </div>
-  <div class="col-md-2 mb-3">
-    <h6>{% translate "Компанія" %}</h6>
-    <ul class="list-unstyled">
-      <li><a href="{% url 'blog:propose' %}" class="text-light">{% translate "Запропонувати матеріал" %}</a></li>
-      <li><a href="{% url 'pages:about' %}" class="text-light">{% translate "Про нас" %}</a></li>
-      <li><a href="{% url 'pages:faq' %}" class="text-light">FAQ</a></li>
-      <li><a href="{% url 'pages:contact' %}" class="text-light">{% translate "Контакти" %}</a></li>
-    </ul>
-  </div>
-  <div class="col-md-2 mb-3">
-    <h6>{% translate "Правове" %}</h6>
-    <ul class="list-unstyled">
-      <li><a href="{% url 'pages:terms' %}" class="text-light">{% translate "Умови використання" %}</a></li>
-      <li><a href="{% url 'pages:privacy' %}" class="text-light">{% translate "Політика конфіденційності" %}</a></li>
-    </ul>
-  </div>
-</div>
-<div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3">
-  <small>&copy; {% now "Y" %} VyshyvankaDaily</small>
-  <form action="{% url 'set_language' %}" method="post" class="d-flex gap-2 mb-0">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ request.path }}">
-    {% get_current_language as CURRENT_LANGUAGE %}
-    {% get_available_languages as LANGUAGES %}
-    <select name="language" class="form-select form-select-sm" onchange="this.form.submit()">
-      {% for lang_code, lang_name in LANGUAGES %}
-        <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>{{ lang_name }}</option>
-      {% endfor %}
-    </select>
-  </form>
-</div>
 </div>
 </footer>
 

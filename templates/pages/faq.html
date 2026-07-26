@@ -1,25 +1,30 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}FAQ — VyshyvankaDaily{% endblock %}
+{% block title %}FAQ - VyshyvankaDaily{% endblock %}
 
 {% block content %}
-<h1>FAQ</h1>
-<div class="accordion" id="faqAccordion">
+<h1>{% translate "Часті запитання" %}</h1>
+
+{% if categories %}
   {% for category in categories %}
-    <h4 class="mt-3">{{ category.name }}</h4>
-    {% for item in category.items.all %}
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ item.pk }}">
+    <h2 class="vd-section-title">{{ category.name }}</h2>
+    <div class="accordion" id="faq{{ category.pk }}">
+      {% for item in category.items.all %}
+        <div class="vd-card mb-2">
+          <button class="w-100 text-start vd-card__body" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faqitem{{ item.pk }}"
+                  style="background: none; border: none; color: var(--vd-cream); font-family: var(--vd-font-display); font-size: 15px;">
             {{ item.question }}
           </button>
-        </h2>
-        <div id="faq{{ item.pk }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">{{ item.answer }}</div>
+          <div id="faqitem{{ item.pk }}" class="collapse" data-bs-parent="#faq{{ category.pk }}">
+            <div class="vd-card__body pt-0 vd-muted">{{ item.answer }}</div>
+          </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   {% endfor %}
-</div>
+{% else %}
+  <div class="vd-empty">{% translate "Розділ поки наповнюється." %}</div>
+{% endif %}
 {% endblock %}

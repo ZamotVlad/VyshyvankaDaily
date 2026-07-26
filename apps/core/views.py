@@ -1,1 +1,82 @@
-# Create your views here.
+import re
+
+from django.conf import settings
+from django.http import HttpResponse, HttpResponseRedirect
+from django.utils.translation import check_for_language
+
+# Префікси НЕ-дефолтних мов (де prefix_default_language=False - українська
+# без префіксу, решта з ним). Зараз лише "en", але список сам розшириться,
+# якщо колись додасться третя мова.
+_NON_DEFAULT_PREFIXES = [code for code, _ in settings.LANGUAGES if code != settings.LANGUAGE_CODE]
+_PREFIX_RE = re.compile(rf"^/({'|'.join(_NON_DEFAULT_PREFIXES)})(/|$)")
+
+
+def set_language_view(request):
+    """
+    Заміна вбудованого django.views.i18n.set_language.
+
+    Причина: відомий, задокументований баг Django (тікети #26556, #28567) -
+    set_language() намагається "перекласти" next-URL у нову мову через
+    translate_url(), але це не працює коректно, коли
+    prefix_default_language=False (наш випадок - українська без префіксу).
+    Результат багу: перемикання назад на дефолтну мову залишає старий
+    префікс (/en/) у Location, і сторінка "не перемикається".
+
+    Це виправлення просто знімає будь-який мовний префікс з next вручну,
+    і додає правильний префікс для НОВОЇ мови (чи не додає - для дефолтної).
+    """
+    lang_code = request.POST.get("language")
+    next_url = request.POST.get("next") or request.META.get("HTTP_REFERER") or "/"
+
+    # Прибрати домен, якщо referer - повний URL
+    if next_url.startswith("http"):
+        from urllib.parse import urlparse
+
+        next_url = urlparse(next_url).path or "/"
+
+    # Зняти наявний мовний префікс (якщо він там є)
+    stripped = _PREFIX_RE.sub("/", next_url, count=1)
+    if not stripped.startswith("/"):
+        stripped = "/" + stripped
+
+    if lang_code and check_for_language(lang_code):
+        if lang_code != settings.LANGUAGE_CODE:
+            next_url = f"/{lang_code}{stripped}"
+        else:
+            next_url = stripped
+    else:
+        next_url = stripped
+
+    response = HttpResponseRedirect(next_url)
+    if lang_code and check_for_language(lang_code):
+        response.set_cookie(
+            settings.LANGUAGE_COOKIE_NAME,
+            lang_code,
+            max_age=settings.LANGUAGE_COOKIE_AGE,
+            path=settings.LANGUAGE_COOKIE_PATH,
+            domain=settings.LANGUAGE_COOKIE_DOMAIN,
+            secure=settings.LANGUAGE_COOKIE_SECURE,
+            httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+            samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+        )
+    return response
+
+
+def robots_txt(request):
+    """
+    Закриваємо від індексації приватне й службове. Архів із фільтрами
+    навмисно НЕ блокуємо тут - краще дозволити сканування й покластись
+    на canonical, інакше робот не побачить сам canonical-тег на
+    заблокованій сторінці.
+    """
+    lines = [
+        "User-agent: *",
+        "Disallow: /accounts/",
+        "Disallow: /profile/settings/",
+        "Disallow: /collection/",
+        "Disallow: /admin/",
+        "Disallow: /patterns/debug/",
+        "",
+        f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")

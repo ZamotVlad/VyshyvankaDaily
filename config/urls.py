@@ -2,13 +2,30 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
-from django.views.i18n import set_language
+
+from apps.core.sitemaps import (
+    BlogPostSitemap,
+    DailyPatternSitemap,
+    RegionSitemap,
+    StaticViewSitemap,
+)
+from apps.core.views import robots_txt, set_language_view
+
+sitemaps = {
+    "patterns": DailyPatternSitemap,
+    "regions": RegionSitemap,
+    "blog": BlogPostSitemap,
+    "static": StaticViewSitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("i18n/setlang/", set_language, name="set_language"),
+    path("i18n/setlang/", set_language_view, name="set_language"),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    path("robots.txt", robots_txt, name="robots_txt"),
 ]
 
 urlpatterns += i18n_patterns(

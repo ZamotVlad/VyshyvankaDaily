@@ -11,3 +11,4 @@ django-ckeditor-5
 bleach
 shapely
 svgpathtools
+whitenoise

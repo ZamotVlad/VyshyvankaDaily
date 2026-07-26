@@ -1,46 +1,57 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}VyshyvankaDaily — {{ pattern.date }}{% endblock %}
+{% block title %}{{ pattern.region.name }} - {{ pattern.date }} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
-<div class="text-center mb-4">
-  <div class="mx-auto" style="max-width: 500px;">
+<section class="vd-hero">
+  <div class="vd-hero__art">
     {{ pattern.svg_content|safe }}
   </div>
-</div>
 
-<div class="text-center mb-4">
-  <h2>{{ pattern.region.name }}</h2>
-  <span class="badge {% if claim_type == 'documented' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-2">
+  <div>
+    <div class="vd-hero__date">{{ pattern.date|date:"d E Y" }}</div>
+    <h1 class="vd-hero__region">{{ pattern.region.name }}</h1>
+
     {% if claim_type == "documented" %}
-      {% translate "Задокументовано" %}
+      <span class="vd-claim vd-claim--documented">◇ {% translate "Задокументовано" %}</span>
     {% else %}
-      {% translate "За усною традицією" %}
+      <span class="vd-claim">◇ {% translate "За традицією" %}</span>
     {% endif %}
-  </span>
-  <p class="mx-auto" style="max-width: 600px;">
-    {{ pattern.region.symbolism_description|truncatewords:40 }}
-  </p>
 
-  {% include "patterns/_save_button.html" %}
-</div>
+    <p class="vd-hero__desc">{{ pattern.region.symbolism_description|truncatewords:45 }}</p>
 
-<div class="mb-4">
-  <h5>{% translate "Останні дні" %}</h5>
-  <div class="d-flex gap-2 flex-wrap">
-    {% for day in ribbon %}
-      <a href="{% url 'patterns:pattern_detail' day.date|date:'Y-m-d' %}" class="border rounded p-2 text-decoration-none text-dark" style="width: 90px;">
-        <div style="width: 70px; height: 70px; overflow: hidden;">{{ day.svg_content|safe }}</div>
-        <small class="d-block text-center">{{ day.date }}</small>
+    <div class="d-flex flex-wrap gap-2">
+      {% include "patterns/_save_button.html" %}
+      <a href="{% url 'patterns:region_detail' pattern.region.slug %}" class="vd-btn vd-btn--ghost">
+        {% translate "Про регіон" %}
       </a>
-    {% endfor %}
+    </div>
   </div>
+</section>
+
+<h2 class="vd-section-title">{% translate "Останні дні" %}</h2>
+<div class="vd-ribbon">
+  {% for item in ribbon %}
+    <a href="{% url 'patterns:pattern_detail' item.date|date:'Y-m-d' %}" class="vd-ribbon__item">
+      {{ item.svg_content|safe }}
+      <span class="vd-ribbon__date">{{ item.date|date:"d.m" }}</span>
+    </a>
+  {% endfor %}
 </div>
 
-<div>
-  <h5>{% translate "З блогу" %}</h5>
-  <!-- TODO: блог - Stage 4 -->
-  <p class="text-muted">{% translate "Незабаром" %}</p>
-</div>
+<section class="vd-landing" id="about-project">
+  <button type="button" class="vd-landing__toggle" onclick="document.getElementById('landing-body').classList.toggle('is-open'); this.classList.toggle('is-open');">
+    <span>{% translate "Що таке VyshyvankaDaily" %}</span>
+    <span class="vd-landing__arrow">▾</span>
+  </button>
+
+  <div id="landing-body" class="vd-landing__body">
+    <div class="vd-prose">
+      <p>{% translate "VyshyvankaDaily - це щоденний генератор українського орнаменту вишиванки, побудований на дослідженні реальної символіки, кольорів і мотивів кожного з 27 регіонів України: 24 областей, Автономної Республіки Крим, Києва та Севастополя." %}</p>
+      <p>{% translate "Кожен день сайт показує новий орнамент, прив'язаний до конкретного регіону - з реальними джерелами (академічні праці, музейні колекції, визнання ЮНЕСКО), описом символіки та чітким розрізненням задокументованого й переказаного за традицією." %}</p>
+      <p>{% translate "Архів зберігає кожен згенерований день, зареєстровані користувачі можуть зберігати улюблені орнаменти у власну колекцію та відстежувати, скільки регіонів вони вже 'пройшли' за час використання сайту." %}</p>
+    </div>
+  </div>
+</section>
 {% endblock %}

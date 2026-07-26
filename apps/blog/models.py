@@ -83,6 +83,17 @@ class BlogPost(TimeStampedModel, SlugModel):
             "тверджень (розділ 4.6 ТЗ)."
         ),
     )
+    related_region = models.ForeignKey(
+        "patterns.Region",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="blog_posts",
+        help_text=(
+            "Якщо стаття присвячена конкретному регіону - для взаємного "
+            "перелінкування (SEO-кластер)."
+        ),
+    )
     published_at = models.DateTimeField(null=True, blank=True)
     view_count = models.PositiveIntegerField(default=0)
     seo_title = models.CharField(max_length=255, blank=True)
@@ -100,6 +111,19 @@ class BlogPost(TimeStampedModel, SlugModel):
             strip=True,
         )
         super().save(*args, **kwargs)
+
+    @property
+    def breadcrumbs(self):
+        from django.urls import reverse
+
+        return [
+            {"label": "Блог", "url": reverse("blog:list")},
+            {
+                "label": self.category.name,
+                "url": f"{reverse('blog:list')}?category={self.category.slug}",
+            },
+            {"label": self.title},
+        ]
 
     class Meta:
         verbose_name = "Стаття блогу"

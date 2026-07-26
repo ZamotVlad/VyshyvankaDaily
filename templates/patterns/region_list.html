@@ -1,24 +1,25 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "Усі регіони" %} — VyshyvankaDaily{% endblock %}
+{% block title %}{% translate "Усі регіони" %} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
 <h1>{% translate "Усі регіони" %}</h1>
-<div class="row g-3">
+<p class="vd-muted mb-4">{% translate "27 регіонів України - кожен зі своєю традицією вишивки, кольорами й символікою." %}</p>
+
+<div class="vd-grid">
   {% for region in regions %}
-    <div class="col-md-4">
-      <a href="{% url 'patterns:region_detail' region.slug %}" class="card h-100 text-decoration-none text-dark">
-        <div class="card-body">
-          <div class="d-flex gap-1 mb-2">
-            {% for color in region.dominant_colors|slice:":4" %}
-              <div style="width: 20px; height: 20px; background-color: {{ color }}; border-radius: 3px; border: 1px solid #ddd;"></div>
-            {% endfor %}
-          </div>
-          <h5 class="card-title">{{ region.name }}</h5>
+    <a href="{% url 'patterns:region_detail' region.slug %}" class="vd-card">
+      <div class="vd-card__body">
+        <div class="vd-swatches mb-3">
+          {% for color in region.dominant_colors|slice:":5" %}
+            <span class="vd-swatch" style="background-color: {{ color }};"></span>
+          {% endfor %}
         </div>
-      </a>
-    </div>
+        <h3 class="vd-card__title">{{ region.name }}</h3>
+        <div class="vd-card__meta">{% translate "Порядок ротації" %}: {{ region.rotation_order }}</div>
+      </div>
+    </a>
   {% endfor %}
 </div>
 {% endblock %}

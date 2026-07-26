@@ -142,6 +142,15 @@ class Region(TimeStampedModel, SlugModel):
             return "documented"
         return "oral_tradition"
 
+    @property
+    def breadcrumbs(self):
+        from django.urls import reverse
+
+        return [
+            {"label": "Регіони", "url": reverse("patterns:region_list")},
+            {"label": self.name},
+        ]
+
     def __str__(self):
         return self.name
 
@@ -257,6 +266,19 @@ class DailyPattern(TimeStampedModel):
         help_text="Службове поле для діагностики (розділ 8.6 ТЗ).",
     )
     view_count = models.PositiveIntegerField(default=0)
+
+    @property
+    def breadcrumbs(self):
+        from django.urls import reverse
+
+        return [
+            {"label": "Архів", "url": reverse("patterns:archive")},
+            {
+                "label": self.region.name,
+                "url": reverse("patterns:region_detail", args=[self.region.slug]),
+            },
+            {"label": str(self.date)},
+        ]
 
     class Meta:
         verbose_name = "Щоденний патерн"

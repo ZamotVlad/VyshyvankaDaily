@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "Налаштування профілю" %} — VyshyvankaDaily{% endblock %}
+{% block title %}{% translate "Налаштування профілю" %} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
-<div class="mx-auto" style="max-width: 480px;">
-<h1>{% translate "Налаштування профілю" %}</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">{% translate "Зберегти" %}</button>
-</form>
+<div class="mx-auto" style="max-width: 460px;">
+  <h1>{% translate "Налаштування профілю" %}</h1>
+  <form method="post" class="vd-form">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}
+        {{ field }}
+        {{ field.errors }}
+        {% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}
+      </p>
+    {% endfor %}
+    <button type="submit" class="vd-btn vd-btn--primary">{% translate "Зберегти" %}</button>
+  </form>
 </div>
 {% endblock %}

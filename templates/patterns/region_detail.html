@@ -4,47 +4,76 @@
 {% block title %}{{ region.name }} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
-<div class="mx-auto" style="max-width: 700px;">
-  <h1>{{ region.name }}</h1>
-  {% if region.slug == "ar-krym" or region.slug == "m-sevastopol" %}
-    <p class="fw-bold text-danger">Крим - це Україна ❤️</p>
-  {% endif %}
-  <span class="badge {% if claim_type == 'documented' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-3">
-    {% if claim_type == "documented" %}
-      {% translate "Задокументовано" %}
-    {% else %}
-      {% translate "За усною традицією" %}
-    {% endif %}
-  </span>
-  <p>{{ region.symbolism_description }}</p>
+{% include "includes/breadcrumbs.html" with breadcrumbs=region.breadcrumbs %}
+<h1>{{ region.name }}</h1>
 
-  <h5>{% translate "Домінуючі кольори" %}</h5>
-  <p class="text-muted small">{% translate "Основні кольори орнаменту цього регіону — не повний перелік усіх відтінків, що зустрічаються в реальній вишивці." %}</p>
-  <div class="d-flex gap-2 mb-3">
-    {% for color in region.dominant_colors %}
-      <div style="width: 40px; height: 40px; background-color: {{ color }}; border-radius: 4px;" title="{{ color }}"></div>
+{% if region.slug == "ar-krym" or region.slug == "m-sevastopol" %}
+  <p style="color: var(--vd-red); font-family: var(--vd-font-display); font-size: 14px; letter-spacing: 0.04em;">
+    {% translate "Крим - це Україна" %} ❤️
+  </p>
+{% endif %}
+
+{% if claim_type == "documented" %}
+  <span class="vd-claim vd-claim--documented">◇ {% translate "Задокументовано" %}</span>
+{% else %}
+  <span class="vd-claim">◇ {% translate "За традицією" %}</span>
+{% endif %}
+
+<div class="vd-prose mt-3">
+  <p>{{ region.symbolism_description }}</p>
+</div>
+
+{% if region.blog_posts.exists %}
+  <h2 class="vd-section-title">{% translate "Статті про цей регіон" %}</h2>
+  <div class="vd-grid vd-grid--wide">
+    {% for post in region.blog_posts.all %}
+      {% if post.status == "published" %}
+        <a href="{% url 'blog:detail' post.slug %}" class="vd-card">
+          <div class="vd-card__body">
+            <h3 class="vd-card__title">{{ post.title }}</h3>
+          </div>
+        </a>
+      {% endif %}
     {% endfor %}
   </div>
+{% endif %}
+<h2 class="vd-section-title">{% translate "Домінуючі кольори" %}</h2>
+<div class="vd-swatches mb-2">
+  {% for color in region.dominant_colors %}
+    <span class="vd-swatch" style="background-color: {{ color }}; width: 34px; height: 34px;" title="{{ color }}"></span>
+  {% endfor %}
+</div>
+<p class="vd-muted vd-small">
+  {% translate "Основні кольори орнаменту цього регіону - не повний перелік усіх відтінків, що зустрічаються в реальній вишивці." %}
+</p>
 
-  <h5>{% translate "Джерела" %}</h5>
-  <ul>
+{% if region.sources.exists %}
+  <h2 class="vd-section-title">{% translate "Джерела" %}</h2>
+  <ul class="vd-prose">
     {% for source in region.sources.all %}
-      <li>{{ source.name }}{% if source.author_or_institution %} — {{ source.author_or_institution }}{% endif %}</li>
+      <li>
+        <strong>{{ source.name }}</strong>
+        {% if source.author_or_institution %} - {{ source.author_or_institution }}{% endif %}
+        {% if source.publication_year %} ({{ source.publication_year }}){% endif %}
+        {% if source.reference %}<br><span class="vd-muted vd-small">{{ source.reference }}</span>{% endif %}
+      </li>
     {% endfor %}
   </ul>
+{% endif %}
 
-  <h5>{% translate "Усі патерни цього регіону" %}</h5>
-  <div class="d-flex gap-2 flex-wrap">
-    {% for pattern in patterns %}
-      <a href="{% url 'patterns:pattern_detail' pattern.date|date:'Y-m-d' %}" class="border rounded p-2 text-decoration-none text-dark" style="width: 90px;">
-        <div style="width: 70px; height: 70px; overflow: hidden;">{{ pattern.svg_content|safe }}</div>
-        <small class="d-block text-center">{{ pattern.date }}</small>
+<h2 class="vd-section-title">{% translate "Орнаменти цього регіону" %}</h2>
+{% if patterns %}
+  <div class="vd-grid">
+    {% for item in patterns %}
+      <a href="{% url 'patterns:pattern_detail' item.date|date:'Y-m-d' %}" class="vd-card">
+        <div class="vd-pattern-card__art">{{ item.svg_content|safe }}</div>
+        <div class="vd-card__body">
+          <div class="vd-card__meta">{{ item.date|date:"d E Y" }}</div>
+        </div>
       </a>
-    {% empty %}
-      <p class="text-muted">{% translate "Ще немає жодного патерну для цього регіону." %}</p>
     {% endfor %}
   </div>
-
-  <!-- TODO: пов'язані статті блогу - Stage 4 -->
-</div>
+{% else %}
+  <div class="vd-empty">{% translate "Ще немає жодного орнаменту для цього регіону." %}</div>
+{% endif %}
 {% endblock %}

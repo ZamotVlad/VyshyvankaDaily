@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db import models
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django_ratelimit.decorators import ratelimit
@@ -19,6 +20,10 @@ def blog_list_view(request):
         if category is not None:
             posts = posts.filter(category=category)
 
+    query = request.GET.get("q", "").strip()
+    if query:
+        posts = posts.filter(models.Q(title__icontains=query) | models.Q(excerpt__icontains=query))
+
     paginator = Paginator(posts, BLOG_PAGE_SIZE)
     page_obj = paginator.get_page(request.GET.get("page"))
 
@@ -26,6 +31,7 @@ def blog_list_view(request):
         "page_obj": page_obj,
         "categories": BlogCategory.objects.filter(is_active=True).order_by("name"),
         "selected_category_slug": category_slug,
+        "query": query,
     }
     return render(request, "blog/blog_list.html", context)
 

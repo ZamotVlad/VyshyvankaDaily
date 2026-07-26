@@ -1,65 +1,72 @@
 {% extends "base.html" %}
-{% load static %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{{ pattern.region.name }} — {{ pattern.date }} — VyshyvankaDaily{% endblock %}
+{% block title %}{{ pattern.region.name }} - {{ pattern.date|date:"d E Y" }} - VyshyvankaDaily{% endblock %}
 
 {% block extra_head %}
-<meta property="og:title" content="{{ pattern.region.name }} — {{ pattern.date }}">
-<meta property="og:description" content="{{ pattern.region.symbolism_description|truncatewords:20 }}">
-<!-- TODO: реальне зображення орнаменту - SEO_VYSHYVANKA.md п.2.6, окремий Stage -->
+<meta property="og:title" content="{{ pattern.region.name }} - {{ pattern.date|date:'d E Y' }}">
+<meta property="og:description" content="{{ pattern.region.symbolism_description|truncatewords:25 }}">
 <meta property="og:image" content="{% static 'og/fallback.svg' %}">
 <meta property="og:type" content="article">
 {% endblock %}
 
 {% block content %}
-<div class="text-center mb-4">
-  <div class="mx-auto" style="max-width: 500px;">
+{% include "includes/breadcrumbs.html" with breadcrumbs=pattern.breadcrumbs %}
+<section class="vd-hero">
+  <div class="vd-hero__art">
     {{ pattern.svg_content|safe }}
   </div>
-</div>
 
-<div class="mx-auto" style="max-width: 700px;">
-  <h1 class="text-center">{{ pattern.region.name }} — {{ pattern.date }}</h1>
-  <span class="badge {% if claim_type == 'documented' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-3">
+  <div>
+    <div class="vd-hero__date">{{ pattern.date|date:"d E Y" }}</div>
+    <h1 class="vd-hero__region">{{ pattern.region.name }}</h1>
+
     {% if claim_type == "documented" %}
-      {% translate "Задокументовано" %}
+      <span class="vd-claim vd-claim--documented">◇ {% translate "Задокументовано" %}</span>
     {% else %}
-      {% translate "За усною традицією" %}
+      <span class="vd-claim">◇ {% translate "За традицією" %}</span>
     {% endif %}
-  </span>
-  <p>{{ pattern.region.symbolism_description }}</p>
 
-  <h5>{% translate "Джерела" %}</h5>
-  <ul>
-    {% for source in pattern.region.sources.all %}
-      <li>{{ source.name }}{% if source.author_or_institution %} — {{ source.author_or_institution }}{% endif %}</li>
-    {% endfor %}
-  </ul>
+    <p class="vd-hero__desc">{{ pattern.region.symbolism_description|truncatewords:45 }}</p>
 
-  <h5>{% translate "Мотиви в композиції" %}</h5>
-  <ul>
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      {% include "patterns/_save_button.html" %}
+      <a href="{% url 'patterns:region_detail' pattern.region.slug %}" class="vd-btn vd-btn--ghost">
+        {% translate "Про регіон" %}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% if pattern.motifs_used.exists %}
+  <h2 class="vd-section-title">{% translate "Мотиви" %}</h2>
+  <div class="vd-grid vd-grid--wide">
     {% for motif in pattern.motifs_used.all %}
-      <li><strong>{{ motif.name }}</strong> — {{ motif.meaning_description }}</li>
+      <div class="vd-card">
+        <div class="vd-card__body">
+          <h3 class="vd-card__title">{{ motif.name }}</h3>
+          <p class="vd-card__meta mb-0">{{ motif.meaning_description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if pattern.region.sources.exists %}
+  <h2 class="vd-section-title">{% translate "Джерела" %}</h2>
+  <ul class="vd-prose">
+    {% for source in pattern.region.sources.all %}
+      <li>{{ source.name }}{% if source.author_or_institution %} - {{ source.author_or_institution }}{% endif %}</li>
     {% endfor %}
   </ul>
+{% endif %}
 
-  <div class="mb-3">
-    {% include "patterns/_save_button.html" %}
-  </div>
-  <div class="d-flex justify-content-between mt-4">
-    {% if previous_pattern %}
-      <a href="{% url 'patterns:pattern_detail' previous_pattern.date|date:'Y-m-d' %}" class="btn btn-outline-secondary">
-        &larr; {{ previous_pattern.date }}
-      </a>
-    {% else %}
-      <span></span>
-    {% endif %}
-    {% if next_pattern %}
-      <a href="{% url 'patterns:pattern_detail' next_pattern.date|date:'Y-m-d' %}" class="btn btn-outline-secondary">
-        {{ next_pattern.date }} &rarr;
-      </a>
-    {% endif %}
-  </div>
+<div class="vd-pagination">
+  {% if previous_pattern %}
+    <a href="{% url 'patterns:pattern_detail' previous_pattern.date|date:'Y-m-d' %}">← {% translate "Попередній" %}</a>
+  {% endif %}
+  {% if next_pattern %}
+    <a href="{% url 'patterns:pattern_detail' next_pattern.date|date:'Y-m-d' %}">{% translate "Наступний" %} →</a>
+  {% endif %}
 </div>
 {% endblock %}

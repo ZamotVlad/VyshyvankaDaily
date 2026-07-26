@@ -1,12 +1,124 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "Сторінку не знайдено" %} — VyshyvankaDaily{% endblock %}
+{% block title %}404 - VyshyvankaDaily{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Запасні значення - сторінка помилки не має залежати від зовнішнього CSS */
+  .vd-404 {
+    --vd-bg: #1C1815;
+    --vd-red: #C23B2E;
+    --vd-cream: #EDE6DC;
+    --vd-muted: #A69B8D;
+    --vd-border: #3A322D;
+    --vd-font-display: "Unbounded", system-ui, sans-serif;
+  }
+  .vd-404 { text-align: center; padding: 60px 20px 40px; }
+  .vd-404__digits { width: min(420px, 88vw); height: auto; margin-bottom: 8px; }
+  .vd-404__digits rect { opacity: 0; animation: vd-stitch 0.5s ease forwards; }
+  @keyframes vd-stitch {
+    from { opacity: 0; transform: scale(0.4); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  /* Стібки з'являються хвилею зліва направо */
+  .vd-404__digits rect:nth-child(n)    { animation-delay: calc(var(--i, 0) * 22ms); }
+
+  .vd-404__thread { display: block; margin: -6px auto 22px; width: 120px; height: 90px; }
+  .vd-404__thread path {
+    stroke: var(--vd-red);
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: vd-unravel 1.5s 0.9s ease forwards;
+  }
+  @keyframes vd-unravel { to { stroke-dashoffset: 0; } }
+
+  .vd-404__title {
+    font-family: var(--vd-font-display);
+    font-size: clamp(22px, 3.4vw, 32px);
+    margin-bottom: 12px;
+  }
+  .vd-404__lead { color: var(--vd-muted); max-width: 460px; margin: 0 auto 28px; }
+  .vd-404__links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-404__digits rect { animation: none; opacity: 1; }
+    .vd-404__thread path { animation: none; stroke-dashoffset: 0; }
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="text-center py-5">
-  <h1>404</h1>
-  <p class="lead">{% translate "Такої сторінки не існує." %}</p>
-  <a href="{% url 'patterns:home' %}" class="btn btn-primary">{% translate "На головну" %}</a>
+<div class="vd-404">
+
+  <svg viewBox="0 0 284 112" xmlns="http://www.w3.org/2000/svg" class="vd-404__digits" role="img" aria-label="404">
+    <rect style="--i:0"  x="50"  y="2"  width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:1"  x="34"  y="18" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:2"  x="50"  y="18" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:3"  x="18"  y="34" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:4"  x="50"  y="34" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:5"  x="2"   y="50" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:6"  x="50"  y="50" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:7"  x="2"   y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:8"  x="18"  y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:9"  x="34"  y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:10" x="50"  y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:11" x="66"  y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:12" x="50"  y="82" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:13" x="50"  y="98" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+
+    <rect style="--i:14" x="120" y="2"  width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:15" x="136" y="2"  width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:16" x="152" y="2"  width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:17" x="104" y="18" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:18" x="168" y="18" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:19" x="104" y="34" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:20" x="152" y="34" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:21" x="168" y="34" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:22" x="104" y="50" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:23" x="136" y="50" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:24" x="168" y="50" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:25" x="104" y="66" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:26" x="120" y="66" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:27" x="168" y="66" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:28" x="104" y="82" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:29" x="168" y="82" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:30" x="120" y="98" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:31" x="136" y="98" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+    <rect style="--i:32" x="152" y="98" width="12" height="12" rx="1.5" fill="var(--vd-cream)"/>
+
+    <rect style="--i:33" x="254" y="2"  width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:34" x="238" y="18" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:35" x="254" y="18" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:36" x="222" y="34" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:37" x="254" y="34" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:38" x="206" y="50" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:39" x="254" y="50" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:40" x="206" y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:41" x="222" y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:42" x="238" y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:43" x="254" y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:44" x="270" y="66" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:45" x="254" y="82" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+    <rect style="--i:46" x="254" y="98" width="12" height="12" rx="1.5" fill="var(--vd-red)"/>
+  </svg>
+
+  <svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" class="vd-404__thread" aria-hidden="true">
+    <path d="M60,0 C60,18 52,26 56,38 C60,50 72,52 70,62 C68,72 56,72 54,80 C53,85 56,88 60,88"/>
+  </svg>
+
+  <h1 class="vd-404__title">{% translate "Цю нитку обірвано" %}</h1>
+  <p class="vd-404__lead">
+    {% translate "Сторінки за цією адресою немає. Можливо, вона змінилась, або її ніколи не було вишито." %}
+  </p>
+
+  <div class="vd-404__links">
+    <a href="{% url 'patterns:home' %}" class="vd-btn vd-btn--primary">{% translate "Орнамент дня" %}</a>
+    <a href="{% url 'patterns:archive' %}" class="vd-btn vd-btn--ghost">{% translate "Архів" %}</a>
+    <a href="{% url 'patterns:region_list' %}" class="vd-btn vd-btn--ghost">{% translate "Регіони" %}</a>
+  </div>
 </div>
 {% endblock %}

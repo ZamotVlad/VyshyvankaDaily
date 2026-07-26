@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Контакти — VyshyvankaDaily{% endblock %}
+{% block title %}{% translate "Контакти" %} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
-<div class="mx-auto" style="max-width: 700px;">
-<h1>Контакти</h1>
-<p>Текст сторінки контактів — заповнити реальною електронною поштою та, за бажанням, посиланнями на соцмережі.</p>
+<div class="vd-prose">
+  <h1>{% translate "Контакти" %}</h1>
+  <p>{% translate "Текст сторінки контактів - заповнити реальною електронною поштою та, за бажанням, посиланнями на соцмережі." %}</p>
 </div>
 {% endblock %}

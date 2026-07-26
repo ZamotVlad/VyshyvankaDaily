@@ -1,15 +1,19 @@
 {% extends "account/base.html" %}
 {% load i18n %}
 
+{% block title %}{% translate "Реєстрація" %} - VyshyvankaDaily{% endblock %}
+
 {% block inner_content %}
 <h1>{% translate "Реєстрація" %}</h1>
-<form method="post">
+<form method="post" class="vd-form">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">{% translate "Зареєструватися" %}</button>
+  <button type="submit" class="vd-btn vd-btn--primary">{% translate "Зареєструватися" %}</button>
 </form>
 
 {% if SOCIALACCOUNT_ENABLED %}
-  {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+  <div style="border-top: 1px solid var(--vd-border); margin-top: 28px; padding-top: 20px;">
+    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+  </div>
 {% endif %}
 {% endblock %}

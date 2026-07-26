@@ -1,19 +1,98 @@
-{% load i18n %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% translate "Помилка сервера" %}</title>
+<title>500 - VyshyvankaDaily</title>
 <style>
-  body { font-family: sans-serif; text-align: center; padding: 80px 20px; color: #333; }
-  h1 { font-size: 48px; margin-bottom: 10px; }
-  a { color: #0F6E56; }
+  :root { --bg:#1C1815; --red:#C23B2E; --cream:#EDE6DC; --muted:#A69B8D; --border:#3A322D; }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--cream);
+    font-family: Georgia, "PT Serif", serif;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; margin: 0; padding: 24px; text-align: center;
+  }
+  .wrap { max-width: 460px; }
+  .art { width: min(330px, 84vw); height: auto; margin-bottom: 18px; }
+  .thread {
+    stroke: #C23B2E; stroke-width: 3; fill: none; stroke-linecap: round;
+    stroke-dasharray: 200; stroke-dashoffset: 200;
+    animation: unravel 1.6s .4s ease forwards;
+  }
+  @keyframes unravel { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .thread { animation: none; stroke-dashoffset: 0; }
+  }
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 12px; }
+  p { color: var(--muted); font-size: 16px; line-height: 1.6; margin: 0 0 26px; }
+  a {
+    display: inline-block; color: var(--cream); text-decoration: none;
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 11px 22px; font-size: 14px; letter-spacing: 0.04em;
+    transition: border-color .2s, color .2s;
+  }
+  a:hover { border-color: var(--red); color: var(--red); }
 </style>
 </head>
 <body>
-  <h1>500</h1>
-  <p>{% translate "Щось пішло не так. Спробуйте, будь ласка, пізніше." %}</p>
-  <a href="/">{% translate "На головну" %}</a>
+<div class="wrap">
+
+  <svg class="art" viewBox="0 0 256 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="500">
+    <!-- 5 -->
+    <g fill="#C23B2E">
+      <rect x="2" y="2" width="12" height="12" rx="1.5"/><rect x="18" y="2" width="12" height="12" rx="1.5"/>
+      <rect x="34" y="2" width="12" height="12" rx="1.5"/><rect x="50" y="2" width="12" height="12" rx="1.5"/>
+      <rect x="66" y="2" width="12" height="12" rx="1.5"/>
+      <rect x="2" y="18" width="12" height="12" rx="1.5"/>
+      <rect x="2" y="34" width="12" height="12" rx="1.5"/><rect x="18" y="34" width="12" height="12" rx="1.5"/>
+      <rect x="34" y="34" width="12" height="12" rx="1.5"/><rect x="50" y="34" width="12" height="12" rx="1.5"/>
+      <rect x="66" y="50" width="12" height="12" rx="1.5"/>
+      <rect x="66" y="66" width="12" height="12" rx="1.5"/>
+      <rect x="2" y="82" width="12" height="12" rx="1.5"/><rect x="66" y="82" width="12" height="12" rx="1.5"/>
+      <rect x="18" y="98" width="12" height="12" rx="1.5"/><rect x="34" y="98" width="12" height="12" rx="1.5"/>
+      <rect x="50" y="98" width="12" height="12" rx="1.5"/>
+    </g>
+
+    <!-- 0, вишитий повністю -->
+    <g fill="#EDE6DC">
+      <rect x="104" y="2" width="12" height="12" rx="1.5"/><rect x="120" y="2" width="12" height="12" rx="1.5"/>
+      <rect x="136" y="2" width="12" height="12" rx="1.5"/>
+      <rect x="88" y="18" width="12" height="12" rx="1.5"/><rect x="152" y="18" width="12" height="12" rx="1.5"/>
+      <rect x="88" y="34" width="12" height="12" rx="1.5"/><rect x="152" y="34" width="12" height="12" rx="1.5"/>
+      <rect x="88" y="50" width="12" height="12" rx="1.5"/><rect x="152" y="50" width="12" height="12" rx="1.5"/>
+      <rect x="88" y="66" width="12" height="12" rx="1.5"/><rect x="152" y="66" width="12" height="12" rx="1.5"/>
+      <rect x="88" y="82" width="12" height="12" rx="1.5"/><rect x="152" y="82" width="12" height="12" rx="1.5"/>
+      <rect x="104" y="98" width="12" height="12" rx="1.5"/><rect x="120" y="98" width="12" height="12" rx="1.5"/>
+      <rect x="136" y="98" width="12" height="12" rx="1.5"/>
+    </g>
+
+    <!-- 0, обірваний: контур читається, але правий низ не довишито -->
+    <g fill="#C23B2E">
+      <rect x="190" y="2"  width="12" height="12" rx="1.5"/>
+      <rect x="206" y="2"  width="12" height="12" rx="1.5"/>
+      <rect x="222" y="2"  width="12" height="12" rx="1.5"/>
+      <rect x="174" y="18" width="12" height="12" rx="1.5"/>
+      <rect x="238" y="18" width="12" height="12" rx="1.5"/>
+      <rect x="174" y="34" width="12" height="12" rx="1.5"/>
+      <rect x="238" y="34" width="12" height="12" rx="1.5"/>
+      <rect x="174" y="50" width="12" height="12" rx="1.5"/>
+      <rect x="238" y="50" width="12" height="12" rx="1.5"/>
+      <rect x="174" y="66" width="12" height="12" rx="1.5"/>
+      <rect x="238" y="66" width="12" height="12" rx="1.5"/>
+      <rect x="174" y="82" width="12" height="12" rx="1.5"/>
+      <rect x="190" y="98" width="12" height="12" rx="1.5"/>
+      <rect x="206" y="98" width="12" height="12" rx="1.5"/>
+    </g>
+
+    <!-- Нитка звисає з останнього вишитого стібка -->
+    <path class="thread"
+          d="M212,110 C216,124 206,132 210,146 C214,160 204,168 208,182 C210,190 214,196 220,199"/>
+  </svg>
+
+  <h1>Стібок зірвався</h1>
+  <p>Щось пішло не так на нашому боці. Ми вже знаємо про це - спробуйте оновити сторінку за хвилину.</p>
+  <a href="/">На головну</a>
+</div>
 </body>
 </html>
