@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load seo_tags %}
 
 {% block title %}{{ region.name }} - VyshyvankaDaily{% endblock %}
+
+{% block extra_head %}
+{% jsonld_breadcrumbs region.breadcrumbs %}
+{% endblock %}
 
 {% block content %}
 {% include "includes/breadcrumbs.html" with breadcrumbs=region.breadcrumbs %}

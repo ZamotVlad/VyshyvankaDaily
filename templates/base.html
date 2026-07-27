@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n static seo_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -19,7 +19,9 @@
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'logo/logo.css' %}">
 <link rel="stylesheet" href="{% static 'css/vd.css' %}">
+{% jsonld_site %}
 {% block extra_head %}{% endblock %}
+<link rel="alternate" type="application/rss+xml" title="VyshyvankaDaily - блог" href="{% url 'blog_feed' %}">
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -30,13 +32,13 @@
     <nav class="vd-header__desktop" aria-label="{% translate 'Основна навігація' %}">
       <ul class="vd-nav">
         <li><a href="{% url 'patterns:archive' %}">{% translate "Архів" %}</a></li>
-        <li><span class="vd-sep">◇</span></li>
+        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
-        <li><span class="vd-sep">◇</span></li>
+        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'patterns:region_list' %}">{% translate "Регіони" %}</a></li>
-        <li><span class="vd-sep">◇</span></li>
+        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'pages:about' %}">{% translate "Про нас" %}</a></li>
-        <li><span class="vd-sep">◇</span></li>
+        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'pages:contact' %}">{% translate "Контакти" %}</a></li>
       </ul>
     </nav>
@@ -93,7 +95,7 @@
   </div>
 </header>
 
-<main class="flex-grow-1 container py-4">
+<main id="main-content" class="flex-grow-1 container py-4">
 {% if messages %}
   <div class="mb-4">
     {% for message in messages %}

@@ -6,15 +6,15 @@
 {% block content %}
 {% if user.is_authenticated %}
   <div class="vd-status-bar">
-    <span>🔥 {{ user.profile.current_streak }} {% translate "днів поспіль" %}</span>
-    <span class="vd-sep">◇</span>
+    <span><span aria-hidden="true">🔥</span> {{ user.profile.current_streak }} {% translate "днів поспіль" %}</span>
+    <span class="vd-sep" aria-hidden="true">◇</span>
     <span>{{ tour_completed }} / {{ tour_total }} {% translate "регіонів пройдено" %}</span>
     <a href="{% url 'patterns:my_collection' %}" class="ms-auto">{% translate "Моя колекція" %} →</a>
   </div>
 {% endif %}
 {% if not user.is_authenticated %}
   <div class="vd-status-bar">
-    <span>🔥 {% translate "Почни свій стрік - заходь щодня й зберігай улюблені орнаменти" %}</span>
+    <span><span aria-hidden="true">🔥</span> {% translate "Почни свій стрік - заходь щодня й зберігай улюблені орнаменти" %}</span>
     <a href="{% url 'account_signup' %}" class="vd-btn vd-btn--primary ms-auto">{% translate "Реєстрація" %}</a>
   </div>
 {% endif %}
@@ -55,9 +55,10 @@
 </div>
 
 <section class="vd-landing" id="about-project">
-  <button type="button" class="vd-landing__toggle" onclick="document.getElementById('landing-body').classList.toggle('is-open'); this.classList.toggle('is-open');">
+  <button type="button" class="vd-landing__toggle" aria-expanded="false" aria-controls="landing-body"
+          onclick="const b=document.getElementById('landing-body');const o=b.classList.toggle('is-open');this.classList.toggle('is-open');this.setAttribute('aria-expanded', o);">
     <span>{% translate "Що таке VyshyvankaDaily" %}</span>
-    <span class="vd-landing__arrow">▾</span>
+    <span class="vd-landing__arrow" aria-hidden="true">▾</span>
   </button>
 
   <div id="landing-body" class="vd-landing__body">

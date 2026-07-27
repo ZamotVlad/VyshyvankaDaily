@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Форма застаріла" %} - VyshyvankaDaily{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="vd-empty" style="border: none; padding-top: 60px;">
+  <h1 style="font-size: 26px;">{% translate "Ця форма трохи застаріла" %}</h1>
+  <p class="vd-muted" style="max-width: 480px; margin: 0 auto 22px;">
+    {% translate "Найімовірніше, сторінка була відкрита довго, або ви скористались кнопкою «назад» у браузері. Це не помилка з вашого боку - просто оновіть сторінку й спробуйте ще раз." %}
+  </p>
+  <a href="{% url 'patterns:home' %}" class="vd-btn vd-btn--primary">{% translate "На головну" %}</a>
+</div>
+{% endblock %}

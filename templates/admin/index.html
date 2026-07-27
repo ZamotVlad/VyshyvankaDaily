@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
   <div class="p-4 bg-white border rounded-default dark:bg-base-900 dark:border-base-800">
     <div class="mb-2 font-semibold">{% translate "Збереження за регіонами" %}</div>
     <ul class="text-sm">
@@ -51,5 +51,6 @@
       {% endfor %}
     </ul>
   </div>
+  {% include "admin/dashboard_widgets/drafts.html" %}
 </div>
 {% endblock %}

@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load seo_tags %}
 
 {% block title %}FAQ - VyshyvankaDaily{% endblock %}
+
+{% block extra_head %}
+{% jsonld_faq categories %}
+{% endblock %}
 
 {% block content %}
 <h1>{% translate "Часті запитання" %}</h1>

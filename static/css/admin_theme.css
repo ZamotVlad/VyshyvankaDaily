@@ -1,0 +1,65 @@
+/* ============================================================
+   Стилі адмінки VyshyvankaDaily (Stage 5, закриття Треку В)
+   ============================================================ */
+
+/* Типографіка - той самий шрифт, що на сайті, для заголовків адмінки */
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&display=swap");
+
+.unfold-heading,
+h1,
+h2,
+h3,
+.text-font-important-light,
+.text-font-important-dark {
+  font-family: "Unbounded", system-ui, sans-serif !important;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   Темна тема для CKEditor 5 - офіційний, задокументований спосіб
+   через CSS-змінні теми, не хаки:
+   https://ckeditor.com/docs/ckeditor5/latest/getting-started/setup/css.html
+   ============================================================ */
+
+.ck.ck-editor {
+  --ck-color-base-background: #241f1b;
+  --ck-color-base-border: #3a322d;
+  --ck-color-base-text: #ede6dc;
+  --ck-color-text: #ede6dc;
+
+  --ck-color-toolbar-background: #2c2621;
+  --ck-color-toolbar-border: #3a322d;
+
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: #3a322d;
+  --ck-color-button-on-background: #c23b2e;
+  --ck-color-button-on-color: #ede6dc;
+
+  --ck-color-focus-border: #c23b2e;
+  --ck-color-shadow-drop: rgba(0, 0, 0, 0.4);
+
+  --ck-content-font-color: #1c1815;
+}
+
+/* Сама область редагування тексту - навмисно лишаємо світлою.
+   Стаття зрештою публікується на кремовому/темному фоні сайту, і
+   автору корисніше бачити текст на світлому тлі під час набору,
+   як у звичайному текстовому редакторі, а не гадати на темному. */
+.ck.ck-editor__editable {
+  background: #fcfaf7 !important;
+  color: #1c1815 !important;
+}
+
+/* Узгодження типографіки адмінки з сайтом (Stage 5).
+   Кольори керуються через UNFOLD["COLORS"] у settings, тут лише шрифт. */
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&display=swap");
+
+.unfold-heading,
+h1,
+h2,
+h3,
+.text-font-important-light,
+.text-font-important-dark {
+  font-family: "Unbounded", system-ui, sans-serif !important;
+  letter-spacing: -0.01em;
+}

@@ -154,6 +154,15 @@ class Region(TimeStampedModel, SlugModel):
     def __str__(self):
         return self.name
 
+    @property
+    def published_blog_posts(self):
+        """
+        Лише опубліковані статті. Фільтр саме тут, а не в шаблоні:
+        так чернетка не потрапить на публічну сторінку навіть якщо
+        десь забути умову в розмітці.
+        """
+        return self.blog_posts.filter(status="published")
+
 
 class MotifQuerySet(models.QuerySet):
     def verified(self):

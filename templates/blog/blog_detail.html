@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load seo_tags %}
 
 {% block title %}{{ post.seo_title|default:post.title }} - VyshyvankaDaily{% endblock %}
 
 {% block extra_head %}
+{% jsonld_article post %}
+{% jsonld_breadcrumbs post.breadcrumbs %}
 {% if post.seo_description %}<meta name="description" content="{{ post.seo_description }}">{% endif %}
 <meta property="og:title" content="{{ post.title }}">
 <meta property="og:description" content="{{ post.excerpt|truncatewords:25 }}">

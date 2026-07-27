@@ -1,4 +1,9 @@
-from django.test import TestCase
+import json
+import re
+import xml.etree.ElementTree as ET
+
+from django.contrib.auth import get_user_model
+from django.test import TestCase, override_settings
 
 from apps.patterns.models import Region
 
@@ -14,3 +19,142 @@ class SlugTransliterationTests(TestCase):
         )
         self.assertTrue(region.slug.isascii())
         self.assertTrue(region.slug)
+
+
+def extract_jsonld(html):
+    """Витягує всі JSON-LD блоки зі сторінки й одразу парсить їх."""
+    blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL)
+    return [json.loads(b) for b in blocks]
+
+
+class RobotsTxtTests(TestCase):
+    def test_served_as_plain_text(self):
+        response = self.client.get("/robots.txt")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("text/plain", response["Content-Type"])
+
+    def test_blocks_private_sections_and_points_to_sitemap(self):
+        body = self.client.get("/robots.txt").content.decode()
+        self.assertIn("User-agent: *", body)
+        for private in ("/accounts/", "/profile/settings/", "/collection/", "/admin/"):
+            self.assertIn(f"Disallow: {private}", body)
+        self.assertIn("/sitemap.xml", body)
+
+    def test_does_not_block_legal_pages(self):
+        """Свідоме рішення: privacy/terms лишаються відкритими для індексації
+        як сигнал довіри (порада SEO-спеціалістки, 26.07)."""
+        body = self.client.get("/robots.txt").content.decode()
+        self.assertNotIn("terms", body)
+        self.assertNotIn("privacy", body)
+
+
+class SitemapTests(TestCase):
+    def test_returns_parseable_xml(self):
+        response = self.client.get("/sitemap.xml")
+        self.assertEqual(response.status_code, 200)
+        ET.fromstring(response.content)  # впаде, якщо XML побитий
+
+    def test_contains_region_and_legal_pages(self):
+        body = self.client.get("/sitemap.xml").content.decode()
+        self.assertIn("/regions/", body)
+        self.assertIn("/terms-of-use/", body)
+        self.assertIn("/privacy-policy/", body)
+
+    def test_has_hreflang_alternates(self):
+        body = self.client.get("/sitemap.xml").content.decode()
+        self.assertIn('hreflang="uk"', body)
+        self.assertIn('hreflang="en"', body)
+        self.assertIn('hreflang="x-default"', body)
+
+
+class HeadMetaTests(TestCase):
+    def test_homepage_has_canonical_and_robots_meta(self):
+        response = self.client.get("/")
+        self.assertContains(response, 'rel="canonical"')
+        self.assertContains(response, 'name="robots"')
+        self.assertContains(response, "index, follow")
+
+    def test_html_lang_attribute_is_filled(self):
+        """Порожній lang був реальним багом (бракувало i18n-процесора)."""
+        html = self.client.get("/").content.decode()
+        self.assertIn('<html lang="uk"', html)
+        self.assertNotIn('<html lang=""', html)
+
+    def test_english_page_declares_english_lang(self):
+        html = self.client.get("/en/").content.decode()
+        self.assertIn('<html lang="en"', html)
+
+
+class JsonLdTests(TestCase):
+    def test_homepage_emits_valid_site_jsonld(self):
+        html = self.client.get("/").content.decode()
+        blocks = extract_jsonld(html)
+        self.assertTrue(blocks, "На головній немає жодного JSON-LD блоку")
+
+        types = []
+        for block in blocks:
+            for node in block.get("@graph", [block]):
+                types.append(node.get("@type"))
+        self.assertIn("Organization", types)
+        self.assertIn("WebSite", types)
+
+    def test_jsonld_escapes_angle_brackets(self):
+        """Неекранований < розірвав би сам тег script."""
+        html = self.client.get("/").content.decode()
+        scripts = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL)
+        for script in scripts:
+            self.assertNotIn("<", script)
+
+
+class PrivatePageIndexingTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username="seotester", password="pass12345")
+
+    def test_collection_page_is_noindex(self):
+        self.client.force_login(self.user)
+        response = self.client.get("/collection/")
+        self.assertContains(response, "noindex")
+
+    def test_public_page_is_not_noindex(self):
+        response = self.client.get("/regions/")
+        self.assertNotContains(response, "noindex")
+
+
+class BlogFeedTests(TestCase):
+    def test_feed_is_served_as_rss(self):
+        response = self.client.get("/blog/feed/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("xml", response["Content-Type"].lower())
+        ET.fromstring(response.content)
+
+
+@override_settings(DEBUG=False, ALLOWED_HOSTS=["testserver"])
+class ErrorPageTests(TestCase):
+    def test_404_uses_our_custom_template(self):
+        response = self.client.get("/сторінки-точно-не-існує/")
+        self.assertEqual(response.status_code, 404)
+        self.assertContains(response, "Цю нитку обірвано", status_code=404)
+
+    def test_500_template_renders_without_context_or_db(self):
+        """500.html навмисно standalone: не extends base.html і не
+        звертається ні до БД, ні до request - інакше сторінка помилки
+        сама впала б там, де вже щось зламано."""
+        from django.template.loader import render_to_string
+
+        html = render_to_string("500.html")
+        self.assertIn("Стібок зірвався", html)
+        self.assertNotIn("{{", html)
+
+
+class LanguageSwitchTests(TestCase):
+    def test_switching_to_default_language_drops_prefix(self):
+        """Регресія на баг Django #26556/#28567 - перемикання з /en/ на
+        українську лишало старий префікс, і сторінка "залипала"."""
+        response = self.client.post("/i18n/setlang/", {"language": "uk", "next": "/en/archive/"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "/archive/")
+
+    def test_switching_to_english_adds_prefix(self):
+        response = self.client.post("/i18n/setlang/", {"language": "en", "next": "/archive/"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "/en/archive/")

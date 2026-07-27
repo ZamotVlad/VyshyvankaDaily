@@ -448,3 +448,57 @@ class StreakTests(TestCase):
         self.client.post(f"/pattern/{pattern.date}/save/")
         self.user.profile.refresh_from_db()
         self.assertEqual(self.user.profile.current_streak, 1)
+
+
+class BreadcrumbsTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон Б", rotation_order=50)
+
+    def test_region_breadcrumbs_end_without_url(self):
+        """Остання крихта - поточна сторінка, вона не має бути посиланням."""
+        crumbs = self.region.breadcrumbs
+        self.assertEqual(crumbs[-1]["label"], self.region.name)
+        self.assertNotIn("url", crumbs[-1])
+
+    def test_pattern_breadcrumbs_include_region_link(self):
+        pattern = DailyPattern.objects.create(
+            date=date(2026, 3, 3),
+            region=self.region,
+            seed="bc1",
+            algorithm_version=1,
+            svg_content="<svg></svg>",
+        )
+        labels = [c["label"] for c in pattern.breadcrumbs]
+        self.assertIn(self.region.name, labels)
+
+    def test_breadcrumbs_render_on_region_page(self):
+        response = self.client.get(f"/regions/{self.region.slug}/")
+        self.assertContains(response, "Головна")
+
+
+class HomepageStatusBarTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон В", rotation_order=51)
+        self.user = get_user_model().objects.create_user(username="visitor", password="pass12345")
+
+    def test_anonymous_sees_signup_call_not_streak_numbers(self):
+        response = self.client.get("/")
+        self.assertContains(response, "Почни свій стрік")
+
+    def test_authenticated_sees_streak_and_tour(self):
+        self.client.force_login(self.user)
+        response = self.client.get("/")
+        self.assertContains(response, "днів поспіль")
+        self.assertContains(response, "регіонів пройдено")
+
+    def test_anonymous_page_does_not_crash_without_profile(self):
+        """AnonymousUser не має profile - шаблон не повинен на цьому падати."""
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+
+
+class LandingSectionTests(TestCase):
+    def test_landing_toggle_present_on_homepage(self):
+        response = self.client.get("/")
+        self.assertContains(response, "Що таке VyshyvankaDaily")
+        self.assertContains(response, 'aria-controls="landing-body"')

@@ -1,5 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0F6E56"/>
-  <text x="600" y="300" font-size="64" font-family="sans-serif" fill="#FFFFFF" text-anchor="middle" font-weight="bold">VyshyvankaDaily</text>
-  <text x="600" y="370" font-size="28" font-family="sans-serif" fill="#D85A30" text-anchor="middle">Щодня — новий орнамент твоєї землі</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#2C2621"/>
+  <g transform="translate(418,90) scale(1.4)">
+    <g fill="#C23B2E">
+      <rect x="22" y="22" width="16" height="16"/><rect x="122" y="22" width="16" height="16"/><rect x="222" y="22" width="16" height="16"/>
+      <rect x="42" y="42" width="16" height="16"/><rect x="122" y="42" width="16" height="16"/><rect x="202" y="42" width="16" height="16"/>
+      <rect x="62" y="62" width="16" height="16"/><rect x="122" y="62" width="16" height="16"/><rect x="182" y="62" width="16" height="16"/>
+      <rect x="82" y="82" width="16" height="16"/><rect x="122" y="82" width="16" height="16"/><rect x="162" y="82" width="16" height="16"/>
+      <rect x="22" y="122" width="16" height="16"/><rect x="42" y="122" width="16" height="16"/><rect x="62" y="122" width="16" height="16"/><rect x="82" y="122" width="16" height="16"/>
+      <rect x="162" y="122" width="16" height="16"/><rect x="182" y="122" width="16" height="16"/><rect x="202" y="122" width="16" height="16"/><rect x="222" y="122" width="16" height="16"/>
+      <rect x="82" y="162" width="16" height="16"/><rect x="122" y="162" width="16" height="16"/><rect x="162" y="162" width="16" height="16"/>
+      <rect x="62" y="182" width="16" height="16"/><rect x="122" y="182" width="16" height="16"/><rect x="182" y="182" width="16" height="16"/>
+      <rect x="42" y="202" width="16" height="16"/><rect x="122" y="202" width="16" height="16"/><rect x="202" y="202" width="16" height="16"/>
+      <rect x="22" y="222" width="16" height="16"/><rect x="122" y="222" width="16" height="16"/><rect x="222" y="222" width="16" height="16"/>
+    </g>
+    <g fill="#000000">
+      <rect x="102" y="102" width="16" height="16"/><rect x="122" y="102" width="16" height="16"/><rect x="142" y="102" width="16" height="16"/>
+      <rect x="102" y="122" width="16" height="16"/><rect x="122" y="122" width="16" height="16"/><rect x="142" y="122" width="16" height="16"/>
+      <rect x="102" y="142" width="16" height="16"/><rect x="122" y="142" width="16" height="16"/><rect x="142" y="142" width="16" height="16"/>
+    </g>
+  </g>
+  <text x="600" y="480" text-anchor="middle" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#EDE6DC">VyshyvankaDaily</text>
+  <text x="600" y="530" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#A69B8D">Щодня - новий орнамент твоєї землі</text>
 </svg>

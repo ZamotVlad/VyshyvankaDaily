@@ -2,6 +2,7 @@ import re
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.utils.translation import check_for_language
 
 # Префікси НЕ-дефолтних мов (де prefix_default_language=False - українська
@@ -80,3 +81,13 @@ def robots_txt(request):
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+def csrf_failure(request, reason=""):
+    """
+    Власний обробник CSRF-відмов (Django за замовчуванням показує
+    негарну вбудовану сторінку). Це НЕ вразливість - навпаки, захист
+    відхилив застарілий/невідповідний токен, як і мав. Найчастіша
+    причина: форма була відкрита довго, чи натиснута кнопка "назад".
+    """
+    return render(request, "403_csrf.html", {"reason": reason}, status=403)

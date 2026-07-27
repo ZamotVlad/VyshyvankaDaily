@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import environ
-from django.templatetags import static
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 
 # Шлях до кореня проєкту: config/settings/base.py -> 3 рівні вгору
@@ -17,6 +17,8 @@ environ.Env.read_env(BASE_DIR / ".env")
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
+CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 
 INSTALLED_APPS = [
     "unfold",
@@ -65,6 +67,7 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "django.template.context_processors.i18n",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -165,23 +168,38 @@ SOCIALACCOUNT_PROVIDERS = {
 UNFOLD = {
     "SITE_TITLE": "VyshyvankaDaily - адміністрування",
     "SITE_HEADER": "VyshyvankaDaily",
-    "SITE_ICON": lambda request: static("logo/favicon.svg"),
-    "SITE_LOGO": lambda request: static("logo/favicon.svg"),
+    "SITE_ICON": lambda request: static("logo/admin_icon.svg"),
+    "SITE_LOGO": lambda request: static("logo/admin_icon.svg"),
     "DASHBOARD_CALLBACK": "apps.core.dashboard.dashboard_callback",
+    "STYLES": [
+        lambda request: static("css/admin_theme.css"),
+    ],
     "COLORS": {
-        # Палітра на основі кольорів вишивки: червоний і чорний як акценти
-        # на нейтральному тлі (розділ 14.1 ТЗ).
+        "base": {
+            "50": "oklch(97% 0.006 70)",
+            "100": "oklch(93% 0.010 70)",
+            "200": "oklch(87% 0.014 68)",
+            "300": "oklch(80% 0.018 66)",
+            "400": "oklch(74% 0.020 64)",
+            "500": "oklch(68% 0.022 62)",
+            "600": "oklch(50% 0.020 60)",
+            "700": "oklch(38% 0.018 58)",
+            "800": "oklch(28% 0.016 56)",
+            "900": "oklch(20% 0.014 54)",
+            "950": "oklch(15% 0.012 52)",
+        },
         "primary": {
-            "50": "254 242 242",
-            "100": "254 226 226",
-            "200": "254 202 202",
-            "300": "252 165 165",
-            "400": "248 113 113",
-            "500": "220 38 38",
-            "600": "185 28 28",
-            "700": "153 27 27",
-            "800": "127 29 29",
-            "900": "69 10 10",
+            "50": "oklch(96% 0.020 30)",
+            "100": "oklch(91% 0.040 30)",
+            "200": "oklch(83% 0.080 30)",
+            "300": "oklch(74% 0.120 30)",
+            "400": "oklch(64% 0.160 30)",
+            "500": "oklch(56% 0.180 30)",
+            "600": "oklch(48% 0.170 30)",
+            "700": "oklch(41% 0.150 30)",
+            "800": "oklch(34% 0.120 30)",
+            "900": "oklch(28% 0.095 30)",
+            "950": "oklch(20% 0.070 30)",
         },
     },
     "SIDEBAR": {

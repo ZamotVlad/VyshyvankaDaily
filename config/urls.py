@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
+from apps.blog.feeds import BlogFeed
 from apps.core.sitemaps import (
     BlogPostSitemap,
     DailyPatternSitemap,
@@ -26,6 +27,7 @@ urlpatterns = [
     path("ckeditor5/", include("django_ckeditor_5.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("robots.txt", robots_txt, name="robots_txt"),
+    path("blog/feed/", BlogFeed(), name="blog_feed"),
 ]
 
 urlpatterns += i18n_patterns(

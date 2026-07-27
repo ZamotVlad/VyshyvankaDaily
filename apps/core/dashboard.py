@@ -10,8 +10,9 @@ from apps.patterns.models import DailyPattern, Motif, Region, SavedPattern
 
 def dashboard_callback(request, context):
     """
-    Дашборд адмінки (розділ 14.3 ТЗ) — 6 віджетів (пункт "непрочитані
-    звернення" видалений разом із ContactMessage, Частина 2 DECISIONS.md).
+    Дашборд адмінки (розділ 14.3 ТЗ) — 7 віджетів (пункт "непрочитані
+    звернення" видалений разом із ContactMessage, Частина 2 DECISIONS.md;
+    пункт "чернетки" доданий при закритті Stage 5).
     """
     User = get_user_model()
     week_ago = timezone.now() - timedelta(days=7)
@@ -42,6 +43,9 @@ def dashboard_callback(request, context):
         "-published_at"
     )[:5]
 
+    draft_posts = BlogPost.objects.filter(status=BlogPost.Status.DRAFT).order_by("-updated_at")[:5]
+    draft_posts_count = BlogPost.objects.filter(status=BlogPost.Status.DRAFT).count()
+
     context.update(
         {
             "vd_total_users": total_users,
@@ -51,6 +55,8 @@ def dashboard_callback(request, context):
             "vd_editorial_debt": editorial_debt,
             "vd_generation_errors": generation_errors,
             "vd_recent_posts": recent_posts,
+            "vd_draft_posts": draft_posts,
+            "vd_draft_posts_count": draft_posts_count,
         }
     )
     return context

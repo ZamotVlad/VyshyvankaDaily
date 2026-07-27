@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% load i18n static %}
+{% load seo_tags %}
 
 {% block title %}{{ pattern.region.name }} - {{ pattern.date|date:"d E Y" }} - VyshyvankaDaily{% endblock %}
 
 {% block extra_head %}
+{% jsonld_pattern pattern %}
+{% jsonld_breadcrumbs pattern.breadcrumbs %}
 <meta property="og:title" content="{{ pattern.region.name }} - {{ pattern.date|date:'d E Y' }}">
 <meta property="og:description" content="{{ pattern.region.symbolism_description|truncatewords:25 }}">
 <meta property="og:image" content="{% static 'og/fallback.svg' %}">

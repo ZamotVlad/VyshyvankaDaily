@@ -2,13 +2,7 @@ from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, TabularInline
 
-from .models import FAQCategory, FAQItem, StaticPage
-
-
-@admin.register(StaticPage)
-class StaticPageAdmin(TranslationAdmin, ModelAdmin):
-    list_display = ("title", "slug")
-    prepopulated_fields = {"slug": ("title",)}
+from .models import FAQCategory, FAQItem
 
 
 class FAQItemInline(TabularInline):

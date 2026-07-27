@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Доступ обмежено" %} - VyshyvankaDaily{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="vd-empty" style="border: none; padding-top: 60px;">
+  <h1 style="font-size: 26px;">{% translate "Забагато спроб поспіль" %}</h1>
+  <p class="vd-muted" style="max-width: 480px; margin: 0 auto 22px;">
+    {% translate "Схоже, ви надіслали форму кілька разів підряд за короткий час. Це нормальне обмеження проти спаму - зачекайте трохи й спробуйте ще раз." %}
+  </p>
+  <a href="{% url 'patterns:home' %}" class="vd-btn vd-btn--primary">{% translate "На головну" %}</a>
+</div>
+{% endblock %}
