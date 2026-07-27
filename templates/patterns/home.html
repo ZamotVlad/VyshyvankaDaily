@@ -4,6 +4,20 @@
 {% block title %}{{ pattern.region.name }} - {{ pattern.date }} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+  <div class="vd-status-bar">
+    <span>🔥 {{ user.profile.current_streak }} {% translate "днів поспіль" %}</span>
+    <span class="vd-sep">◇</span>
+    <span>{{ tour_completed }} / {{ tour_total }} {% translate "регіонів пройдено" %}</span>
+    <a href="{% url 'patterns:my_collection' %}" class="ms-auto">{% translate "Моя колекція" %} →</a>
+  </div>
+{% endif %}
+{% if not user.is_authenticated %}
+  <div class="vd-status-bar">
+    <span>🔥 {% translate "Почни свій стрік - заходь щодня й зберігай улюблені орнаменти" %}</span>
+    <a href="{% url 'account_signup' %}" class="vd-btn vd-btn--primary ms-auto">{% translate "Реєстрація" %}</a>
+  </div>
+{% endif %}
 <section class="vd-hero">
   <div class="vd-hero__art">
     {{ pattern.svg_content|safe }}

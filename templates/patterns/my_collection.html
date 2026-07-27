@@ -26,6 +26,16 @@
       </div>
     </div>
   </div>
+  <div class="col-md-4">
+    <div class="vd-card">
+      <div class="vd-card__body">
+        <div class="vd-card__meta">{% translate "Днів поспіль" %}</div>
+        <div style="font-family: var(--vd-font-display); font-size: 32px; color: var(--vd-cream);">
+          {{ user.profile.current_streak }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% if saved_patterns %}

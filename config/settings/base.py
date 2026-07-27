@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import environ
+from django.templatetags import static
 from django.utils.translation import gettext_lazy as _
 
 # Шлях до кореня проєкту: config/settings/base.py -> 3 рівні вгору
@@ -162,9 +163,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 UNFOLD = {
-    "DASHBOARD_CALLBACK": "apps.core.dashboard.dashboard_callback",
-    "SITE_TITLE": "VyshyvankaDaily",
+    "SITE_TITLE": "VyshyvankaDaily - адміністрування",
     "SITE_HEADER": "VyshyvankaDaily",
+    "SITE_ICON": lambda request: static("logo/favicon.svg"),
+    "SITE_LOGO": lambda request: static("logo/favicon.svg"),
+    "DASHBOARD_CALLBACK": "apps.core.dashboard.dashboard_callback",
     "COLORS": {
         # Палітра на основі кольорів вишивки: червоний і чорний як акценти
         # на нейтральному тлі (розділ 14.1 ТЗ).

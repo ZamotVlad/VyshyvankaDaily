@@ -26,6 +26,18 @@ def _is_saved_by(user, pattern):
     return SavedPattern.objects.filter(user=user, pattern=pattern).exists()
 
 
+def _tour_progress(user):
+    """Спільний розрахунок для home_view і my_collection_view - див. ADR 29."""
+    tour_region_ids = (
+        SavedPattern.objects.filter(user=user)
+        .annotate(saved_date=TruncDate("created_at"))
+        .filter(saved_date=F("pattern__date"))
+        .values_list("pattern__region_id", flat=True)
+        .distinct()
+    )
+    return len(tour_region_ids), Region.objects.verified().count()
+
+
 def home_view(request):
     today = timezone.localdate()
     pattern = generate_daily_pattern(
@@ -46,6 +58,12 @@ def home_view(request):
         "ribbon": ribbon,
         "is_saved": _is_saved_by(request.user, pattern),
     }
+
+    if request.user.is_authenticated:
+        tour_completed, tour_total = _tour_progress(request.user)
+        context["tour_completed"] = tour_completed
+        context["tour_total"] = tour_total
+
     return render(request, "patterns/home.html", context)
 
 
@@ -97,6 +115,8 @@ def toggle_save_view(request, iso_date):
     pattern = get_object_or_404(DailyPattern, date=pattern_date)
 
     saved, created = SavedPattern.objects.get_or_create(user=request.user, pattern=pattern)
+    if created:
+        _update_streak(request.user.profile)
     if not created:
         saved.delete()
         messages.info(request, "Видалено з колекції.")
@@ -124,15 +144,7 @@ def my_collection_view(request):
         .order_by("-created_at")
     )
 
-    tour_region_ids = (
-        SavedPattern.objects.filter(user=request.user)
-        .annotate(saved_date=TruncDate("created_at"))
-        .filter(saved_date=F("pattern__date"))
-        .values_list("pattern__region_id", flat=True)
-        .distinct()
-    )
-    tour_completed = len(tour_region_ids)
-    tour_total = Region.objects.verified().count()
+    tour_completed, tour_total = _tour_progress(request.user)
 
     context = {
         "saved_patterns": saved_patterns,
@@ -272,3 +284,24 @@ def debug_all_regions_view(request):
         results.append({"region": region, "svg": svg_content, "motifs": motifs})
 
     return render(request, "patterns/debug_all_regions.html", {"results": results})
+
+
+def _update_streak(profile):
+    """
+    Streak - дні поспіль, коли людина зберігала орнамент. На відміну від
+    "пройденого туру" (Stage 3, ADR 29) - не обмежений 27 регіонами й не
+    застигає назавжди: рахує лише послідовність днів, регіон може
+    повторюватись без шкоди для лічильника.
+    """
+    today = timezone.localdate()
+    last = profile.last_active_date
+
+    if last == today:
+        return  # уже рахували сьогодні, повторне збереження того самого дня не множить streak
+    if last == today - timedelta(days=1):
+        profile.current_streak += 1
+    else:
+        profile.current_streak = 1  # пропущений день чи перший раз - лічильник з нуля
+
+    profile.last_active_date = today
+    profile.save()

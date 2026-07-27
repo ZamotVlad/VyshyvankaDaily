@@ -710,3 +710,80 @@ a.vd-card:hover {
     display: none !important;
   }
 }
+
+/* ---------- Статус-бар streak/тур на головній (залогінені) ---------- */
+
+.vd-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  padding: 12px 18px;
+  margin-bottom: 8px;
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  color: var(--vd-cream);
+  flex-wrap: wrap;
+}
+.vd-status-bar a {
+  color: var(--vd-red);
+}
+
+/* Коли статус-бар присутній (залогінений) - верхній відступ hero вже
+   зайвий, бо простір і так є від самого статус-бару. Для анонімних
+   (без статус-бару) padding-top у .vd-hero лишається як є. */
+.vd-status-bar + .vd-hero {
+  padding-top: 8px;
+}
+
+/* Виправлення: .vd-status-bar a (посилання в статус-барі) переважає
+   .vd-btn--primary за специфічністю CSS (клас+тег проти одного класу),
+   через що текст кнопки "Реєстрація" зливався з червоним фоном. */
+.vd-status-bar .vd-btn--primary {
+  color: var(--vd-cream) !important;
+}
+.vd-status-bar .vd-btn--primary:hover {
+  color: var(--vd-cream) !important;
+}
+
+/* ============================================================
+   Мобільний аудит (Stage 5, закриття Треку В) - виправлення для
+   вузьких екранів 320-375px, знайдені перечитуванням коду.
+   Потребує підтвердження на реальному пристрої/DevTools.
+   ============================================================ */
+
+@media (max-width: 480px) {
+  /* Орнамент у hero - на дуже вузьких екранах 520px максимальної
+     висоти займає весь перший екран, не лишаючи місця для тексту */
+  .vd-hero__art svg {
+    max-height: 340px;
+  }
+
+  /* Кнопка в status-bar (стрік/реєстрація) на вузькому екрані з
+     ms-auto виглядає відірваною на власному рядку - прибираємо
+     авто-відступ, лишаємо природний потік зліва направо */
+  .vd-status-bar .ms-auto {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  /* Захист сітки карток від горизонтального скролу на дуже
+     вузьких пристроях (320px) - зменшуємо мінімальну ширину
+     клітинки нижче типового значення */
+  .vd-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .vd-grid--wide {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Таблиці всередині статей блогу (вивід CKEditor) - захист від
+   переповнення на вузькому екрані, скрол лише в межах таблиці */
+.vd-prose table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}

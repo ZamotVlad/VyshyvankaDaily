@@ -395,3 +395,56 @@ class TourIndicatorTests(TestCase):
         response = self.client.get("/collection/")
         self.assertEqual(response.context["total_saved"], 2)
         self.assertEqual(response.context["tour_completed"], 1)
+
+
+class StreakTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон А", rotation_order=1)
+        self.user = get_user_model().objects.create_user(username="streaker", password="pass12345")
+
+    def test_first_save_sets_streak_to_one(self):
+        pattern = DailyPattern.objects.create(
+            date=timezone.localdate(),
+            region=self.region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+        self.client.force_login(self.user)
+        self.client.post(f"/pattern/{pattern.date}/save/")
+        self.user.profile.refresh_from_db()
+        self.assertEqual(self.user.profile.current_streak, 1)
+
+    def test_consecutive_day_increments_streak(self):
+        self.user.profile.current_streak = 3
+        self.user.profile.last_active_date = timezone.localdate() - timedelta(days=1)
+        self.user.profile.save()
+
+        today_pattern = DailyPattern.objects.create(
+            date=timezone.localdate(),
+            region=self.region,
+            seed="s3",
+            algorithm_version=1,
+            svg_content="<svg>3</svg>",
+        )
+        self.client.force_login(self.user)
+        self.client.post(f"/pattern/{today_pattern.date}/save/")
+        self.user.profile.refresh_from_db()
+        self.assertEqual(self.user.profile.current_streak, 4)
+
+    def test_gap_day_resets_streak_to_one(self):
+        pattern = DailyPattern.objects.create(
+            date=timezone.localdate(),
+            region=self.region,
+            seed="s4",
+            algorithm_version=1,
+            svg_content="<svg>4</svg>",
+        )
+        self.user.profile.current_streak = 10
+        self.user.profile.last_active_date = timezone.localdate() - timedelta(days=3)
+        self.user.profile.save()
+
+        self.client.force_login(self.user)
+        self.client.post(f"/pattern/{pattern.date}/save/")
+        self.user.profile.refresh_from_db()
+        self.assertEqual(self.user.profile.current_streak, 1)

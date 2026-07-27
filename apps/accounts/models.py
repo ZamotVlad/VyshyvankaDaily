@@ -24,6 +24,9 @@ class Profile(TimeStampedModel):
         help_text="Дублює вибір, збережений у сесії/cookie (необов'язково).",
     )
 
+    current_streak = models.PositiveIntegerField(default=0)
+    last_active_date = models.DateField(null=True, blank=True)
+
     class Meta:
         verbose_name = "Профіль"
         verbose_name_plural = "Профілі"

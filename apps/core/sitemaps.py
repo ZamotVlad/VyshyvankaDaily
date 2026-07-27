@@ -78,6 +78,8 @@ class StaticViewSitemap(Sitemap):
             "pages:about",
             "pages:faq",
             "pages:contact",
+            "pages:terms",
+            "pages:privacy",
         ]
 
     def location(self, item):
