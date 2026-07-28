@@ -3,7 +3,7 @@
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ request.path }}">
   {% get_current_language as CURRENT_LANGUAGE %}
-  <select name="language" onchange="this.form.submit()" aria-label="Language">
+  <select name="language" aria-label="Language">
     <option value="uk" {% if CURRENT_LANGUAGE == "uk" %}selected{% endif %}>Українська</option>
     <option value="en" {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>English</option>
   </select>

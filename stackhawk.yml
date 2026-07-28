@@ -1,0 +1,4 @@
+app:
+  applicationId: df9acc20-fbdd-415d-9cab-4b8b1dd1b34e
+  env: Development
+  host: http://host.docker.internal:9000

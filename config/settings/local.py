@@ -6,3 +6,4 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # локальної перевірки з DEBUG=False (інакше довелось би збирати щоразу).
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "host.docker.internal"]

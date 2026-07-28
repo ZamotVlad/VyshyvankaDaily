@@ -13,6 +13,7 @@
   --vd-cream: #ede6dc;
   --vd-muted: #a69b8d;
   --vd-border: #3a322d;
+  --vd-red-text: #e85a4a;
 
   /* Типографіка */
   --vd-font-display: "Unbounded", system-ui, sans-serif;
@@ -299,7 +300,7 @@ a.vd-card:hover {
   font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--vd-red);
+  color: var(--vd-red-text);
   margin-bottom: 10px;
 }
 .vd-hero__region {
@@ -329,7 +330,7 @@ a.vd-card:hover {
 }
 .vd-claim--documented {
   border-color: var(--vd-red);
-  color: var(--vd-red);
+  color: var(--vd-red-text);
 }
 
 /* Стрічка останніх днів */
@@ -728,7 +729,7 @@ a.vd-card:hover {
   flex-wrap: wrap;
 }
 .vd-status-bar a {
-  color: var(--vd-red);
+  color: var(--vd-red-text);
 }
 
 /* Коли статус-бар присутній (залогінений) - верхній відступ hero вже

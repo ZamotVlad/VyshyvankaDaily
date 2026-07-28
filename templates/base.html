@@ -11,6 +11,7 @@
 {% endif %}
 <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
 <meta name="author" content="VyshyvankaDaily">
+<meta name="description" content="{% block meta_description %}Щоденний генератор орнаменту української вишиванки з реальними джерелами символіки й традицій усіх 27 регіонів.{% endblock %}">
 <link rel="publisher" href="{% url 'patterns:home' %}">
 <link rel="icon" type="image/svg+xml" href="{% static 'logo/favicon.svg' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -145,5 +146,6 @@
 </footer>
 
 <script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/site.js' %}"></script>
 </body>
 </html>
