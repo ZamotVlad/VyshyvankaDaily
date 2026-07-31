@@ -17,24 +17,32 @@ class HideServerHeaderMiddleware:
 
 class ContentSecurityPolicyMiddleware:
     """
-    CSP: суворо для script-src (головний захист від XSS - шкідливий
-    JS не виконається, навіть якщо десь потрапить у сторінку), дозволено
-    unsafe-inline лише для style-src. Причина: частина стилів на сайті -
-    кольори регіонів/мотивів із бази даних, їх неможливо винести в
-    статичний CSS-клас наперед. Inline-стилі не можуть виконати код,
-    тому цей виняток низькоризиковий і є свідомим постійним рішенням,
-    не тимчасовим компромісом.
+    CSP: суворий для публічного сайту (script-src без unsafe-inline/
+    unsafe-eval - головний захист від XSS). Для адмінки (/vd/...) -
+    послаблений script-src, бо Unfold/Alpine.js вимагають unsafe-eval
+    для роботи. Адмінка - єдиний користувач (власник), не публічний
+    відвідувач, тому цей компроміс обмежений лише нею, не всім сайтом.
     """
+
+    ADMIN_PREFIX = "/vd/"
 
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
         response = self.get_response(request)
+
+        is_admin = request.path.startswith(self.ADMIN_PREFIX)
+        script_src = (
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com;"
+            if is_admin
+            else "script-src 'self' https://static.cloudflareinsights.com; "
+        )
+
         response["Content-Security-Policy"] = (
             "default-src 'self'; "
-            "script-src 'self' https://static.cloudflareinsights.com; "
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            + script_src
+            + "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
             "font-src 'self' https://fonts.gstatic.com; "
             "img-src 'self' data:; "
             "connect-src 'self'; "

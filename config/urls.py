@@ -22,7 +22,7 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("vd/", admin.site.urls),
     path("i18n/setlang/", set_language_view, name="set_language"),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
