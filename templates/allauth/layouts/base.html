@@ -1,0 +1,38 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block head_title %}{% endblock head_title %} - VyshyvankaDaily</title>
+  <link rel="stylesheet" href="{% static 'css/vd.css' %}">
+  <style>
+    body {
+      background: var(--vd-bg);
+      color: var(--vd-cream);
+      font-family: system-ui, sans-serif;
+      max-width: 640px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+    a { color: var(--vd-red-text); }
+    h1 { font-size: 32px; margin-bottom: 16px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 6px; }
+  </style>
+  {% block extra_head %}{% endblock extra_head %}
+</head>
+<body>
+  <p><a href="/">← VyshyvankaDaily</a></p>
+  {% block body %}
+    {% if messages %}
+      <div class="vd-muted" style="margin-bottom: 20px;">
+        <strong>{% translate "Повідомлення" %}:</strong>
+        <ul>{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+      </div>
+    {% endif %}
+    {% block content %}{% endblock content %}
+  {% endblock body %}
+  {% block extra_body %}{% endblock extra_body %}
+</body>
+</html>

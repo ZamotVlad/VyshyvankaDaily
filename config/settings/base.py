@@ -272,12 +272,12 @@ CKEDITOR_5_CONFIGS = {
             "|",
             "insertTable",
             "|",
-            "codeBlock",
-            "|",
             "sourceEditing",
         ],
     },
 }
+
+CKEDITOR_5_CUSTOM_CSS = "css/ckeditor5_admin_fix.css"
 CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "png"]
 CKEDITOR_5_MAX_FILE_SIZE = 5  # МБ (розділ 14.5 ТЗ — обмеження за розміром)
 

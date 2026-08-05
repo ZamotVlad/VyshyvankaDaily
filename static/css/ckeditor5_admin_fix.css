@@ -1,0 +1,48 @@
+/* Виправлення контрасту CKEditor5 у темній адмінці Unfold -
+   відома проблема бібліотеки (django-ckeditor-5, issue #66):
+   іконки й фон панелі зливаються в темній темі. Кольори взято
+   з тих самих токенів, що й основний дизайн сайту (vd.css). */
+
+.ck.ck-editor {
+  --ck-color-toolbar-background: #1c1815;
+  --ck-color-toolbar-border: #3a322d;
+  --ck-color-base-border: #3a322d;
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: #2c2621;
+  --ck-color-button-on-background: #c23b2e;
+  --ck-color-button-on-hover-background: #8e2c22;
+  --ck-color-button-on-color: #ede6dc;
+}
+
+.ck.ck-toolbar {
+  background: #1c1815 !important;
+  border-color: #3a322d !important;
+}
+
+.ck.ck-toolbar .ck-icon {
+  color: #ede6dc;
+}
+
+.ck.ck-button:not(.ck-disabled):hover {
+  background: #2c2621 !important;
+}
+
+.ck.ck-content {
+  background: #ede6dc !important;
+  color: #1c1815 !important;
+  min-height: 260px;
+}
+
+.ck.ck-dropdown__panel,
+.ck.ck-list {
+  background: #241f1b !important;
+  border-color: #3a322d !important;
+}
+
+.ck.ck-list__item .ck-button {
+  color: #ede6dc !important;
+}
+
+.ck.ck-list__item .ck-button:hover {
+  background: #2c2621 !important;
+}

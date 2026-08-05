@@ -38,7 +38,16 @@ def _tour_progress(user):
     return len(tour_region_ids), Region.objects.verified().count()
 
 
+FAQ_HOME_QUESTIONS = [
+    "Звідки береться орнамент, який показує сайт щодня?",
+    "Чому орнамент змінюється, якщо регіон повторюється?",
+    "Навіщо реєструватися, якщо орнамент дня доступний і без акаунта?",
+]
+
+
 def home_view(request):
+    from apps.pages.models import FAQItem
+
     today = timezone.localdate()
     pattern = generate_daily_pattern(
         today,
@@ -52,11 +61,15 @@ def home_view(request):
         .order_by("-date")
     )
 
+    faq_highlights = list(FAQItem.objects.filter(question_uk__in=FAQ_HOME_QUESTIONS))
+    faq_highlights.sort(key=lambda item: FAQ_HOME_QUESTIONS.index(item.question_uk))
+
     context = {
         "pattern": pattern,
         "claim_type": pattern.region.get_claim_type(),
         "ribbon": ribbon,
         "is_saved": _is_saved_by(request.user, pattern),
+        "faq_highlights": faq_highlights,
     }
 
     if request.user.is_authenticated:

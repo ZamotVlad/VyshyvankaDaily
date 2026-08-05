@@ -1025,3 +1025,105 @@ a.vd-card:hover {
   font-size: 13px;
   color: var(--vd-muted);
 }
+
+/* ---------- Плівка фото регіону + лайтбокс ---------- */
+
+.vd-photo-strip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.vd-photo-strip__item {
+  flex: 0 0 110px;
+  height: 110px;
+  padding: 0;
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  overflow: hidden;
+  background: var(--vd-surface);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.vd-photo-strip__item:hover,
+.vd-photo-strip__item:focus-visible {
+  border-color: var(--vd-red);
+}
+.vd-photo-strip__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vd-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 24, 21, 0.94);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.vd-lightbox[hidden] {
+  display: none;
+}
+.vd-lightbox__img {
+  max-width: min(900px, 92vw);
+  max-height: 78vh;
+  border-radius: var(--vd-radius);
+  display: block;
+}
+.vd-lightbox__caption {
+  color: var(--vd-muted);
+  margin-top: 14px;
+  font-size: 14px;
+  text-align: center;
+  max-width: 700px;
+}
+.vd-lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: 1px solid var(--vd-border);
+  color: var(--vd-cream);
+  font-size: 22px;
+  line-height: 1;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--vd-radius);
+  cursor: pointer;
+}
+.vd-lightbox__close:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-red);
+}
+
+/* Пом'якшення стандартних елементів allauth (email.html та подібні
+   сторінки, які ми свідомо не переписуємо структурно через
+   ризик несумісності версій) - лише косметика, логіку не чіпає. */
+.allauth-form-group,
+form[id^="email_list"] .form-group,
+form[id^="email_list"] fieldset {
+  margin-bottom: 14px;
+}
+form[id^="email_list"] button,
+form[id^="email_list"] input[type="submit"] {
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 9px 16px;
+  border-radius: var(--vd-radius);
+  border: 1px solid var(--vd-border);
+  background: transparent;
+  color: var(--vd-cream);
+  cursor: pointer;
+}
+form[id^="email_list"] button:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-red);
+}

@@ -18,5 +18,9 @@
     {% endfor %}
     <button type="submit" class="vd-btn vd-btn--primary">{% translate "Зберегти" %}</button>
   </form>
+
+  <div class="mt-4 pt-3" style="border-top: 1px solid var(--vd-border);">
+    <p class="vd-small"><a href="{% url 'account_change_password' %}">{% translate "Змінити пароль" %}</a></p>
+  </div>
 </div>
 {% endblock %}

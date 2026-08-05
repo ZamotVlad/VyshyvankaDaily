@@ -98,6 +98,16 @@ class Region(TimeStampedModel, SlugModel):
         blank=True,
         help_text="Цільове ключове слово/фраза для цієї сторінки (SEO).",
     )
+    seo_title = models.CharField(
+        max_length=70,
+        blank=True,
+        help_text="Заголовок сторінки для пошукових систем. Автоматично додає: - VyshyvankaDaily",
+    )
+    seo_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="Опис сторінки для пошукових систем (SEO). Порожнє - береться з опису символіки.",
+    )
     dominant_colors = models.JSONField(
         help_text='Список кольорових кодів (наприклад, ["#FF6B35", "#004E89"]).',
     )
@@ -343,3 +353,40 @@ class SavedPattern(TimeStampedModel):
 
     def __str__(self):
         return f"{self.user} — {self.pattern}"
+
+
+class RegionPhoto(TimeStampedModel):
+    """
+    Реальне фото вишиванки регіону (не згенерований орнамент) - плівка
+    мініатюр на сторінці регіону, повний розмір по кліку. Окремо від
+    DailyPattern: це фотографії, підібрані вручну, з перевіреним
+    джерелом/ліцензією, не автоматична генерація.
+    """
+
+    region = models.ForeignKey(
+        "patterns.Region",
+        on_delete=models.CASCADE,
+        related_name="photos",
+    )
+    thumbnail_url = models.URLField(
+        help_text="Маленьке зображення для плівки мініатюр на сторінці регіону.",
+    )
+    image_url = models.URLField(
+        help_text="Повнорозмірне зображення, що відкривається по кліку.",
+    )
+    caption = models.CharField(max_length=255, blank=True)
+    source_note = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Джерело/ліцензія фото - автор чи звідки взято. Перевір права на використання.",
+    )
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Фото регіону"
+        verbose_name_plural = "Фото регіону"
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return f"{self.region.name} - фото {self.pk}"

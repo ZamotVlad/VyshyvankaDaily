@@ -2,10 +2,15 @@
 {% load i18n %}
 {% load seo_tags %}
 
-{% block title %}{{ region.name }} - VyshyvankaDaily{% endblock %}
+{% block title %}{{ region.seo_title|default:region.name|add:" - VyshyvankaDaily" }}{% endblock %}
 
 {% block extra_head %}
 {% jsonld_breadcrumbs region.breadcrumbs %}
+{% if region.target_keyword %}<meta name="keywords" content="{{ region.target_keyword }}">{% endif %}
+{% if region.seo_description %}<meta name="description" content="{{ region.seo_description }}">{% endif %}
+<meta property="og:title" content="{{ region.seo_title|default:region.name }}">
+<meta property="og:description" content="{{ region.seo_description|default:region.symbolism_description|truncatewords:25 }}">
+<meta property="og:type" content="article">
 {% endblock %}
 
 {% block content %}
@@ -27,6 +32,19 @@
 <div class="vd-prose mt-3">
   {{ region.symbolism_description|safe }}
 </div>
+
+{% if region.photos.exists %}
+  <h2 class="vd-section-title">{% translate "Фотографії вишиванки" %}</h2>
+  <div class="vd-photo-strip">
+    {% for photo in region.photos.all %}
+      {% if photo.is_active %}
+        <button type="button" class="vd-photo-strip__item" data-full="{{ photo.image_url }}" data-caption="{{ photo.caption }}">
+          <img src="{{ photo.thumbnail_url }}" alt="{{ photo.caption|default:region.name }}" loading="lazy">
+        </button>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
 
 {% if region.blog_posts.exists %}
   <h2 class="vd-section-title">{% translate "Статті про цей регіон" %}</h2>
@@ -81,4 +99,9 @@
 {% else %}
   <div class="vd-empty">{% translate "Ще немає жодного орнаменту для цього регіону." %}</div>
 {% endif %}
+<div class="vd-lightbox" id="photo-lightbox" hidden>
+  <button type="button" class="vd-lightbox__close" aria-label="{% translate 'Закрити' %}">×</button>
+  <img class="vd-lightbox__img" src="" alt="">
+  <div class="vd-lightbox__caption"></div>
+</div>
 {% endblock %}

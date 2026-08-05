@@ -3,7 +3,13 @@ from django.utils.html import format_html
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin
 
-from .models import DailyPattern, Motif, Region, Source
+from .models import DailyPattern, Motif, Region, RegionPhoto, Source
+
+
+class RegionPhotoInline(admin.TabularInline):
+    model = RegionPhoto
+    extra = 1
+    fields = ("thumbnail_url", "image_url", "caption", "source_note", "order", "is_active")
 
 
 @admin.register(Region)
@@ -21,6 +27,7 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
     search_fields = ("name_uk", "name_en", "slug")
     prepopulated_fields = {"slug": ("name_uk",)}
     filter_horizontal = ("sources",)
+    inlines = [RegionPhotoInline]
     ordering = ("rotation_order",)
     list_per_page = 30
     actions = ["mark_verified", "mark_pending"]
@@ -35,7 +42,7 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
         (
             "SEO",
             {
-                "fields": ("target_keyword",),
+                "fields": ("target_keyword", "seo_title", "seo_description"),
                 "classes": ("collapse",),
             },
         ),

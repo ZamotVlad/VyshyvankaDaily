@@ -5,6 +5,10 @@
 
 {% block meta_description %}Шукаєте орнамент вишиванки своєї області? Дізнавайтесь значення візерунків та їх історію з VyshyvankaDaily! Новий орнамент щодня - зберіть свою колекцію!{% endblock %}
 
+{% block extra_head %}
+<meta name="keywords" content="орнамент вишиванки, вишиванки різних регіонів україни, орнаменти вишиванок по регіонах">
+{% endblock %}
+
 {% block content %}
 {% if user.is_authenticated %}
   <div class="vd-status-bar">
@@ -79,4 +83,16 @@
     </div>
   </div>
 </section>
+{% if faq_highlights %}
+<section class="vd-section-title" style="margin-top: 56px;">{% translate "Часті запитання" %}</section>
+<div class="vd-faq mb-3">
+  {% for item in faq_highlights %}
+    <div class="vd-faq__item" style="cursor: default;">
+      <div class="vd-faq__q" style="cursor: default;">{{ item.question }}</div>
+      <div class="vd-faq__a" style="padding-top: 0;">{{ item.answer }}</div>
+    </div>
+  {% endfor %}
+</div>
+<a href="{% url 'pages:faq' %}" class="vd-btn vd-btn--ghost">{% translate "Усі питання" %} →</a>
+{% endif %}
 {% endblock %}
