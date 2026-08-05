@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 from apps.core.models import SlugModel, TimeStampedModel
 
@@ -88,8 +89,9 @@ class Region(TimeStampedModel, SlugModel):
         max_length=255,
         help_text="Назва регіону, наприклад «Полтавщина».",
     )
-    symbolism_description = models.TextField(
+    symbolism_description = CKEditor5Field(
         help_text="Розгорнутий опис значення кольорів і мотивів саме цього регіону.",
+        config_name="default",
     )
     target_keyword = models.CharField(
         max_length=255,
@@ -129,6 +131,18 @@ class Region(TimeStampedModel, SlugModel):
         verbose_name = "Регіон"
         verbose_name_plural = "Регіони"
         ordering = ["rotation_order"]
+
+    def save(self, *args, **kwargs):
+        import bleach
+        from django.conf import settings
+
+        self.symbolism_description = bleach.clean(
+            self.symbolism_description,
+            tags=settings.ALLOWED_BLOG_HTML_TAGS,
+            attributes=settings.ALLOWED_BLOG_HTML_ATTRIBUTES,
+            strip=True,
+        )
+        super().save(*args, **kwargs)
 
     def get_claim_type(self) -> str:
         """

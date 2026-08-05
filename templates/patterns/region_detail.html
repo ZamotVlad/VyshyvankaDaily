@@ -25,7 +25,7 @@
 {% endif %}
 
 <div class="vd-prose mt-3">
-  <p>{{ region.symbolism_description }}</p>
+  {{ region.symbolism_description|safe }}
 </div>
 
 {% if region.blog_posts.exists %}
