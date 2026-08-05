@@ -57,7 +57,12 @@
 <section class="vd-landing" id="about-project">
   <button type="button" class="vd-landing__toggle" aria-expanded="false" aria-controls="landing-body">
     <span>{% translate "Що таке VyshyvankaDaily" %}</span>
-    <span class="vd-landing__arrow" aria-hidden="true">▾</span>
+    <span class="vd-landing__toggle-right">
+      <span id="landing-toggle-text"
+            data-more="{% translate 'Показати більше' %}"
+            data-less="{% translate 'Згорнути' %}">{% translate "Показати більше" %}</span>
+      <span class="vd-landing__arrow" aria-hidden="true">▾</span>
+    </span>
   </button>
 
   <div id="landing-body" class="vd-landing__body">

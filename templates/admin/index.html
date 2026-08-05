@@ -44,7 +44,7 @@
     <ul class="text-sm">
       {% for post in vd_recent_posts %}
         <li class="py-1 border-b border-base-100 dark:border-base-800">
-          <a href="/admin/blog/blogpost/{{ post.pk }}/change/" class="text-primary-600">{{ post.title }}</a>
+          <a href="/vd/blog/blogpost/{{ post.pk }}/change/" class="text-primary-600">{{ post.title }}</a>
         </li>
       {% empty %}
         <li class="text-base-500">{% translate "Ще немає опублікованих статей." %}</li>

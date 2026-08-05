@@ -91,6 +91,11 @@ class Region(TimeStampedModel, SlugModel):
     symbolism_description = models.TextField(
         help_text="Розгорнутий опис значення кольорів і мотивів саме цього регіону.",
     )
+    target_keyword = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Цільове ключове слово/фраза для цієї сторінки (SEO).",
+    )
     dominant_colors = models.JSONField(
         help_text='Список кольорових кодів (наприклад, ["#FF6B35", "#004E89"]).',
     )

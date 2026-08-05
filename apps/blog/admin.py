@@ -20,7 +20,14 @@ class BlogCategoryAdmin(TranslationAdmin, ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(TranslationAdmin, ModelAdmin):
-    list_display = ("title", "status_badge", "post_type", "category", "published_at")
+    list_display = (
+        "title",
+        "status_badge",
+        "post_type",
+        "category",
+        "published_at",
+        "keyword_badge",
+    )
     list_filter = ("status", "post_type", "category")
     search_fields = ("title_uk", "title_en")
     prepopulated_fields = {"slug": ("title_uk",)}
@@ -51,7 +58,7 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
         (
             "SEO",
             {
-                "fields": ("seo_title", "seo_description"),
+                "fields": ("seo_title", "seo_description", "target_keyword"),
                 "classes": ("collapse",),
             },
         ),
@@ -72,6 +79,15 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
             "#3A7D2C" if published else "#A69B8D",
             obj.get_status_display(),
         )
+
+    @admin.display(description="Ключове слово")
+    def keyword_badge(self, obj):
+        if obj.target_keyword:
+            return format_html(
+                '<span style="color: #3A7D2C;">{}</span>',
+                obj.target_keyword,
+            )
+        return format_html('<span style="color: #C23B2E;">—</span>')
 
 
 @admin.register(GuestPostSubmission)

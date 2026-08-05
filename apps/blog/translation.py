@@ -14,4 +14,4 @@ class BlogPostTranslationOptions(TranslationOptions):
     # django-modeltranslation (відоме, задокументоване обмеження бібліотеки,
     # issue #576 у репозиторії modeltranslation). Тіло статті спільне для
     # обох мов; перекладними лишаються тільки текстові поля.
-    fields = ("title", "excerpt", "seo_title", "seo_description")
+    fields = ("title", "excerpt", "seo_title", "seo_description", "target_keyword")

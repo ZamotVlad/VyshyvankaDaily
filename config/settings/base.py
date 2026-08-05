@@ -212,48 +212,42 @@ UNFOLD = {
             {
                 "title": "Контент дня",
                 "items": [
-                    {"title": "Щоденні патерни", "link": "/admin/patterns/dailypattern/"},
+                    {"title": "Щоденні патерни", "link": "/vd/patterns/dailypattern/"},
                 ],
             },
             {
                 "title": "Довідники",
                 "items": [
-                    {"title": "Регіони", "link": "/admin/patterns/region/"},
-                    {"title": "Мотиви", "link": "/admin/patterns/motif/"},
-                    {"title": "Джерела", "link": "/admin/patterns/source/"},
+                    {"title": "Регіони", "link": "/vd/patterns/region/"},
+                    {"title": "Мотиви", "link": "/vd/patterns/motif/"},
+                    {"title": "Джерела", "link": "/vd/patterns/source/"},
                 ],
             },
             {
                 "title": "Блог",
                 "items": [
-                    {"title": "Статті", "link": "/admin/blog/blogpost/"},
-                    {"title": "Категорії статей", "link": "/admin/blog/blogcategory/"},
+                    {"title": "Статті", "link": "/vd/blog/blogpost/"},
+                    {"title": "Категорії статей", "link": "/vd/blog/blogcategory/"},
                     {
                         "title": "Заявки на гостьові пости",
-                        "link": "/admin/blog/guestpostsubmission/",
+                        "link": "/vd/blog/guestpostsubmission/",
                     },
                 ],
             },
             {
                 "title": "Спільнота",
                 "items": [
-                    {"title": "Користувачі", "link": "/admin/auth/user/"},
-                    {"title": "Профілі", "link": "/admin/accounts/profile/"},
-                    {"title": "Збережені патерни", "link": "/admin/patterns/savedpattern/"},
-                ],
-            },
-            {
-                "title": "Звернення",
-                "items": [
-                    {"title": "Контактні повідомлення", "link": "/admin/pages/contactmessage/"},
+                    {"title": "Користувачі", "link": "/vd/auth/user/"},
+                    {"title": "Профілі", "link": "/vd/accounts/profile/"},
+                    {"title": "Збережені патерни", "link": "/vd/patterns/savedpattern/"},
                 ],
             },
             {
                 "title": "Сторінки",
                 "items": [
-                    {"title": "Статичні сторінки", "link": "/admin/pages/staticpage/"},
-                    {"title": "Категорії FAQ", "link": "/admin/pages/faqcategory/"},
-                    {"title": "Пункти FAQ", "link": "/admin/pages/faqitem/"},
+                    {"title": "Статичні сторінки", "link": "/vd/pages/staticpage/"},
+                    {"title": "Категорії FAQ", "link": "/vd/pages/faqcategory/"},
+                    {"title": "Пункти FAQ", "link": "/vd/pages/faqitem/"},
                 ],
             },
         ],

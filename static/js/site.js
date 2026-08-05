@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
       var isOpen = body.classList.toggle("is-open");
       landingToggle.classList.toggle("is-open");
       landingToggle.setAttribute("aria-expanded", isOpen);
+
+      var toggleText = document.getElementById("landing-toggle-text");
+      if (toggleText) {
+        toggleText.textContent = isOpen ? toggleText.dataset.less : toggleText.dataset.more;
+      }
     });
   }
 
@@ -17,4 +22,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-

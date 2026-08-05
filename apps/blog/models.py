@@ -98,6 +98,11 @@ class BlogPost(TimeStampedModel, SlugModel):
     view_count = models.PositiveIntegerField(default=0)
     seo_title = models.CharField(max_length=255, blank=True)
     seo_description = models.TextField(blank=True)
+    target_keyword = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Цільове ключове слово/фраза для цієї статті (SEO).",
+    )
 
     slug_source_field = "title_uk"
 

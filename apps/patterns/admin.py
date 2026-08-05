@@ -15,6 +15,7 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
         "rotation_order",
         "motif_count",
         "palette_preview",
+        "keyword_badge",
     )
     list_filter = ("verification_status", "is_active")
     search_fields = ("name_uk", "name_en", "slug")
@@ -29,6 +30,13 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
             "Основне",
             {
                 "fields": ("name", "slug", "is_active", "rotation_order"),
+            },
+        ),
+        (
+            "SEO",
+            {
+                "fields": ("target_keyword",),
+                "classes": ("collapse",),
             },
         ),
         (
@@ -59,6 +67,15 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
             "#3A7D2C" if verified else "#C23B2E",
             obj.get_verification_status_display(),
         )
+
+    @admin.display(description="Ключове слово")
+    def keyword_badge(self, obj):
+        if obj.target_keyword:
+            return format_html(
+                '<span style="color: #3A7D2C;">{}</span>',
+                obj.target_keyword,
+            )
+        return format_html('<span style="color: #C23B2E;">—</span>')
 
     @admin.display(description="Мотивів")
     def motif_count(self, obj):

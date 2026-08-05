@@ -630,7 +630,13 @@ a.vd-card:hover {
 .vd-landing__toggle:hover {
   color: var(--vd-cream);
 }
+.vd-landing__toggle-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .vd-landing__arrow {
+  font-size: 16px;
   transition: transform 0.25s ease;
 }
 .vd-landing__toggle.is-open .vd-landing__arrow {
@@ -787,4 +793,28 @@ a.vd-card:hover {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
+}
+
+/* ---------- Пошук на блозі - однорядна форма, щоб випадаючий список
+   категорій не лягав поверх кнопки "Шукати" (браузерний select
+   рендерить список окремим шаром над сторінкою, не в потоці) ---------- */
+
+.vd-form.vd-search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 620px;
+}
+.vd-form.vd-search-bar input[type="text"] {
+  flex: 1 1 220px;
+  width: auto;
+}
+.vd-form.vd-search-bar select {
+  flex: 0 1 200px;
+  width: auto;
+}
+.vd-form.vd-search-bar button {
+  flex: 0 0 auto;
+  margin-top: 0;
 }

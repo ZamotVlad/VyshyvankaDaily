@@ -5,17 +5,17 @@
 
 {% block content %}
 <h1>{% translate "Блог" %}</h1>
-<p class="vd-muted mb-4">{% translate "Дослідження, символіка, історії регіонів." %}</p>
+<p class="vd-muted mb-4">{% translate "Про вишиванку, українську культуру - і все, що між ними." %}</p>
 
-<form method="get" class="vd-form mb-4" style="max-width: 400px;">
-  <input type="text" name="q" value="{{ query }}" placeholder="{% translate 'Пошук по блогу' %}" class="mb-2">
+<form method="get" class="vd-form vd-search-bar mb-4">
+  <input type="text" name="q" value="{{ query }}" placeholder="{% translate 'Пошук по блогу' %}">
   <select name="category" onchange="this.form.submit()">
     <option value="">{% translate "Усі категорії" %}</option>
     {% for category in categories %}
       <option value="{{ category.slug }}" {% if category.slug == selected_category_slug %}selected{% endif %}>{{ category.name }}</option>
     {% endfor %}
   </select>
-  <button type="submit" class="vd-btn vd-btn--ghost mt-2">{% translate "Шукати" %}</button>
+  <button type="submit" class="vd-btn vd-btn--ghost">{% translate "Шукати" %}</button>
 </form>
 
 {% if page_obj %}

@@ -5,7 +5,7 @@ from .models import Motif, Region
 
 @register(Region)
 class RegionTranslationOptions(TranslationOptions):
-    fields = ("name", "symbolism_description")
+    fields = ("name", "symbolism_description", "target_keyword")
 
 
 @register(Motif)
