@@ -2,33 +2,40 @@
 {% load i18n %}
 {% load seo_tags %}
 
-{% block title %}FAQ - VyshyvankaDaily{% endblock %}
+{% block title %}{% translate "Часті запитання" %} - VyshyvankaDaily{% endblock %}
 
 {% block extra_head %}
 {% jsonld_faq categories %}
 {% endblock %}
 
 {% block content %}
-<h1>{% translate "Часті запитання" %}</h1>
+<div class="vd-page-head">
+  <span class="vd-page-head__eyebrow">{% translate "Довідка" %}</span>
+  <h1>{% translate "Часті запитання" %}</h1>
+  <p class="vd-page-head__lede">{% translate "Як працює орнамент дня, звідки беруться описи символіки й навіщо тут акаунт." %}</p>
+  <div class="vd-stitch-rule vd-stitch-rule--short"></div>
+</div>
 
 {% if categories %}
-  {% for category in categories %}
-    <h2 class="vd-section-title">{{ category.name }}</h2>
-    <div class="accordion" id="faq{{ category.pk }}">
-      {% for item in category.items.all %}
-        <div class="vd-card mb-2">
-          <button class="w-100 text-start vd-card__body" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#faqitem{{ item.pk }}"
-                  style="background: none; border: none; color: var(--vd-cream); font-family: var(--vd-font-display); font-size: 15px;">
-            {{ item.question }}
-          </button>
-          <div id="faqitem{{ item.pk }}" class="collapse" data-bs-parent="#faq{{ category.pk }}">
-            <div class="vd-card__body pt-0 vd-muted">{{ item.answer }}</div>
+  <div class="vd-faq">
+    {% for category in categories %}
+      <h2 class="vd-section-title">{{ category.name }}</h2>
+      <div class="accordion" id="faq{{ category.pk }}">
+        {% for item in category.items.all %}
+          <div class="vd-faq__item">
+            <button class="vd-faq__q" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#faqitem{{ item.pk }}"
+                    aria-expanded="false" aria-controls="faqitem{{ item.pk }}">
+              {{ item.question }}
+            </button>
+            <div id="faqitem{{ item.pk }}" class="collapse" data-bs-parent="#faq{{ category.pk }}">
+              <div class="vd-faq__a">{{ item.answer }}</div>
+            </div>
           </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% endfor %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
 {% else %}
   <div class="vd-empty">{% translate "Розділ поки наповнюється." %}</div>
 {% endif %}

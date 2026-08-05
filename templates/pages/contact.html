@@ -4,10 +4,38 @@
 {% block title %}{% translate "Контакти" %} - VyshyvankaDaily{% endblock %}
 
 {% block content %}
-<div class="vd-prose">
+<div class="vd-page-head">
+  <span class="vd-page-head__eyebrow">{% translate "Зворотний зв'язок" %}</span>
   <h1>{% translate "Контакти" %}</h1>
-  <p>{% translate "Питання щодо проєкту, виправлення до опису регіону чи пропозиції співпраці - пишіть напряму на пошту нижче." %}</p>
-  <p><a href="mailto:hello@example.com">hello@example.com</a></p>
-  <p class="vd-muted vd-small">{% translate "Адресу буде замінено на реальну перед публічним запуском." %}</p>
+  <p class="vd-page-head__lede">{% translate "Пишіть напряму на пошту з питаннями, виправленнями чи пропозиціями співпраці." %}</p>
+  <div class="vd-stitch-rule vd-stitch-rule--short"></div>
+</div>
+
+<div class="vd-contact-card">
+  <div class="vd-contact-card__label">{% translate "Електронна пошта" %}</div>
+  <a class="vd-contact-card__mail" href="mailto:vyshyvankadaily@gmail.com">vyshyvankadaily@gmail.com</a>
+</div>
+
+<div class="vd-doc">
+  <section>
+    <h2>{% translate "З чим зазвичай пишуть" %}</h2>
+    <ul>
+      <li>{% translate "Неточність в описі символіки регіону. Вкажіть, що саме не так і на яке джерело спиратись." %}</li>
+      <li>{% translate "Питання щодо ваших даних або прохання видалити акаунт." %}</li>
+      <li>{% translate "Технічна помилка на сайті. Опишіть, що ви робили й що пішло не так." %}</li>
+      <li>{% translate "Запит на коментар, згадку чи цитування проєкту в іншому матеріалі." %}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>{% translate "Що краще надіслати через окрему форму" %}</h2>
+    <p>{% translate "Якщо ви хочете запропонувати матеріал для блогу, скористайтесь формою «Запропонувати матеріал». Заявка одразу потрапляє в чергу розгляду з усіма потрібними полями, і загубити її складніше, ніж лист." %}</p>
+    <p><a href="{% url 'blog:propose' %}">{% translate "Запропонувати матеріал" %}</a></p>
+  </section>
+
+  <section>
+    <h2>{% translate "Чого ми не робимо" %}</h2>
+    <p>{% translate "Ми не продаємо вишиванки й не приймаємо замовлення на вишивку." %}</p>
+  </section>
 </div>
 {% endblock %}

@@ -818,3 +818,210 @@ a.vd-card:hover {
   flex: 0 0 auto;
   margin-top: 0;
 }
+
+/* ============================================================
+   Статичні сторінки: Про нас, Контакти, FAQ, юридичні тексти.
+   Сигнатура - лічильний стібковий рядок (рахункова вишивка).
+   ============================================================ */
+
+.vd-page-head {
+  max-width: 780px;
+  margin-bottom: 44px;
+}
+.vd-page-head__eyebrow {
+  display: block;
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vd-red-text);
+  margin-bottom: 14px;
+}
+.vd-page-head h1 {
+  margin-bottom: 0.35em;
+}
+.vd-page-head__lede {
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--vd-muted);
+  margin-bottom: 0;
+}
+
+/* Стібковий рядок */
+.vd-stitch-rule {
+  height: 6px;
+  margin-top: 22px;
+  background-image: repeating-linear-gradient(90deg, var(--vd-red) 0 6px, transparent 6px 15px);
+  opacity: 0.8;
+}
+.vd-stitch-rule--short {
+  max-width: 130px;
+}
+
+/* Документ зі структурованими розділами */
+.vd-doc {
+  max-width: 780px;
+}
+.vd-doc section {
+  margin-bottom: 36px;
+  scroll-margin-top: 96px;
+}
+.vd-doc section h2 {
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+.vd-doc__num {
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--vd-red-text);
+  margin-right: 10px;
+}
+.vd-doc p {
+  margin-bottom: 1em;
+}
+.vd-doc ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1em;
+}
+.vd-doc li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 9px;
+}
+.vd-doc li::before {
+  content: "\2715";
+  position: absolute;
+  left: 2px;
+  top: 1px;
+  font-size: 11px;
+  color: var(--vd-red);
+}
+
+/* Зміст юридичних сторінок */
+.vd-toc {
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  padding: 20px 22px;
+  margin-bottom: 44px;
+  max-width: 780px;
+}
+.vd-toc h2 {
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  margin: 0 0 14px;
+}
+.vd-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  column-gap: 30px;
+}
+.vd-toc li {
+  font-size: 14px;
+  margin-bottom: 7px;
+  break-inside: avoid;
+}
+.vd-toc a {
+  color: var(--vd-cream);
+}
+.vd-toc a:hover {
+  color: var(--vd-red-text);
+}
+@media (max-width: 640px) {
+  .vd-toc ol {
+    columns: 1;
+  }
+}
+
+/* Картка пошти на сторінці контактів */
+.vd-contact-card {
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-left: 3px solid var(--vd-red);
+  border-radius: var(--vd-radius);
+  padding: 24px 26px;
+  margin-bottom: 40px;
+  max-width: 780px;
+}
+.vd-contact-card__label {
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+}
+.vd-contact-card__mail {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--vd-font-display);
+  font-size: clamp(17px, 3vw, 25px);
+  color: var(--vd-cream);
+  word-break: break-word;
+}
+.vd-contact-card__mail:hover {
+  color: var(--vd-red-text);
+}
+
+/* FAQ */
+.vd-faq {
+  max-width: 820px;
+}
+.vd-faq__item {
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.vd-faq__item:hover {
+  border-color: #4a403a;
+}
+.vd-faq__q {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--vd-cream);
+  font-family: var(--vd-font-display);
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 16px 54px 16px 20px;
+  cursor: pointer;
+  position: relative;
+}
+.vd-faq__q::after {
+  content: "+";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--vd-red-text);
+}
+.vd-faq__q[aria-expanded="true"]::after {
+  content: "\2212";
+}
+.vd-faq__q:focus-visible {
+  outline: 2px solid var(--vd-red);
+  outline-offset: -2px;
+}
+.vd-faq__a {
+  padding: 0 20px 18px;
+  color: var(--vd-muted);
+}
+
+.vd-doc__updated {
+  margin-top: 44px;
+  padding-top: 18px;
+  border-top: 1px solid var(--vd-border);
+  font-size: 13px;
+  color: var(--vd-muted);
+}

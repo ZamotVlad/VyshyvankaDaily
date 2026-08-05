@@ -32,8 +32,6 @@
 
     <nav class="vd-header__desktop" aria-label="{% translate 'Основна навігація' %}">
       <ul class="vd-nav">
-        <li><a href="{% url 'patterns:archive' %}">{% translate "Архів" %}</a></li>
-        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
         <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'patterns:region_list' %}">{% translate "Регіони" %}</a></li>
@@ -41,6 +39,8 @@
         <li><a href="{% url 'pages:about' %}">{% translate "Про нас" %}</a></li>
         <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'pages:contact' %}">{% translate "Контакти" %}</a></li>
+        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
+        <li><a href="{% url 'patterns:archive' %}">{% translate "Архів" %}</a></li>
       </ul>
     </nav>
 
