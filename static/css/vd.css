@@ -98,7 +98,7 @@ a:hover {
   align-items: center;
 }
 .site-logo__svg {
-  height: 32px;
+  height: 36px;
   width: auto;
 }
 
@@ -113,7 +113,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 14px;
   padding: 16px 0;
 }
 
@@ -130,11 +130,11 @@ a:hover {
 }
 .vd-nav a {
   font-family: var(--vd-font-display);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 12px;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--vd-cream);
-  padding: 8px 13px;
+  padding: 8px 15px;
   position: relative;
   white-space: nowrap;
 }
@@ -170,7 +170,7 @@ a:hover {
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--vd-cream);
-  padding: 8px 12px;
+  padding: 8px 9px;
 }
 .vd-auth a:hover {
   color: var(--vd-red);
@@ -186,15 +186,33 @@ a:hover {
   flex-shrink: 0;
 }
 
-.vd-lang select {
-  background: var(--vd-surface);
-  color: var(--vd-cream);
-  border: 1px solid var(--vd-border);
+.vd-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.vd-lang__form {
+  display: inline;
+}
+.vd-lang__btn {
+  background: none;
+  border: none;
+  color: var(--vd-muted);
   font-family: var(--vd-font-display);
-  font-size: 11px;
-  border-radius: var(--vd-radius);
-  padding: 6px 8px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  padding: 6px 4px;
   cursor: pointer;
+}
+.vd-lang__btn:hover {
+  color: var(--vd-cream);
+}
+.vd-lang__btn.is-active {
+  color: var(--vd-red);
+}
+.vd-lang__sep {
+  color: var(--vd-border);
+  font-size: 12px;
 }
 
 /* ---------- Кнопки ---------- */

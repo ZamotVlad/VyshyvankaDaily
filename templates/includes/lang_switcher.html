@@ -1,10 +1,17 @@
 {% load i18n %}
-<form action="{% url 'set_language' %}" method="post" class="vd-lang mb-0">
-  {% csrf_token %}
-  <input name="next" type="hidden" value="{{ request.path }}">
-  {% get_current_language as CURRENT_LANGUAGE %}
-  <select name="language" aria-label="Language">
-    <option value="uk" {% if CURRENT_LANGUAGE == "uk" %}selected{% endif %}>Українська</option>
-    <option value="en" {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>English</option>
-  </select>
-</form>
+{% get_current_language as CURRENT_LANGUAGE %}
+<div class="vd-lang mb-0">
+  <form action="{% url 'set_language' %}" method="post" class="vd-lang__form">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.path }}">
+    <input name="language" type="hidden" value="uk">
+    <button type="submit" class="vd-lang__btn {% if CURRENT_LANGUAGE == 'uk' %}is-active{% endif %}">UA</button>
+  </form>
+  <span class="vd-lang__sep" aria-hidden="true">/</span>
+  <form action="{% url 'set_language' %}" method="post" class="vd-lang__form">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.path }}">
+    <input name="language" type="hidden" value="en">
+    <button type="submit" class="vd-lang__btn {% if CURRENT_LANGUAGE == 'en' %}is-active{% endif %}">EN</button>
+  </form>
+</div>
