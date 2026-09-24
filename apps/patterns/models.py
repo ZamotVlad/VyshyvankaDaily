@@ -113,6 +113,7 @@ class Region(TimeStampedModel, SlugModel):
     )
     shirt_cut_type = models.CharField(
         max_length=255,
+        blank=True,
         help_text="Особливості крою сорочки (наразі інформаційне поле).",
     )
     rotation_order = models.IntegerField(
