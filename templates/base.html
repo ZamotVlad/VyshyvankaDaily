@@ -117,11 +117,10 @@
     <div class="col-md-3 mb-4">
       <h2>{% translate "Регіони" %}</h2>
       <ul>
+        <li><a href="{% url 'patterns:region_detail' 'lvivska-oblast' %}">{% translate "Львівська область" %}</a></li>
         <li><a href="{% url 'patterns:region_detail' 'poltavska-oblast' %}">{% translate "Полтавська область" %}</a></li>
-        <li><a href="{% url 'patterns:region_detail' 'khmelnytska-oblast' %}">{% translate "Хмельницька область" %}</a></li>
-        <li><a href="{% url 'patterns:region_detail' 'ar-krym' %}">{% translate "Автономна Республіка Крим" %}</a></li>
-        <li><a href="{% url 'patterns:region_detail' 'ivano-frankivska-oblast' %}">{% translate "Івано-Франківська область" %}</a></li>
-        <li><a href="{% url 'patterns:region_list' %}">{% translate "Усі 27 регіонів →" %}</a></li>
+        <li><a href="{% url 'patterns:region_detail' 'm-kyiv' %}">{% translate "м. Київ" %}</a></li>
+        <li><a href="{% url 'patterns:region_list' %}"><strong>{% translate "Усі 27 регіонів →" %}</strong></a></li>
       </ul>
     </div>
     <div class="col-md-3 mb-4">
