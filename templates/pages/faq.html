@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% load seo_tags %}
 
 {% block title %}{% translate "Часті запитання" %} - VyshyvankaDaily{% endblock %}
 
 {% block extra_head %}
 {% jsonld_faq categories %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 {% endblock %}
 
 {% block content %}

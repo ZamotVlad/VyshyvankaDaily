@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}Орнамент вишиванки різних регіонів України | VyshyvankaDaily{% endblock %}
 
@@ -7,6 +7,7 @@
 
 {% block extra_head %}
 <meta name="keywords" content="орнамент вишиванки, вишиванки різних регіонів україни, орнаменти вишиванок по регіонах">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 {% endblock %}
 
 {% block content %}

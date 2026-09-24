@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% translate "Усі регіони" %} - VyshyvankaDaily{% endblock %}
 
 {% block extra_head %}
 <meta name="keywords" content="вишиванки по регіонах україни, орнамент вишиванки по областях">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 {% endblock %}
 
 {% block content %}
