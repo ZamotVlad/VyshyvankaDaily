@@ -5,7 +5,7 @@ from .base import env
 
 DEBUG = False
 
-EMAIL_BACKEND = "anymail.backends.postmark.EmailBackend"
+EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
 
 # Heroku Postgres: DATABASE_URL приходить готовим від аддону.
 DATABASES = {

@@ -3,7 +3,7 @@ django-modeltranslation
 django-environ
 python-slugify
 django-allauth
-django-anymail[postmark]
+django-anymail[brevo]
 PyJWT[crypto]
 django-ratelimit
 django-unfold
