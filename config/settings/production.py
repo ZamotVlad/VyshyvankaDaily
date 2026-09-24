@@ -35,7 +35,7 @@ SECURE_REFERRER_POLICY = "same-origin"
 # УВАГА, увімкнути SECURE_SSL_REDIRECT лише ПІСЛЯ підтвердження, що
 # домен реально відповідає по HTTPS (крок 6 плану деплою).
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
 # HSTS: починати з малого значення (1 година), і лише переконавшись,
 # що все працює по HTTPS, підіймати до року. Помилка тут коштує дорого:
