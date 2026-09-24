@@ -8,14 +8,12 @@ from django.urls import include, path
 from apps.blog.feeds import BlogFeed
 from apps.core.sitemaps import (
     BlogPostSitemap,
-    DailyPatternSitemap,
     RegionSitemap,
     StaticViewSitemap,
 )
 from apps.core.views import google_site_verification, robots_txt, set_language_view
 
 sitemaps = {
-    "patterns": DailyPatternSitemap,
     "regions": RegionSitemap,
     "blog": BlogPostSitemap,
     "static": StaticViewSitemap,
