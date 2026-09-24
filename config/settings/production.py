@@ -41,6 +41,6 @@ SECURE_SSL_REDIRECT = True
 # що все працює по HTTPS, підіймати до року. Помилка тут коштує дорого:
 # браузери запам'ятовують заголовок і відмовляються ходити по HTTP
 # рівно стільки, скільки вказано, навіть якщо ти вже все відкотив.
-SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_SECONDS = 86400
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_HSTS_PRELOAD = False
