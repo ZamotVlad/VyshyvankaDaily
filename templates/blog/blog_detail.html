@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% load seo_tags %}
 
 {% block title %}{{ post.seo_title|default:post.title }} - VyshyvankaDaily{% endblock %}
@@ -11,7 +11,7 @@
 {% jsonld_breadcrumbs post.breadcrumbs %}
 <meta property="og:title" content="{{ post.title }}">
 <meta property="og:description" content="{{ post.excerpt|truncatewords:25 }}">
-{% if post.cover_image_url %}<meta property="og:image" content="{{ post.cover_image_url }}">{% endif %}
+<meta property="og:image" content="{% if post.cover_image_url %}{{ post.cover_image_url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}{% endif %}">
 <meta property="og:type" content="article">
 {% endblock %}
 

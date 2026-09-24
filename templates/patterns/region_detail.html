@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% load seo_tags %}
 
 {% block title %}{{ region.seo_title|default:region.name|add:" - VyshyvankaDaily" }}{% endblock %}
@@ -11,6 +11,7 @@
 {% if region.target_keyword %}<meta name="keywords" content="{{ region.target_keyword }}">{% endif %}
 <meta property="og:title" content="{{ region.seo_title|default:region.name }}">
 <meta property="og:description" content="{{ region.seo_description|default:region.symbolism_description|striptags|truncatewords:25 }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 <meta property="og:type" content="article">
 {% endblock %}
 
