@@ -1,5 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+from django.utils import timezone
 
 from apps.blog.models import BlogPost
 from apps.patterns.models import DailyPattern, Region
@@ -15,7 +16,11 @@ class DailyPatternSitemap(Sitemap):
     x_default = True
 
     def items(self):
-        return DailyPattern.objects.order_by("-date")
+        # Тільки сьогоднішній патерн - минулі дні майже дублюють контент
+        # сторінки регіону (symbolism_description, motifs, sources), тому
+        # закриті від індексації (noindex у шаблоні) і не мають бути в
+        # sitemap - не варто витрачати краулінговий бюджет робота на них.
+        return DailyPattern.objects.filter(date=timezone.localdate())
 
     def location(self, obj):
         return reverse("patterns:pattern_detail", args=[obj.date.isoformat()])
@@ -63,8 +68,6 @@ class BlogPostSitemap(Sitemap):
 class StaticViewSitemap(Sitemap):
     """Сторінки без моделі - фіксований список іменованих URL."""
 
-    changefreq = "yearly"
-    priority = 0.5
     i18n = True
     alternates = True
     x_default = True
@@ -81,6 +84,13 @@ class StaticViewSitemap(Sitemap):
             "pages:terms",
             "pages:privacy",
         ]
+
+    def changefreq(self, item):
+        # Головна показує сьогоднішній патерн - реально оновлюється щодня.
+        return "daily" if item == "patterns:home" else "yearly"
+
+    def priority(self, item):
+        return 1.0 if item == "patterns:home" else 0.5
 
     def location(self, item):
         return reverse(item)

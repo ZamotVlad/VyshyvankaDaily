@@ -5,6 +5,7 @@
 {% block title %}{{ pattern.region.name }} - {{ pattern.date|date:"d E Y" }} - VyshyvankaDaily{% endblock %}
 
 {% block extra_head %}
+{% if not is_today %}<meta name="robots" content="noindex, follow">{% endif %}
 {% jsonld_pattern pattern %}
 {% jsonld_breadcrumbs pattern.breadcrumbs %}
 <meta property="og:title" content="{{ pattern.region.name }} - {{ pattern.date|date:'d E Y' }}">
@@ -30,7 +31,7 @@
       <span class="vd-claim">◇ {% translate "За традицією" %}</span>
     {% endif %}
 
-    <p class="vd-hero__desc">{{ pattern.region.symbolism_description|truncatewords:45 }}</p>
+    <p class="vd-hero__desc">{{ pattern.region.symbolism_description|striptags|truncatewords:45 }}</p>
 
     <div class="d-flex flex-wrap gap-2 mb-4">
       {% include "patterns/_save_button.html" %}

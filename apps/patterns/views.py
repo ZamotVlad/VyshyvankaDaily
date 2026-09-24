@@ -103,6 +103,7 @@ def pattern_detail_view(request, iso_date):
 
     context = {
         "pattern": pattern,
+        "is_today": pattern_date == timezone.localdate(),
         "claim_type": pattern.region.get_claim_type(),
         "previous_pattern": previous_pattern,
         "next_pattern": next_pattern,
