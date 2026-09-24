@@ -891,12 +891,17 @@ a.vd-card:hover {
   margin-bottom: 9px;
 }
 .vd-doc li::before {
-  content: "\2715";
+  content: "\25A0";
   position: absolute;
   left: 2px;
+  top: 7px;
+  font-size: 8px;
+  color: var(--vd-red);
+}
+.vd-doc .vd-list--forbidden li::before {
+  content: "\2715";
   top: 1px;
   font-size: 11px;
-  color: var(--vd-red);
 }
 
 /* Зміст юридичних сторінок */
