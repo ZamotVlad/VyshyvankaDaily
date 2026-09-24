@@ -133,6 +133,8 @@ celerybeat.pid
 
 # Environments
 .env
+vyshyvanka_full_dump.json
+*.dump.json
 .venv
 env/
 venv/
