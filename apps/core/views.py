@@ -83,6 +83,19 @@ def robots_txt(request):
     return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
+def google_site_verification(request):
+    """
+    Файл підтвердження власності домену для Google Search Console.
+    Обслуговується через view, а не фізичний файл на диску, бо файлова
+    система Heroku ефемерна - будь-що, не закомічене в git, зникає
+    при кожному новому деплої.
+    """
+    return HttpResponse(
+        "google-site-verification: googled602211b36b6f933.html",
+        content_type="text/plain",
+    )
+
+
 def csrf_failure(request, reason=""):
     """
     Власний обробник CSRF-відмов (Django за замовчуванням показує
