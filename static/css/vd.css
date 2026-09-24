@@ -93,6 +93,15 @@ a:hover {
 
 /* ---------- Хедер ---------- */
 
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+}
+.site-logo__svg {
+  height: 32px;
+  width: auto;
+}
+
 .vd-header {
   background: var(--vd-bg);
   border-bottom: 1px solid var(--vd-border);
@@ -121,12 +130,13 @@ a:hover {
 }
 .vd-nav a {
   font-family: var(--vd-font-display);
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 11px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--vd-cream);
-  padding: 8px 18px;
+  padding: 8px 13px;
   position: relative;
+  white-space: nowrap;
 }
 .vd-nav a::after {
   content: "";
@@ -164,6 +174,16 @@ a:hover {
 }
 .vd-auth a:hover {
   color: var(--vd-red);
+}
+.vd-kofi-link {
+  display: inline-flex;
+  align-items: center;
+}
+.vd-kofi-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  flex-shrink: 0;
 }
 
 .vd-lang select {
@@ -701,7 +721,7 @@ a.vd-card:hover {
 }
 
 /* До 900px - ховаємо десктопну навігацію, показуємо бургер */
-@media (max-width: 900px) {
+@media (max-width: 1060px) {
   .vd-burger {
     display: block;
   }
@@ -710,9 +730,9 @@ a.vd-card:hover {
   }
 }
 
-/* Від 901px - ховаємо мобільну панель повністю, незалежно від того,
+/* Від 1061px - ховаємо мобільну панель повністю, незалежно від того,
    розгорнута вона Bootstrap-класом collapse чи ні */
-@media (min-width: 901px) {
+@media (min-width: 1061px) {
   .vd-mobile-panel {
     display: none !important;
   }
