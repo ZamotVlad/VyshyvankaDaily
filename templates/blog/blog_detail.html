@@ -4,10 +4,11 @@
 
 {% block title %}{{ post.seo_title|default:post.title }} - VyshyvankaDaily{% endblock %}
 
+{% block meta_description %}{{ post.seo_description|default:post.excerpt|truncatewords:25 }}{% endblock %}
+
 {% block extra_head %}
 {% jsonld_article post %}
 {% jsonld_breadcrumbs post.breadcrumbs %}
-{% if post.seo_description %}<meta name="description" content="{{ post.seo_description }}">{% endif %}
 <meta property="og:title" content="{{ post.title }}">
 <meta property="og:description" content="{{ post.excerpt|truncatewords:25 }}">
 {% if post.cover_image_url %}<meta property="og:image" content="{{ post.cover_image_url }}">{% endif %}

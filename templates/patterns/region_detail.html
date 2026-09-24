@@ -4,12 +4,13 @@
 
 {% block title %}{{ region.seo_title|default:region.name|add:" - VyshyvankaDaily" }}{% endblock %}
 
+{% block meta_description %}{{ region.seo_description|default:region.symbolism_description|striptags|truncatewords:25 }}{% endblock %}
+
 {% block extra_head %}
 {% jsonld_breadcrumbs region.breadcrumbs %}
 {% if region.target_keyword %}<meta name="keywords" content="{{ region.target_keyword }}">{% endif %}
-{% if region.seo_description %}<meta name="description" content="{{ region.seo_description }}">{% endif %}
 <meta property="og:title" content="{{ region.seo_title|default:region.name }}">
-<meta property="og:description" content="{{ region.seo_description|default:region.symbolism_description|truncatewords:25 }}">
+<meta property="og:description" content="{{ region.seo_description|default:region.symbolism_description|striptags|truncatewords:25 }}">
 <meta property="og:type" content="article">
 {% endblock %}
 
