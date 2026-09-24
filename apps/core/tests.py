@@ -4,8 +4,11 @@ import xml.etree.ElementTree as ET
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
+from django.utils import timezone
 
-from apps.patterns.models import Region
+from apps.blog.models import BlogCategory, BlogPost
+from apps.pages.models import FAQCategory, FAQItem
+from apps.patterns.models import DailyPattern, Region
 
 
 class SlugTransliterationTests(TestCase):
@@ -105,6 +108,71 @@ class JsonLdTests(TestCase):
         for script in scripts:
             self.assertNotIn("<", script)
 
+    def test_pattern_page_emits_visualartwork_jsonld(self):
+        region = Region.objects.create(
+            name="Тестова область",
+            symbolism_description="Опис символіки регіону.",
+            dominant_colors=["#000000"],
+            shirt_cut_type="Тестовий крій",
+            rotation_order=1,
+        )
+        pattern = DailyPattern.objects.create(
+            date=timezone.localdate(),
+            region=region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+        html = self.client.get(f"/pattern/{pattern.date.isoformat()}/").content.decode()
+        blocks = extract_jsonld(html)
+        types = [b.get("@type") for b in blocks]
+        self.assertIn("VisualArtwork", types)
+
+        artwork = next(b for b in blocks if b.get("@type") == "VisualArtwork")
+        self.assertIn(region.name, artwork["name"])
+        self.assertEqual(artwork["locationCreated"]["name"], region.name)
+
+    def test_blog_post_emits_blogposting_jsonld(self):
+        category = BlogCategory.objects.create(name="Категорія")
+        post = BlogPost.objects.create(
+            title_uk="Тестова стаття",
+            slug="test-article",
+            excerpt_uk="Короткий опис",
+            body="<p>Текст</p>",
+            category=category,
+            status="published",
+            published_at=timezone.now(),
+        )
+        html = self.client.get(f"/blog/{post.slug}/").content.decode()
+        blocks = extract_jsonld(html)
+        types = [b.get("@type") for b in blocks]
+        self.assertIn("BlogPosting", types)
+
+        article = next(b for b in blocks if b.get("@type") == "BlogPosting")
+        self.assertEqual(article["headline"], post.title)
+        self.assertEqual(article["description"], post.excerpt)
+
+    def test_faq_page_emits_faqpage_jsonld_with_items(self):
+        category = FAQCategory.objects.create(name="Загальні питання", order=999)
+        FAQItem.objects.create(
+            category=category,
+            question="Унікальне тестове запитання?",
+            answer="Тестова відповідь.",
+        )
+        html = self.client.get("/faq/").content.decode()
+        blocks = extract_jsonld(html)
+        types = [b.get("@type") for b in blocks]
+        self.assertIn("FAQPage", types)
+
+        faq = next(b for b in blocks if b.get("@type") == "FAQPage")
+        questions = [entity["name"] for entity in faq["mainEntity"]]
+        self.assertIn("Унікальне тестове запитання?", questions)
+
+    def test_faq_page_omits_jsonld_when_no_items(self):
+        """jsonld_faq повертає порожній рядок, коли питань немає - перевіряємо, що тег не падає."""
+        response = self.client.get("/faq/")
+        self.assertEqual(response.status_code, 200)
+
 
 class PrivatePageIndexingTests(TestCase):
     def setUp(self):
@@ -158,3 +226,25 @@ class LanguageSwitchTests(TestCase):
         response = self.client.post("/i18n/setlang/", {"language": "en", "next": "/archive/"})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response["Location"], "/en/archive/")
+
+
+class ContextProcessorTests(TestCase):
+    def test_canonical_url_present_on_home(self):
+        response = self.client.get("/")
+        self.assertIn("canonical_url", response.context)
+        self.assertTrue(response.context["canonical_url"].endswith("/"))
+
+    def test_canonical_url_includes_page_param(self):
+        response = self.client.get("/archive/?page=2")
+        self.assertIn("page=2", response.context["canonical_url"])
+
+    def test_alternate_url_present(self):
+        response = self.client.get("/")
+        self.assertIn("alternate_url", response.context)
+
+
+class SecurityHeadersMiddlewareTests(TestCase):
+    def test_csp_header_present_on_public_pages(self):
+        response = self.client.get("/")
+        self.assertIn("Content-Security-Policy", response)
+        self.assertNotIn("unsafe-eval", response["Content-Security-Policy"])

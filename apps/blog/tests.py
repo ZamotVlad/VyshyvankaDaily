@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.test import TestCase
 from django.utils import timezone
@@ -135,3 +136,142 @@ class RegionLinkingTests(TestCase):
     def test_region_page_works_without_any_posts(self):
         response = self.client.get(f"/regions/{self.region.slug}/")
         self.assertEqual(response.status_code, 200)
+
+
+class BlogDetailDraftAccessTests(TestCase):
+    def setUp(self):
+        self.category = BlogCategory.objects.create(name="Категорія")
+        self.post = BlogPost.objects.create(
+            title_uk="Чернетка",
+            slug="draft-post",
+            body="<p>x</p>",
+            category=self.category,
+            status="draft",
+        )
+
+    def test_anonymous_gets_404_on_draft(self):
+        response = self.client.get(f"/blog/{self.post.slug}/")
+        self.assertEqual(response.status_code, 404)
+
+    def test_staff_can_view_draft(self):
+        staff = get_user_model().objects.create_user(
+            username="editor", password="pass12345", is_staff=True
+        )
+        self.client.force_login(staff)
+        response = self.client.get(f"/blog/{self.post.slug}/")
+        self.assertEqual(response.status_code, 200)
+
+
+class BlogCategoryFilterTests(TestCase):
+    def test_filter_by_category(self):
+        cat_a = BlogCategory.objects.create(name="А", slug="a")
+        cat_b = BlogCategory.objects.create(name="Б", slug="b")
+        BlogPost.objects.create(
+            title_uk="Пост А",
+            slug="post-a",
+            body="<p>x</p>",
+            category=cat_a,
+            status="published",
+            published_at=timezone.now(),
+        )
+        BlogPost.objects.create(
+            title_uk="Пост Б",
+            slug="post-b",
+            body="<p>x</p>",
+            category=cat_b,
+            status="published",
+            published_at=timezone.now(),
+        )
+        response = self.client.get(f"/blog/?category={cat_a.slug}")
+        titles = [p.title for p in response.context["page_obj"].object_list]
+        self.assertIn("Пост А", titles)
+        self.assertNotIn("Пост Б", titles)
+
+
+class GuestPostProposeViewTests(TestCase):
+    def test_get_returns_200(self):
+        response = self.client.get("/blog/propose/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_honeypot_filled_shows_success_without_saving(self):
+        from apps.blog.models import GuestPostSubmission
+
+        response = self.client.post(
+            "/blog/propose/",
+            {
+                "author_name": "Бот",
+                "author_email": "bot@example.com",
+                "topic": "Тема",
+                "honeypot": "заповнено",
+            },
+            follow=True,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(GuestPostSubmission.objects.exists())
+
+
+class BlogFeedTests(TestCase):
+    def test_feed_returns_200_and_lists_published_post(self):
+        category = BlogCategory.objects.create(name="Категорія")
+        BlogPost.objects.create(
+            title_uk="Стаття у стрічці",
+            slug="feed-post",
+            excerpt_uk="Опис",
+            body="<p>x</p>",
+            category=category,
+            status="published",
+            published_at=timezone.now(),
+        )
+        response = self.client.get("/blog/feed/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Стаття у стрічці")
+
+
+class BlogAdminTests(TestCase):
+    def test_status_badge_shows_published_color(self):
+        from django.contrib import admin as django_admin
+
+        from apps.blog.admin import BlogPostAdmin
+
+        category = BlogCategory.objects.create(name="Категорія")
+        post = BlogPost.objects.create(
+            title_uk="Тест",
+            slug="admin-test",
+            body="<p>x</p>",
+            category=category,
+            status="published",
+        )
+        admin_instance = BlogPostAdmin(BlogPost, django_admin.site)
+        badge = admin_instance.status_badge(post)
+        self.assertIn("#3A7D2C", badge)
+
+    def test_keyword_badge_shows_dash_when_empty(self):
+        from django.contrib import admin as django_admin
+
+        from apps.blog.admin import BlogPostAdmin
+
+        category = BlogCategory.objects.create(name="Категорія")
+        post = BlogPost.objects.create(
+            title_uk="Тест 2",
+            slug="admin-test-2",
+            body="<p>x</p>",
+            category=category,
+        )
+        admin_instance = BlogPostAdmin(BlogPost, django_admin.site)
+        badge = admin_instance.keyword_badge(post)
+        self.assertIn("—", badge)
+
+    def test_category_post_count(self):
+        from django.contrib import admin as django_admin
+
+        from apps.blog.admin import BlogCategoryAdmin
+
+        category = BlogCategory.objects.create(name="Категорія")
+        BlogPost.objects.create(
+            title_uk="Тест 3",
+            slug="admin-test-3",
+            body="<p>x</p>",
+            category=category,
+        )
+        admin_instance = BlogCategoryAdmin(BlogCategory, django_admin.site)
+        self.assertEqual(admin_instance.post_count(category), 1)

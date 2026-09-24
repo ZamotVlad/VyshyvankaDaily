@@ -2,8 +2,9 @@ from datetime import date, timedelta
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
+from django.contrib.messages.storage.fallback import FallbackStorage
 from django.template.loader import render_to_string
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
 from django.utils import timezone
 
 from apps.patterns.models import DailyPattern, Motif, Region, SavedPattern
@@ -502,3 +503,159 @@ class LandingSectionTests(TestCase):
         response = self.client.get("/")
         self.assertContains(response, "Що таке VyshyvankaDaily")
         self.assertContains(response, 'aria-controls="landing-body"')
+
+
+class ArchiveFilterTests(TestCase):
+    def setUp(self):
+        self.region_a = make_region("Регіон А", 1)
+        self.region_b = make_region("Регіон Б", 2)
+        DailyPattern.objects.create(
+            date=date(2026, 5, 1),
+            region=self.region_a,
+            seed="a1",
+            algorithm_version=1,
+            svg_content="<svg>a1</svg>",
+        )
+        DailyPattern.objects.create(
+            date=date(2026, 5, 10),
+            region=self.region_b,
+            seed="b1",
+            algorithm_version=1,
+            svg_content="<svg>b1</svg>",
+        )
+
+    def test_filter_by_region(self):
+        response = self.client.get(f"/archive/?region={self.region_a.slug}")
+        self.assertEqual(response.status_code, 200)
+        region_ids = [p.region_id for p in response.context["page_obj"].object_list]
+        self.assertEqual(region_ids, [self.region_a.id])
+
+    def test_filter_by_date_range(self):
+        response = self.client.get("/archive/?date_from=2026-05-05&date_to=2026-05-15")
+        dates = [p.date for p in response.context["page_obj"].object_list]
+        self.assertEqual(dates, [date(2026, 5, 10)])
+
+    def test_invalid_date_param_is_ignored(self):
+        response = self.client.get("/archive/?date_from=not-a-date")
+        self.assertEqual(response.status_code, 200)
+
+    def test_sort_by_region(self):
+        response = self.client.get("/archive/?sort=region")
+        self.assertEqual(response.context["sort"], "region")
+
+    def test_default_sort_is_date(self):
+        response = self.client.get("/archive/")
+        self.assertEqual(response.context["sort"], "date")
+
+
+class RegionListViewTests(TestCase):
+    def test_returns_200_and_lists_verified_regions(self):
+        make_region("Видимий регіон", 1, verified=True)
+        make_region("Непідтверджений регіон", 2, verified=False)
+        response = self.client.get("/regions/")
+        names = [r.name for r in response.context["regions"]]
+        self.assertIn("Видимий регіон", names)
+        self.assertNotIn("Непідтверджений регіон", names)
+
+
+@override_settings(DEBUG=True)
+class DebugViewsEnabledTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Дебаг регіон", 1)
+
+    def test_debug_pattern_view_returns_200(self):
+        response = self.client.get(f"/patterns/debug/{timezone.localdate().isoformat()}/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_debug_pattern_view_rejects_bad_date(self):
+        response = self.client.get("/patterns/debug/not-a-date/")
+        self.assertEqual(response.status_code, 404)
+
+    def test_debug_all_regions_view_returns_200(self):
+        response = self.client.get("/patterns/debug/all-regions/")
+        self.assertEqual(response.status_code, 200)
+
+
+class DebugViewsDisabledTests(TestCase):
+    def test_debug_pattern_view_404_when_debug_off(self):
+        response = self.client.get(f"/patterns/debug/{timezone.localdate().isoformat()}/")
+        self.assertEqual(response.status_code, 404)
+
+    def test_debug_all_regions_view_404_when_debug_off(self):
+        response = self.client.get("/patterns/debug/regions/")
+        self.assertEqual(response.status_code, 404)
+
+
+class PatternDetailIsTodayTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Сьогоднішній регіон", 1)
+
+    def test_is_today_true_for_current_date(self):
+        pattern = DailyPattern.objects.create(
+            date=timezone.localdate(),
+            region=self.region,
+            seed="today",
+            algorithm_version=1,
+            svg_content="<svg>today</svg>",
+        )
+        response = self.client.get(f"/pattern/{pattern.date.isoformat()}/")
+        self.assertTrue(response.context["is_today"])
+
+    def test_is_today_false_for_past_date(self):
+        past_date = timezone.localdate() - timedelta(days=3)
+        pattern = DailyPattern.objects.create(
+            date=past_date,
+            region=self.region,
+            seed="past",
+            algorithm_version=1,
+            svg_content="<svg>past</svg>",
+        )
+        response = self.client.get(f"/pattern/{pattern.date.isoformat()}/")
+        self.assertFalse(response.context["is_today"])
+
+
+class RegionAdminTests(TestCase):
+    def test_verification_badge_verified(self):
+        from django.contrib import admin as django_admin
+
+        from apps.patterns.admin import RegionAdmin
+
+        region = make_region("Адмін регіон", 1, verified=True)
+        admin_instance = RegionAdmin(Region, django_admin.site)
+        badge = admin_instance.verification_badge(region)
+        self.assertIn("#3A7D2C", badge)
+
+    def test_keyword_badge_dash_when_empty(self):
+        from django.contrib import admin as django_admin
+
+        from apps.patterns.admin import RegionAdmin
+
+        region = make_region("Регіон без ключа", 2)
+        admin_instance = RegionAdmin(Region, django_admin.site)
+        badge = admin_instance.keyword_badge(region)
+        self.assertIn("—", badge)
+
+    def test_palette_preview_empty_returns_dash(self):
+        from django.contrib import admin as django_admin
+
+        from apps.patterns.admin import RegionAdmin
+
+        region = make_region("Регіон без кольорів", 3)
+        region.dominant_colors = []
+        region.save()
+        admin_instance = RegionAdmin(Region, django_admin.site)
+        self.assertEqual(admin_instance.palette_preview(region), "-")
+
+    def test_mark_verified_action(self):
+        from django.contrib import admin as django_admin
+
+        from apps.patterns.admin import RegionAdmin
+
+        region = make_region("Регіон на перевірці", 4, verified=False)
+        admin_instance = RegionAdmin(Region, django_admin.site)
+        request = RequestFactory().get("/vd/")
+        request.session = {}
+        request._messages = FallbackStorage(request)
+        admin_instance.mark_verified(request, Region.objects.filter(pk=region.pk))
+        region.refresh_from_db()
+        self.assertEqual(region.verification_status, Region.VerificationStatus.VERIFIED)
