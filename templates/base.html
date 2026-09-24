@@ -22,7 +22,9 @@
 <link rel="stylesheet" href="{% static 'logo/logo.css' %}">
 <link rel="stylesheet" href="{% static 'css/vd.css' %}">
 {% jsonld_site %}
-{% block extra_head %}{% endblock %}
+{% block extra_head %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
+{% endblock %}
 <link rel="alternate" type="application/rss+xml" title="VyshyvankaDaily - блог" href="{% url 'blog_feed' %}">
 </head>
 <body class="d-flex flex-column min-vh-100">
