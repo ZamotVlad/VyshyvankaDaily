@@ -451,3 +451,7 @@ backups/
 *.sql
 *.dump
 og_check.png
+
+# tools
+tools/node_modules/
+tools/package*.json

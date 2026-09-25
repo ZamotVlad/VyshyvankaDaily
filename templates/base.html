@@ -23,7 +23,7 @@
 <link rel="preload" href="{% static 'fonts/unbounded-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{% static 'fonts/ptserif-400-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
 {% endif %}
-<link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
+<style>{% include "includes/fonts_css.html" %}</style>
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'logo/logo.css' %}">
 <link rel="stylesheet" href="{% static 'css/vd.css' %}">
@@ -163,7 +163,7 @@
     </div>
   </div>
   <div class="vd-footer__bottom d-flex justify-content-between flex-wrap gap-2">
-    <span>&copy; {% now "Y" %} VyshyvankaDaily · <span class="vd-muted">Beta 1.1</span></span>
+    <span>&copy; {% now "Y" %} VyshyvankaDaily · <span class="vd-muted">v{{ site_version }}</span></span>
     <span class="vd-muted">{% translate "Усі права захищені" %}</span>
   </div>
 </div>

@@ -18,6 +18,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 CANONICAL_HOST = env("CANONICAL_HOST", default="")
+SITE_VERSION = "1.0.0"
 
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 LANGUAGE_COOKIE_SAMESITE = "Lax"

@@ -26,4 +26,5 @@ def seo(request):
     return {
         "canonical_url": canonical_url,
         "hreflang_links": hreflang_links,
+        "site_version": settings.SITE_VERSION,
     }

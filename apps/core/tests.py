@@ -314,7 +314,7 @@ class SecurityHeadersMiddlewareTests(TestCase):
         self.assertIn("font-src 'self';", csp)
         html = response.content.decode()
         self.assertNotIn("fonts.googleapis.com", html)
-        self.assertIn("fonts/fonts.css", html)
+        self.assertRegex(html, r"@font-face \{ font-family: \"Unbounded\";")
         self.assertIn("fonts/unbounded-cyrillic.woff2", html)
         en = self.client.get("/en/").content.decode()
         self.assertIn("fonts/unbounded-latin.woff2", en)
@@ -330,7 +330,7 @@ class SecurityHeadersMiddlewareTests(TestCase):
         self.assertIn('rel="apple-touch-icon"', html)
 
     def test_font_files_are_served(self):
-        for name in ("fonts.css", "unbounded-cyrillic.woff2", "ptserif-400-latin.woff2"):
+        for name in ("unbounded-cyrillic.woff2", "ptserif-400-latin.woff2"):
             self.assertEqual(self.client.get(f"/static/fonts/{name}").status_code, 200)
 
     def test_html_is_gzip_compressed_when_client_accepts_it(self):
@@ -613,3 +613,31 @@ class TranslationSyncCommandTests(TestCase):
         self.category.name_en = "Test category"
         self.category.save()
         self.assertContains(self.client.get("/en/faq/"), "Test category")
+
+
+class PurgedBootstrapTests(TestCase):
+    def test_template_classes_kept_in_purged_bootstrap(self):
+        from pathlib import Path
+
+        base = Path(settings.BASE_DIR)
+        vendor = base / "static" / "vendor" / "bootstrap"
+        full = (vendor / "bootstrap.full.min.css").read_text(encoding="utf-8")
+        purged = (vendor / "bootstrap.min.css").read_text(encoding="utf-8")
+        sources = [*base.glob("templates/**/*.html"), *base.glob("apps/**/*.py")]
+        classes = set()
+        for path in sources:
+            for attr in re.findall(r'class=["\']([^"\']*)', path.read_text(encoding="utf-8")):
+                classes.update(t for t in attr.split() if re.fullmatch(r"[a-z][\w-]*", t))
+
+        def has(css, cls):
+            return re.search(r"\." + re.escape(cls) + r"(?![\w-])", css) is not None
+
+        missing = sorted(c for c in classes if has(full, c) and not has(purged, c))
+        self.assertEqual(missing, [], "Перезібрати Bootstrap: node tools/purge_bootstrap.cjs")
+
+
+class SiteVersionTests(TestCase):
+    def test_footer_shows_version_without_beta(self):
+        html = self.client.get("/").content.decode()
+        self.assertIn(f"v{settings.SITE_VERSION}", html)
+        self.assertNotIn("Beta", html)
