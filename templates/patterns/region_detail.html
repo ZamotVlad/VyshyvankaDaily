@@ -57,20 +57,20 @@
   </div>
 {% endif %}
 
-{% if region.blog_posts.exists %}
-  <h2 class="vd-section-title">{% translate "Статті про цей регіон" %}</h2>
-  <div class="vd-grid vd-grid--wide">
-    {% for post in region.blog_posts.all %}
-      {% if post.status == "published" %}
+{% with posts=region.published_blog_posts %}
+  {% if posts %}
+    <h2 class="vd-section-title">{% translate "Статті про цей регіон" %}</h2>
+    <div class="vd-grid vd-grid--wide">
+      {% for post in posts %}
         <a href="{% url 'blog:detail' post.slug %}" class="vd-card">
           <div class="vd-card__body">
             <h3 class="vd-card__title">{{ post.title }}</h3>
           </div>
         </a>
-      {% endif %}
-    {% endfor %}
-  </div>
-{% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 <h2 class="vd-section-title">{% translate "Домінуючі кольори" %}</h2>
 <div class="vd-swatches mb-2">
   {% for color in region.dominant_colors %}

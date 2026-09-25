@@ -167,6 +167,7 @@ class RegionLinkingTests(TestCase):
         )
         response = self.client.get(f"/regions/{self.region.slug}/")
         self.assertNotContains(response, "Секретна чернетка")
+        self.assertNotContains(response, "Статті про цей регіон")
 
     def test_region_page_works_without_any_posts(self):
         response = self.client.get(f"/regions/{self.region.slug}/")
