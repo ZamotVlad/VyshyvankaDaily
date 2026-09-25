@@ -5,13 +5,18 @@ on: [push, pull_request]
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: "dummy-key-for-github-actions"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version-file: ".python-version"
+          cache: "pip"
+      - run: sudo apt-get update && sudo apt-get install -y gettext
       - run: pip install -r requirements/local.txt
       - run: ruff check .
+      - run: ruff format --check .
+      - run: python manage.py makemigrations --check --dry-run
+      - run: python manage.py compilemessages
       - run: pytest
-        env:
-          SECRET_KEY: "dummy-key-for-github-actions"
