@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ author.name }} - VyshyvankaDaily{% endblock %}
+
+{% block meta_description %}{{ author.bio|truncatewords:25 }}{% endblock %}
+
+{% block content %}
+<div class="vd-author-page">
+  {% if author.avatar_url %}
+    <img src="{{ author.avatar_url }}" alt="{{ author.name }}" class="vd-author-page__avatar">
+  {% endif %}
+  <h1>{{ author.name }}</h1>
+  {% if author.bio %}<p class="vd-author-page__bio">{{ author.bio }}</p>{% endif %}
+  {% if author.website_url %}
+    <a href="{{ author.website_url }}" target="_blank" rel="noopener" class="vd-btn vd-btn--ghost">{% translate "Профіль" %}</a>
+  {% endif %}
+</div>
+
+<h2 class="vd-section-title mt-5">{% translate "Статті автора" %}</h2>
+{% if posts %}
+  <div class="vd-grid vd-grid--wide">
+    {% for post in posts %}
+      <a href="{% url 'blog:detail' post.slug %}" class="vd-card">
+        <div class="vd-card__body">
+          <h3 class="vd-card__title">{{ post.title }}</h3>
+          <div class="vd-card__meta">{{ post.published_at|date:"d.m.Y" }}</div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="vd-muted">{% translate "Поки що немає опублікованих статей." %}</p>
+{% endif %}
+{% endblock %}

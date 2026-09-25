@@ -6,9 +6,19 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django_ratelimit.decorators import ratelimit
 
 from apps.blog.forms import GuestPostSubmissionForm
-from apps.blog.models import BlogCategory, BlogPost
+from apps.blog.models import Author, BlogCategory, BlogPost
 
 BLOG_PAGE_SIZE = 12
+
+
+def author_detail_view(request, slug):
+    author = get_object_or_404(Author, slug=slug)
+    posts = (
+        BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED, blog_author=author)
+        .select_related("category")
+        .order_by("-published_at")
+    )
+    return render(request, "blog/author_detail.html", {"author": author, "posts": posts})
 
 
 def blog_list_view(request):

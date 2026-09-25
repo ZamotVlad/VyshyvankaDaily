@@ -35,6 +35,15 @@
   {{ region.symbolism_description|safe }}
 </div>
 
+{% if site_author %}
+  <a href="{% url 'blog:author_detail' site_author.slug %}" class="vd-author-byline">
+    {% if site_author.avatar_url %}
+      <img src="{{ site_author.avatar_url }}" alt="{{ site_author.name }}" class="vd-author-byline__avatar">
+    {% endif %}
+    <span class="vd-author-byline__name">{% translate "Автор" %}: {{ site_author.name }}</span>
+  </a>
+{% endif %}
+
 {% if region.photos.exists %}
   <h2 class="vd-section-title">{% translate "Фотографії вишиванки" %}</h2>
   <div class="vd-photo-strip">

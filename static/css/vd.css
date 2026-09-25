@@ -1169,3 +1169,48 @@ form[id^="email_list"] button:hover {
   border-color: var(--vd-red);
   color: var(--vd-red);
 }
+
+/* ---------- Плашка автора ---------- */
+.vd-author-byline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 24px;
+  padding: 10px 14px;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  color: var(--vd-cream);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+.vd-author-byline:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-cream);
+}
+.vd-author-byline__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.vd-author-byline__name {
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+}
+.vd-author-page {
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto 32px;
+}
+.vd-author-page__avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+.vd-author-page__bio {
+  color: var(--vd-muted);
+  margin-bottom: 20px;
+}

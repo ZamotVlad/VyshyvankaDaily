@@ -12,12 +12,13 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
+from apps.blog.models import Author
 from apps.patterns.models import DailyPattern, Region, SavedPattern
 from apps.patterns.services.generation import CURRENT_ALGORITHM_VERSION, generate_daily_pattern
 from apps.patterns.services.pattern_builder import build_svg_for_date
 
 RIBBON_DAYS = 7
-ARCHIVE_PAGE_SIZE = 12
+ARCHIVE_PAGE_SIZE = 10
 
 
 def _is_saved_by(user, pattern):
@@ -180,6 +181,7 @@ def region_detail_view(request, slug):
         "region": region,
         "claim_type": region.get_claim_type(),
         "patterns": patterns,
+        "site_author": Author.objects.first(),
     }
     return render(request, "patterns/region_detail.html", context)
 

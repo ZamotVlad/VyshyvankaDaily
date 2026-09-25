@@ -44,6 +44,15 @@
     {% if post.guest_author_name %} · {{ post.guest_author_name }}{% endif %}
   </p>
 
+  {% if post.blog_author %}
+    <a href="{% url 'blog:author_detail' post.blog_author.slug %}" class="vd-author-byline">
+      {% if post.blog_author.avatar_url %}
+        <img src="{{ post.blog_author.avatar_url }}" alt="{{ post.blog_author.name }}" class="vd-author-byline__avatar">
+      {% endif %}
+      <span class="vd-author-byline__name">{% translate "Автор" %}: {{ post.blog_author.name }}</span>
+    </a>
+  {% endif %}
+
   {{ post.body|safe }}
 
   {% if post.sources.exists %}
