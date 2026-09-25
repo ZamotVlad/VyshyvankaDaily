@@ -120,6 +120,7 @@ LANGUAGES = [
 # Налаштування django-modeltranslation
 MODELTRANSLATION_DEFAULT_LANGUAGE = "uk"
 MODELTRANSLATION_LANGUAGES = ("uk", "en")
+MODELTRANSLATION_CUSTOM_FIELDS = ("CKEditor5Field",)
 
 LOCALE_PATHS = [
     BASE_DIR / "locale",

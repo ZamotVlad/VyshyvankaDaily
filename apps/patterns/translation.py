@@ -5,7 +5,7 @@ from .models import Motif, Region, RegionPhoto
 
 @register(Region)
 class RegionTranslationOptions(TranslationOptions):
-    fields = ("name", "target_keyword", "seo_title", "seo_description")
+    fields = ("name", "target_keyword", "seo_title", "seo_description", "symbolism_description")
 
 
 @register(Motif)

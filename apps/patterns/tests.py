@@ -35,6 +35,13 @@ class SeedDeterminismTests(TestCase):
 
 
 def make_region(name, rotation_order, is_active=True, verified=True):
+    from django.utils import translation
+
+    with translation.override("uk"):
+        return _create_region(name, rotation_order, is_active, verified)
+
+
+def _create_region(name, rotation_order, is_active, verified):
     return Region.objects.create(
         name=name,
         symbolism_description="Тестовий опис.",
@@ -891,3 +898,83 @@ class DominantColorsValidationTests(TestCase):
         for bad in [["red"], ["#FFF"], ['#000000" onload="x'], "#000000", [], [123]]:
             with self.assertRaises(ValidationError, msg=repr(bad)):
                 self._region(bad).full_clean()
+
+
+class RegionEnglishContentTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон Мова", rotation_order=400)
+
+    def test_english_page_falls_back_to_ukrainian_until_translated(self):
+        response = self.client.get(f"/en/regions/{self.region.slug}/")
+        self.assertContains(response, "Тестовий опис.")
+
+    def test_english_page_shows_english_text_when_present(self):
+        self.region.symbolism_description_en = "<p>English symbolism.</p>"
+        self.region.save()
+        self.assertContains(
+            self.client.get(f"/en/regions/{self.region.slug}/"), "English symbolism."
+        )
+        uk = self.client.get(f"/regions/{self.region.slug}/")
+        self.assertContains(uk, "Тестовий опис.")
+        self.assertNotContains(uk, "English symbolism.")
+
+    def test_both_languages_are_sanitized(self):
+        self.region.symbolism_description_uk = "<p>Укр</p><script>alert(1)</script>"
+        self.region.symbolism_description_en = "<p>Eng</p><script>alert(2)</script>"
+        self.region.save()
+        self.region.refresh_from_db()
+        self.assertNotIn("<script>", self.region.symbolism_description_uk)
+        self.assertNotIn("<script>", self.region.symbolism_description_en)
+
+
+class LoadRegionContentTests(TestCase):
+    def setUp(self):
+        import json
+        import tempfile
+
+        self.region = make_region("Регіон Файл", rotation_order=500)
+        entry = {
+            "slug": self.region.slug,
+            "target_keyword": "ключ",
+            "seo_title": "Заголовок",
+            "seo_description": "Опис",
+            "symbolism_description_html": "<p>Новий текст</p>",
+            "en": {
+                "target_keyword": "keyword",
+                "seo_title": "Title",
+                "seo_description": "Description",
+                "symbolism_description_html": "<p>New text</p>",
+            },
+        }
+        self.path = tempfile.mktemp(suffix=".json")
+        with open(self.path, "w", encoding="utf-8") as f:
+            json.dump([entry], f, ensure_ascii=False)
+
+    def _run(self, *args):
+        from io import StringIO
+
+        from django.core.management import call_command
+
+        out = StringIO()
+        call_command("load_region_content", self.path, *args, stdout=out)
+        self.region.refresh_from_db()
+        return out.getvalue()
+
+    def test_loads_both_languages(self):
+        self._run()
+        self.assertEqual(self.region.symbolism_description_uk, "<p>Новий текст</p>")
+        self.assertEqual(self.region.symbolism_description_en, "<p>New text</p>")
+        self.assertEqual(self.region.seo_title_en, "Title")
+        self.assertEqual(self.region.target_keyword_uk, "ключ")
+
+    def test_dry_run_changes_nothing(self):
+        self._run("--dry-run")
+        self.assertEqual(self.region.symbolism_description_uk, "Тестовий опис.")
+        self.assertIsNone(self.region.symbolism_description_en)
+
+    def test_check_reports_differences_without_writing(self):
+        out = self._run("--check")
+        self.assertIn(self.region.slug, out)
+        self.assertEqual(self.region.symbolism_description_uk, "Тестовий опис.")
+        self._run()
+        self.assertIn("збігаються", self._run("--check"))

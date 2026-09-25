@@ -162,12 +162,19 @@ class Region(TimeStampedModel, SlugModel):
         import bleach
         from django.conf import settings
 
-        self.symbolism_description = bleach.clean(
-            self.symbolism_description,
-            tags=settings.ALLOWED_BLOG_HTML_TAGS,
-            attributes=settings.ALLOWED_BLOG_HTML_ATTRIBUTES,
-            strip=True,
-        )
+        for field in ("symbolism_description_uk", "symbolism_description_en"):
+            value = getattr(self, field)
+            if value:
+                setattr(
+                    self,
+                    field,
+                    bleach.clean(
+                        value,
+                        tags=settings.ALLOWED_BLOG_HTML_TAGS,
+                        attributes=settings.ALLOWED_BLOG_HTML_ATTRIBUTES,
+                        strip=True,
+                    ),
+                )
         super().save(*args, **kwargs)
 
     def get_claim_type(self) -> str:
