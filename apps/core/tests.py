@@ -272,6 +272,10 @@ class SecurityHeadersMiddlewareTests(TestCase):
         self.assertIn("Permissions-Policy", response)
         self.assertIn("camera=()", response["Permissions-Policy"])
 
+    def test_csp_does_not_allow_unused_third_party_scripts(self):
+        for path in ["/", "/vd/login/"]:
+            self.assertNotIn("cloudflareinsights", self.client.get(path)["Content-Security-Policy"])
+
     def test_static_files_get_security_headers(self):
         response = self.client.get("/static/css/vd.css")
         self.assertEqual(response.status_code, 200)

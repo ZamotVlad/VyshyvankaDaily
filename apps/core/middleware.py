@@ -57,9 +57,9 @@ class ContentSecurityPolicyMiddleware:
 
         is_admin = request.path.startswith(self.ADMIN_PREFIX)
         script_src = (
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com;"
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
             if is_admin
-            else "script-src 'self' https://static.cloudflareinsights.com; "
+            else "script-src 'self'; "
         )
 
         response["Content-Security-Policy"] = (
