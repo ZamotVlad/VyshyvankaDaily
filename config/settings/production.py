@@ -14,6 +14,9 @@ DATABASES = {
     ),
 }
 
+# Heroku router - один проксі перед застосунком.
+ALLAUTH_TRUSTED_PROXY_COUNT = 1
+
 # Спільний між процесами кеш (ліміти запитів). Таблиця: createcachetable у Procfile.
 CACHES = {
     "default": {

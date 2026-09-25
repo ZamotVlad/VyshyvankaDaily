@@ -326,3 +326,44 @@ class FaviconTests(TestCase):
         response = self.client.get("/favicon.ico")
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response["Location"], "/static/favicon/favicon.png")
+
+
+class AdminLoginRateLimitTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        cache.clear()
+        get_user_model().objects.create_superuser(
+            username="boss", email="boss@example.com", password="right-pass-123"
+        )
+
+    def _login(self, password, ip="1.1.1.1"):
+        return self.client.post(
+            "/vd/login/",
+            {"username": "boss", "password": password},
+            HTTP_X_FORWARDED_FOR=ip,
+        )
+
+    def test_blocks_after_five_attempts_from_same_ip(self):
+        for _ in range(5):
+            self.assertEqual(self._login("wrong").status_code, 200)
+        self.assertEqual(self._login("right-pass-123").status_code, 403)
+
+    def test_other_ip_is_not_blocked(self):
+        for _ in range(5):
+            self._login("wrong")
+        self.assertEqual(self._login("right-pass-123", ip="2.2.2.2").status_code, 302)
+
+    def test_login_page_views_are_not_limited(self):
+        for _ in range(10):
+            self.assertEqual(self.client.get("/vd/login/").status_code, 200)
+
+
+class AllauthClientIpTests(TestCase):
+    @override_settings(ALLAUTH_TRUSTED_PROXY_COUNT=1)
+    def test_allauth_uses_heroku_appended_ip(self):
+        from allauth.core.internal.httpkit import get_client_ip
+        from django.test import RequestFactory
+
+        request = RequestFactory().get("/", HTTP_X_FORWARDED_FOR="6.6.6.6, 3.3.3.3")
+        self.assertEqual(get_client_ip(request), "3.3.3.3")

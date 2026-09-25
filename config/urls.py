@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+from django_ratelimit.decorators import ratelimit
 
 from apps.blog.feeds import BlogFeed
 from apps.core.sitemaps import (
@@ -19,7 +20,10 @@ sitemaps = {
     "static": StaticViewSitemap,
 }
 
+admin_login = ratelimit(key="ip", rate="5/5m", method="POST", block=True)(admin.site.login)
+
 urlpatterns = [
+    path("vd/login/", admin_login, name="admin_login"),
     path("vd/", admin.site.urls),
     path("i18n/setlang/", set_language_view, name="set_language"),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
