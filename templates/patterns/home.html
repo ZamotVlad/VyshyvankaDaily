@@ -85,7 +85,8 @@
   </div>
 </section>
 {% if faq_highlights %}
-<section class="vd-section-title" style="margin-top: 56px;">{% translate "Часті запитання" %}</section>
+<section style="margin-top: 56px;">
+  <h2 class="vd-section-title">{% translate "Часті запитання" %}</h2>
 <div class="vd-faq mb-3">
   {% for item in faq_highlights %}
     <div class="vd-faq__item" style="cursor: default;">
@@ -95,5 +96,6 @@
   {% endfor %}
 </div>
 <a href="{% url 'pages:faq' %}" class="vd-btn vd-btn--ghost">{% translate "Усі питання" %} →</a>
+</section>
 {% endif %}
 {% endblock %}
