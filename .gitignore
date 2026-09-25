@@ -382,6 +382,7 @@ pyrightconfig.json
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
 [Bb]in
+!bin/
 !bin/post_compile
 [Ii]nclude
 [Ll]ib
@@ -447,3 +448,8 @@ backups/
 *.sql
 *.dump
 og_check.png
+
+#CLAUDE
+CLAUDE.md
+CLAUDE.local.md
+.claude/settings.local.json
