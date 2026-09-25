@@ -285,6 +285,8 @@ CKEDITOR_5_MAX_FILE_SIZE = 5  # МБ (розділ 14.5 ТЗ — обмежен�
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+RATELIMIT_IP_META_KEY = "apps.core.utils.client_ip"
+
 # Логи в stderr (heroku logs).
 LOGGING = {
     "version": 1,

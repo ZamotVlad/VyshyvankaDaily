@@ -36,6 +36,26 @@ class GuestPostSubmissionTests(TestCase):
     def setUp(self):
         cache.clear()
 
+    def test_page_views_do_not_count_towards_limit(self):
+        for _ in range(5):
+            self.client.get("/blog/propose/")
+        response = self.client.post("/blog/propose/", self._valid_data())
+        self.assertEqual(response.status_code, 302)
+
+    def test_limit_is_per_client_ip_behind_proxy(self):
+        for i in range(3):
+            data = {**self._valid_data(), "email": f"a{i}@example.com"}
+            self.client.post("/blog/propose/", data, HTTP_X_FORWARDED_FOR="1.1.1.1")
+        data = {**self._valid_data(), "email": "b@example.com"}
+        response = self.client.post("/blog/propose/", data, HTTP_X_FORWARDED_FOR="2.2.2.2")
+        self.assertEqual(response.status_code, 302)
+
+    def test_submitter_ip_is_last_forwarded_address(self):
+        self.client.post(
+            "/blog/propose/", self._valid_data(), HTTP_X_FORWARDED_FOR="6.6.6.6, 3.3.3.3"
+        )
+        self.assertEqual(GuestPostSubmission.objects.get().submitter_ip, "3.3.3.3")
+
 
 class BlogPostSanitizationTests(TestCase):
     def test_disallowed_tags_stripped_on_save(self):
