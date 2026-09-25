@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 RIBBON_DAYS = 7
 ARCHIVE_PAGE_SIZE = 10
+LIST_PAGE_SIZE = 12
 
 
 def _is_saved_by(user, pattern):
@@ -180,10 +181,11 @@ def my_collection_view(request):
     )
 
     tour_completed, tour_total = _tour_progress(request.user)
+    page = Paginator(saved_patterns, LIST_PAGE_SIZE).get_page(request.GET.get("page"))
 
     context = {
-        "saved_patterns": saved_patterns,
-        "total_saved": saved_patterns.count(),
+        "saved_patterns": page,
+        "total_saved": page.paginator.count,
         "tour_completed": tour_completed,
         "tour_total": tour_total,
     }
@@ -196,6 +198,7 @@ def region_detail_view(request, slug):
     patterns = DailyPattern.objects.filter(region=region, date__lte=timezone.localdate()).order_by(
         "-date"
     )
+    patterns = Paginator(patterns, LIST_PAGE_SIZE).get_page(request.GET.get("page"))
 
     context = {
         "region": region,

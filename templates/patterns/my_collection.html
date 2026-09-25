@@ -50,6 +50,7 @@
       </a>
     {% endfor %}
   </div>
+  {% include "includes/pagination.html" with page_obj=saved_patterns %}
 {% else %}
   <div class="vd-empty">
     <p>{% translate "Колекція поки порожня." %}</p>

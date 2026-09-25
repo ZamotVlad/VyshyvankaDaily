@@ -107,6 +107,7 @@
       </a>
     {% endfor %}
   </div>
+  {% include "includes/pagination.html" with page_obj=patterns %}
 {% else %}
   <div class="vd-empty">{% translate "Ще немає жодного орнаменту для цього регіону." %}</div>
 {% endif %}

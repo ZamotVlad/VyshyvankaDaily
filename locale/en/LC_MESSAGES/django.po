@@ -5022,6 +5022,18 @@ msgstr "Today's ornament is being prepared"
 msgid "Спробуйте оновити сторінку за хвилину."
 msgstr "Please refresh the page in a minute."
 
+#: .\templates\includes\pagination.html:3
+msgid "Сторінки"
+msgstr "Pages"
+
+#: .\templates\includes\pagination.html:5
+msgid "Попередня сторінка"
+msgstr "Previous page"
+
+#: .\templates\includes\pagination.html:9
+msgid "Наступна сторінка"
+msgstr "Next page"
+
 #~ msgid "Хмельницька область"
 #~ msgstr "Khmelnytskyi Oblast"
 

@@ -796,3 +796,36 @@ class HomepageUnavailableTests(TestCase):
         make_region("Регіон А", rotation_order=1)
         response = self.client.get("/")
         self.assertEqual(response.status_code, 503)
+
+
+class ListPaginationTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон П", rotation_order=90)
+        self.user = get_user_model().objects.create_user(username="p", password="pass12345")
+        for i in range(15):
+            pattern = DailyPattern.objects.create(
+                date=date(2026, 1, 1) + timedelta(days=i),
+                region=self.region,
+                seed=f"s{i}",
+                algorithm_version=1,
+                svg_content="<svg></svg>",
+            )
+            SavedPattern.objects.create(user=self.user, pattern=pattern)
+
+    def test_region_page_shows_12_patterns_per_page(self):
+        first = self.client.get(f"/regions/{self.region.slug}/")
+        second = self.client.get(f"/regions/{self.region.slug}/?page=2")
+        self.assertEqual(len(first.context["patterns"]), 12)
+        self.assertEqual(len(second.context["patterns"]), 3)
+        self.assertContains(first, "?page=2")
+
+    def test_collection_shows_12_per_page_and_full_total(self):
+        self.client.force_login(self.user)
+        response = self.client.get("/collection/")
+        self.assertEqual(len(response.context["saved_patterns"]), 12)
+        self.assertEqual(response.context["total_saved"], 15)
+        self.assertEqual(len(self.client.get("/collection/?page=2").context["saved_patterns"]), 3)
+
+    def test_invalid_page_falls_back_gracefully(self):
+        response = self.client.get(f"/regions/{self.region.slug}/?page=abc")
+        self.assertEqual(response.status_code, 200)
