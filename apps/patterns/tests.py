@@ -975,6 +975,10 @@ class LoadRegionContentTests(TestCase):
     def test_check_reports_differences_without_writing(self):
         out = self._run("--check")
         self.assertIn(self.region.slug, out)
+        import hashlib
+
+        digest = hashlib.sha256("Тестовий опис.".encode()).hexdigest()[:12]
+        self.assertIn(f"(база {digest})", out)
         self.assertEqual(self.region.symbolism_description_uk, "Тестовий опис.")
         self._run()
         self.assertIn("збігаються", self._run("--check"))

@@ -1,3 +1,4 @@
+import hashlib
 import json
 
 from django.core.management.base import BaseCommand, CommandError
@@ -12,6 +13,11 @@ FIELDS = {
     "seo_description": "seo_description",
     "symbolism_description_html": "symbolism_description",
 }
+
+
+def _digest(value):
+    """Короткий відбиток тексту, щоб звірити базу з локальною копією без виводу кирилиці."""
+    return hashlib.sha256((value or "").encode("utf-8")).hexdigest()[:12]
 
 
 class Command(BaseCommand):
@@ -95,7 +101,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR(f"  {entry['slug']}: немає в базі"))
                 continue
             fields = [
-                field
+                f"{field} (база {_digest(getattr(region, field))})"
                 for field, value in self._values(entry)
                 if field.endswith("_uk") and (getattr(region, field) or "") != value
             ]
