@@ -50,4 +50,8 @@ class ContentSecurityPolicyMiddleware:
             "base-uri 'self'; "
             "frame-ancestors 'none';"
         )
+
+        response["Permissions-Policy"] = (
+            "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+        )
         return response
