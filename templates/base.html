@@ -22,6 +22,16 @@
 <link rel="stylesheet" href="{% static 'logo/logo.css' %}">
 <link rel="stylesheet" href="{% static 'css/vd.css' %}">
 {% jsonld_site %}
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:site_name" content="VyshyvankaDaily">
+{% if LANGUAGE_CODE == "en" %}
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="uk_UA">
+{% else %}
+<meta property="og:locale" content="uk_UA">
+<meta property="og:locale:alternate" content="en_US">
+{% endif %}
+<meta name="twitter:card" content="summary_large_image">
 {% block extra_head %}
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 {% endblock %}

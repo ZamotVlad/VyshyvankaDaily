@@ -82,6 +82,20 @@ class SitemapTests(TestCase):
         self.assertIn('hreflang="x-default"', body)
 
 
+class OpenGraphTests(TestCase):
+    def test_common_og_tags_on_every_page(self):
+        body = self.client.get("/archive/").content.decode()
+        self.assertIn('<meta property="og:url" content="http://testserver/archive/">', body)
+        self.assertIn('<meta property="og:site_name" content="VyshyvankaDaily">', body)
+        self.assertIn('<meta property="og:locale" content="uk_UA">', body)
+        self.assertIn('<meta name="twitter:card" content="summary_large_image">', body)
+
+    def test_og_locale_follows_language(self):
+        body = self.client.get("/en/archive/").content.decode()
+        self.assertIn('<meta property="og:locale" content="en_US">', body)
+        self.assertIn('<meta property="og:locale:alternate" content="uk_UA">', body)
+
+
 class HeadMetaTests(TestCase):
     def test_homepage_has_canonical_and_robots_meta(self):
         response = self.client.get("/")
