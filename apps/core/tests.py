@@ -276,6 +276,13 @@ class SecurityHeadersMiddlewareTests(TestCase):
         for path in ["/", "/vd/login/"]:
             self.assertNotIn("cloudflareinsights", self.client.get(path)["Content-Security-Policy"])
 
+    def test_html_is_gzip_compressed_when_client_accepts_it(self):
+        plain = self.client.get("/regions/")
+        compressed = self.client.get("/regions/", HTTP_ACCEPT_ENCODING="gzip")
+        self.assertEqual(compressed["Content-Encoding"], "gzip")
+        self.assertIn("Accept-Encoding", compressed["Vary"])
+        self.assertLess(len(compressed.content), len(plain.content) / 3)
+
     def test_static_files_get_security_headers(self):
         response = self.client.get("/static/css/vd.css")
         self.assertEqual(response.status_code, 200)

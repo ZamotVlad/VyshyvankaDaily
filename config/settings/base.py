@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "apps.core.middleware.CanonicalHostMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # Обов'язково для i18n
     "django.middleware.common.CommonMiddleware",
