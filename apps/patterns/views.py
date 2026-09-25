@@ -82,11 +82,19 @@ def home_view(request):
     return render(request, "patterns/home.html", context)
 
 
-def pattern_detail_view(request, iso_date):
+def _parse_iso_date(value: str) -> date:
+    """Лише канонічний YYYY-MM-DD, щоб у сторінки була одна адреса."""
     try:
-        pattern_date = date.fromisoformat(iso_date)
-    except ValueError as exc:
-        raise Http404("Формат дати: YYYY-MM-DD") from exc
+        parsed = date.fromisoformat(value)
+    except ValueError:
+        parsed = None
+    if parsed is None or parsed.isoformat() != value:
+        raise Http404("Формат дати: YYYY-MM-DD")
+    return parsed
+
+
+def pattern_detail_view(request, iso_date):
+    pattern_date = _parse_iso_date(iso_date)
 
     if pattern_date > timezone.localdate():
         raise Http404("Дата в майбутньому")
@@ -123,11 +131,7 @@ def toggle_save_view(request, iso_date):
     Toggle через get_or_create/delete — покладаємось на UniqueConstraint
     (user, pattern) із Stage 1, не перевіряємо існування вручну заздалегідь.
     """
-    try:
-        pattern_date = date.fromisoformat(iso_date)
-    except ValueError as exc:
-        raise Http404("Формат дати: YYYY-MM-DD") from exc
-
+    pattern_date = _parse_iso_date(iso_date)
     pattern = get_object_or_404(DailyPattern, date=pattern_date)
 
     saved, created = SavedPattern.objects.get_or_create(user=request.user, pattern=pattern)

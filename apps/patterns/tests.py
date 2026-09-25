@@ -670,3 +670,22 @@ class RegionAdminTests(TestCase):
         admin_instance.mark_verified(request, Region.objects.filter(pk=region.pk))
         region.refresh_from_db()
         self.assertEqual(region.verification_status, Region.VerificationStatus.VERIFIED)
+
+
+class PatternDetailUrlTests(TestCase):
+    def setUp(self):
+        region = make_region("Регіон А", rotation_order=1)
+        DailyPattern.objects.create(
+            date=date(2026, 6, 1),
+            region=region,
+            seed="s1",
+            algorithm_version=1,
+            svg_content="<svg>1</svg>",
+        )
+
+    def test_canonical_date_url_works(self):
+        self.assertEqual(self.client.get("/pattern/2026-06-01/").status_code, 200)
+
+    def test_non_canonical_date_formats_are_404(self):
+        for value in ["20260601", "2026-W22-1", "2026-06-01T00:00"]:
+            self.assertEqual(self.client.get(f"/pattern/{value}/").status_code, 404, value)
