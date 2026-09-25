@@ -7,6 +7,7 @@ from django_ratelimit.decorators import ratelimit
 
 from apps.blog.forms import GuestPostSubmissionForm
 from apps.blog.models import Author, BlogCategory, BlogPost
+from apps.core.utils import client_ip
 
 BLOG_PAGE_SIZE = 12
 
@@ -73,8 +74,8 @@ def blog_detail_view(request, slug):
     return render(request, "blog/blog_detail.html", context)
 
 
-@ratelimit(key="ip", rate="3/h", block=True)
-@ratelimit(key="post:email", rate="3/h", block=True)
+@ratelimit(key="ip", rate="3/h", method="POST", block=True)
+@ratelimit(key="post:email", rate="3/h", method="POST", block=True)
 def guest_post_propose_view(request):
     """
     Заявка на гостьовий пост (розділ 5.12, 6.4, 13.1 ТЗ).
@@ -94,7 +95,7 @@ def guest_post_propose_view(request):
         if form.is_valid():
             if not form.cleaned_data.get("honeypot"):
                 submission = form.save(commit=False)
-                submission.submitter_ip = request.META.get("REMOTE_ADDR")
+                submission.submitter_ip = client_ip(request)
                 submission.save()
             messages.success(request, "Дякуємо! Заявку отримано.")
             return redirect("blog:propose")

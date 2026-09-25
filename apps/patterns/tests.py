@@ -322,6 +322,17 @@ class SavedPatternToggleTests(TestCase):
         self.client.post(f"/pattern/{self.pattern.date}/save/")
         self.assertFalse(SavedPattern.objects.filter(user=self.user, pattern=self.pattern).exists())
 
+    def test_toggle_redirects_to_internal_next(self):
+        self.client.force_login(self.user)
+        response = self.client.post(f"/pattern/{self.pattern.date}/save/", {"next": "/archive/"})
+        self.assertEqual(response["Location"], "/archive/")
+
+    def test_toggle_ignores_external_next(self):
+        self.client.force_login(self.user)
+        for next_url in ["https://evil.com/", "//evil.com", "/\\evil.com"]:
+            response = self.client.post(f"/pattern/{self.pattern.date}/save/", {"next": next_url})
+            self.assertEqual(response["Location"], f"/pattern/{self.pattern.date}/")
+
     def test_collection_shows_only_own_saved_patterns(self):
         other_user = get_user_model().objects.create_user(username="other", password="pass12345")
         SavedPattern.objects.create(user=other_user, pattern=self.pattern)

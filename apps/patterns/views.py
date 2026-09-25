@@ -10,6 +10,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
 from apps.blog.models import Author
@@ -138,7 +139,11 @@ def toggle_save_view(request, iso_date):
     else:
         messages.success(request, "Збережено в колекцію.")
 
-    next_url = request.POST.get("next") or reverse("patterns:pattern_detail", args=[iso_date])
+    next_url = request.POST.get("next")
+    if not url_has_allowed_host_and_scheme(
+        next_url, allowed_hosts={request.get_host()}, require_https=request.is_secure()
+    ):
+        next_url = reverse("patterns:pattern_detail", args=[iso_date])
     return redirect(next_url)
 
 
