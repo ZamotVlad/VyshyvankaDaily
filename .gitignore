@@ -440,6 +440,7 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,python,django,web,pycharm,visualstudiocode,venv
 
 ### VyshyvankaDaily project-specific ###
+docs/
 backups/
 *_backup*.json
 *.sql
