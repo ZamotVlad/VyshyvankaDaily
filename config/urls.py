@@ -8,6 +8,7 @@ from django_ratelimit.decorators import ratelimit
 
 from apps.blog.feeds import BlogFeed
 from apps.core.sitemaps import (
+    AuthorSitemap,
     BlogPostSitemap,
     RegionSitemap,
     StaticViewSitemap,
@@ -18,6 +19,7 @@ sitemaps = {
     "regions": RegionSitemap,
     "blog": BlogPostSitemap,
     "static": StaticViewSitemap,
+    "authors": AuthorSitemap,
 }
 
 admin_login = ratelimit(key="ip", rate="5/5m", method="POST", block=True)(admin.site.login)

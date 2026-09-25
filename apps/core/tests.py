@@ -68,6 +68,13 @@ class SitemapTests(TestCase):
         self.assertIn("/terms-of-use/", body)
         self.assertIn("/privacy-policy/", body)
 
+    def test_contains_author_pages(self):
+        from apps.blog.models import Author
+
+        author = Author.objects.create(name="Тест Автор")
+        body = self.client.get("/sitemap.xml").content.decode()
+        self.assertIn(f"/blog/author/{author.slug}/", body)
+
     def test_has_hreflang_alternates(self):
         body = self.client.get("/sitemap.xml").content.decode()
         self.assertIn('hreflang="uk"', body)

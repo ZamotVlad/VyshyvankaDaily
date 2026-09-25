@@ -2,7 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from django.utils import timezone
 
-from apps.blog.models import BlogPost
+from apps.blog.models import Author, BlogPost
 from apps.patterns.models import DailyPattern, Region
 
 
@@ -60,6 +60,23 @@ class BlogPostSitemap(Sitemap):
 
     def location(self, obj):
         return reverse("blog:detail", args=[obj.slug])
+
+    def lastmod(self, obj):
+        return obj.updated_at
+
+
+class AuthorSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.4
+    i18n = True
+    alternates = True
+    x_default = True
+
+    def items(self):
+        return Author.objects.order_by("name")
+
+    def location(self, obj):
+        return reverse("blog:author_detail", args=[obj.slug])
 
     def lastmod(self, obj):
         return obj.updated_at
