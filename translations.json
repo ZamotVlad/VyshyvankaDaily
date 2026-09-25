@@ -140,11 +140,11 @@
     "model": "pages.faqitem",
     "uk": {
       "question": "Що означає «Пройдено живих днів» у моїй колекції?",
-      "answer": "Це кількість унікальних регіонів, орнамент яких ви зберегли саме в день його публікації, а не заднім числом з архіву."
+      "answer": "Це кількість унікальних регіонів, орнамент яких ви зберегли саме в день його публікації, а не заднім числом з архіву. Обмеження навмисне: механіка заохочує заходити щодня, а не пройти весь архів за один раз."
     },
     "en": {
       "question": "What does \"Live days completed\" mean in my collection?",
-      "answer": "It is the number of unique regions whose pattern you saved on the day it was published, rather than later from the archive."
+      "answer": "It is the number of unique regions whose pattern you saved on the day it was published, rather than later from the archive. The limit is deliberate: the mechanic encourages you to come back every day rather than go through the whole archive in one go."
     }
   },
   {
@@ -481,7 +481,7 @@
     "model": "blog.author",
     "uk": {
       "name": "Владислав Замотайло",
-      "bio": "Backend-розробник з України. Самостійно спроєктував і розробив VyshyvankaDaily -платформу, яка щодня показує орнамент вишиванки одного з 27 регіонів України з реальною історією символіки з музейних і наукових джерел. Пишу тут про культуру, орнаменти та технічну сторону проєкту."
+      "bio": "Backend-розробник з України. Самостійно спроєктував і розробив VyshyvankaDaily - платформу, яка щодня показує орнамент вишиванки одного з 27 регіонів України з реальною історією символіки з музейних і наукових джерел. Пишу тут про культуру, орнаменти та технічну сторону проєкту."
     },
     "en": {
       "name": "Vladyslav Zamotailo",
