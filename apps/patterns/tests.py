@@ -978,3 +978,32 @@ class LoadRegionContentTests(TestCase):
         self.assertEqual(self.region.symbolism_description_uk, "Тестовий опис.")
         self._run()
         self.assertIn("збігаються", self._run("--check"))
+
+
+class ExportRegionContentTests(TestCase):
+    def test_export_is_ascii_and_round_trips_through_loader(self):
+        import json
+        import tempfile
+        from io import StringIO
+
+        from django.core.management import call_command
+
+        region = make_region("Регіон Експорт", rotation_order=600)
+        region.seo_title_uk = "Заголовок «з лапками»"
+        region.symbolism_description_en = "<p>English</p>"
+        region.save()
+
+        out = StringIO()
+        call_command("export_region_content", region.slug, stdout=out)
+        raw = out.getvalue()
+        self.assertTrue(raw.isascii())
+        data = json.loads(raw)
+        self.assertEqual(data[0]["seo_title"], "Заголовок «з лапками»")
+        self.assertEqual(data[0]["en"]["symbolism_description_html"], "<p>English</p>")
+
+        path = tempfile.mktemp(suffix=".json")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(raw)
+        check = StringIO()
+        call_command("load_region_content", path, "--check", stdout=check)
+        self.assertIn("збігаються", check.getvalue())
