@@ -248,3 +248,8 @@ class SecurityHeadersMiddlewareTests(TestCase):
         response = self.client.get("/")
         self.assertIn("Content-Security-Policy", response)
         self.assertNotIn("unsafe-eval", response["Content-Security-Policy"])
+
+    def test_permissions_policy_header_present(self):
+        response = self.client.get("/")
+        self.assertIn("Permissions-Policy", response)
+        self.assertIn("camera=()", response["Permissions-Policy"])

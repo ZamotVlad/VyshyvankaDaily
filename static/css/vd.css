@@ -58,7 +58,7 @@ h3 {
 }
 
 a {
-  color: var(--vd-red);
+  color: var(--vd-red-text);
   text-decoration: none;
 }
 a:hover {

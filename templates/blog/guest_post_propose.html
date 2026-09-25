@@ -22,6 +22,7 @@
     {% endif %}
   {% endfor %}
   <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+    {{ form.honeypot.label_tag }}
     {{ form.honeypot }}
   </div>
   <button type="submit" class="vd-btn vd-btn--primary">{% translate "Надіслати" %}</button>

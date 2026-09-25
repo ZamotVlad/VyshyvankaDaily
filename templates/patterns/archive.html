@@ -40,6 +40,7 @@
 </form>
 
 {% if page_obj %}
+  <h2 class="visually-hidden">{% translate "Результати архіву" %}</h2>
   <div class="vd-grid">
     {% for item in page_obj %}
       <a href="{% url 'patterns:pattern_detail' item.date|date:'Y-m-d' %}" class="vd-card">

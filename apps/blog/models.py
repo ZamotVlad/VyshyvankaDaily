@@ -153,10 +153,14 @@ class GuestPostSubmission(TimeStampedModel):
     brand_name = models.CharField(max_length=255, blank=True)
     proposed_topic = models.CharField(max_length=255)
     proposal_description = models.TextField()
+    # Приховане поле проти автоматичного спаму - має лишатись порожнім.
+    # Навмисно без help_text: Django сам додає aria-describedby на віджет
+    # для нього, а сам текст ніде не рендериться (шаблон виключає honeypot
+    # зі стандартного циклу полів) - без help_text немає й зламаного
+    # ARIA-посилання.
     honeypot = models.CharField(
         max_length=255,
         blank=True,
-        help_text="Приховане поле проти автоматичного спаму — має лишатись порожнім.",
     )
     submitter_ip = models.GenericIPAddressField(null=True, blank=True)
     review_status = models.CharField(

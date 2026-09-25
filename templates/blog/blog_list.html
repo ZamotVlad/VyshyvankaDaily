@@ -12,8 +12,10 @@
 </div>
 
 <form method="get" class="vd-form vd-search-bar mb-4">
-  <input type="text" name="q" value="{{ query }}" placeholder="{% translate 'Пошук по блогу' %}">
-  <select name="category" onchange="this.form.submit()">
+  <label for="id_blog_q" class="visually-hidden">{% translate "Пошук по блогу" %}</label>
+  <input type="text" name="q" id="id_blog_q" value="{{ query }}" placeholder="{% translate 'Пошук по блогу' %}">
+  <label for="id_blog_category" class="visually-hidden">{% translate "Категорія" %}</label>
+  <select name="category" id="id_blog_category">
     <option value="">{% translate "Усі категорії" %}</option>
     {% for category in categories %}
       <option value="{{ category.slug }}" {% if category.slug == selected_category_slug %}selected{% endif %}>{{ category.name }}</option>
