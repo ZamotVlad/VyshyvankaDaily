@@ -19,7 +19,7 @@ class Author(TimeStampedModel, SlugModel):
     avatar_url = models.URLField(blank=True)
     website_url = models.URLField(blank=True)
 
-    slug_source_field = "name"
+    slug_source_field = "name_uk"
 
     class Meta:
         verbose_name = "Автор"

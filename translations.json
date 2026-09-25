@@ -1,0 +1,489 @@
+[
+  {
+    "model": "pages.faqcategory",
+    "uk": {
+      "name": "Орнамент дня"
+    },
+    "en": {
+      "name": "Pattern of the Day"
+    }
+  },
+  {
+    "model": "pages.faqcategory",
+    "uk": {
+      "name": "Джерела й достовірність"
+    },
+    "en": {
+      "name": "Sources and Reliability"
+    }
+  },
+  {
+    "model": "pages.faqcategory",
+    "uk": {
+      "name": "Акаунт і колекція"
+    },
+    "en": {
+      "name": "Account and Collection"
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Звідки береться орнамент, який показує сайт щодня?",
+      "answer": "Кожен день прив'язаний до конкретного регіону України через ротацію, що охоплює всі 27 регіонів по черзі. Геометрія мотиву будується на основі реального дослідженого орнаменту цього регіону, а не генерується навмання."
+    },
+    "en": {
+      "question": "Where does the daily pattern come from?",
+      "answer": "Each day is tied to a specific region of Ukraine through a rotation that goes through all 27 regions in turn. The motif's geometry is based on real, researched ornament from that region; it is not generated at random."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Чому сьогодні саме цей регіон?",
+      "answer": "Регіон обчислюється з календарної дати. Це означає, що всі відвідувачі бачать один і той самий регіон того самого дня, а орнамент за будь-яку минулу дату можна відтворити точно таким, яким він був."
+    },
+    "en": {
+      "question": "Why this region today?",
+      "answer": "The region is calculated from the calendar date. This means every visitor sees the same region on the same day, and the pattern for any past date can be reproduced exactly as it was."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Що буде, коли всі 27 регіонів пройдуть по колу?",
+      "answer": "Ротація почнеться спочатку, з першого регіону."
+    },
+    "en": {
+      "question": "What happens once all 27 regions have come round?",
+      "answer": "The rotation starts again from the first region."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Чому орнамент змінюється, якщо регіон повторюється?",
+      "answer": "Кожен день має власний ключ генерації, прив'язаний до дати - він визначає, який саме з дозволених для регіону мотивів з'явиться того дня. Кількість мотивів на регіон різна й постійно поповнюється, тож розмаїття орнаментів того самого регіону з часом лише зростатиме."
+    },
+    "en": {
+      "question": "Why does the pattern change when a region comes round again?",
+      "answer": "Each day has its own generation key tied to the date. It decides which of the region's permitted motifs appears that day. The number of motifs per region varies and keeps growing, so the variety of patterns for the same region will only increase over time."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Чому на сайті 27 регіонів, а не 24?",
+      "answer": "27 - це кількість адміністративних одиниць України: 24 області, Автономна Республіка Крим і два міста з окремим статусом - Київ і Севастополь. Ми йдемо за цим офіційним поділом, а не лише за списком областей."
+    },
+    "en": {
+      "question": "Why does the site have 27 regions and not 24?",
+      "answer": "27 is the number of administrative units of Ukraine: 24 oblasts, the Autonomous Republic of Crimea and two cities with special status, Kyiv and Sevastopol. We follow this official division rather than the list of oblasts alone."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Чому Крим і Севастополь показуються окремо від областей?",
+      "answer": "Тому що це окремі адміністративні одиниці, не області - так само, як Київ. Кримськотатарський орнамент «орьнек», який представляє Крим на сайті, до того ж належить до окремої традиції, відмінної від материкової української вишивки."
+    },
+    "en": {
+      "question": "Why are Crimea and Sevastopol shown separately from the oblasts?",
+      "answer": "Because they are separate administrative units, not oblasts, just like Kyiv. The Crimean Tatar ornament ornek, which represents Crimea on the site, also belongs to a distinct tradition, different from mainland Ukrainian embroidery."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Чи можна подивитись орнамент за минулу дату?",
+      "answer": "Так, через архів. Там зберігається кожен згенерований день від самого початку."
+    },
+    "en": {
+      "question": "Can I see the pattern for a past date?",
+      "answer": "Yes, in the archive. It keeps every generated day from the very beginning."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Чи можна довіряти опису символіки?",
+      "answer": "Ми розрізняємо два рівні достовірності. «Задокументовано» означає, що є конкретне академічне дослідження, музейна колекція чи офіційне визнання. «За традицією» означає переказ усної традиції без підтвердженого письмового джерела. Обидві позначки видно прямо на сторінці регіону."
+    },
+    "en": {
+      "question": "Can I trust the symbolism descriptions?",
+      "answer": "We distinguish two levels of reliability. \"Documented\" means there is a specific academic study, museum collection or official recognition. \"Traditional\" means a retelling of oral tradition without a confirmed written source. Both labels are shown directly on the region page."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Я знайшов неточність в описі регіону. Куди написати?",
+      "answer": "Через сторінку контактів. Найкорисніший лист той, у якому вказано, що саме не так і на яке джерело спиратись. Обґрунтовані виправлення ми вносимо."
+    },
+    "en": {
+      "question": "I found an inaccuracy in a region description. Where do I write?",
+      "answer": "Through the contact page. The most useful message says exactly what is wrong and which source to rely on. We make well-founded corrections."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Навіщо реєструватися, якщо орнамент дня доступний і без акаунта?",
+      "answer": "Для перегляду реєстрація не потрібна: орнамент дня, архів і сторінки регіонів відкриті для всіх. Акаунт потрібен лише щоб зберігати улюблені орнаменти у власну колекцію."
+    },
+    "en": {
+      "question": "Why register if the pattern of the day is available without an account?",
+      "answer": "You don't need to register to browse: the pattern of the day, the archive and the region pages are open to everyone. An account is only needed to save your favourite patterns to your own collection."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Що означає «Пройдено живих днів» у моїй колекції?",
+      "answer": "Це кількість унікальних регіонів, орнамент яких ви зберегли саме в день його публікації, а не заднім числом з архіву."
+    },
+    "en": {
+      "question": "What does \"Live days completed\" mean in my collection?",
+      "answer": "It is the number of unique regions whose pattern you saved on the day it was published, rather than later from the archive."
+    }
+  },
+  {
+    "model": "pages.faqitem",
+    "uk": {
+      "question": "Як видалити акаунт і збережені дані?",
+      "answer": "Напишіть через сторінку контактів з адреси, на яку зареєстрований акаунт. Ми видалимо акаунт разом із пов'язаними з ним даними."
+    },
+    "en": {
+      "question": "How do I delete my account and saved data?",
+      "answer": "Write to us through the contact page from the email address your account is registered with. We will delete the account together with all data linked to it."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Зубчаста лінія",
+      "meaning_description": "Сувора геометрична низь - характерна для Поділля техніка вишивки прямими, скісними, ламаними, зубчастими лініями, без рослинних елементів."
+    },
+    "en": {
+      "name": "Serrated line",
+      "meaning_description": "Austere geometric nyz: a Podillia embroidery technique of straight, slanted, broken and serrated lines, with no plant elements."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Ромб із засіяним полем",
+      "meaning_description": "Базова геометрична форма строгої сітчастої вишивки, поширена по всьому Поділлю."
+    },
+    "en": {
+      "name": "Rhombus with a sown field",
+      "meaning_description": "The basic geometric form of strict grid embroidery, found throughout Podillia."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Геометричний квадрат",
+      "meaning_description": "Ритмічне чергування кольорів у квадратах, характерне для подільської вишивки."
+    },
+    "en": {
+      "name": "Geometric square",
+      "meaning_description": "A rhythmic alternation of colours in squares, typical of Podillia embroidery."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Зірки і ромби",
+      "meaning_description": "Ритмічне повторення геометричних фігур, що вписуються одна в одну - західноволинський прийом."
+    },
+    "en": {
+      "name": "Stars and rhombuses",
+      "meaning_description": "A rhythmic repetition of geometric figures set one inside another, a technique of western Volhynia."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Солярний знак",
+      "meaning_description": "Геометризовані хрести й солярні (свастичні) знаки - традиційна символіка сонця."
+    },
+    "en": {
+      "name": "Solar sign",
+      "meaning_description": "Geometrised crosses and solar (swastika) signs, the traditional symbols of the sun."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Квітковий букет",
+      "meaning_description": "Пишні квіти й дерева, вишиті переважно червоним по білому тлі."
+    },
+    "en": {
+      "name": "Flower bouquet",
+      "meaning_description": "Lush flowers and trees, embroidered mostly in red on a white ground."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Розетка",
+      "meaning_description": "Найпоширеніший мотив Полісся - восьмикутна зірка й ритмічний повтор ламаних ліній."
+    },
+    "en": {
+      "name": "Rosette",
+      "meaning_description": "The most common motif of Polissia: an eight-pointed star and a rhythmic repeat of broken lines."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Кривулька",
+      "meaning_description": "Найдавніший геометричний зигзаг закарпатської вишивки."
+    },
+    "en": {
+      "name": "Kryvulka",
+      "meaning_description": "The oldest geometric zigzag of Transcarpathian embroidery."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Коло з розеткою",
+      "meaning_description": "Символ сонця - коло з розеткою всередині, характерне для запорізької вишивки."
+    },
+    "en": {
+      "name": "Circle with a rosette",
+      "meaning_description": "A sun symbol, a circle with a rosette inside, typical of Zaporizhzhia embroidery."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Гуцульська лінія",
+      "meaning_description": "Геометричні лінії, що з'єднуються в одну широку динамічну лінію."
+    },
+    "en": {
+      "name": "Hutsul line",
+      "meaning_description": "Geometric lines that join into a single wide, dynamic line."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Виноградне гроно",
+      "meaning_description": "Поширений мотив «брокарівської» вишивки - рослинний орнамент хрестиком."
+    },
+    "en": {
+      "name": "Bunch of grapes",
+      "meaning_description": "A common motif of Brocard embroidery: a plant ornament in cross stitch."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Вазон",
+      "meaning_description": "Реалістичний рослинний мотив - вазон із квітами й листям."
+    },
+    "en": {
+      "name": "Flowerpot",
+      "meaning_description": "A realistic plant motif: a flowerpot with flowers and leaves."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Рослинно-геометричний узор",
+      "meaning_description": "Поліхромний візерунок хрестиком, вишитий грубою ниткою."
+    },
+    "en": {
+      "name": "Plant and geometric pattern",
+      "meaning_description": "A polychrome cross-stitch design embroidered with coarse thread."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Сосонка (яворівка)",
+      "meaning_description": "Дрібний елемент яворівської вишивки з навмисно великим негативним простором."
+    },
+    "en": {
+      "name": "Sosonka (Yavoriv style)",
+      "meaning_description": "A small element of Yavoriv embroidery with deliberately large negative space."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Сосонка",
+      "meaning_description": "Стилізований рослинний мотив - сосонка, дубове листя, шишки хмелю."
+    },
+    "en": {
+      "name": "Sosonka",
+      "meaning_description": "A stylised plant motif: a pine sprig, oak leaves, hop cones."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Двоголовий орел",
+      "meaning_description": "Символ під впливом молдовської та румунської традицій."
+    },
+    "en": {
+      "name": "Double-headed eagle",
+      "meaning_description": "A symbol shaped by Moldovan and Romanian traditions."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Ламане гільце",
+      "meaning_description": "Рослинний мотив білої гладі - умовне спрощення технічно складнішої техніки «білим по білому»."
+    },
+    "en": {
+      "name": "Broken sprig",
+      "meaning_description": "A plant motif of white satin stitch, a simplified version of the technically more demanding white-on-white technique."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Простий геометричний візерунок",
+      "meaning_description": "Найдавніший монохромний геометричний орнамент Полісся."
+    },
+    "en": {
+      "name": "Simple geometric pattern",
+      "meaning_description": "The oldest monochrome geometric ornament of Polissia."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Птах",
+      "meaning_description": "Зображення птаха символізувало мир і духовну чистоту."
+    },
+    "en": {
+      "name": "Bird",
+      "meaning_description": "The image of a bird symbolised peace and spiritual purity."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Калина з пташками",
+      "meaning_description": "Улюблений мотив борщівської вишивки - калина між двома пташками."
+    },
+    "en": {
+      "name": "Guelder rose with birds",
+      "meaning_description": "A favourite motif of Borshchiv embroidery: a guelder rose between two birds."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Дерево життя",
+      "meaning_description": "Мотив з меандром, що за традицією символізував підземну воду."
+    },
+    "en": {
+      "name": "Tree of life",
+      "meaning_description": "A motif with a meander that by tradition symbolised underground water."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Світове дерево",
+      "meaning_description": "Головна ідеограма - образ Матері-Землі (за традицією)."
+    },
+    "en": {
+      "name": "World tree",
+      "meaning_description": "The central ideogram, an image of Mother Earth (by tradition)."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Дрібний геометричний стібок",
+      "meaning_description": "Складний геометричний візерунок, характерний для черкаської вишивки."
+    },
+    "en": {
+      "name": "Fine geometric stitch",
+      "meaning_description": "An intricate geometric pattern typical of Cherkasy embroidery."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Букет троянд",
+      "meaning_description": "Великі букети троянд і птахи - характерно для Кіцманя."
+    },
+    "en": {
+      "name": "Bouquet of roses",
+      "meaning_description": "Large bouquets of roses and birds, typical of Kitsman."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Орликовий мотив",
+      "meaning_description": "Двоголовий орел, що з часом трансформувався в рослинні елементи (за традицією)."
+    },
+    "en": {
+      "name": "Eagle motif",
+      "meaning_description": "A double-headed eagle that over time turned into plant elements (by tradition)."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Марам (дерево життя)",
+      "meaning_description": "Кримськотатарський символ дерева життя, вигнута гілка «егрі дал»."
+    },
+    "en": {
+      "name": "Maram (tree of life)",
+      "meaning_description": "The Crimean Tatar tree-of-life symbol, a curved branch called egri dal."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Ромб із засіяним полем",
+      "meaning_description": "Базова геометрична форма строгої сітчастої вишивки, поширена по всьому Поділлю."
+    },
+    "en": {
+      "name": "Rhombus with a sown field",
+      "meaning_description": "The basic geometric form of strict grid embroidery, found throughout Podillia."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Виноградне гроно (варіація для м. Київ)",
+      "meaning_description": "Поширений мотив «брокарівської» вишивки - рослинний орнамент хрестиком."
+    },
+    "en": {
+      "name": "Bunch of grapes (Kyiv variation)",
+      "meaning_description": "A common motif of Brocard embroidery: a plant ornament in cross stitch."
+    }
+  },
+  {
+    "model": "patterns.motif",
+    "uk": {
+      "name": "Марам (дерево життя) (варіація для м. Севастополь)",
+      "meaning_description": "Кримськотатарський символ дерева життя, вигнута гілка «егрі дал»."
+    },
+    "en": {
+      "name": "Maram (tree of life) (Sevastopol variation)",
+      "meaning_description": "The Crimean Tatar tree-of-life symbol, a curved branch called egri dal."
+    }
+  },
+  {
+    "model": "blog.author",
+    "uk": {
+      "name": "Владислав Замотайло"
+    },
+    "en": {
+      "name": "Vladyslav Zamotailo"
+    }
+  }
+]

@@ -36,6 +36,9 @@ class SlugModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            source_value = getattr(self, self.slug_source_field, "")
+            base_field = self.slug_source_field.removesuffix("_uk")
+            source_value = getattr(self, self.slug_source_field, "") or getattr(
+                self, base_field, ""
+            )
             self.slug = translit_slugify(source_value)
         super().save(*args, **kwargs)

@@ -518,3 +518,98 @@ class AdminPagesRenderTests(TestCase):
             "/vd/patterns/region/",
         ]:
             self.assertEqual(self.client.get(url).status_code, 200, url)
+
+
+class TranslationSyncCommandTests(TestCase):
+    def setUp(self):
+        from django.utils import translation
+
+        with translation.override("uk"):
+            self.category = FAQCategory.objects.create(name="Тестова категорія", order=99)
+            self.item = FAQItem.objects.create(
+                category=self.category, question="Тестове питання?", answer="Відповідь."
+            )
+
+    def _call(self, name, *args):
+        from io import StringIO
+
+        from django.core.management import call_command
+
+        out = StringIO()
+        call_command(name, *args, stdout=out)
+        return out.getvalue()
+
+    def _file(self, entries):
+        import tempfile
+
+        f = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8")
+        json.dump(entries, f, ensure_ascii=False)
+        f.close()
+        return f.name
+
+    def _entry(self, question="Тестове питання?"):
+        return {
+            "model": "pages.faqitem",
+            "uk": {"question": question, "answer": "Відповідь."},
+            "en": {"question": "Test question?", "answer": "Answer."},
+        }
+
+    def test_export_is_ascii_json_with_both_languages(self):
+        out = self._call("export_translations", "pages.faqitem")
+        out.encode("ascii")
+        entry = next(e for e in json.loads(out) if e["uk"]["question"] == "Тестове питання?")
+        self.assertEqual(entry["en"], {"question": "", "answer": ""})
+
+    def test_load_sets_english_when_ukrainian_matches(self):
+        path = self._file([self._entry()])
+        out = self._call("load_translations", path)
+        self.item.refresh_from_db()
+        self.assertEqual(self.item.question_en, "Test question?")
+        self.assertEqual(self.item.question_uk, "Тестове питання?")
+        self.assertIn("оновлено: 1", out)
+
+    def test_check_and_dry_run_do_not_write(self):
+        path = self._file([self._entry()])
+        self.assertIn("Збіглося: 1", self._call("load_translations", path, "--check"))
+        self._call("load_translations", path, "--dry-run")
+        self.item.refresh_from_db()
+        self.assertFalse(self.item.question_en)
+
+    def test_changed_ukrainian_text_is_skipped_with_digest(self):
+        from apps.core.translations import digest
+
+        entry = self._entry()
+        entry["uk"]["answer"] = "Стара відповідь."
+        out = self._call("load_translations", self._file([entry]))
+        self.item.refresh_from_db()
+        self.assertFalse(self.item.question_en)
+        self.assertIn(f"answer (база {digest('Відповідь.')})", out)
+        self.assertIn("пропущено: 1", out)
+
+    def test_repo_translations_file_is_valid(self):
+        from pathlib import Path
+
+        from apps.core.translations import TARGETS
+
+        path = Path(settings.BASE_DIR) / "translations.json"
+        for entry in json.loads(path.read_text(encoding="utf-8")):
+            fields = set(TARGETS[entry["model"]])
+            self.assertLessEqual(set(entry["uk"]), fields)
+            self.assertEqual(set(entry["en"]), set(entry["uk"]))
+            text = json.dumps(entry, ensure_ascii=False)
+            self.assertNotIn("—", text)
+            self.assertIsNone(re.search("[А-Яа-яІіЇїЄєҐґ]", "".join(entry["en"].values())))
+
+    def test_author_created_in_english_gets_slug(self):
+        from django.utils import translation
+
+        from apps.blog.models import Author
+
+        with translation.override("en"):
+            author = Author.objects.create(name="Test Author")
+        self.assertEqual(author.slug, "test-author")
+
+    def test_faq_category_name_shows_in_english(self):
+        self.category.name_en = "Test category"
+        self.category.save()
+        self.assertContains(self.client.get("/en/faq/"), "Test category")

@@ -1,17 +1,17 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from unfold.admin import ModelAdmin, TabularInline
 
 from .models import FAQCategory, FAQItem
 
 
-class FAQItemInline(TabularInline):
+class FAQItemInline(TranslationTabularInline, TabularInline):
     model = FAQItem
     extra = 1
 
 
 @admin.register(FAQCategory)
-class FAQCategoryAdmin(ModelAdmin):
+class FAQCategoryAdmin(TranslationAdmin, ModelAdmin):
     list_display = ("name", "order")
     inlines = [FAQItemInline]
 

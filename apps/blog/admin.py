@@ -8,10 +8,10 @@ from .models import Author, BlogCategory, BlogPost, GuestPostSubmission
 
 
 @admin.register(Author)
-class AuthorAdmin(ModelAdmin):
+class AuthorAdmin(TranslationAdmin, ModelAdmin):
     list_display = ("name", "slug", "post_count")
-    search_fields = ("name",)
-    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ("name_uk", "name_en")
+    prepopulated_fields = {"slug": ("name_uk",)}
 
     @admin.display(description="Статей")
     def post_count(self, obj):

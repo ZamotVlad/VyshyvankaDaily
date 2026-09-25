@@ -1,6 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import BlogCategory, BlogPost
+from .models import Author, BlogCategory, BlogPost
 
 
 @register(BlogCategory)
@@ -15,3 +15,8 @@ class BlogPostTranslationOptions(TranslationOptions):
     # issue #576 у репозиторії modeltranslation). Тіло статті спільне для
     # обох мов; перекладними лишаються тільки текстові поля.
     fields = ("title", "excerpt", "seo_title", "seo_description", "target_keyword")
+
+
+@register(Author)
+class AuthorTranslationOptions(TranslationOptions):
+    fields = ("name", "bio")
