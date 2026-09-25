@@ -12,6 +12,14 @@ DATABASES = {
     "default": dj_database_url.parse(env("DATABASE_URL"), conn_max_age=600),
 }
 
+# Спільний між процесами кеш (ліміти запитів). Таблиця: createcachetable у Procfile.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "django_cache",
+    }
+}
+
 # Стиснення + унікальні імена файлів з хешем вмісту (кешування назавжди).
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},

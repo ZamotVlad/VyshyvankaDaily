@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.test import TestCase
+from django.core.management import call_command
+from django.test import TestCase, override_settings
 from django.utils import timezone
 
 from apps.blog.models import BlogCategory, BlogPost, GuestPostSubmission
@@ -55,6 +56,20 @@ class GuestPostSubmissionTests(TestCase):
             "/blog/propose/", self._valid_data(), HTTP_X_FORWARDED_FOR="6.6.6.6, 3.3.3.3"
         )
         self.assertEqual(GuestPostSubmission.objects.get().submitter_ip, "3.3.3.3")
+
+
+@override_settings(
+    CACHES={
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "django_cache",
+        }
+    }
+)
+class GuestPostDatabaseCacheTests(GuestPostSubmissionTests):
+    def setUp(self):
+        call_command("createcachetable", verbosity=0)
+        super().setUp()
 
 
 class BlogPostSanitizationTests(TestCase):
