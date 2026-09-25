@@ -464,3 +464,18 @@ class BackupDataTests(TestCase):
         files = self._run_backup()
         self.assertIn("Автор Бекапу", files["content.json"])
         self.assertIn('"model": "patterns.region"', files["content.json"])
+
+
+class AdminPagesRenderTests(TestCase):
+    def test_changed_admin_pages_open(self):
+        admin_user = get_user_model().objects.create_superuser(
+            username="admin2", email="a@example.com", password="pass12345"
+        )
+        self.client.force_login(admin_user)
+        for url in [
+            "/vd/patterns/dailypattern/",
+            "/vd/blog/blogpost/",
+            "/vd/blog/blogpost/add/",
+            "/vd/patterns/region/",
+        ]:
+            self.assertEqual(self.client.get(url).status_code, 200, url)

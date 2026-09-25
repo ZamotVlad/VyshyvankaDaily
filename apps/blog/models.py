@@ -127,7 +127,6 @@ class BlogPost(TimeStampedModel, SlugModel):
         ),
     )
     published_at = models.DateTimeField(null=True, blank=True)
-    view_count = models.PositiveIntegerField(default=0)
     seo_title = models.CharField(max_length=255, blank=True)
     seo_description = models.TextField(blank=True)
     target_keyword = models.CharField(

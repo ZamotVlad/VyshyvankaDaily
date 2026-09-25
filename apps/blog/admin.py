@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin
 
@@ -43,7 +44,6 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
     search_fields = ("title_uk", "title_en")
     prepopulated_fields = {"slug": ("title_uk",)}
     filter_horizontal = ("sources",)
-    readonly_fields = ("view_count",)
     autocomplete_fields = ("related_region",)
     list_per_page = 30
 
@@ -73,13 +73,6 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
                 "classes": ("collapse",),
             },
         ),
-        (
-            "Службове",
-            {
-                "fields": ("view_count",),
-                "classes": ("collapse",),
-            },
-        ),
     )
 
     @admin.display(description="Статус")
@@ -98,7 +91,7 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
                 '<span style="color: #3A7D2C;">{}</span>',
                 obj.target_keyword,
             )
-        return format_html('<span style="color: #C23B2E;">—</span>')
+        return mark_safe('<span style="color: #C23B2E;">—</span>')
 
 
 @admin.register(GuestPostSubmission)

@@ -305,7 +305,6 @@ class DailyPattern(TimeStampedModel):
         default=GenerationStatus.SUCCESS,
         help_text="Службове поле для діагностики (розділ 8.6 ТЗ).",
     )
-    view_count = models.PositiveIntegerField(default=0)
 
     @property
     def breadcrumbs(self):

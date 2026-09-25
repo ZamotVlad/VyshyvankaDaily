@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
-from django.utils.html import format_html
+from django.utils.html import format_html, format_html_join
+from django.utils.safestring import mark_safe
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin
 
@@ -84,7 +85,7 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
                 '<span style="color: #3A7D2C;">{}</span>',
                 obj.target_keyword,
             )
-        return format_html('<span style="color: #C23B2E;">—</span>')
+        return mark_safe('<span style="color: #C23B2E;">—</span>')
 
     @admin.display(description="Мотивів")
     def motif_count(self, obj):
@@ -93,13 +94,14 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
     @admin.display(description="Палітра")
     def palette_preview(self, obj):
         colors = obj.dominant_colors or []
-        swatches = "".join(
-            f'<span style="display:inline-block;width:14px;height:14px;'
-            f"border-radius:3px;border:1px solid #666;background:{c};"
-            f'margin-right:3px;"></span>'
-            for c in colors[:5]
+        if not colors:
+            return "-"
+        return format_html_join(
+            "",
+            '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;'
+            'border:1px solid #666;background:{};margin-right:3px;"></span>',
+            ((c,) for c in colors[:5]),
         )
-        return format_html(swatches) if swatches else "-"
 
     @admin.action(description="Позначити обрані як «Верифіковано»")
     def mark_verified(self, request, queryset):
@@ -176,12 +178,12 @@ class SourceAdmin(ModelAdmin):
 
 @admin.register(DailyPattern)
 class DailyPatternAdmin(ModelAdmin):
-    list_display = ("date", "region", "generation_status", "algorithm_version", "view_count")
+    list_display = ("date", "region", "generation_status", "algorithm_version")
     list_filter = ("generation_status", "region", "algorithm_version")
     actions = ["retry_fallbacks"]
     date_hierarchy = "date"
     search_fields = ("region__name_uk",)
-    readonly_fields = ("seed", "svg_content", "view_count")
+    readonly_fields = ("seed", "svg_content")
     autocomplete_fields = ("region",)
     list_per_page = 50
 
