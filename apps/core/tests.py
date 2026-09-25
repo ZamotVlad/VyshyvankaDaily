@@ -272,6 +272,11 @@ class SecurityHeadersMiddlewareTests(TestCase):
         self.assertIn("Permissions-Policy", response)
         self.assertIn("camera=()", response["Permissions-Policy"])
 
+    def test_static_files_get_security_headers(self):
+        response = self.client.get("/static/css/vd.css")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["X-Content-Type-Options"], "nosniff")
+
 
 @override_settings(ALLOWED_HOSTS=["vyshyvankadaily.live"], SECURE_SSL_REDIRECT=True)
 class WwwRedirectMiddlewareTests(TestCase):

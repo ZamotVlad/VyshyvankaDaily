@@ -50,8 +50,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "apps.core.middleware.CanonicalHostMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # Обов'язково для i18n
     "django.middleware.common.CommonMiddleware",
