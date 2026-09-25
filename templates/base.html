@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}VyshyvankaDaily{% endblock %}</title>
 <link rel="canonical" href="{{ canonical_url }}">
-{% if alternate_url %}
-  <link rel="alternate" hreflang="{{ alternate_lang_code }}" href="{{ alternate_url }}">
-{% endif %}
+{% for code, url in hreflang_links %}
+  <link rel="alternate" hreflang="{{ code }}" href="{{ url }}">
+{% endfor %}
 <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
 <meta name="author" content="VyshyvankaDaily">
 <meta name="description" content="{% block meta_description %}Щоденний генератор орнаменту української вишиванки з реальними джерелами символіки й традицій усіх 27 регіонів.{% endblock %}">

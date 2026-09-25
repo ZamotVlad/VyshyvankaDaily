@@ -256,9 +256,17 @@ class ContextProcessorTests(TestCase):
         response = self.client.get("/archive/?page=2")
         self.assertIn("page=2", response.context["canonical_url"])
 
-    def test_alternate_url_present(self):
-        response = self.client.get("/")
-        self.assertIn("alternate_url", response.context)
+    def test_head_hreflang_lists_both_languages_and_x_default(self):
+        for path in ["/archive/", "/en/archive/"]:
+            body = self.client.get(path).content.decode()
+            self.assertIn('hreflang="uk" href="http://testserver/archive/"', body)
+            self.assertIn('hreflang="en" href="http://testserver/en/archive/"', body)
+            self.assertIn('hreflang="x-default" href="http://testserver/archive/"', body)
+
+    def test_canonical_ignores_invalid_or_first_page_param(self):
+        for query in ["?page=abc", "?page=1", "?page=-3", "?page=0"]:
+            response = self.client.get(f"/archive/{query}")
+            self.assertEqual(response.context["canonical_url"], "http://testserver/archive/")
 
 
 class SecurityHeadersMiddlewareTests(TestCase):
