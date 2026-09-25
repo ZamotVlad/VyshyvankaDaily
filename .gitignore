@@ -435,4 +435,13 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+### Windows ###
+...
 # End of https://www.toptal.com/developers/gitignore/api/windows,python,django,web,pycharm,visualstudiocode,venv
+
+### VyshyvankaDaily project-specific ###
+backups/
+*_backup*.json
+*.sql
+*.dump
+og_check.png
