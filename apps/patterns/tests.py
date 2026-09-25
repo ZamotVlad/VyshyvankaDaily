@@ -77,6 +77,19 @@ class RegionRotationTests(TestCase):
         self.assertEqual(result, self.region_a)
 
 
+class RotationOrderTieTests(TestCase):
+    def test_seeded_regions_have_unique_rotation_order(self):
+        orders = list(Region.objects.values_list("rotation_order", flat=True))
+        self.assertEqual(len(orders), len(set(orders)))
+
+    def test_equal_rotation_order_falls_back_to_creation_order(self):
+        Region.objects.all().update(is_active=False)
+        first = make_region("Регіон Я", rotation_order=5)
+        second = make_region("Регіон А", rotation_order=5)
+        self.assertEqual(get_region_for_date(ROTATION_EPOCH), first)
+        self.assertEqual(get_region_for_date(ROTATION_EPOCH + timedelta(days=1)), second)
+
+
 def fake_success(pattern_date, region):
     return f"<svg>{pattern_date}-{region.pk}</svg>", []
 

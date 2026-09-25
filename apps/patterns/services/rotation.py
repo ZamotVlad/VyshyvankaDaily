@@ -16,7 +16,7 @@ def get_region_for_date(pattern_date: date) -> Region:
     деактивовані/неверифіковані природно пропускаються, бо не входять
     у список ротації.
     """
-    regions = list(Region.objects.verified().order_by("rotation_order"))
+    regions = list(Region.objects.verified().order_by("rotation_order", "pk"))
     if not regions:
         raise Region.DoesNotExist("Немає жодного верифікованого активного регіону.")
 
