@@ -228,6 +228,7 @@ UNFOLD = {
                 "items": [
                     {"title": "Статті", "link": "/vd/blog/blogpost/"},
                     {"title": "Категорії статей", "link": "/vd/blog/blogcategory/"},
+                    {"title": "Автори", "link": "/vd/blog/author/"},
                     {
                         "title": "Заявки на гостьові пости",
                         "link": "/vd/blog/guestpostsubmission/",
