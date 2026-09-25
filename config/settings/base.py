@@ -285,6 +285,24 @@ CKEDITOR_5_MAX_FILE_SIZE = 5  # МБ (розділ 14.5 ТЗ — обмежен�
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Логи в stderr (heroku logs).
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {"format": "%(levelname)s %(name)s: %(message)s"},
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "simple"},
+    },
+    "root": {"handlers": ["console"], "level": "WARNING"},
+    "loggers": {
+        "django.request": {"level": "ERROR"},
+        "django.security.DisallowedHost": {"handlers": [], "propagate": False},
+        "apps": {"level": "INFO"},
+    },
+}
+
 # Дозволений перелік HTML-тегів/атрибутів для санітизації тіла статті
 # (розділ 14.5 ТЗ) — навмисно обмежений, не весь HTML5.
 ALLOWED_BLOG_HTML_TAGS = [
