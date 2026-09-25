@@ -27,4 +27,4 @@ Django 5 · PostgreSQL · Bootstrap 5 · Heroku · Brevo (email) · Google OAuth
 
 ---
 
-<p align="center">Зроблено з ❤️ в Україні</p>б
+<p align="center">Зроблено з ❤️ в Україні</p>
