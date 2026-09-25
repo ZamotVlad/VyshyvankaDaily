@@ -1,7 +1,9 @@
 import json
 import re
 import xml.etree.ElementTree as ET
+from unittest import skipUnless
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.utils import timezone
@@ -403,3 +405,28 @@ class AllauthClientIpTests(TestCase):
 
         request = RequestFactory().get("/", HTTP_X_FORWARDED_FOR="6.6.6.6, 3.3.3.3")
         self.assertEqual(get_client_ip(request), "3.3.3.3")
+
+
+EN_MO = settings.BASE_DIR / "locale" / "en" / "LC_MESSAGES" / "django.mo"
+
+
+@skipUnless(EN_MO.exists(), "потрібен скомпільований django.mo (compilemessages)")
+class EnglishUiStringsTests(TestCase):
+    def test_breadcrumbs_and_jsonld_are_translated(self):
+        region = Region.objects.verified().first()
+        body = self.client.get(f"/en/regions/{region.slug}/").content.decode()
+        self.assertIn(">Regions</a>", body)
+        self.assertIn('"name": "Home"', body)
+        self.assertNotIn(">Регіони</a>", body)
+
+    def test_save_message_is_translated(self):
+        pattern = DailyPattern.objects.create(
+            date=timezone.localdate().replace(day=1),
+            region=Region.objects.first(),
+            seed="s",
+            algorithm_version=1,
+            svg_content="<svg></svg>",
+        )
+        self.client.force_login(get_user_model().objects.create_user(username="e", password="p"))
+        response = self.client.post(f"/en/pattern/{pattern.date}/save/", follow=True)
+        self.assertContains(response, "Saved to collection.")

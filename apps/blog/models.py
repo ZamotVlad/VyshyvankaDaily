@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext as _
 from django_ckeditor_5.fields import CKEditor5Field
 
 from apps.core.models import SlugModel, TimeStampedModel
@@ -153,7 +154,7 @@ class BlogPost(TimeStampedModel, SlugModel):
         from django.urls import reverse
 
         return [
-            {"label": "Блог", "url": reverse("blog:list")},
+            {"label": _("Блог"), "url": reverse("blog:list")},
             {
                 "label": self.category.name,
                 "url": f"{reverse('blog:list')}?category={self.category.slug}",

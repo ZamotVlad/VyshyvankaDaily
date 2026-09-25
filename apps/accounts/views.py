@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 
 from .forms import ProfileForm
 
@@ -12,7 +13,7 @@ def profile_settings_view(request):
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            messages.success(request, "Профіль оновлено.")
+            messages.success(request, _("Профіль оновлено."))
             return redirect("accounts:profile_settings")
     else:
         form = ProfileForm(instance=profile)

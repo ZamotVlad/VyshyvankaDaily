@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext as _
 from django_ckeditor_5.fields import CKEditor5Field
 
 from apps.core.models import SlugModel, TimeStampedModel
@@ -177,7 +178,7 @@ class Region(TimeStampedModel, SlugModel):
         from django.urls import reverse
 
         return [
-            {"label": "Регіони", "url": reverse("patterns:region_list")},
+            {"label": _("Регіони"), "url": reverse("patterns:region_list")},
             {"label": self.name},
         ]
 
@@ -311,7 +312,7 @@ class DailyPattern(TimeStampedModel):
         from django.urls import reverse
 
         return [
-            {"label": "Архів", "url": reverse("patterns:archive")},
+            {"label": _("Архів"), "url": reverse("patterns:archive")},
             {
                 "label": self.region.name,
                 "url": reverse("patterns:region_detail", args=[self.region.slug]),

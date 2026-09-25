@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.db import models
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext as _
 from django_ratelimit.decorators import ratelimit
 
 from apps.blog.forms import GuestPostSubmissionForm
@@ -97,7 +98,7 @@ def guest_post_propose_view(request):
                 submission = form.save(commit=False)
                 submission.submitter_ip = client_ip(request)
                 submission.save()
-            messages.success(request, "Дякуємо! Заявку отримано.")
+            messages.success(request, _("Дякуємо! Заявку отримано."))
             return redirect("blog:propose")
     else:
         form = GuestPostSubmissionForm()

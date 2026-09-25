@@ -2,6 +2,7 @@ import json
 
 from django import template
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 
 register = template.Library()
 
@@ -56,7 +57,7 @@ def jsonld_breadcrumbs(context, breadcrumbs):
         {
             "@type": "ListItem",
             "position": 1,
-            "name": "Головна",
+            "name": _("Головна"),
             "item": request.build_absolute_uri("/"),
         }
     ]

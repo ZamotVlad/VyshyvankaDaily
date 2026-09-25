@@ -5034,6 +5034,22 @@ msgstr "Previous page"
 msgid "Наступна сторінка"
 msgstr "Next page"
 
+#: .\apps\patterns\views.py
+msgid "Видалено з колекції."
+msgstr "Removed from collection."
+
+#: .\apps\patterns\views.py
+msgid "Збережено в колекцію."
+msgstr "Saved to collection."
+
+#: .\apps\blog\views.py
+msgid "Дякуємо! Заявку отримано."
+msgstr "Thank you! Your proposal has been received."
+
+#: .\apps\accounts\views.py
+msgid "Профіль оновлено."
+msgstr "Profile updated."
+
 #~ msgid "Хмельницька область"
 #~ msgstr "Khmelnytskyi Oblast"
 

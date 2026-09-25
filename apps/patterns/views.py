@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.blog.models import Author
@@ -151,9 +152,9 @@ def toggle_save_view(request, iso_date):
         _update_streak(request.user.profile)
     if not created:
         saved.delete()
-        messages.info(request, "Видалено з колекції.")
+        messages.info(request, _("Видалено з колекції."))
     else:
-        messages.success(request, "Збережено в колекцію.")
+        messages.success(request, _("Збережено в колекцію."))
 
     next_url = request.POST.get("next")
     if not url_has_allowed_host_and_scheme(
