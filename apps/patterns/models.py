@@ -1,4 +1,7 @@
+import re
+
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext as _
 from django_ckeditor_5.fields import CKEditor5Field
@@ -58,6 +61,16 @@ class Source(TimeStampedModel):
         return self.name
 
 
+HEX_COLOR_RE = re.compile(r"#[0-9A-Fa-f]{6}")
+
+
+def validate_hex_colors(value):
+    if not isinstance(value, list) or not all(
+        isinstance(c, str) and HEX_COLOR_RE.fullmatch(c) for c in value
+    ):
+        raise ValidationError('Очікується список кольорів у форматі ["#RRGGBB", ...].')
+
+
 class RegionQuerySet(models.QuerySet):
     def verified(self):
         """
@@ -110,6 +123,7 @@ class Region(TimeStampedModel, SlugModel):
         help_text="Опис сторінки для пошукових систем (SEO). Порожнє - береться з опису символіки.",
     )
     dominant_colors = models.JSONField(
+        validators=[validate_hex_colors],
         help_text='Список кольорових кодів (наприклад, ["#FF6B35", "#004E89"]).',
     )
     shirt_cut_type = models.CharField(

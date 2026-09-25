@@ -872,3 +872,22 @@ class QueryCountTests(TestCase):
     def test_collection(self):
         self.client.force_login(self.user)
         self._assert_constant("/collection/")
+
+
+class DominantColorsValidationTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон Колір", rotation_order=300)
+
+    def _region(self, colors):
+        self.region.dominant_colors = colors
+        return self.region
+
+    def test_valid_hex_colors_pass(self):
+        self._region(["#FF6B35", "#004e89"]).full_clean()
+
+    def test_invalid_values_rejected(self):
+        from django.core.exceptions import ValidationError
+
+        for bad in [["red"], ["#FFF"], ['#000000" onload="x'], "#000000", [], [123]]:
+            with self.assertRaises(ValidationError, msg=repr(bad)):
+                self._region(bad).full_clean()
