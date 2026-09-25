@@ -5014,6 +5014,14 @@ msgstr ""
 msgid "Select currency"
 msgstr ""
 
+#: .\templates\patterns\home_unavailable.html:9
+msgid "Орнамент дня готується"
+msgstr "Today's ornament is being prepared"
+
+#: .\templates\patterns\home_unavailable.html:11
+msgid "Спробуйте оновити сторінку за хвилину."
+msgstr "Please refresh the page in a minute."
+
 #~ msgid "Хмельницька область"
 #~ msgstr "Khmelnytskyi Oblast"
 

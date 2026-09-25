@@ -695,3 +695,17 @@ class PatternDetailUrlTests(TestCase):
         response = self.client.get("/pattern/2026-06-01/")
         robots = re.findall(r'<meta name="robots" content="([^"]+)"', response.content.decode())
         self.assertEqual(robots, ["noindex, follow"])
+
+
+class HomepageUnavailableTests(TestCase):
+    def test_no_active_regions_shows_friendly_page_instead_of_500(self):
+        Region.objects.update(is_active=False)
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 503)
+        self.assertContains(response, "Орнамент дня готується", status_code=503)
+
+    @patch("apps.patterns.views.build_svg_for_date", side_effect=RuntimeError("boom"))
+    def test_generation_failure_without_fallback_shows_friendly_page(self, _mock):
+        make_region("Регіон А", rotation_order=1)
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 503)

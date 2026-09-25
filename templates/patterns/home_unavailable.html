@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}VyshyvankaDaily{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
+
+{% block content %}
+<div class="vd-empty" style="border: none; padding-top: 60px;">
+  <h1 style="font-size: 26px;">{% translate "Орнамент дня готується" %}</h1>
+  <p class="vd-muted" style="max-width: 480px; margin: 0 auto 22px;">
+    {% translate "Спробуйте оновити сторінку за хвилину." %}
+  </p>
+</div>
+{% endblock %}

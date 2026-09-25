@@ -1,3 +1,4 @@
+import logging
 from datetime import date, datetime, timedelta
 
 from django.conf import settings
@@ -15,8 +16,14 @@ from django.views.decorators.http import require_POST
 
 from apps.blog.models import Author
 from apps.patterns.models import DailyPattern, Region, SavedPattern
-from apps.patterns.services.generation import CURRENT_ALGORITHM_VERSION, generate_daily_pattern
+from apps.patterns.services.generation import (
+    CURRENT_ALGORITHM_VERSION,
+    NoFallbackAvailable,
+    generate_daily_pattern,
+)
 from apps.patterns.services.pattern_builder import build_svg_for_date
+
+logger = logging.getLogger(__name__)
 
 RIBBON_DAYS = 7
 ARCHIVE_PAGE_SIZE = 10
@@ -51,11 +58,15 @@ def home_view(request):
     from apps.pages.models import FAQItem
 
     today = timezone.localdate()
-    pattern = generate_daily_pattern(
-        today,
-        algorithm_version=CURRENT_ALGORITHM_VERSION,
-        generate_fn=build_svg_for_date,
-    )
+    try:
+        pattern = generate_daily_pattern(
+            today,
+            algorithm_version=CURRENT_ALGORITHM_VERSION,
+            generate_fn=build_svg_for_date,
+        )
+    except (Region.DoesNotExist, NoFallbackAvailable):
+        logger.exception("Орнамент дня недоступний на %s", today)
+        return render(request, "patterns/home_unavailable.html", status=503)
 
     ribbon = (
         DailyPattern.objects.filter(date__lte=today, date__gt=today - timedelta(days=RIBBON_DAYS))
