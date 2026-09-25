@@ -97,7 +97,7 @@
           <a href="{% url 'account_logout' %}">{% translate "Вийти" %}</a>
         {% else %}
           <a href="{% url 'account_login' %}">{% translate "Увійти" %}</a>
-          <a href="{% url 'account_signup' %}">{% translate "Реєстрація" %}</a>
+          <a href="{% url 'account_signup' %}" aria-label="{% translate 'Реєстрація - меню' %}">{% translate "Реєстрація" %}</a>
         {% endif %}
       </div>
     </div>

@@ -155,9 +155,8 @@ a:hover {
   transform: scaleX(1);
 }
 .vd-sep {
-  color: var(--vd-red);
+  color: var(--vd-red-text);
   font-size: 9px;
-  opacity: 0.55;
 }
 
 .vd-auth {
@@ -208,10 +207,10 @@ a:hover {
   color: var(--vd-cream);
 }
 .vd-lang__btn.is-active {
-  color: var(--vd-red);
+  color: var(--vd-red-text);
 }
 .vd-lang__sep {
-  color: var(--vd-border);
+  color: var(--vd-muted);
   font-size: 12px;
 }
 
@@ -234,11 +233,11 @@ a:hover {
     color 0.2s;
 }
 .vd-btn--primary {
-  background: var(--vd-red);
+  background: var(--vd-red-dim);
   color: var(--vd-cream);
 }
 .vd-btn--primary:hover {
-  background: var(--vd-red-dim);
+  background: var(--vd-red);
   color: var(--vd-cream);
 }
 .vd-btn--ghost {
