@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 13:26+0300\n"
+"POT-Creation-Date: 2026-09-25 13:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,720 +18,1571 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: config/settings/base.py:105
+#: .\config\settings\base.py:113
 msgid "Ukrainian"
 msgstr "Ukrainian"
 
-#: config/settings/base.py:106
+#: .\config\settings\base.py:114
 msgid "English"
 msgstr "English"
 
-#: templates/404.html:113
+#: .\templates\403.html:4
+msgid "Доступ обмежено"
+msgstr "Access denied"
+
+#: .\templates\403.html:9
+msgid "Забагато спроб поспіль"
+msgstr "Too many attempts in a row"
+
+#: .\templates\403.html:11
+msgid ""
+"Схоже, ви надіслали форму кілька разів підряд за короткий час. Це нормальне "
+"обмеження проти спаму - зачекайте трохи й спробуйте ще раз."
+msgstr ""
+"It looks like you've submitted this form several times in a row. This is a "
+"normal anti-spam limit - please wait a bit and try again."
+
+#: .\templates\403.html:13 .\templates\403_csrf.html:13
+msgid "На головну"
+msgstr "Back to home"
+
+#: .\templates\403_csrf.html:4
+msgid "Форма застаріла"
+msgstr "Form expired"
+
+#: .\templates\403_csrf.html:9
+msgid "Ця форма трохи застаріла"
+msgstr "This form is a bit stale"
+
+#: .\templates\403_csrf.html:11
+msgid ""
+"Найімовірніше, сторінка була відкрита довго, або ви скористались кнопкою "
+"«назад» у браузері. Це не помилка з вашого боку - просто оновіть сторінку й "
+"спробуйте ще раз."
+msgstr ""
+"This usually happens if the page was open for a while, or you used your "
+"browser's back button. It's not something you did wrong - just refresh the "
+"page and try again."
+
+#: .\templates\404.html:113
 msgid "Цю нитку обірвано"
 msgstr "This thread snapped"
 
-#: templates/404.html:115
+#: .\templates\404.html:115
 msgid ""
 "Сторінки за цією адресою немає. Можливо, вона змінилась, або її ніколи не "
 "було вишито."
 msgstr ""
-"There's no page at this address. It may have moved, or it was never stitched "
-"at all."
+"There's no page at this address. It may have moved, or it was never stitched"
+" at all."
 
-#: templates/404.html:119
+#: .\templates\404.html:119
 msgid "Орнамент дня"
 msgstr "Pattern of the Day"
 
-#: templates/404.html:120 templates/base.html:32 templates/base.html:75
-#: templates/patterns/archive.html:4
+#: .\templates\404.html:120 .\templates\base.html:46 .\templates\base.html:83
+#: .\templates\patterns\archive.html:4
 msgid "Архів"
 msgstr "Archive"
 
-#: templates/404.html:121 templates/base.html:36 templates/base.html:77
-#: templates/base.html:115
+#: .\templates\404.html:121 .\templates\base.html:40 .\templates\base.html:85
+#: .\templates\base.html:126
 msgid "Регіони"
 msgstr "Regions"
 
-#: templates/account/login.html:4 templates/account/login.html:7
+#: .\templates\account\login.html:4 .\templates\account\login.html:7
 msgid "Вхід"
 msgstr "Log In"
 
-#: templates/account/login.html:11 templates/base.html:61
-#: templates/base.html:88
+#: .\templates\account\login.html:17
+msgid "Увійти через Google"
+msgstr "Log in with Google"
+
+#: .\templates\account\login.html:21 .\templates\account\signup.html:21
+msgid "або"
+msgstr "or"
+
+#: .\templates\account\login.html:29 .\templates\base.html:70
+#: .\templates\base.html:99
 msgid "Увійти"
 msgstr "Log In"
 
-#: templates/account/login.html:15
+#: .\templates\account\login.html:33
 msgid "Ще немає акаунта? Зареєструватися"
 msgstr "Don't have an account? Sign up"
 
-#: templates/account/signup.html:4 templates/account/signup.html:7
-#: templates/base.html:62 templates/base.html:89
-#: templates/patterns/home.html:18
-msgid "Реєстрація"
-msgstr "Sign Up"
+#: .\templates\account\logout.html:4
+msgid "Вихід"
+msgstr "Log Out"
 
-#: templates/account/signup.html:11
-msgid "Зареєструватися"
-msgstr "Sign Up"
-
-#: templates/accounts/profile_settings.html:4
-#: templates/accounts/profile_settings.html:8
-msgid "Налаштування профілю"
-msgstr "Profile Settings"
-
-#: templates/accounts/profile_settings.html:19
-msgid "Зберегти"
-msgstr "Save"
-
-#: templates/admin/index.html:7
-msgid "Користувачі"
-msgstr "Users"
-
-#: templates/admin/index.html:9
-msgid "за тиждень"
-msgstr "this week"
-
-#: templates/admin/index.html:12
-msgid "Заявки на гостьові пости"
-msgstr "Guest post submissions"
-
-#: templates/admin/index.html:14
-msgid "очікують розгляду"
-msgstr "awaiting review"
-
-#: templates/admin/index.html:17
-msgid "Редакційний борг"
-msgstr "Editorial backlog"
-
-#: templates/admin/index.html:19
-msgid "регіонів/мотивів на перевірці"
-msgstr "regions/motifs under review"
-
-#: templates/admin/index.html:22
-msgid "Помилки генерації"
-msgstr "Generation errors"
-
-#: templates/admin/index.html:24
-msgid "застосовано резервний варіант"
-msgstr "fallback used"
-
-#: templates/admin/index.html:30
-msgid "Збереження за регіонами"
-msgstr "Saves by region"
-
-#: templates/admin/index.html:38
-msgid "Ще немає збережень."
-msgstr "No saves yet."
-
-#: templates/admin/index.html:43
-msgid "Останні статті блогу"
-msgstr "Latest blog posts"
-
-#: templates/admin/index.html:50
-msgid "Ще немає опублікованих статей."
-msgstr "No published posts yet."
-
-#: templates/base.html:30
-msgid "Основна навігація"
-msgstr "Main navigation"
-
-#: templates/base.html:34 templates/base.html:76
-#: templates/blog/blog_detail.html:17 templates/blog/blog_list.html:4
-#: templates/blog/blog_list.html:7
-msgid "Блог"
-msgstr "Blog"
-
-#: templates/base.html:38 templates/base.html:78 templates/pages/about.html:4
-#: templates/pages/about.html:8
-msgid "Про нас"
-msgstr "About"
-
-#: templates/base.html:40 templates/base.html:79 templates/pages/contact.html:4
-#: templates/pages/contact.html:8
-msgid "Контакти"
-msgstr "Contact"
-
-#: templates/base.html:54 templates/base.html:84
-#: templates/patterns/home.html:12 templates/patterns/my_collection.html:4
-#: templates/patterns/my_collection.html:8
-msgid "Моя колекція"
-msgstr "My Collection"
-
-#: templates/base.html:55 templates/base.html:85
-msgid "Налаштування"
-msgstr "Settings"
-
-#: templates/base.html:57 templates/base.html:86
+#: .\templates\account\logout.html:7 .\templates\account\logout.html:16
+#: .\templates\base.html:66 .\templates\base.html:97
 msgid "Вийти"
 msgstr "Log Out"
 
-#: templates/base.html:67
+#: .\templates\account\logout.html:8
+msgid "Ви впевнені, що хочете вийти?"
+msgstr "Are you sure you want to log out?"
+
+#: .\templates\account\logout.html:17
+msgid "Скасувати"
+msgstr "Cancel"
+
+#: .\templates\account\password_change.html:4
+#: .\templates\account\password_change.html:7
+msgid "Зміна пароля"
+msgstr "Change Password"
+
+#: .\templates\account\password_change.html:11
+#: .\templates\accounts\profile_settings.html:19
+msgid "Зберегти"
+msgstr "Save"
+
+#: .\templates\account\password_reset.html:4
+#: .\templates\account\password_reset.html:7
+msgid "Відновлення пароля"
+msgstr "Password Reset"
+
+#: .\templates\account\password_reset.html:8
+msgid ""
+"Забули пароль? Введіть свою адресу електронної пошти нижче, і ми надішлемо "
+"вам листа з інструкціями для його відновлення."
+msgstr ""
+"Forgot your password? Enter your email address below and we'll send you a "
+"message with instructions for resetting it."
+
+#: .\templates\account\password_reset.html:12
+msgid "Відновити пароль"
+msgstr "Reset Password"
+
+#: .\templates\account\password_reset_from_key.html:4
+msgid "Новий пароль"
+msgstr "New Password"
+
+#: .\templates\account\password_reset_from_key.html:7
+msgid "Встановити новий пароль"
+msgstr "Set New Password"
+
+#: .\templates\account\password_reset_from_key.html:9
+msgid ""
+"Посилання для відновлення пароля недійсне - можливо, ним уже скористались. "
+"Запросіть нове."
+msgstr ""
+"This password reset link is invalid - it may have already been used. Please "
+"request a new one."
+
+#: .\templates\account\password_reset_from_key.html:10
+msgid "Запросити нове посилання"
+msgstr "Request a New Link"
+
+#: .\templates\account\password_reset_from_key.html:15
+#: .\templates\accounts\profile_settings.html:23
+msgid "Змінити пароль"
+msgstr "Change Password"
+
+#: .\templates\account\signup.html:4 .\templates\account\signup.html:7
+#: .\templates\base.html:100 .\templates\patterns\home.html:25
+msgid "Реєстрація"
+msgstr "Sign Up"
+
+#: .\templates\account\signup.html:17
+msgid "Зареєструватися через Google"
+msgstr "Sign Up with Google"
+
+#: .\templates\account\signup.html:29
+msgid "Зареєструватися"
+msgstr "Sign Up"
+
+#: .\templates\accounts\profile_settings.html:4
+#: .\templates\accounts\profile_settings.html:8
+msgid "Налаштування профілю"
+msgstr "Profile Settings"
+
+#: .\templates\admin\dashboard_widgets\drafts.html:4
+msgid "Чернетки"
+msgstr "Drafts"
+
+#: .\templates\admin\dashboard_widgets\drafts.html:5
+msgid "Нова стаття"
+msgstr "New Article"
+
+#: .\templates\admin\dashboard_widgets\drafts.html:16
+msgid "Немає незавершених чернеток."
+msgstr "No unfinished drafts."
+
+#: .\templates\admin\index.html:7
+msgid "Користувачі"
+msgstr "Users"
+
+#: .\templates\admin\index.html:9
+msgid "за тиждень"
+msgstr "this week"
+
+#: .\templates\admin\index.html:12
+msgid "Заявки на гостьові пости"
+msgstr "Guest post submissions"
+
+#: .\templates\admin\index.html:14
+msgid "очікують розгляду"
+msgstr "awaiting review"
+
+#: .\templates\admin\index.html:17
+msgid "Редакційний борг"
+msgstr "Editorial backlog"
+
+#: .\templates\admin\index.html:19
+msgid "регіонів/мотивів на перевірці"
+msgstr "regions/motifs under review"
+
+#: .\templates\admin\index.html:22
+msgid "Помилки генерації"
+msgstr "Generation errors"
+
+#: .\templates\admin\index.html:24
+msgid "застосовано резервний варіант"
+msgstr "fallback used"
+
+#: .\templates\admin\index.html:30
+msgid "Збереження за регіонами"
+msgstr "Saves by region"
+
+#: .\templates\admin\index.html:38
+msgid "Ще немає збережень."
+msgstr "No saves yet."
+
+#: .\templates\admin\index.html:43
+msgid "Останні статті блогу"
+msgstr "Latest blog posts"
+
+#: .\templates\admin\index.html:50
+msgid "Ще немає опублікованих статей."
+msgstr "No published posts yet."
+
+#: .\templates\allauth\layouts\base.html:30
+msgid "Повідомлення"
+msgstr "Messages"
+
+#: .\templates\base.html:36
+msgid "Основна навігація"
+msgstr "Main navigation"
+
+#: .\templates\base.html:38 .\templates\base.html:84
+#: .\templates\blog\blog_detail.html:21 .\templates\blog\blog_list.html:4
+#: .\templates\blog\blog_list.html:7
+msgid "Блог"
+msgstr "Blog"
+
+#: .\templates\base.html:42 .\templates\base.html:86
+#: .\templates\pages\about.html:4 .\templates\pages\about.html:9
+msgid "Про нас"
+msgstr "About"
+
+#: .\templates\base.html:44 .\templates\base.html:87
+#: .\templates\pages\contact.html:4 .\templates\pages\contact.html:9
+#: .\templates\pages\privacy.html:121 .\templates\pages\terms.html:115
+msgid "Контакти"
+msgstr "Contact"
+
+#: .\templates\base.html:52 .\templates\base.html:91
+msgid "Підтримати"
+msgstr "Support"
+
+#: .\templates\base.html:63 .\templates\base.html:95
+#: .\templates\patterns\home.html:19 .\templates\patterns\my_collection.html:4
+#: .\templates\patterns\my_collection.html:8
+msgid "Моя колекція"
+msgstr "My Collection"
+
+#: .\templates\base.html:64 .\templates\base.html:96
+msgid "Налаштування"
+msgstr "Settings"
+
+#: .\templates\base.html:75
 msgid "Меню"
 msgstr "Menu"
 
-#: templates/base.html:112
+#: .\templates\base.html:100
+msgid "Реєстрація - меню"
+msgstr "Sign Up - menu"
+
+#: .\templates\base.html:123
 msgid "Щодня - новий орнамент твоєї землі."
 msgstr "A new pattern from your homeland, every day."
 
-#: templates/base.html:117
+#: .\templates\base.html:128
+msgid "Львівська область"
+msgstr "Lviv Oblast"
+
+#: .\templates\base.html:129
 msgid "Полтавська область"
 msgstr "Poltava Oblast"
 
-#: templates/base.html:118
-msgid "Хмельницька область"
-msgstr "Khmelnytskyi Oblast"
+#: .\templates\base.html:130
+msgid "м. Київ"
+msgstr "Kyiv"
 
-#: templates/base.html:119
-msgid "Автономна Республіка Крим"
-msgstr "Autonomous Republic of Crimea"
-
-#: templates/base.html:120
-msgid "Івано-Франківська область"
-msgstr "Ivano-Frankivsk Oblast"
-
-#: templates/base.html:121
+#: .\templates\base.html:131
 msgid "Усі 27 регіонів →"
 msgstr "All 27 regions →"
 
-#: templates/base.html:125
+#: .\templates\base.html:135
 msgid "Компанія"
 msgstr "Company"
 
-#: templates/base.html:128 templates/blog/guest_post_propose.html:4
+#: .\templates\base.html:138 .\templates\blog\guest_post_propose.html:4
+#: .\templates\pages\contact.html:33
 msgid "Запропонувати матеріал"
 msgstr "Submit an article"
 
-#: templates/base.html:132
+#: .\templates\base.html:142 .\templates\pages\privacy.html:8
+#: .\templates\pages\terms.html:8
 msgid "Правове"
 msgstr "Legal"
 
-#: templates/base.html:134 templates/pages/terms.html:4
-#: templates/pages/terms.html:8
+#: .\templates\base.html:144 .\templates\pages\terms.html:4
+#: .\templates\pages\terms.html:9
 msgid "Умови використання"
 msgstr "Terms of Use"
 
-#: templates/base.html:135 templates/pages/privacy.html:4
-#: templates/pages/privacy.html:8
+#: .\templates\base.html:145 .\templates\pages\privacy.html:4
+#: .\templates\pages\privacy.html:9
 msgid "Політика конфіденційності"
 msgstr "Privacy Policy"
 
-#: templates/blog/blog_detail.html:28 templates/blog/blog_list.html:30
+#: .\templates\base.html:151
+msgid "Усі права захищені"
+msgstr "All rights reserved"
+
+#: .\templates\blog\author_detail.html:16
+msgid "Профіль"
+msgstr "Profile"
+
+#: .\templates\blog\author_detail.html:21
+msgid "Статті автора"
+msgstr "Author's Articles"
+
+#: .\templates\blog\author_detail.html:35
+msgid "Описи регіонів"
+msgstr "Region Descriptions"
+
+#: .\templates\blog\author_detail.html:48
+msgid "Поки що немає опублікованих матеріалів."
+msgstr "No published content yet."
+
+#: .\templates\blog\blog_detail.html:32 .\templates\blog\blog_list.html:36
 msgid "Партнерський матеріал"
 msgstr "Sponsored content"
 
-#: templates/blog/blog_detail.html:34
+#: .\templates\blog\blog_detail.html:38
 msgid "Ця стаття про регіон"
 msgstr "This article is about"
 
-#: templates/blog/blog_detail.html:46 templates/patterns/pattern_detail.html:56
-#: templates/patterns/region_detail.html:51
+#: .\templates\blog\blog_detail.html:52
+#: .\templates\patterns\region_detail.html:43
+msgid "Автор"
+msgstr "Author"
+
+#: .\templates\blog\blog_detail.html:59
+#: .\templates\patterns\pattern_detail.html:60
+#: .\templates\patterns\region_detail.html:85
 msgid "Джерела"
 msgstr "Sources"
 
-#: templates/blog/blog_detail.html:56
+#: .\templates\blog\blog_detail.html:69
 msgid "Читайте також"
 msgstr "Read also"
 
-#: templates/blog/blog_list.html:8
-msgid "Дослідження, символіка, історії регіонів."
-msgstr "Research, symbolism, and regional stories."
+#: .\templates\blog\blog_list.html:10
+msgid "Про вишиванку та українську культуру"
+msgstr "About Vyshyvanka and Ukrainian Culture"
 
-#: templates/blog/blog_list.html:11
+#: .\templates\blog\blog_list.html:11
+msgid ""
+"Тут ми пишемо про вишиванки регіонів України та орнаменти вишиванок по "
+"регіонах - детальніше, ніж вміщується на сторінці самого регіону, - а також "
+"ширше, про українську культуру, історію й традиції, які стоять за "
+"візерунком. Частина статей розбирає символіку конкретної області, інша "
+"виходить за межі самого орнаменту."
+msgstr ""
+"Here we write about the vyshyvankas of Ukraine's regions and their patterns "
+"in more depth than fits on a region's own page, and more broadly about "
+"Ukrainian culture, history, and the traditions behind the pattern. Some "
+"articles unpack the symbolism of a specific oblast, others go beyond the "
+"pattern itself."
+
+#: .\templates\blog\blog_list.html:15 .\templates\blog\blog_list.html:16
 msgid "Пошук по блогу"
 msgstr "Search the blog"
 
-#: templates/blog/blog_list.html:13
+#: .\templates\blog\blog_list.html:17
+msgid "Категорія"
+msgstr "Category"
+
+#: .\templates\blog\blog_list.html:19
 msgid "Усі категорії"
 msgstr "All categories"
 
-#: templates/blog/blog_list.html:18
+#: .\templates\blog\blog_list.html:24
 msgid "Шукати"
 msgstr "Search"
 
-#: templates/blog/blog_list.html:52
+#: .\templates\blog\blog_list.html:58
 msgid "Статей поки немає."
 msgstr "No posts yet."
 
-#: templates/blog/guest_post_propose.html:7
+#: .\templates\blog\guest_post_propose.html:7
 msgid "Запропонувати гостьовий пост"
 msgstr "Submit a guest post"
 
-#: templates/blog/guest_post_propose.html:9
+#: .\templates\blog\guest_post_propose.html:9
 msgid ""
-"Розкажіть коротко про тему, яку хочете розкрити. Ми відповімо, якщо матеріал "
-"підійде."
+"Розкажіть коротко про тему, яку хочете розкрити. Ми відповімо, якщо матеріал"
+" підійде."
 msgstr ""
 "Tell us briefly about the topic you'd like to cover. We'll get back to you "
 "if it's a good fit."
 
-#: templates/blog/guest_post_propose.html:27
+#: .\templates\blog\guest_post_propose.html:28
 msgid "Надіслати"
 msgstr "Submit"
 
-#: templates/includes/breadcrumbs.html:2
+#: .\templates\includes\breadcrumbs.html:2
 msgid "Хлібні крихти"
 msgstr "Breadcrumbs"
 
-#: templates/includes/breadcrumbs.html:3
+#: .\templates\includes\breadcrumbs.html:3
 msgid "Головна"
 msgstr "Home"
 
-#: templates/pages/about.html:10
+#: .\templates\pages\about.html:8
+msgid "Про проєкт"
+msgstr "About the Project"
+
+#: .\templates\pages\about.html:10
 msgid ""
-"VyshyvankaDaily - це щоденний генератор українського орнаменту вишиванки, "
-"побудований на дослідженні реальної символіки, кольорів і мотивів "
-"традиційної вишивки. Щодня сайт показує новий орнамент, прив'язаний до "
-"конкретного регіону України - усього їх 27: 24 області, Автономна Республіка "
-"Крим, Київ і Севастополь."
+"Щодня сайт показує один орнамент, прив'язаний до одного з 27 регіонів "
+"України, з описом символіки й переліком джерел, на які ми спирались."
 msgstr ""
-"VyshyvankaDaily is a daily generator of Ukrainian vyshyvanka patterns, built "
-"on research into the real symbolism, colors, and motifs of traditional "
-"embroidery. Every day the site shows a new pattern tied to a specific region "
-"of Ukraine, 27 in total: 24 oblasts, the Autonomous Republic of Crimea, "
-"Kyiv, and Sevastopol."
+"Every day the site shows one pattern tied to one of Ukraine's 27 regions, "
+"with a description of its symbolism and a list of the sources we relied on."
 
-#: templates/pages/about.html:12
+#: .\templates\pages\about.html:16
+msgid "Що робить цей сайт"
+msgstr "What This Site Does"
+
+#: .\templates\pages\about.html:17
 msgid ""
-"Ідея проєкту проста: вишиванка - це не просто орнамент, а мова символів, яка "
-"відрізняється від регіону до регіону. Полтавщина відома технікою білим по "
-"білому, Борщівщина - насиченим чорним тлом, Крим - кримськотатарським "
-"орнаментом орьнек із власною, окремою традицією. Ми прагнемо показати це "
-"розмаїття чесно, з покликанням на реальні джерела там, де це можливо, і з "
-"чітким розрізненням задокументованого й переказаного за традицією там, де "
-"академічних джерел немає."
+"VyshyvankaDaily генерує орнамент вишиванки щодня. Кожен день закріплений за "
+"конкретним регіоном: 24 області, Автономна Республіка Крим, Київ і "
+"Севастополь."
 msgstr ""
-"The idea behind the project is simple: a vyshyvanka isn't just an ornament, "
-"it's a language of symbols that changes from region to region. Poltava is "
-"known for its white-on-white technique, Borshchiv for its dense black "
-"backgrounds, and Crimea for the Crimean Tatar ornek pattern, a separate "
-"tradition in its own right. We try to show this variety honestly, citing "
-"real sources wherever we can, and clearly separating what's documented from "
-"what's passed down by tradition when academic sources aren't available."
+"VyshyvankaDaily generates a vyshyvanka pattern every day. Each day is tied "
+"to a specific region: 24 oblasts, the Autonomous Republic of Crimea, Kyiv, "
+"and Sevastopol."
 
-#: templates/pages/about.html:14
+#: .\templates\pages\about.html:18
 msgid ""
-"Кожен орнамент супроводжується описом символіки регіону та переліком джерел, "
-"на які ми спирались - академічні праці, музейні колекції, визнання ЮНЕСКО. "
-"Там, де конкретне джерело для окремого твердження ще не підтверджено, ми "
-"прямо про це кажемо, а не видаємо здогад за факт."
+"Орнамент не випадковий. Геометрія будується з реальних досліджених мотивів "
+"регіону, а палітра відповідає тому, що характерне саме для цієї місцевості."
 msgstr ""
-"Each pattern comes with a description of the region's symbolism and a list "
-"of the sources we relied on: academic papers, museum collections, UNESCO "
-"recognition. Where a specific claim isn't yet backed by a confirmed source, "
-"we say so directly instead of presenting a guess as fact."
+"The pattern isn't random. Its geometry is built from real, researched motifs"
+" of the region, and its palette matches what's characteristic of that "
+"specific area."
 
-#: templates/pages/about.html:16
+#: .\templates\pages\about.html:22
+msgid "Місія"
+msgstr "Mission"
+
+#: .\templates\pages\about.html:23
 msgid ""
-"Проєкт розробляє одна людина, самостійно - від бекенду до дослідження "
-"джерел. Це означає, що деякі розділи (переклад, юридичні тексти, повна "
-"перевірка кожного джерела) ще доопрацьовуються, і ми відкрито це позначаємо, "
-"а не приховуємо."
+"Наша місія - розповідати про українську вишиванку через призму регіонів: яка"
+" символіка стоїть за кожним орнаментом, звідки вона походить і чим один край"
+" відрізняється від іншого."
 msgstr ""
-"The project is built by one person, alone, from the backend to the source "
-"research. That means some parts (translation, legal pages, a full check of "
-"every source) are still a work in progress, and we mark that openly instead "
-"of hiding it."
+"Our mission is to tell the story of Ukrainian vyshyvanka through the lens of"
+" its regions: what symbolism lies behind each pattern, where it comes from, "
+"and how one area differs from another."
 
-#: templates/pages/about.html:18
+#: .\templates\pages\about.html:24
 msgid ""
-"Якщо ви дослідник, музейний працівник чи просто маєте виправлення до опису "
-"символіки конкретного регіону - напишіть нам через сторінку контактів."
+"Тому поруч із орнаментами на сайті з'являться матеріали про історію, "
+"традиції та сучасну культуру України - вишиванка тут відправна точка, а не "
+"межа теми."
 msgstr ""
-"If you're a researcher, a museum professional, or simply have a correction "
-"to a region's description, reach out through the contact page."
+"That's why, alongside the patterns, the site will feature material about "
+"Ukraine's history, traditions, and contemporary culture - vyshyvanka is the "
+"starting point here, not the boundary of the topic."
 
-#: templates/pages/contact.html:9
+#: .\templates\pages\about.html:28
+msgid "Цінності"
+msgstr "Values"
+
+#: .\templates\pages\about.html:30
 msgid ""
-"Питання щодо проєкту, виправлення до опису регіону чи пропозиції співпраці - "
-"пишіть напряму на пошту нижче."
+"Джерело, а не припущення. Кожне твердження або підкріплене джерелом, або "
+"прямо позначене як переказ за традицією."
 msgstr ""
-"Questions about the project, corrections to a region's description, or "
-"collaboration proposals: email us directly at the address below."
+"A source, not a guess. Every claim is either backed by a source or clearly "
+"marked as passed down by tradition."
 
-#: templates/pages/contact.html:11
-msgid "Адресу буде замінено на реальну перед публічним запуском."
-msgstr "This address will be replaced with a real one before launch."
+#: .\templates\pages\about.html:31
+msgid ""
+"Регіон, а не узагальнення. Ми показуємо різницю між областями, а не зводимо "
+"українську вишиванку до одного орнаменту."
+msgstr ""
+"A region, not a generalization. We show the differences between oblasts "
+"instead of reducing Ukrainian vyshyvanka to a single pattern."
 
-#: templates/pages/faq.html:7
+#: .\templates\pages\about.html:32
+msgid ""
+"Контекст, а не лише орнамент. Вишиванка - привід говорити про історію та "
+"культуру України ширше, не тільки про візерунок."
+msgstr ""
+"Context, not just pattern. Vyshyvanka is a reason to talk about Ukraine's "
+"history and culture more broadly, not only about the design."
+
+#: .\templates\pages\about.html:37
+msgid "Хто веде проєкт"
+msgstr "Who Runs the Project"
+
+#: .\templates\pages\about.html:38
+msgid ""
+"Наразі VyshyvankaDaily веде одна людина - від генерації орнаменту до пошуку "
+"джерел. Проєкт відкритий до партнерства й підтримки тих, кому небайдужа "
+"тема."
+msgstr ""
+"VyshyvankaDaily is currently run by one person - from generating the pattern"
+" to researching sources. The project is open to partnerships and support "
+"from anyone who cares about the topic."
+
+#: .\templates\pages\contact.html:8
+msgid "Зворотний зв'язок"
+msgstr "Get in Touch"
+
+#: .\templates\pages\contact.html:10
+msgid ""
+"Пишіть напряму на пошту з питаннями, виправленнями чи пропозиціями "
+"співпраці."
+msgstr ""
+"Email us directly with questions, corrections, or collaboration proposals."
+
+#: .\templates\pages\contact.html:15
+msgid "Електронна пошта"
+msgstr "Email"
+
+#: .\templates\pages\contact.html:21
+msgid "З чим можна написати"
+msgstr "What to Write to Us About"
+
+#: .\templates\pages\contact.html:23
+msgid ""
+"Неточність в описі символіки регіону. Вкажіть, що саме не так і на яке "
+"джерело спиратись."
+msgstr ""
+"An inaccuracy in a region's symbolism description. Tell us what's wrong and "
+"which source to rely on."
+
+#: .\templates\pages\contact.html:24
+msgid "Питання щодо ваших даних або прохання видалити акаунт."
+msgstr "Questions about your data, or a request to delete your account."
+
+#: .\templates\pages\contact.html:25
+msgid "Технічна помилка на сайті. Опишіть, що ви робили й що пішло не так."
+msgstr ""
+"A technical bug on the site. Describe what you were doing and what went "
+"wrong."
+
+#: .\templates\pages\contact.html:26
+msgid "Запит на коментар, згадку чи цитування проєкту в іншому матеріалі."
+msgstr ""
+"A request for a comment, mention, or citation of the project in another "
+"piece."
+
+#: .\templates\pages\contact.html:31
+msgid "Що краще надіслати через окрему форму"
+msgstr "What's Better Sent Through a Separate Form"
+
+#: .\templates\pages\contact.html:32
+msgid ""
+"Якщо ви хочете запропонувати матеріал для блогу, скористайтесь формою "
+"«Запропонувати матеріал». Заявка одразу потрапляє в чергу розгляду з усіма "
+"потрібними полями, і загубити її складніше, ніж лист."
+msgstr ""
+"If you'd like to propose an article for the blog, use the 'Submit an "
+"article' form. Your submission goes straight into the review queue with all "
+"the fields we need, and it's much harder to lose than an email."
+
+#: .\templates\pages\contact.html:37
+msgid "Чого ми не робимо"
+msgstr "What We Don't Do"
+
+#: .\templates\pages\contact.html:38
+msgid "Ми не продаємо вишиванки й не приймаємо замовлення на вишивку."
+msgstr "We don't sell vyshyvankas or take embroidery orders."
+
+#: .\templates\pages\faq.html:5 .\templates\pages\faq.html:15
+#: .\templates\patterns\home.html:89
 msgid "Часті запитання"
 msgstr "Frequently Asked Questions"
 
-#: templates/pages/faq.html:28
+#: .\templates\pages\faq.html:14
+msgid "Довідка"
+msgstr "Help"
+
+#: .\templates\pages\faq.html:16
+msgid ""
+"Як працює орнамент дня, звідки беруться описи символіки й навіщо тут акаунт."
+msgstr ""
+"How the pattern of the day works, where the symbolism descriptions come "
+"from, and what the account is for."
+
+#: .\templates\pages\faq.html:41
 msgid "Розділ поки наповнюється."
 msgstr "This section is still being filled in."
 
-#: templates/pages/privacy.html:9 templates/pages/terms.html:9
-msgid ""
-"Це чернетка, узгоджена з реальною роботою сайту, але не перевірена юристом. "
-"Обов'язково доопрацювати перед публічним запуском."
+#: .\templates\pages\privacy.html:10
+msgid "Які дані збирає сайт, навіщо, кому вони передаються і як їх видалити."
 msgstr ""
-"This is a draft that matches how the site actually works, but it hasn't been "
-"reviewed by a lawyer. It must be finalized before launch."
+"What data the site collects, why, who it is shared with, and how to delete "
+"it."
 
-#: templates/pages/privacy.html:11
+#: .\templates\pages\privacy.html:14 .\templates\pages\terms.html:14
+msgid "Зміст сторінки"
+msgstr "Page Contents"
+
+#: .\templates\pages\privacy.html:15 .\templates\pages\terms.html:15
+msgid "Зміст"
+msgstr "Contents"
+
+#: .\templates\pages\privacy.html:17
+msgid "1. Хто обробляє ваші дані"
+msgstr "1. Who processes your data"
+
+#: .\templates\pages\privacy.html:18
+msgid "2. Які дані ми збираємо"
+msgstr "2. What data we collect"
+
+#: .\templates\pages\privacy.html:19
+msgid "3. Навіщо і на якій підставі"
+msgstr "3. Why, and on what basis"
+
+#: .\templates\pages\privacy.html:20
+msgid "4. Скільки ми зберігаємо дані"
+msgstr "4. How long we keep data"
+
+#: .\templates\pages\privacy.html:21
+msgid "5. Кому передаються дані"
+msgstr "5. Who we share data with"
+
+#: .\templates\pages\privacy.html:22
+msgid "6. Міжнародна передача"
+msgstr "6. International transfers"
+
+#: .\templates\pages\privacy.html:23
+msgid "7. Кукі"
+msgstr "7. Cookies"
+
+#: .\templates\pages\privacy.html:24
+msgid "8. Ваші права"
+msgstr "8. Your rights"
+
+#: .\templates\pages\privacy.html:25
+msgid "9. Вік користувачів"
+msgstr "9. Age of users"
+
+#: .\templates\pages\privacy.html:26
+msgid "10. Безпека даних"
+msgstr "10. Data security"
+
+#: .\templates\pages\privacy.html:27
+msgid "11. Автоматизовані рішення"
+msgstr "11. Automated decisions"
+
+#: .\templates\pages\privacy.html:28
+msgid "12. Зміни політики"
+msgstr "12. Changes to this policy"
+
+#: .\templates\pages\privacy.html:29
+msgid "13. Контакти"
+msgstr "13. Contact"
+
+#: .\templates\pages\privacy.html:35
+msgid "Хто обробляє ваші дані"
+msgstr "Who processes your data"
+
+#: .\templates\pages\privacy.html:36
+msgid ""
+"VyshyvankaDaily - персональний проєкт приватної особи. Ми визначаємо, які "
+"дані збираються й навіщо, тобто виступаємо володільцем цих даних."
+msgstr ""
+"VyshyvankaDaily is a personal project run by a private individual. We decide"
+" what data is collected and why, meaning we act as the data controller."
+
+#: .\templates\pages\privacy.html:37
+msgid ""
+"З будь-яким питанням щодо ваших даних звертайтесь через сторінку контактів."
+msgstr "For any question about your data, reach out through the contact page."
+
+#: .\templates\pages\privacy.html:41
 msgid "Які дані ми збираємо"
 msgstr "What data we collect"
 
-#: templates/pages/privacy.html:12
+#: .\templates\pages\privacy.html:42
 msgid ""
-"При реєстрації акаунта - електронна адреса та, за бажанням, відображуване "
-"ім'я. При надсиланні форми (пропозиція статті) - ім'я, електронна адреса та "
-"IP-адреса відправника."
+"При реєстрації: електронна адреса, пароль у зашифрованому вигляді та, за "
+"бажанням, відображуване ім'я. При вході через Google ми отримуємо електронну"
+" адресу й ім'я з вашого профілю Google, але не пароль."
 msgstr ""
-"When you register an account: your email address and, optionally, a display "
-"name. When you submit a form (such as an article proposal): your name, email "
-"address, and the sender's IP address."
+"When you register: your email address, an encrypted password, and, "
+"optionally, a display name. When you sign in with Google, we receive your "
+"email address and name from your Google profile, but not your password."
 
-#: templates/pages/privacy.html:14
-msgid "Навіщо ми збираємо ці дані"
-msgstr "Why we collect this data"
-
-#: templates/pages/privacy.html:15
+#: .\templates\pages\privacy.html:43
 msgid ""
-"Електронна адреса - для входу в акаунт і підтвердження реєстрації. IP-адреса "
-"відправників форм зберігається виключно для боротьби зі спамом і "
-"зловживаннями, з жодною іншою метою не використовується та не передається "
-"третім особам."
+"При надсиланні форми пропозиції матеріалу: ім'я, електронна адреса, назва "
+"організації, якщо ви її вказали, текст пропозиції та IP-адреса відправника."
 msgstr ""
-"Your email address is used to log into your account and confirm "
-"registration. The IP address of form senders is stored solely to prevent "
-"spam and abuse. It is not used for any other purpose and is not shared with "
-"third parties."
+"When you submit the article proposal form: your name, email address, "
+"organization name if you provided one, the text of the proposal, and the "
+"sender's IP address."
 
-#: templates/pages/privacy.html:17
+#: .\templates\pages\privacy.html:44
+msgid ""
+"При користуванні сайтом: технічні записи сервера, зокрема IP-адреса, час "
+"запиту й тип браузера."
+msgstr ""
+"When you use the site: technical server logs, including your IP address, "
+"request time, and browser type."
+
+#: .\templates\pages\privacy.html:45
+msgid "Ми не збираємо дані платіжних карток, бо на сайті немає оплат."
+msgstr ""
+"We don't collect payment card data, since there are no payments on the site."
+
+#: .\templates\pages\privacy.html:49
+msgid "Навіщо і на якій підставі"
+msgstr "Why, and on what basis"
+
+#: .\templates\pages\privacy.html:50
+msgid ""
+"Більшість даних ми обробляємо, щоб надати сервіс, яким ви користуєтесь - "
+"вхід в акаунт, колекцію, листи підтвердження реєстрації та відновлення "
+"паролю."
+msgstr ""
+"We process most data to provide the service you're using - account login, "
+"your collection, and confirmation and password reset emails."
+
+#: .\templates\pages\privacy.html:52
+msgid "Електронна адреса й пароль - для входу в акаунт."
+msgstr "Email and password - to log into your account."
+
+#: .\templates\pages\privacy.html:53
+msgid "Збережені орнаменти й лічильник днів - для роботи колекції."
+msgstr "Saved patterns and the day counter - to run your collection."
+
+#: .\templates\pages\privacy.html:54
+msgid ""
+"Електронна адреса - для листів підтвердження реєстрації та відновлення "
+"паролю."
+msgstr ""
+"Email address - for registration confirmation and password reset emails."
+
+#: .\templates\pages\privacy.html:55
+msgid ""
+"IP-адреса у формах і технічних записах - щоб протидіяти спаму й "
+"зловживанням. Це єдиний випадок, де підставою є не запит сервісу, а наш "
+"законний інтерес у захисті сайту."
+msgstr ""
+"IP address in forms and technical logs - to counter spam and abuse. This is "
+"the one case where the basis isn't the service you requested, but our "
+"legitimate interest in protecting the site."
+
+#: .\templates\pages\privacy.html:60
+msgid "Скільки ми зберігаємо дані"
+msgstr "How long we keep data"
+
+#: .\templates\pages\privacy.html:61
+msgid ""
+"Дані акаунта зберігаються, поки існує акаунт. Після видалення акаунта "
+"пов'язані з ним дані видаляються."
+msgstr ""
+"Account data is kept for as long as the account exists. When you delete your"
+" account, the associated data is deleted too."
+
+#: .\templates\pages\privacy.html:62
+msgid ""
+"Заявки на публікацію матеріалу зберігаються, поки це потрібно для розгляду й"
+" ведення історії співпраці. Технічні записи сервера зберігаються обмежений "
+"час і потрібні для діагностики та безпеки."
+msgstr ""
+"Article submissions are kept for as long as needed for review and to "
+"maintain a history of collaboration. Technical server logs are kept for a "
+"limited time and are needed for diagnostics and security."
+
+#: .\templates\pages\privacy.html:66
 msgid "Кому передаються дані"
 msgstr "Who we share data with"
 
-#: templates/pages/privacy.html:18
+#: .\templates\pages\privacy.html:67
 msgid ""
-"Дані не продаються й не передаються третім особам для маркетингу. Технічні "
-"постачальники послуг (хостинг, відправлення листів підтвердження) обробляють "
-"дані виключно в межах надання цих послуг."
+"Ми не продаємо ваші дані й не передаємо їх для реклами. Для роботи сайту "
+"залучені такі сервіси:"
 msgstr ""
-"We do not sell your data or share it with third parties for marketing "
-"purposes. Technical service providers (hosting, sending confirmation emails) "
-"process data only to the extent needed to provide those services."
+"We don't sell your data or share it for advertising. The following services "
+"are involved in running the site:"
 
-#: templates/pages/privacy.html:20
+#: .\templates\pages\privacy.html:69
+msgid ""
+"хостинг-провайдер, на серверах якого працює сайт і зберігається база даних;"
+msgstr ""
+"the hosting provider whose servers run the site and store the database;"
+
+#: .\templates\pages\privacy.html:70
+msgid ""
+"Brevo - надсилання листів підтвердження реєстрації та відновлення паролю;"
+msgstr "Brevo - sending registration confirmation and password reset emails;"
+
+#: .\templates\pages\privacy.html:71
+msgid "Google - вхід через акаунт Google, якщо ви обрали цей спосіб."
+msgstr "Google - signing in with a Google account, if you chose that option."
+
+#: .\templates\pages\privacy.html:73
+msgid ""
+"Кожен сервіс отримує лише ті дані, які потрібні для його функції, і має "
+"власну політику конфіденційності. Дані також можуть бути передані "
+"уповноваженим органам, якщо цього вимагає закон."
+msgstr ""
+"Each service receives only the data it needs for its function and has its "
+"own privacy policy. Data may also be disclosed to authorized bodies where "
+"required by law."
+
+#: .\templates\pages\privacy.html:77
+msgid "Міжнародна передача"
+msgstr "International transfers"
+
+#: .\templates\pages\privacy.html:78
+msgid ""
+"Частина цих сервісів обробляє дані на серверах за межами України, зокрема в "
+"Європейському Союзі та Сполучених Штатах."
+msgstr ""
+"Some of these services process data on servers outside Ukraine, including in"
+" the European Union and the United States."
+
+#: .\templates\pages\privacy.html:82
 msgid "Кукі"
 msgstr "Cookies"
 
-#: templates/pages/privacy.html:21
+#: .\templates\pages\privacy.html:83
 msgid ""
-"Сайт використовує лише строго необхідні кукі - сесію входу, збережений вибір "
-"мови, захист від CSRF-атак. Аналітичних чи рекламних кукі немає."
+"Сайт використовує лише строго необхідні кукі: сесія входу, збережений вибір "
+"мови, захист від міжсайтової підробки запитів. Аналітичних і рекламних кукі "
+"немає, тому немає й банера згоди на кукі."
 msgstr ""
 "The site uses only strictly necessary cookies: your login session, your "
-"saved language choice, and CSRF protection. There are no analytics or "
-"advertising cookies."
+"saved language choice, and cross-site request forgery protection. There are "
+"no analytics or advertising cookies, so there's no cookie consent banner "
+"either."
 
-#: templates/pages/privacy.html:23
+#: .\templates\pages\privacy.html:87
 msgid "Ваші права"
 msgstr "Your rights"
 
-#: templates/pages/privacy.html:24
-msgid ""
-"Ви можете видалити свій акаунт і пов'язані з ним дані в будь-який момент, "
-"звернувшись через сторінку контактів."
-msgstr ""
-"You can delete your account and the data associated with it at any time by "
-"reaching out through the contact page."
+#: .\templates\pages\privacy.html:88
+msgid "Ви маєте право:"
+msgstr "You have the right to:"
 
-#: templates/pages/privacy.html:26
+#: .\templates\pages\privacy.html:90
+msgid "дізнатись, які ваші дані ми обробляємо, і отримати їх копію;"
+msgstr "find out what data of yours we process, and get a copy of it;"
+
+#: .\templates\pages\privacy.html:91
+msgid "виправити неточні дані;"
+msgstr "correct inaccurate data;"
+
+#: .\templates\pages\privacy.html:92
+msgid "видалити акаунт і пов'язані з ним дані;"
+msgstr "delete your account and the data associated with it;"
+
+#: .\templates\pages\privacy.html:93
+msgid "заперечити проти обробки, що спирається на наш законний інтерес;"
+msgstr "object to processing based on our legitimate interest;"
+
+#: .\templates\pages\privacy.html:94
+msgid ""
+"подати скаргу до Уповноваженого Верховної Ради України з прав людини, який "
+"здійснює контроль за додержанням законодавства про захист персональних "
+"даних."
+msgstr ""
+"file a complaint with the Ukrainian Parliament Commissioner for Human "
+"Rights, who oversees compliance with personal data protection legislation."
+
+#: .\templates\pages\privacy.html:96
+msgid ""
+"Щоб скористатись будь-яким із цих прав, напишіть через сторінку контактів. "
+"Ми відповідаємо в строк, встановлений законодавством."
+msgstr ""
+"To exercise any of these rights, reach out through the contact page. We "
+"respond within the timeframe set by law."
+
+#: .\templates\pages\privacy.html:100 .\templates\pages\terms.html:60
+msgid "Вік користувачів"
+msgstr "Age of Users"
+
+#: .\templates\pages\privacy.html:101
+msgid ""
+"Сайт не призначений для дітей. Ми свідомо не збираємо дані осіб молодших 16 "
+"років. Якщо ви вважаєте, що дитина надала нам свої дані, напишіть, і ми їх "
+"видалимо."
+msgstr ""
+"The site isn't intended for children. We don't knowingly collect data from "
+"anyone under 16. If you believe a child has provided us with their data, let"
+" us know and we'll delete it."
+
+#: .\templates\pages\privacy.html:105
+msgid "Безпека даних"
+msgstr "Data Security"
+
+#: .\templates\pages\privacy.html:106
+msgid ""
+"З'єднання з сайтом шифрується. Паролі зберігаються не у відкритому вигляді, "
+"а у формі криптографічного хешу, тому ми не бачимо ваш пароль. Доступ до "
+"адміністративної панелі обмежений."
+msgstr ""
+"The connection to the site is encrypted. Passwords aren't stored in plain "
+"text but as a cryptographic hash, so we can't see your password. Access to "
+"the admin panel is restricted."
+
+#: .\templates\pages\privacy.html:107
+msgid ""
+"Жодна система не є абсолютно захищеною, тому ми не можемо гарантувати "
+"безумовної безпеки переданих даних."
+msgstr ""
+"No system is completely secure, so we can't guarantee the absolute security "
+"of transmitted data."
+
+#: .\templates\pages\privacy.html:111
+msgid "Автоматизовані рішення"
+msgstr "Automated Decisions"
+
+#: .\templates\pages\privacy.html:112
+msgid ""
+"Ми не приймаємо щодо вас рішень автоматизовано й не займаємось "
+"профілюванням."
+msgstr ""
+"We don't make automated decisions about you and don't engage in profiling."
+
+#: .\templates\pages\privacy.html:116
 msgid "Зміни політики"
 msgstr "Changes to this policy"
 
-#: templates/pages/privacy.html:27
+#: .\templates\pages\privacy.html:117
 msgid ""
-"Ми можемо оновлювати цю політику без попереднього повідомлення. Актуальна "
-"версія завжди доступна на цій сторінці."
+"Ми можемо оновлювати цю політику. Актуальна версія завжди на цій сторінці, з"
+" датою останнього оновлення внизу."
 msgstr ""
-"We may update this policy without prior notice. The current version is "
-"always available on this page."
+"We may update this policy. The current version is always available on this "
+"page, with the last-updated date at the bottom."
 
-#: templates/pages/terms.html:11
-msgid "1. Загальні положення"
-msgstr "1. General provisions"
+#: .\templates\pages\privacy.html:122
+msgid "Питання щодо обробки даних - через сторінку контактів."
+msgstr ""
+"Questions about how we process data: reach out through the contact page."
 
-#: templates/pages/terms.html:12
+#: .\templates\pages\privacy.html:123 .\templates\pages\terms.html:117
+msgid "Написати нам"
+msgstr "Write to Us"
+
+#: .\templates\pages\privacy.html:126 .\templates\pages\terms.html:120
+msgid "Останнє оновлення: 5 серпня 2026 року."
+msgstr "Last updated: August 5, 2026."
+
+#: .\templates\pages\terms.html:10
 msgid ""
-"Використовуючи VyshyvankaDaily, ви погоджуєтесь із цими умовами. Якщо ви не "
-"згодні з будь-яким пунктом - будь ласка, не користуйтесь сайтом."
+"Правила користування сайтом VyshyvankaDaily: що ми надаємо, чого не "
+"гарантуємо і що просимо не робити."
 msgstr ""
-"By using VyshyvankaDaily, you agree to these terms. If you disagree with any "
-"part of them, please don't use the site."
+"Terms for using VyshyvankaDaily: what we provide, what we don't guarantee, "
+"and what we ask you not to do."
 
-#: templates/pages/terms.html:14
-msgid "2. Характер контенту"
-msgstr "2. Nature of the content"
+#: .\templates\pages\terms.html:17
+msgid "1. Про ці умови"
+msgstr "1. About These Terms"
 
-#: templates/pages/terms.html:15
+#: .\templates\pages\terms.html:18
+msgid "2. Що робить сайт"
+msgstr "2. What the Site Does"
+
+#: .\templates\pages\terms.html:19
+msgid "3. Характер контенту"
+msgstr "3. Nature of the Content"
+
+#: .\templates\pages\terms.html:20
+msgid "4. Обліковий запис"
+msgstr "4. Your Account"
+
+#: .\templates\pages\terms.html:21
+msgid "5. Вік користувачів"
+msgstr "5. Age of Users"
+
+#: .\templates\pages\terms.html:22
+msgid "6. Правила користування"
+msgstr "6. Rules of Use"
+
+#: .\templates\pages\terms.html:23
+msgid "7. Матеріали, які ви надсилаєте"
+msgstr "7. Content You Submit"
+
+#: .\templates\pages\terms.html:24
+msgid "8. Права на контент сайту"
+msgstr "8. Rights to Site Content"
+
+#: .\templates\pages\terms.html:25
+msgid "9. Зовнішні посилання"
+msgstr "9. External Links"
+
+#: .\templates\pages\terms.html:26
+msgid "10. Обмеження відповідальності"
+msgstr "10. Limitation of Liability"
+
+#: .\templates\pages\terms.html:27
+msgid "11. Припинення доступу"
+msgstr "11. Termination of Access"
+
+#: .\templates\pages\terms.html:28
+msgid "12. Застосовне право"
+msgstr "12. Governing Law"
+
+#: .\templates\pages\terms.html:29
+msgid "13. Зміни умов"
+msgstr "13. Changes to These Terms"
+
+#: .\templates\pages\terms.html:30
+msgid "14. Контакти"
+msgstr "14. Contact"
+
+#: .\templates\pages\terms.html:36
+msgid "Про ці умови"
+msgstr "About These Terms"
+
+#: .\templates\pages\terms.html:37
 msgid ""
-"Описи символіки й орнаментів на сайті засновані на дослідженні відкритих "
-"джерел і, де можливо, супроводжуються покликанням на них. Частина контенту "
-"базується на усній традиції, а не на письмових академічних джерелах - це "
-"позначається окремо. Ми не гарантуємо абсолютної повноти чи наукової "
-"бездоганності кожного опису й вітаємо обґрунтовані виправлення через "
-"сторінку контактів."
+"Ці умови регулюють користування сайтом VyshyvankaDaily. Відкриваючи сайт, ви"
+" приймаєте їх. Якщо ви не згодні з якимось пунктом, не користуйтесь сайтом."
 msgstr ""
-"Descriptions of symbolism and patterns on this site are based on research "
-"into publicly available sources and, where possible, cite them directly. "
-"Some content is based on oral tradition rather than written academic "
-"sources, and this is marked separately. We do not guarantee that every "
-"description is complete or scientifically flawless, and we welcome well-"
-"founded corrections through the contact page."
+"These terms govern your use of VyshyvankaDaily. By opening the site, you "
+"accept them. If you disagree with any part of them, please don't use the "
+"site."
 
-#: templates/pages/terms.html:17
-msgid "3. Обліковий запис"
-msgstr "3. Your account"
+#: .\templates\pages\terms.html:38
+msgid "Сайт веде приватна особа. Зв'язок - через сторінку контактів."
+msgstr ""
+"The site is run by a private individual. Contact us through the contact "
+"page."
 
-#: templates/pages/terms.html:18
+#: .\templates\pages\terms.html:42
+msgid "Що робить сайт"
+msgstr "What the Site Does"
+
+#: .\templates\pages\terms.html:43
 msgid ""
-"Реєстрація необов'язкова для перегляду контенту. Створюючи акаунт, ви "
-"підтверджуєте, що надана електронна адреса належить вам. Колекція збережених "
-"орнаментів приватна й доступна лише власнику акаунта."
+"Сайт показує згенерований орнамент вишиванки на кожен календарний день, з "
+"описом символіки відповідного регіону й переліком джерел. Реєстрація "
+"потрібна лише для збереження орнаментів у власну колекцію."
 msgstr ""
-"Registration isn't required to view content. By creating an account, you "
-"confirm that the email address you provide belongs to you. Your collection "
-"of saved patterns is private and accessible only to you."
+"The site shows a generated vyshyvanka pattern for every calendar day, with a"
+" description of the relevant region's symbolism and a list of sources. "
+"Registration is only needed to save patterns to your own collection."
 
-#: templates/pages/terms.html:20
-msgid "4. Матеріали користувачів"
-msgstr "4. User-submitted content"
-
-#: templates/pages/terms.html:21
+#: .\templates\pages\terms.html:44
 msgid ""
-"Надсилаючи пропозицію статті через форму «Запропонувати матеріал», ви "
-"підтверджуєте, що маєте право розпоряджатися цим матеріалом, і надаєте нам "
-"право опублікувати його на сайті, якщо він пройде розгляд. Ми залишаємо за "
-"собою право відмовити в публікації без пояснення причин."
+"Сервіс безкоштовний. Ми не гарантуємо безперервної роботи сайту й можемо "
+"тимчасово припиняти доступ для обслуговування, оновлення чи з технічних "
+"причин."
 msgstr ""
-"By submitting an article proposal through the 'Submit an article' form, you "
-"confirm that you have the right to that material, and you grant us the right "
-"to publish it on the site if it passes review. We reserve the right to "
-"decline publication without explanation."
+"The service is free. We don't guarantee uninterrupted operation and may "
+"temporarily suspend access for maintenance, updates, or technical reasons."
 
-#: templates/pages/terms.html:23
-msgid "5. Обмеження відповідальності"
-msgstr "5. Limitation of liability"
+#: .\templates\pages\terms.html:48
+msgid "Характер контенту"
+msgstr "Nature of the Content"
 
-#: templates/pages/terms.html:24
+#: .\templates\pages\terms.html:49
 msgid ""
-"Сайт надається «як є», без будь-яких гарантій. Ми не несемо відповідальності "
-"за будь-які збитки, що виникли внаслідок використання чи неможливості "
-"використання сайту, включно з тимчасовою недоступністю сервісу."
+"Описи символіки спираються на дослідження відкритих джерел. Кожне твердження"
+" позначене як задокументоване або як переказ усної традиції."
 msgstr ""
-"The site is provided 'as is', without warranties of any kind. We are not "
-"liable for any damages arising from your use of, or inability to use, the "
-"site, including temporary unavailability of the service."
+"Symbolism descriptions are based on research into publicly available "
+"sources. Every claim is marked as either documented or passed down through "
+"oral tradition."
 
-#: templates/pages/terms.html:26
-msgid "6. Зміни умов"
-msgstr "6. Changes to these terms"
-
-#: templates/pages/terms.html:27
+#: .\templates\pages\terms.html:50
 msgid ""
-"Ми можемо оновлювати ці умови без попереднього повідомлення. Актуальна "
-"версія завжди доступна на цій сторінці."
+"Ми не гарантуємо наукової бездоганності кожного опису. Орнаменти на сайті - "
+"інтерпретація традиції, а не точне відтворення конкретної історичної "
+"пам'ятки. Вони не призначені для використання як автентична схема вишивання "
+"чи як джерело в наукових роботах."
 msgstr ""
-"We may update these terms without prior notice. The current version is "
-"always available on this page."
+"We don't guarantee that every description is scientifically flawless. The "
+"patterns on the site are an interpretation of tradition, not an exact "
+"reproduction of a specific historical artifact. They aren't intended for use"
+" as an authentic embroidery scheme or as a source in academic work."
 
-#: templates/pages/terms.html:29
-msgid "7. Контакти"
-msgstr "7. Contact"
+#: .\templates\pages\terms.html:54
+msgid "Обліковий запис"
+msgstr "Your Account"
 
-#: templates/pages/terms.html:30
+#: .\templates\pages\terms.html:55
+msgid ""
+"Створюючи акаунт, ви підтверджуєте, що вказана електронна адреса належить "
+"вам, і зобов'язуєтесь не передавати доступ до акаунта іншим особам. "
+"Відповідальність за дії, вчинені під вашим акаунтом, несете ви."
+msgstr ""
+"By creating an account, you confirm that the email address you provided "
+"belongs to you, and you agree not to share access to your account with "
+"others. You are responsible for actions taken under your account."
+
+#: .\templates\pages\terms.html:56
+msgid ""
+"Колекція збережених орнаментів приватна й доступна лише власнику акаунта. Ми"
+" можемо призупинити чи видалити акаунт, який використовується для дій, "
+"описаних у пункті 6."
+msgstr ""
+"Your collection of saved patterns is private and accessible only to you. We "
+"may suspend or delete an account used for the actions described in section "
+"6."
+
+#: .\templates\pages\terms.html:61
+msgid ""
+"Сайт не містить контенту з віковими обмеженнями, переглядати його може будь-"
+"хто. Створювати акаунт можна з 16 років. Якщо акаунт створює молодша особа, "
+"це має відбуватись за згодою батьків або опікунів, і відповідальність несуть"
+" вони."
+msgstr ""
+"The site contains no age-restricted content and anyone can browse it. "
+"Accounts can be created from age 16. If a younger person creates an account,"
+" this must happen with the consent of a parent or guardian, who bears "
+"responsibility for it."
+
+#: .\templates\pages\terms.html:65
+msgid "Правила користування"
+msgstr "Rules of Use"
+
+#: .\templates\pages\terms.html:66
+msgid "Користуючись сайтом, ви погоджуєтесь не робити такого:"
+msgstr "By using the site, you agree not to:"
+
+#: .\templates\pages\terms.html:68
+msgid ""
+"автоматизовано збирати вміст сайту, зокрема масово завантажувати сторінки чи"
+" орнаменти;"
+msgstr ""
+"automatically scrape the site's content, including bulk-downloading pages or"
+" patterns;"
+
+#: .\templates\pages\terms.html:69
+msgid ""
+"створювати навантаження, що заважає роботі сайту для інших відвідувачів;"
+msgstr "create a load that interferes with the site for other visitors;"
+
+#: .\templates\pages\terms.html:70
+msgid ""
+"намагатись отримати доступ до чужих акаунтів, службових розділів чи "
+"адміністративної панелі;"
+msgstr ""
+"attempt to access other people's accounts, internal sections, or the admin "
+"panel;"
+
+#: .\templates\pages\terms.html:71
+msgid ""
+"обходити технічні обмеження, зокрема обмеження частоти запитів і захист "
+"форм;"
+msgstr ""
+"circumvent technical restrictions, including rate limits and form "
+"protections;"
+
+#: .\templates\pages\terms.html:72
+msgid ""
+"подавати вміст сайту так, ніби ми підтверджуємо твердження, яких не робили."
+msgstr ""
+"present the site's content as if we've confirmed claims we haven't made."
+
+#: .\templates\pages\terms.html:77
+msgid "Матеріали, які ви надсилаєте"
+msgstr "Content You Submit"
+
+#: .\templates\pages\terms.html:78
+msgid ""
+"Надсилаючи пропозицію матеріалу, ви підтверджуєте, що маєте право на цей "
+"матеріал і що він не порушує чужих авторських прав. Ви надаєте нам "
+"невиключне право опублікувати його на сайті, зберігати й перекладати, якщо "
+"він пройде розгляд."
+msgstr ""
+"By submitting a proposed article, you confirm that you hold the rights to "
+"that material and that it doesn't infringe anyone else's copyright. You "
+"grant us a non-exclusive right to publish it on the site, store it, and "
+"translate it, should it pass review."
+
+#: .\templates\pages\terms.html:79
+msgid ""
+"Ми не зобов'язані публікувати надіслане й можемо відмовити без пояснення "
+"причин. Винагорода за публікацію не передбачена, якщо про неї не домовлено "
+"окремо в письмовій формі."
+msgstr ""
+"We're under no obligation to publish what you submit and may decline without"
+" explanation. No payment for publication is provided unless separately "
+"agreed in writing."
+
+#: .\templates\pages\terms.html:83
+msgid "Права на контент сайту"
+msgstr "Rights to Site Content"
+
+#: .\templates\pages\terms.html:84
+msgid ""
+"Тексти, описи символіки, дизайн і згенеровані орнаменти належать "
+"VyshyvankaDaily, якщо не зазначено інше. Бібліографічні дані джерел належать"
+" їхнім авторам і наведені як цитування."
+msgstr ""
+"Texts, symbolism descriptions, design, and generated patterns belong to "
+"VyshyvankaDaily unless stated otherwise. Bibliographic source data belongs "
+"to its authors and is presented as citation."
+
+#: .\templates\pages\terms.html:85
+msgid ""
+"Ви можете переглядати сайт, зберігати сторінки для особистого користування й"
+" ділитись посиланнями. Повторна публікація текстів чи орнаментів, зокрема з "
+"комерційною метою, потребує письмового дозволу."
+msgstr ""
+"You may browse the site, save pages for personal use, and share links. "
+"Republishing texts or patterns, including for commercial purposes, requires "
+"written permission."
+
+#: .\templates\pages\terms.html:89
+msgid "Зовнішні посилання"
+msgstr "External Links"
+
+#: .\templates\pages\terms.html:90
+msgid ""
+"Сайт містить посилання на зовнішні ресурси, зокрема на джерела досліджень. "
+"Ми не контролюємо їхній вміст і не відповідаємо за нього."
+msgstr ""
+"The site contains links to external resources, including research sources. "
+"We don't control their content and aren't responsible for it."
+
+#: .\templates\pages\terms.html:94
+msgid "Обмеження відповідальності"
+msgstr "Limitation of Liability"
+
+#: .\templates\pages\terms.html:95
+msgid ""
+"Сайт надається «як є», без гарантій будь-якого роду, зокрема гарантій "
+"придатності для конкретної мети чи безперебійної роботи."
+msgstr ""
+"The site is provided 'as is', without warranties of any kind, including "
+"warranties of fitness for a particular purpose or uninterrupted operation."
+
+#: .\templates\pages\terms.html:96
+msgid ""
+"У межах, дозволених законом, ми не відповідаємо за збитки, втрачену вигоду "
+"чи втрату даних, що виникли внаслідок користування сайтом або неможливості "
+"ним скористатись, зокрема через тимчасову недоступність, неточність в описі "
+"чи дії третіх сторін."
+msgstr ""
+"To the extent permitted by law, we are not liable for damages, lost profit, "
+"or data loss arising from your use of the site or inability to use it, "
+"including due to temporary unavailability, inaccuracies in a description, or"
+" the actions of third parties."
+
+#: .\templates\pages\terms.html:100
+msgid "Припинення доступу"
+msgstr "Termination of Access"
+
+#: .\templates\pages\terms.html:101
+msgid ""
+"Ми можемо обмежити чи припинити ваш доступ до сайту в разі порушення цих "
+"умов. Ви можете припинити користування будь-коли й попросити видалити акаунт"
+" через сторінку контактів."
+msgstr ""
+"We may restrict or terminate your access to the site if you violate these "
+"terms. You may stop using the site at any time and ask us to delete your "
+"account through the contact page."
+
+#: .\templates\pages\terms.html:105
+msgid "Застосовне право"
+msgstr "Governing Law"
+
+#: .\templates\pages\terms.html:106
+msgid ""
+"Ці умови регулюються законодавством України. Спори вирішуються шляхом "
+"переговорів, а якщо домовитись не вдається - у судовому порядку відповідно "
+"до законодавства України."
+msgstr ""
+"These terms are governed by the law of Ukraine. Disputes are resolved "
+"through negotiation, and if agreement can't be reached, in court in "
+"accordance with the law of Ukraine."
+
+#: .\templates\pages\terms.html:110
+msgid "Зміни умов"
+msgstr "Changes to These Terms"
+
+#: .\templates\pages\terms.html:111
+msgid ""
+"Ми можемо оновлювати ці умови. Актуальна версія завжди на цій сторінці, з "
+"датою останнього оновлення внизу. Продовження користування сайтом після "
+"оновлення означає згоду з новою редакцією."
+msgstr ""
+"We may update these terms. The current version is always available on this "
+"page, with the last-updated date at the bottom. Continuing to use the site "
+"after an update means you accept the new version."
+
+#: .\templates\pages\terms.html:116
 msgid "Питання щодо цих умов - через сторінку контактів."
 msgstr "Questions about these terms: reach out through the contact page."
 
-#: templates/patterns/_save_button.html:7
+#: .\templates\patterns\_save_button.html:7
 msgid "Прибрати з колекції"
 msgstr "Remove from collection"
 
-#: templates/patterns/_save_button.html:9
+#: .\templates\patterns\_save_button.html:9
 msgid "Зберегти в колекцію"
 msgstr "Save to collection"
 
-#: templates/patterns/_save_button.html:14
+#: .\templates\patterns\_save_button.html:14
 msgid "Увійти, щоб зберегти"
 msgstr "Log in to save"
 
-#: templates/patterns/archive.html:7
+#: .\templates\patterns\archive.html:7
 msgid "Архів орнаментів"
 msgstr "Pattern archive"
 
-#: templates/patterns/archive.html:8
+#: .\templates\patterns\archive.html:8
 msgid "Кожен орнамент, згенерований від запуску проєкту."
 msgstr "Every pattern generated since the project launched."
 
-#: templates/patterns/archive.html:13
+#: .\templates\patterns\archive.html:13
 msgid "Регіон"
 msgstr "Region"
 
-#: templates/patterns/archive.html:15 templates/patterns/region_list.html:4
-#: templates/patterns/region_list.html:7
+#: .\templates\patterns\archive.html:15
+#: .\templates\patterns\region_list.html:4
+#: .\templates\patterns\region_list.html:12
 msgid "Усі регіони"
 msgstr "All regions"
 
-#: templates/patterns/archive.html:22
+#: .\templates\patterns\archive.html:22
 msgid "Від"
 msgstr "From"
 
-#: templates/patterns/archive.html:26
+#: .\templates\patterns\archive.html:26
 msgid "До"
 msgstr "To"
 
-#: templates/patterns/archive.html:30
+#: .\templates\patterns\archive.html:30
 msgid "Сортування"
 msgstr "Sort by"
 
-#: templates/patterns/archive.html:32
+#: .\templates\patterns\archive.html:32
 msgid "За датою"
 msgstr "By date"
 
-#: templates/patterns/archive.html:33
+#: .\templates\patterns\archive.html:33
 msgid "За регіоном"
 msgstr "By region"
 
-#: templates/patterns/archive.html:37
+#: .\templates\patterns\archive.html:37
 msgid "Показати"
 msgstr "Show"
 
-#: templates/patterns/archive.html:67
+#: .\templates\patterns\archive.html:43
+msgid "Результати архіву"
+msgstr "Archive Results"
+
+#: .\templates\patterns\archive.html:68
 msgid "За вибраними умовами нічого не знайдено."
 msgstr "Nothing matches these filters."
 
-#: templates/patterns/home.html:9
+#: .\templates\patterns\home.html:16
 msgid "днів поспіль"
 msgstr "day streak"
 
-#: templates/patterns/home.html:11
+#: .\templates\patterns\home.html:18
 msgid "регіонів пройдено"
 msgstr "regions completed"
 
-#: templates/patterns/home.html:17
+#: .\templates\patterns\home.html:24
 msgid "Почни свій стрік - заходь щодня й зберігай улюблені орнаменти"
 msgstr "Start your streak - visit daily and save your favorite patterns"
 
-#: templates/patterns/home.html:31 templates/patterns/pattern_detail.html:25
-#: templates/patterns/region_detail.html:17
+#: .\templates\patterns\home.html:25
+msgid "Почати реєстрацію зараз"
+msgstr "Start signing up now"
+
+#: .\templates\patterns\home.html:38
+#: .\templates\patterns\pattern_detail.html:29
+#: .\templates\patterns\region_detail.html:29
 msgid "Задокументовано"
 msgstr "Documented"
 
-#: templates/patterns/home.html:33 templates/patterns/pattern_detail.html:27
-#: templates/patterns/region_detail.html:19
+#: .\templates\patterns\home.html:40
+#: .\templates\patterns\pattern_detail.html:31
+#: .\templates\patterns\region_detail.html:31
 msgid "За традицією"
 msgstr "Traditional"
 
-#: templates/patterns/home.html:41 templates/patterns/pattern_detail.html:35
+#: .\templates\patterns\home.html:48
+#: .\templates\patterns\pattern_detail.html:39
 msgid "Про регіон"
 msgstr "About this region"
 
-#: templates/patterns/home.html:47
+#: .\templates\patterns\home.html:54
 msgid "Останні дні"
 msgstr "Recent days"
 
-#: templates/patterns/home.html:59
+#: .\templates\patterns\home.html:66
 msgid "Що таке VyshyvankaDaily"
 msgstr "What is VyshyvankaDaily"
 
-#: templates/patterns/home.html:65
-msgid ""
-"VyshyvankaDaily - це щоденний генератор українського орнаменту вишиванки, "
-"побудований на дослідженні реальної символіки, кольорів і мотивів кожного з "
-"27 регіонів України: 24 областей, Автономної Республіки Крим, Києва та "
-"Севастополя."
-msgstr ""
-"VyshyvankaDaily is a daily generator of Ukrainian vyshyvanka patterns, built "
-"on research into the real symbolism, colors, and motifs of each of Ukraine's "
-"27 regions: 24 oblasts, the Autonomous Republic of Crimea, Kyiv, and "
-"Sevastopol."
+#: .\templates\patterns\home.html:69 .\templates\patterns\home.html:70
+msgid "Показати більше"
+msgstr "Show More"
 
-#: templates/patterns/home.html:66
+#: .\templates\patterns\home.html:70
+msgid "Згорнути"
+msgstr "Collapse"
+
+#: .\templates\patterns\home.html:77
+msgid "Орнаменти з усіх регіонів України"
+msgstr "Patterns from All Regions of Ukraine"
+
+#: .\templates\patterns\home.html:78
 msgid ""
-"Кожен день сайт показує новий орнамент, прив'язаний до конкретного регіону - "
-"з реальними джерелами (академічні праці, музейні колекції, визнання ЮНЕСКО), "
-"описом символіки та чітким розрізненням задокументованого й переказаного за "
-"традицією."
+"VyshyvankaDaily - це щоденний генератор орнаменту вишиванки, побудований на "
+"дослідженні реальної символіки, кольорів і мотивів кожного з 27 регіонів "
+"України: 24 областей, Автономної Республіки Крим, Києва та Севастополя."
+msgstr ""
+"VyshyvankaDaily is a daily vyshyvanka pattern generator, built on research "
+"into the real symbolism, colors, and motifs of each of Ukraine's 27 regions:"
+" 24 oblasts, the Autonomous Republic of Crimea, Kyiv, and Sevastopol."
+
+#: .\templates\patterns\home.html:80
+msgid "Орнаменти вишиванок по регіонах"
+msgstr "Vyshyvanka Patterns by Region"
+
+#: .\templates\patterns\home.html:81
+msgid ""
+"Вишиванки різних регіонів України відрізняються не лише кольором, а й самою "
+"логікою узору - на сайті зібрані різні види вишиванок по регіонах, кожен зі "
+"своєю палітрою й технікою. Полтавщина тримається техніки білим по білому, "
+"Борщівщина - щільним чорним тлом, а Крим показує кримськотатарський орнамент"
+" орьнек, який належить до окремої традиції. Ми не зводимо ці відмінності до "
+"одного узагальненого «українського орнаменту» - кожен регіон отримує "
+"власний, окремо досліджений опис, а весь архів орнаментів вишиванок "
+"доступний для перегляду."
+msgstr ""
+"Vyshyvankas from different regions of Ukraine differ not just in color but "
+"in the very logic of the pattern - the site brings together different kinds "
+"of vyshyvanka by region, each with its own palette and technique. Poltava "
+"sticks to its white-on-white technique, Borshchiv to a dense black "
+"background, and Crimea shows the Crimean Tatar ornek pattern, which belongs "
+"to a separate tradition entirely. We don't flatten these differences into "
+"one generalized 'Ukrainian pattern' - each region gets its own, separately "
+"researched description, and the full archive of vyshyvanka patterns is "
+"available to browse."
+
+#: .\templates\patterns\home.html:82
+msgid ""
+"Кожен день сайт показує новий орнамент, прив'язаний до конкретного регіону -"
+" з реальними джерелами (академічні праці, музейні колекції, визнання "
+"ЮНЕСКО), описом символіки та чітким розрізненням задокументованого й "
+"переказаного за традицією."
 msgstr ""
 "Every day the site shows a new pattern tied to a specific region, with real "
 "sources (academic papers, museum collections, UNESCO recognition), a "
 "description of its symbolism, and a clear distinction between what's "
 "documented and what's passed down by tradition."
 
-#: templates/patterns/home.html:67
+#: .\templates\patterns\home.html:83
 msgid ""
 "Архів зберігає кожен згенерований день, зареєстровані користувачі можуть "
 "зберігати улюблені орнаменти у власну колекцію та відстежувати, скільки "
 "регіонів вони вже 'пройшли' за час використання сайту."
 msgstr ""
-"The archive keeps every day that's ever been generated. Registered users can "
-"save their favorite patterns to a personal collection and track how many "
+"The archive keeps every day that's ever been generated. Registered users can"
+" save their favorite patterns to a personal collection and track how many "
 "regions they've 'completed' over time."
 
-#: templates/patterns/my_collection.html:14
+#: .\templates\patterns\home.html:98
+msgid "Усі питання"
+msgstr "All Questions"
+
+#: .\templates\patterns\my_collection.html:14
 msgid "Збережено орнаментів"
 msgstr "Patterns saved"
 
-#: templates/patterns/my_collection.html:22
+#: .\templates\patterns\my_collection.html:22
 msgid "Пройдено живих днів"
 msgstr "Live days completed"
 
-#: templates/patterns/my_collection.html:32
+#: .\templates\patterns\my_collection.html:32
 msgid "Днів поспіль"
 msgstr "Day streak"
 
-#: templates/patterns/my_collection.html:55
+#: .\templates\patterns\my_collection.html:55
 msgid "Колекція поки порожня."
 msgstr "Your collection is empty."
 
-#: templates/patterns/my_collection.html:56
+#: .\templates\patterns\my_collection.html:56
 msgid "До орнаменту дня"
 msgstr "Go to today's pattern"
 
-#: templates/patterns/pattern_detail.html:42
+#: .\templates\patterns\pattern_detail.html:46
 msgid "Мотиви"
 msgstr "Motifs"
 
-#: templates/patterns/pattern_detail.html:66
+#: .\templates\patterns\pattern_detail.html:70
 msgid "Попередній"
 msgstr "Previous"
 
-#: templates/patterns/pattern_detail.html:69
+#: .\templates\patterns\pattern_detail.html:73
 msgid "Наступний"
 msgstr "Next"
 
-#: templates/patterns/region_detail.html:12
+#: .\templates\patterns\region_detail.html:24
 msgid "Крим - це Україна"
 msgstr "Crimea is Ukraine"
 
-#: templates/patterns/region_detail.html:27
+#: .\templates\patterns\region_detail.html:48
+msgid "Фотографії вишиванки"
+msgstr "Vyshyvanka Photos"
+
+#: .\templates\patterns\region_detail.html:61
 msgid "Статті про цей регіон"
 msgstr "Articles about this region"
 
-#: templates/patterns/region_detail.html:40
+#: .\templates\patterns\region_detail.html:74
 msgid "Домінуючі кольори"
 msgstr "Dominant colors"
 
-#: templates/patterns/region_detail.html:47
+#: .\templates\patterns\region_detail.html:81
 msgid ""
 "Основні кольори орнаменту цього регіону - не повний перелік усіх відтінків, "
 "що зустрічаються в реальній вишивці."
 msgstr ""
-"The main colors of this region's pattern, not a complete list of every shade "
-"found in real embroidery."
+"The main colors of this region's pattern, not a complete list of every shade"
+" found in real embroidery."
 
-#: templates/patterns/region_detail.html:64
+#: .\templates\patterns\region_detail.html:98
 msgid "Орнаменти цього регіону"
 msgstr "Patterns from this region"
 
-#: templates/patterns/region_detail.html:77
+#: .\templates\patterns\region_detail.html:111
 msgid "Ще немає жодного орнаменту для цього регіону."
 msgstr "No patterns for this region yet."
 
-#: templates/patterns/region_list.html:8
+#: .\templates\patterns\region_detail.html:114
+msgid "Закрити"
+msgstr "Close"
+
+#: .\templates\patterns\region_list.html:13
 msgid ""
 "27 регіонів України - кожен зі своєю традицією вишивки, кольорами й "
 "символікою."
@@ -739,6 +1590,3563 @@ msgstr ""
 "27 regions of Ukraine, each with its own embroidery tradition, colors, and "
 "symbolism."
 
-#: templates/patterns/region_list.html:20
+#: .\templates\patterns\region_list.html:16
+msgid ""
+"Вишиванки по регіонах України не зводяться до одного орнаменту - у кожної "
+"області своя палітра, свій характерний мотив і своя історія. Кожен регіон "
+"має власний, окремо досліджений опис символіки."
+msgstr ""
+"Vyshyvankas across Ukraine's regions don't reduce to a single pattern - "
+"every oblast has its own palette, its own characteristic motif, and its own "
+"story. Each region has its own, separately researched symbolism description."
+
+#: .\templates\patterns\region_list.html:17
+msgid ""
+"Якщо цікавить конкретний орнамент вишиванки по областях - відкрий картку "
+"регіону: там повний опис кольорів, мотивів і джерел, на які ми спираємось."
+msgstr ""
+"If you're interested in a specific region's vyshyvanka pattern, open its "
+"region card: there you'll find a full description of the colors, motifs, and"
+" sources we relied on."
+
+#: .\templates\patterns\region_list.html:30
 msgid "Порядок ротації"
 msgstr "Rotation order"
+
+#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16
+msgid "Messages"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
+msgid "Site Maps"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr ""
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: .\venv\Lib\site-packages\django\core\paginator.py:30
+msgid "…"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:32
+msgid "That page number is not an integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:33
+msgid "That page number is less than 1"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:34
+msgid "That page contains no results"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:22
+msgid "Enter a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:70
+msgid "Enter a valid domain name."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:153
+#: .\venv\Lib\site-packages\django\forms\fields.py:774
+msgid "Enter a valid URL."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:200
+msgid "Enter a valid integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:211
+msgid "Enter a valid email address."
+msgstr ""
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\venv\Lib\site-packages\django\core\validators.py:289
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:297
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or"
+" hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:309
+#: .\venv\Lib\site-packages\django\core\validators.py:318
+#: .\venv\Lib\site-packages\django\core\validators.py:332
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2220
+#, python-format
+msgid "Enter a valid %(protocol)s address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:311
+msgid "IPv4"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:320
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:43
+msgid "IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:334
+msgid "IPv4 or IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:375
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:381
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:416
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:425
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:434
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:441
+#, python-format
+msgid ""
+"Ensure this value is a multiple of step size %(limit_value)s, starting from "
+"%(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:473
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:491
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:514
+#: .\venv\Lib\site-packages\django\forms\fields.py:365
+#: .\venv\Lib\site-packages\django\forms\fields.py:404
+msgid "Enter a number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:516
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:521
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:526
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:597
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:659
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1600
+#: .\venv\Lib\site-packages\django\forms\models.py:908
+#: .\venv\Lib\site-packages\unfold\contrib\inlines\admin.py:111
+msgid "and"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1602
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\constraints.py:22
+#, python-format
+msgid "Constraint “%(name)s” is violated."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:134
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:135
+msgid "This field cannot be null."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:136
+msgid "This field cannot be blank."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:137
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or
+#. 'month'. Eg: "Title must be unique for pub_date year"
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:141
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:180
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1162
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1163
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1165
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1215
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1217
+msgid "String (unlimited)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1326
+msgid "Comma-separated integers"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1427
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1431
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1566
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1435
+msgid "Date (without time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1562
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1570
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1575
+msgid "Date (with time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1702
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1704
+msgid "Decimal number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1864
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] "
+"[[HH:]MM:]ss[.uuuuuu] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1868
+msgid "Duration"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1920
+msgid "Email address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1945
+msgid "File path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2023
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2025
+msgid "Floating point number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2065
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2067
+msgid "Integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2163
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2180
+msgid "Small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2188
+msgid "IPv4 address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2219
+msgid "IP address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2310
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2311
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2313
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2364
+msgid "Positive big integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2379
+msgid "Positive integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2394
+msgid "Positive small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2410
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2446
+msgid "Text"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2526
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2530
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2534
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:291
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:307
+#: .\venv\Lib\site-packages\unfold\widgets.py:589
+#: .\venv\Lib\site-packages\unfold\widgets.py:634
+msgid "Time"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2642
+msgid "URL"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2666
+msgid "Raw binary data"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2731
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2733
+msgid "Universally unique identifier"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:244
+msgid "File"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:420
+msgid "Image"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:24
+msgid "A JSON object"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:26
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:979
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r is not a valid choice."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:982
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1276
+msgid "One-to-one relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1333
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1335
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1383
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the
+#. label
+#: .\venv\Lib\site-packages\django\forms\boundfield.py:185
+msgid ":?.!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:94
+msgid "This field is required."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:314
+msgid "Enter a whole number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:485
+#: .\venv\Lib\site-packages\django\forms\fields.py:1257
+msgid "Enter a valid date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:508
+#: .\venv\Lib\site-packages\django\forms\fields.py:1258
+msgid "Enter a valid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:535
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:569
+msgid "Enter a valid duration."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:570
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:639
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:640
+msgid "No file was submitted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:641
+msgid "The submitted file is empty."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:643
+#, python-format
+msgid ""
+"Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:648
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:716
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:879
+#: .\venv\Lib\site-packages\django\forms\fields.py:965
+#: .\venv\Lib\site-packages\django\forms\models.py:1592
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:967
+#: .\venv\Lib\site-packages\django\forms\fields.py:1086
+#: .\venv\Lib\site-packages\django\forms\models.py:1590
+msgid "Enter a list of values."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1087
+msgid "Enter a complete value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1329
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1359
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: .\venv\Lib\site-packages\django\forms\forms.py:97
+msgid ":"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\forms.py:239
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:61
+#, python-format
+msgid ""
+"ManagementForm data is missing or has been tampered with. Missing fields: "
+"%(field_names)s. You may need to file a bug report if the issue persists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:65
+#, python-format
+msgid "Please submit at most %(num)d form."
+msgid_plural "Please submit at most %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:70
+#, python-format
+msgid "Please submit at least %(num)d form."
+msgid_plural "Please submit at least %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:484
+#: .\venv\Lib\site-packages\django\forms\formsets.py:491
+msgid "Order"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:499
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:28
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:63
+msgid "Delete"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:901
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:906
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:913
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:922
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1359
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1450
+msgid ""
+"Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1594
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\utils.py:229
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:527
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\command_help.html:27
+msgid "Clear"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:528
+msgid "Currently"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:529
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:42
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\inline_links.html:7
+msgid "Change"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:866
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\boolean.html:4
+msgid "Unknown"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:867
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:80
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:88
+msgid "Yes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:868
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:81
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:89
+msgid "No"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:873
+msgid "yes,no,maybe"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:903
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:920
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:922
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:924
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:926
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:928
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:930
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:74
+msgid "p.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:75
+msgid "a.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:80
+msgid "PM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:81
+msgid "AM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:153
+msgid "midnight"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:155
+msgid "noon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Monday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:8
+msgid "Tuesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:9
+msgid "Wednesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Thursday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Friday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:12
+msgid "Saturday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:13
+msgid "Sunday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:16
+msgid "Mon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:17
+msgid "Tue"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:18
+msgid "Wed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "Thu"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "Fri"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:21
+msgid "Sat"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:22
+msgid "Sun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:25
+msgid "January"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:26
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:27
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:28
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:29
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:30
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:31
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:32
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:33
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:34
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:35
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:36
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:39
+msgid "jan"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:40
+msgid "feb"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:41
+msgid "mar"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:42
+msgid "apr"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:43
+msgid "may"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:44
+msgid "jun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:45
+msgid "jul"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:46
+msgid "aug"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:47
+msgid "sep"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:48
+msgid "oct"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:49
+msgid "nov"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:50
+msgid "dec"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:53
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:54
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:55
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:56
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:57
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:58
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:59
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:60
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:61
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:62
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:63
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:64
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:67
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:68
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:69
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:70
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:71
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:72
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:73
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:74
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:75
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:76
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:77
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:78
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:20
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\text.py:76
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\text.py:282
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: .\venv\Lib\site-packages\django\utils\text.py:301
+#: .\venv\Lib\site-packages\django\utils\timesince.py:135
+msgid ", "
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:8
+#, python-format
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:29
+msgid "Forbidden"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:30
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:34
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:40
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:45
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or"
+" including the “Referrer-Policy: no-referrer” header, please remove them. "
+"The CSRF protection requires the “Referer” header to do strict referer "
+"checking. If you’re concerned about privacy, use alternatives like <a "
+"rel=\"noreferrer\" …> for links to third-party sites."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:54
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:60
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:66
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:44
+msgid "No year specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:64
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:115
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:214
+msgid "Date out of range"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:94
+msgid "No month specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:147
+msgid "No day specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:194
+msgid "No week specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:353
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:384
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:680
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because "
+"%(class_name)s.allow_future is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:720
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\detail.py:56
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:70
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:77
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:173
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:49
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:51
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:68
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:8
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:11
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:204
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:206
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:208
+#, python-format
+msgid ""
+"You are seeing this page because <a "
+"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
+"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file "
+"and you have not configured any URLs."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:217
+msgid "Django Documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:218
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:226
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:227
+msgid "Get started with Django"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:235
+msgid "Django Community"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:236
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_ckeditor_5\permissions.py:18
+msgid "You do not have permission to upload files."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_ckeditor_5\permissions.py:25
+msgid "You must be logged in to upload files."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_ckeditor_5\validators.py:17
+#, python-format
+msgid "File should be at most %(max_size)s MB."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_ckeditor_5\views.py:41
+msgid "Invalid form data"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_ckeditor_5\widgets.py:43
+msgid "Check the correct settings.CKEDITOR_5_CONFIGS "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:139
+#, python-format
+msgid "Error: Cannot handle glob %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:375
+#, python-format
+msgid "Cannot read %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:557
+#, python-format
+msgid "Unimplemented function: %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:707
+#, python-format
+msgid "new name needed for rename of %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:729
+#, python-format
+msgid "Unhandled filechange type: %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1138
+msgid "Couldn't parse rename source"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1168
+#, python-format
+msgid "Malformed %(refname)s line: '%(line)s'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1550
+#, python-format
+msgid "Unsupported command: '%s'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1552
+#, python-format
+msgid "Could not parse line: '%s'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1569
+#, python-format
+msgid ""
+"\n"
+"NEXT STEPS FOR YOUR SENSITIVE DATA REMOVAL:\n"
+"  * If you are doing your rewrite in multiple steps, ignore these next steps\n"
+"    until you have completed all your invocations of git-filter-repo.\n"
+"  * See the \"Sensitive Data Removal\" subsection of the \"DISCUSSION\" section\n"
+"    of the manual for more details about any of the steps below.\n"
+"  * Inspect this repository and verify that the sensitive data is indeed\n"
+"    completely removed from all commits.\n"
+"  * Force push the rewritten history to the server:\n"
+"      %s\n"
+"  * Contact the server admins for additional steps they need to take; the\n"
+"    First Changed Commit(s)%s may come in handy here.\n"
+"  * Have other colleagues with a clone either discard their clone and reclone\n"
+"    OR follow the detailed steps in the manual to repeatedly rebase and\n"
+"    purge the sensitive data from their copy.  Again, the First Changed\n"
+"    Commit(s)%s may come in handy.\n"
+"  * See the \"Prevent repeats and avoid future sensitive data spills\" section\n"
+"    of the manual.\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1640
+#, python-format
+msgid "%s does not appear to be a valid git repository"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1699
+#, python-format
+msgid "Processed %d blob sizes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1718
+#, python-format
+msgid "Error: unexpected `git cat-file` output: \"%s\"\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1777
+msgid ""
+"Error: --path-rename expects one colon in its argument: <old_name:new_name>."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1781
+msgid ""
+"Error: With --path-rename, if OLD_NAME and NEW_NAME are both non-empty and "
+"either ends with a slash then both must."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1785
+#: .\venv\Lib\site-packages\git_filter_repo.py:1792
+msgid "Error: Pathnames cannot begin with a '/'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1795
+#, python-format
+msgid "Error: Invalid path component '%s' found in '%s'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1818
+#, python-format
+msgid "Error: HelperFilter given invalid option_string: %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1830
+msgid ""
+"Rewrite (or analyze) repository history\n"
+"\n"
+"    git-filter-repo destructively rewrites history (unless --analyze or\n"
+"    --dry-run are given) according to specified rules.  It refuses to do any\n"
+"    rewriting unless either run from a clean fresh clone, or --force was\n"
+"    given.\n"
+"\n"
+"    Basic Usage:\n"
+"      git-filter-repo --analyze\n"
+"      git-filter-repo [FILTER/RENAME/CONTROL OPTIONS]\n"
+"\n"
+"    See EXAMPLES section for details.\n"
+"    "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1845
+msgid ""
+"CALLBACKS\n"
+"\n"
+"    Most callback functions are of the same general format.  For a command line\n"
+"    argument like\n"
+"      --foo-callback 'BODY'\n"
+"\n"
+"    the following code will be compiled and called:\n"
+"      def foo_callback(foo):\n"
+"        BODY\n"
+"\n"
+"    The exception on callbacks is the --file-info-callback, which will be\n"
+"    discussed further below.\n"
+"\n"
+"    Given the callback style, we can thus make a simple callback to replace\n"
+"    'Jon' with 'John' in author/committer/tagger names:\n"
+"      git filter-repo --name-callback 'return name.replace(b\"Jon\", b\"John\")'\n"
+"\n"
+"    To remove all 'Tested-by' tags in commit (or tag) messages:\n"
+"      git filter-repo --message-callback 'return re.sub(br\"\\nTested-by:.*\", \"\", message)'\n"
+"\n"
+"    To remove all .DS_Store files:\n"
+"      git filter-repo --filename-callback 'return None if os.path.basename(filename) == b\".DS_Store\" else filename'\n"
+"\n"
+"    Note that if BODY resolves to a filename, then the contents of that file\n"
+"    will be used as the BODY in the callback function.\n"
+"\n"
+"    The --file-info-callback has a more involved function callback; for it the\n"
+"    following code will be compiled and called:\n"
+"      def file_info_callback(filename, mode, blob_id, value):\n"
+"        BODY\n"
+"\n"
+"    It is designed to be used in cases where filtering depends on both\n"
+"    filename and contents (and maybe mode).  It is called for file changes\n"
+"    other than deletions (since deletions have no file contents to operate\n"
+"    on).  This callback is expected to return a tuple of (filename, mode,\n"
+"    blob_id).  It can make use of the following functions from the value\n"
+"    instance:\n"
+"      value.get_contents_by_identifier(blob_id) -> contents (bytestring)\n"
+"      value.get_size_by_identifier(blob_id) -> size_of_blob (int)\n"
+"      value.insert_file_with_contents(contents) -> blob_id\n"
+"      value.is_binary(contents) -> bool\n"
+"      value.apply_replace_text(contents) -> new_contents (bytestring)\n"
+"    and can read/write the following data member from the value instance:\n"
+"      value.data (dict)\n"
+"\n"
+"    The filename can be used for renaming the file similar to\n"
+"    --filename-callback (or None to drop the change), and mode is one\n"
+"    of b'100644', b'100755', b'120000', or b'160000'.\n"
+"\n"
+"    For more detailed examples and explanations AND caveats, see\n"
+"      https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#CALLBACKS\n"
+"\n"
+"EXAMPLES\n"
+"\n"
+"    To get a bunch of reports mentioning renames that have occurred in\n"
+"    your repo and listing sizes of objects aggregated by any of path,\n"
+"    directory, extension, or blob-id:\n"
+"      git filter-repo --analyze\n"
+"\n"
+"    (These reports can help you choose how to filter your repo; it can\n"
+"    be useful to re-run this command after filtering to regenerate the\n"
+"    report and verify the changes look correct.)\n"
+"\n"
+"    To extract the history that touched just 'guides' and 'tools/releases':\n"
+"      git filter-repo --path guides/ --path tools/releases\n"
+"\n"
+"    To remove foo.zip and bar/baz/zips from every revision in history:\n"
+"      git filter-repo --path foo.zip --path bar/baz/zips/ --invert-paths\n"
+"\n"
+"    To replace the text 'password' with 'p455w0rd':\n"
+"      git filter-repo --replace-text <(echo \"password==>p455w0rd\")\n"
+"\n"
+"    To use the current version of the .mailmap file to update authors,\n"
+"    committers, and taggers throughout history and make it permanent:\n"
+"      git filter-repo --use-mailmap\n"
+"\n"
+"    To extract the history of 'src/', rename all files to have a new leading\n"
+"    directory 'my-module' (e.g. src/foo.java -> my-module/src/foo.java), and\n"
+"    add a 'my-module-' prefix to all tags:\n"
+"      git filter-repo --path src/ --to-subdirectory-filter my-module --tag-rename '':'my-module-'\n"
+"\n"
+"    For more detailed examples and explanations, see\n"
+"      https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#EXAMPLES"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1936
+msgid "Analysis"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1938
+msgid ""
+"Analyze repository history and create a report that may be useful in "
+"determining what to filter in a subsequent run. Will not modify your repo."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1945
+msgid ""
+"Directory to write report, defaults to GIT_DIR/filter_repo/analysis,refuses "
+"to run if exists, --force delete existing dir first."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1948
+msgid "Filtering based on paths (see also --filename-callback)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1950
+msgid ""
+"\n"
+"           These options specify the paths to select.  Note that much like git\n"
+"           itself, renames are NOT followed so you may need to specify multiple\n"
+"           paths, e.g. `--path olddir/ --path newdir/`\n"
+"           "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1957
+msgid ""
+"Invert the selection of files from the specified --path-{match,glob,regex} "
+"options below, i.e. only select files matching none of those options."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1964
+msgid ""
+"Exact paths (files or directories) to include in filtered history.  Multiple"
+" --path options can be specified to get a union of paths."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1969
+msgid ""
+"Glob of paths to include in filtered history. Multiple --path-glob options "
+"can be specified to get a union of paths."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1974
+msgid ""
+"Regex of paths to include in filtered history. Multiple --path-regex options"
+" can be specified to get a union of paths"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1978
+msgid ""
+"Match on file base name instead of full path from the top of the repo.  "
+"Incompatible with --path-rename, and incompatible with matching against "
+"directory names."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1982
+msgid "Renaming based on paths (see also --filename-callback)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1987
+msgid ""
+"Path to rename; if filename or directory matches OLD_NAME rename to "
+"NEW_NAME.  Multiple --path-rename options can be specified.  NOTE: If you "
+"combine filtering options with renaming ones, do not rely on a rename "
+"argument to select paths; you also need a filter to select them."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1993
+msgid "Path shortcuts"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:1998
+msgid ""
+"Specify several path filtering and renaming directives, one per line.  Lines"
+" with '==>' in them specify path renames, and lines can begin with "
+"'literal:' (the default), 'glob:', or 'regex:' to specify different matching"
+" styles.  Blank lines and lines starting with a '#' are ignored."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2005
+msgid ""
+"Only look at history that touches the given subdirectory and treat that "
+"directory as the project root.  Equivalent to using '--path DIRECTORY/ "
+"--path-rename DIRECTORY/:'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2010
+msgid ""
+"Treat the project root as if it were under DIRECTORY. Equivalent to using '"
+"--path-rename :DIRECTORY/'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2013
+msgid "Content editing filters (see also --blob-callback)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2016
+#, python-brace-format
+msgid ""
+"A file with expressions that, if found, will be replaced. By default, each "
+"expression is treated as literal text, but 'regex:' and 'glob:' prefixes are"
+" supported.  You can end the line with '==>' and some replacement text to "
+"choose a replacement choice other than the default of '{}'."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2024
+msgid "Strip blobs (files) bigger than specified size (e.g. '5M', '2G', etc)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2027
+msgid ""
+"Read git object ids from each line of the given file, and strip all of them "
+"from history"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2030
+msgid "Renaming of refs (see also --refname-callback)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2033
+msgid ""
+"Rename tags starting with OLD to start with NEW.  For example, --tag-rename "
+"foo:bar will rename tag foo-1.2.3 to bar-1.2.3; either OLD or NEW can be "
+"empty."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2037
+msgid "Filtering of commit messages (see also --message-callback)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2040
+msgid ""
+"A file with expressions that, if found in commit or tag messages, will be "
+"replaced. This file uses the same syntax as --replace-text."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2044
+msgid ""
+"By default, since commits are rewritten and thus gain new hashes, references"
+" to old commit hashes in commit messages are replaced with new commit hashes"
+" (abbreviated to the same length as the old reference).  Use this flag to "
+"turn off updating commit hashes in commit messages."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2050
+msgid ""
+"Do not reencode commit messages into UTF-8.  By default, if the commit "
+"object specifies an encoding for the commit message, the message is re-"
+"encoded into UTF-8."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2054
+msgid ""
+"Filtering of names & emails (see also --name-callback and --email-callback)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2059
+msgid ""
+"Use specified mailmap file (see git-shortlog(1) for details on the format) "
+"when rewriting author, committer, and tagger names and emails.  If the "
+"specified file is part of git history, historical versions of the file will "
+"be ignored; only the current contents are consulted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2066
+msgid "Same as: '--mailmap .mailmap' "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2068
+msgid "Parent rewriting"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2073
+msgid ""
+"How to handle replace refs (see git-replace(1)).  Replace refs can be added "
+"during the history rewrite as a way to allow users to pass old commit IDs "
+"(from before git-filter-repo was run) to git commands and have git know how "
+"to translate those old commit IDs to the new (post-rewrite) commit IDs.  "
+"Also, replace refs that existed before the rewrite can either be deleted or "
+"updated.  The choices to pass to --replace-refs thus need to specify both "
+"what to do with existing refs and what to do with commit rewrites.  Thus "
+"'update-and-add' means to update existing replace refs, and for any commit "
+"rewrite (even if already pointed at by a replace ref) add a new "
+"refs/replace/ reference to map from the old commit ID to the new commit ID."
+"  The default is update-no-add, meaning update existing replace refs but do "
+"not add any new ones.  There is also a special 'old-default' option for "
+"picking the default used in versions prior to git-filter-repo-2.45, namely "
+"'update-and-add' upon the first run of git-filter-repo in a repository and "
+"'update-or-add' if running git-filter-repo again on a repository."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2095
+msgid ""
+"Whether to prune empty commits.  'auto' (the default) means only prune "
+"commits which become empty (not commits which were empty in the original "
+"repo, unless their parent was pruned). When the parent of a commit is "
+"pruned, the first non-pruned ancestor becomes the new parent."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2102
+msgid ""
+"Since merge commits are needed for history topology, they are typically "
+"exempt from pruning.  However, they can become degenerate with the pruning "
+"of other commits (having fewer than two parents, having one commit serve as "
+"both parents, or having one parent as the ancestor of the other.)  If such "
+"merge commits have no file changes, they can be pruned.  The default "
+"('auto') is to only prune empty merge commits which become degenerate (not "
+"which started as such)."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2111
+msgid ""
+"Even if the first parent is or becomes an ancestor of another parent, do not"
+" prune it.  This modifies how --prune-degenerate behaves, and may be useful "
+"in projects who always use merge --no-ff."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2116
+msgid "Generic callback code snippets"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2118
+msgid ""
+"Python code body for processing filenames; see CALLBACKS sections below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2121
+msgid ""
+"Python code body for processing file and metadata; see CALLBACKS sections "
+"below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2124
+msgid ""
+"Python code body for processing messages (both commit messages and tag "
+"messages); see CALLBACKS section below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2127
+msgid ""
+"Python code body for processing names of people; see CALLBACKS section "
+"below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2130
+msgid ""
+"Python code body for processing emails addresses; see CALLBACKS section "
+"below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2133
+msgid "Python code body for processing refnames; see CALLBACKS section below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2137
+msgid ""
+"Python code body for processing blob objects; see CALLBACKS section below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2140
+msgid ""
+"Python code body for processing commit objects; see CALLBACKS section below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2143
+msgid ""
+"Python code body for processing tag objects.  Note that lightweight tags "
+"have no tag object and are thus not handled by this callback. See CALLBACKS "
+"section below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2147
+msgid ""
+"Python code body for processing reset objects; see CALLBACKS section below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2150
+msgid "Sensitive Data Removal Handling"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2152
+msgid ""
+"This rewrite is intended to remove sensitive data from a repository.  Gather"
+" extra information from the rewrite needed to provide additional "
+"instructions on how to clean up other copies."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2157
+msgid ""
+"By default, --sensitive-data-removal will trigger a mirror-like fetch of all"
+" refs from origin, discarding local changes, but ensuring that _all_ "
+"fetchable refs that hold on to the sensitve data are rewritten.  This flag "
+"removes that fetch, risking that other refs continue holding on to the "
+"sensitive data.  This option is implied by --partial or any flag that "
+"implies --partial."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2166
+msgid ""
+"Specifying alternate source or target locations implies --partial,\n"
+"except that the normal default for --replace-refs is used.  However,\n"
+"unlike normal uses of --partial, this doesn't risk mixing old and new\n"
+"history since the old and new histories are in different repositories."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2170
+msgid "Location to filter from/to"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2173
+msgid "Git repository to read from"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2175
+msgid "Git repository to overwrite with filtered history"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2177
+msgid "Ordering of commits"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2179
+msgid "Processes commits in commit timestamp order."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2181
+msgid "Miscellaneous options"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2183
+msgid "Show this help message and exit."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2185
+msgid "Display filter-repo's version and exit."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2187
+msgid "Avoid triggering the no-arguments-specified check."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2189
+msgid ""
+"Rewrite repository history even if the current repo does not look like a "
+"fresh clone.  History rewriting is irreversible (and includes immediate "
+"pruning of reflogs and old objects), so be cautious about using this flag."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2194
+msgid ""
+"Do a partial history rewrite, resulting in the mixture of old and new "
+"history.  This disables rewriting refs/remotes/origin/* to refs/heads/*, "
+"disables removing of the 'origin' remote, disables removing unexported refs,"
+" disables expiring the reflog, and disables the automatic post-filter gc.  "
+"Also, this modifies --tag-rename and --refname-callback options such that "
+"instead of replacing old refs with new refnames, it will instead create new "
+"refs and keep the old ones around.  Use with caution."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2204
+msgid "Do not run 'git gc' after filtering."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2211
+msgid ""
+"Limit history rewriting to the specified refs.  Implies --partial.  In "
+"addition to the normal caveats of --partial (mixing old and new history, no "
+"automatic remapping of refs/remotes/origin/* to refs/heads/*, etc.), this "
+"also may cause problems for pruning of degenerate empty merge commits when "
+"negative revisions are specified."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2219
+msgid ""
+"Do not change the repository.  Run `git fast-export` and filter its output, "
+"and save both the original and the filtered version for comparison.  This "
+"also disables rewriting commit messages due to not knowing new commit IDs "
+"and disables filtering of some empty commits due to inability to query the "
+"fast-import backend."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2226
+msgid ""
+"Print additional information about operations being performed and commands "
+"being run.  When used together with --dry-run, also show extra information "
+"about what would be run."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2248
+msgid ""
+"Instead of running `git fast-export` and filtering its output, filter the "
+"fast-export stream from stdin.    The stdin must be in the expected input "
+"format (e.g. it needs to include original-oid directives)."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2253
+msgid "Pass --quiet to other git commands called"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2259
+msgid ""
+"Error: --analyze is incompatible with --path* flags; it's a read-only "
+"operation."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2262
+msgid "Error: --analyze is incompatible with --stdin."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2277
+msgid "Error: --use-base-name and --path-rename are incompatible."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2292
+msgid "Error: need git >= 2.24.0"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2296
+msgid "Error: need git >= 2.23.0"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2309
+msgid "Error: need git >= 2.22.0"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2316
+#, python-format
+msgid "Error: could not parse --strip-blobs-bigger-than argument %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2324
+msgid ""
+"Error: --file-info-callback is incompatible with --stdin, --blob-callback,\n"
+"and --filename-callback."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2385
+#, python-format
+msgid ""
+"Error: In %s, 'glob:' and '==>' are incompatible (renaming globs makes no "
+"sense)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2393
+msgid ""
+"Error: When rename directories, if OLDNAME and NEW_NAME are both non-empty "
+"and either ends with a slash then both must."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2416
+msgid "No arguments specified."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2545
+#, python-format
+msgid "Unhandled change type(s): %(change_type)s (in commit %(commit)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2564
+#, python-format
+msgid "Processed %d commits"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2574
+msgid "Nothing to analyze; repository is empty."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2631
+msgid "Error: rev-list|diff-tree pipeline failed; see above."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2638
+msgid "<present>"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2688
+msgid "Overall Statistics"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2689
+msgid "Number of commits"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2691
+msgid "Number of filenames"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2693
+msgid "Number of directories"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2695
+msgid "Number of file extensions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2698
+msgid "Total unpacked size (bytes)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2700
+msgid "Total packed size (bytes)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2705
+msgid "Caveats"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2706
+msgid "Sizes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2707
+msgid ""
+"\n"
+"        Packed size represents what size your repository would be if no\n"
+"        trees, commits, tags, or other metadata were included (though it may\n"
+"        fail to represent de-duplication; see below).  It also represents the\n"
+"        current packing, which may be suboptimal if you haven't gc'ed for a\n"
+"        while.\n"
+"\n"
+"        Unpacked size represents what size your repository would be if no\n"
+"        trees, commits, tags, or other metadata were included AND if no\n"
+"        files were packed; i.e., without delta-ing or compression.\n"
+"\n"
+"        Both unpacked and packed sizes can be slightly misleading.  Deleting\n"
+"        a blob from history not save as much space as the unpacked size,\n"
+"        because it is obviously normally stored in packed form.  Also,\n"
+"        deleting a blob from history may not save as much space as its packed\n"
+"        size either, because another blob could be stored as a delta against\n"
+"        that blob, so when you remove one blob another blob's packed size may\n"
+"        grow.\n"
+"\n"
+"        Also, the sum of the packed sizes can add up to more than the\n"
+"        repository size; if the same contents appeared in the repository in\n"
+"        multiple places, git will automatically de-dupe and store only one\n"
+"        copy, while the way sizes are added in this analysis adds the size\n"
+"        for each file path that has those contents.  Further, if a file is\n"
+"        ever reverted to a previous version's contents, the previous\n"
+"        version's size will be counted multiple times in this analysis, even\n"
+"        though git will only store it once.\n"
+"        "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2736
+msgid "Deletions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2737
+msgid ""
+"\n"
+"        Whether a file is deleted is not a binary quality, since it can be\n"
+"        deleted on some branches but still exist in others.  Also, it might\n"
+"        exist in an old tag, but have been deleted in versions newer than\n"
+"        that.  More thorough tracking could be done, including looking at\n"
+"        merge commits where one side of history deleted and the other modified,\n"
+"        in order to give a more holistic picture of deletions.  However, that\n"
+"        algorithm would not only be more complex to implement, it'd also be\n"
+"        quite difficult to present and interpret by users.  Since --analyze\n"
+"        is just about getting a high-level rough picture of history, it instead\n"
+"        implements the simplistic rule that is good enough for 98% of cases:\n"
+"          A file is marked as deleted if the last commit in the fast-export\n"
+"          stream that mentions the file lists it as deleted.\n"
+"        This makes it dependent on topological ordering, but generally gives\n"
+"        the \"right\" answer.\n"
+"        "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2754
+msgid "Renames"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2755
+msgid ""
+"\n"
+"        Renames share the same non-binary nature that deletions do, plus\n"
+"        additional challenges:\n"
+"          * If the renamed file is renamed again, instead of just two names for\n"
+"            a path you can have three or more.\n"
+"          * Rename pairs of the form (oldname, newname) that we consider to be\n"
+"            different names of the \"same file\" might only be valid over certain\n"
+"            commit ranges.  For example, if a new commit reintroduces a file\n"
+"            named oldname, then new versions of oldname aren't the \"same file\"\n"
+"            anymore.  We could try to portray this to the user, but it's easier\n"
+"            for the user to just break the pairing and only report unbroken\n"
+"            rename pairings to the user.\n"
+"          * The ability for users to rename files differently in different\n"
+"            branches means that our chains of renames will not necessarily be\n"
+"            linear but may branch out.\n"
+"        "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2789
+msgid "Deleted directories by reverse size"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2791
+#: .\venv\Lib\site-packages\git_filter_repo.py:2803
+msgid "Format: unpacked size, packed size, date deleted, directory name\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2799
+#: .\venv\Lib\site-packages\git_filter_repo.py:2810
+msgid "<toplevel>"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2802
+msgid "All directories by reverse size"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2814
+msgid "Deleted extensions by reverse size"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2816
+#: .\venv\Lib\site-packages\git_filter_repo.py:2828
+msgid "Format: unpacked size, packed size, date deleted, extension name\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2824
+#: .\venv\Lib\site-packages\git_filter_repo.py:2835
+msgid "<no extension>"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2827
+msgid "All extensions by reverse size"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2839
+msgid "Deleted paths by reverse accumulated size"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2841
+msgid "Format: unpacked size, packed size, date deleted, path name(s)\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2853
+msgid "All paths by reverse accumulated size"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2855
+msgid "Format: unpacked size, packed size, date deleted, path name\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2867
+msgid "Files by sha and associated pathnames in reverse size"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2868
+msgid "Format: sha, unpacked size, packed size, filename(s) object stored as\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2900
+#, python-format
+msgid "Warning: Removing recursively: \"%s\""
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2903
+#, python-format
+msgid "Error: dir already exists (use --force to delete): \"%s\"\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2912
+#, python-format
+msgid "Writing reports to %s..."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:2915
+msgid "done.\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3216
+#, python-format
+msgid "Parsed %d commits"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3241
+#, python-format
+msgid "Error: Cannot pass a %s_callback to RepoFilter AND pass --%s-callback"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3246
+#, python-format
+msgid "Error: --%s-callback should have a return statement"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3297
+msgid ""
+"      Error: Cannot specify --sensitive-data-removal on a follow-up invocation\n"
+"             of git-filter-repo unless it was specified in previously runs."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3313
+msgid "Error: sensitive data removal is incompatible with --stdin"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3316
+msgid ""
+"Error: sensitive data removal is incompatible with --source and --target"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3399
+msgid ""
+"Note: when cloning local repositories, you need to pass\n"
+"      --no-local to git clone to avoid this issue.\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3402
+#, python-format
+msgid ""
+"Aborting: Refusing to destructively overwrite repo history since\n"
+"this does not look like a fresh clone.\n"
+"  (%s)\n"
+"%sPlease operate on a fresh clone instead.  If you want to proceed\n"
+"anyway, use --force."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3412
+msgid "GIT_DIR must be ."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3414
+msgid "GIT_DIR must be .git"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3427
+#, python-format
+msgid ""
+"Aborting: Cannot rewrite history on a case insensitive\n"
+"filesystem since you have refs that differ in case only:\n"
+"%s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3442
+#, python-format
+msgid ""
+"Aborting: Cannot rewrite history on a character normalizing\n"
+"filesystem since you have refs that differ in normalization:\n"
+"%s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3459
+msgid "expected freshly packed repo"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3465
+msgid "expected one remote, origin"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3475
+#, python-format
+msgid "expected at most one entry in the reflog for %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3480
+msgid "has stashed changes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3486
+msgid "you have uncommitted changes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3488
+msgid "you have unstaged changes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3498
+msgid "you have untracked changes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3506
+#, python-format
+msgid "%s exists, but %s not found"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3509
+#, python-format
+msgid "%s does not match %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3515
+msgid "you have multiple worktrees"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3526
+msgid "Repacking your repo and cleaning out old unneeded objects"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3925
+msgid "File renaming caused colliding pathnames!\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3926
+#, python-brace-format
+msgid "  Commit: {}\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:3927
+#, python-brace-format
+msgid "  Filename: {}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4219
+#, python-format
+msgid "Failed loading %s from %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4244
+#, python-format
+msgid "Failed to find %s to save to %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4312
+msgid "Rewrote the stash."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4415
+#: .\venv\Lib\site-packages\git_filter_repo.py:4530
+msgid "git update-ref failed; see above"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4445
+msgid ""
+"NOTICE: Fetching all refs from origin to make sure we rewrite\n"
+"        all history that may reference the sensitive data, via\n"
+"      "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4452
+msgid "WARNING: Fetching all refs from origin failed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4459
+#, python-format
+msgid ""
+"NOTICE: Removing 'origin' remote; see 'Why is my origin removed?'\n"
+"        in the manual if you want to push back there.\n"
+"        (was %s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4783
+#: .\venv\Lib\site-packages\git_filter_repo.py:4789
+msgid "old"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4783
+#: .\venv\Lib\site-packages\git_filter_repo.py:4789
+msgid "new"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4789
+msgid "ref"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4809
+msgid ""
+"\n"
+"          The following commits used to be merge commits but due to filtering\n"
+"          are now regular commits; they likely have suboptimal commit messages\n"
+"          (e.g. \"Merge branch next into master\").  Original commit hash on the\n"
+"          left, commit hash after filtering/rewriting on the right:\n"
+"          "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4821
+msgid ""
+"\n"
+"          The following commits were filtered out, but referenced in another\n"
+"          commit message.  The reference to the now-nonexistent commit hash\n"
+"          (or a substring thereof) was left as-is in any commit messages:\n"
+"          "
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4831
+msgid "No filtering problems encountered.\n"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4834
+msgid ""
+"This file exists to allow you to filter again without --force,\n"
+"and to specify that metadata files should be updated instead\n"
+"of rewritten"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4898
+msgid "Error: fast-export failed; see above."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4908
+msgid "Error: fast-import failed; see above."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4922
+msgid "NOTE: Not running fast-import or cleaning up; --dry-run passed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4924
+msgid "      Requested filtering can be seen by comparing:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4927
+msgid "      Requested filtering can be seen at:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4947
+#, python-brace-format
+msgid "Completely finished after {:.2f} seconds."
+msgstr ""
+
+#: .\venv\Lib\site-packages\git_filter_repo.py:4955
+msgid " and LFS Objects Orphaned"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:14
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:94
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:102
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:112
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:122
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:126
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:158
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:177
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:406
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:411
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:421
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:441
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:458
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:477
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:483
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:500
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:512
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:520
+msgid "title"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:18
+msgid "password"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:287
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:306
+msgid "title a"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:291
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:317
+msgid "title b"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:295
+msgid "title c"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:299
+msgid "title d"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\models.py:422
+msgid "visits"
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\tests\translation.py:74
+msgid "Sorry, translation is not available."
+msgstr ""
+
+#: .\venv\Lib\site-packages\modeltranslation\widgets.py:32
+msgid "None"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\admin.py:42
+#: .\venv\Lib\site-packages\unfold\templatetags\unfold_list.py:351
+msgid "Select record"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\admin.py:225
+msgid "Select action"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\change_list.html:44
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:24
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:25
+#: .\venv\Lib\site-packages\unfold\templates\admin\pagination.html:19
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:10
+msgid "Save"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:10
+msgid "Collapse"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:19
+msgid "Name"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:20
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:178
+msgid "Value"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:21
+msgid "Default"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:22
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:59
+msgid "Code"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:40
+msgid "Current file"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\constance\templates\admin\constance\includes\results_list.html:71
+msgid "Reset to default"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:18
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:57
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:70
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:23
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\mixins.py:47
+msgid "All"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:38
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:95
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:123
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\choice_filters.py:151
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:39
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:93
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\dropdown_filters.py:142
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\mixins.py:70
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\mixins.py:171
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\text_filters.py:28
+#: .\venv\Lib\site-packages\unfold\contrib\filters\admin\text_filters.py:57
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_date_range.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_datetime_range.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_range.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_single.html:5
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_slider.html:7
+#: .\venv\Lib\site-packages\unfold\templates\admin\filter.html:11
+#: .\venv\Lib\site-packages\unfold\templates\admin\filter.html:32
+#, python-format
+msgid " By %(filter_title)s "
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:207
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:252
+msgid "From"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:218
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:262
+msgid "To"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:286
+msgid "Date from"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\forms.py:302
+msgid "Date to"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\filters\templates\unfold\filters\filters_numeric_slider.html:21
+msgid "Not enough data."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\array.html:30
+msgid "Add new item"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:7
+msgid "Paragraph"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:11
+msgid "Underlined"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:15
+msgid "Bold"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:19
+msgid "Italic"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:23
+msgid "Strike"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:27
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:98
+msgid "Link"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:35
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:39
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:43
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:47
+msgid "Heading"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:55
+msgid "Quote"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:63
+msgid "Unordered list"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:67
+msgid "Ordered list"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:71
+msgid "Indent increase"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:75
+msgid "Indent decrease"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:83
+msgid "Undo"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:87
+msgid "Redo"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:95
+msgid "Enter an URL"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\forms\templates\unfold\forms\helpers\toolbar.html:102
+msgid "Unlink"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\change_form.html:8
+msgid "Object permissions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:13
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:14
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:9
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:43
+msgid "Object"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_group.html:16
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:15
+msgid "Group"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\admin\guardian\model\obj_perms_manage_user.html:17
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:33
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:15
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:33
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:14
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:30
+msgid "User"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:7
+msgid "Group permissions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:25
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:49
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:25
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:49
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:18
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:34
+msgid "Action"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:51
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:51
+msgid "Edit"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\group_form.html:68
+msgid "Manage group"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:7
+msgid "User permissions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\guardian\templates\unfold\guardian\user_form.html:68
+msgid "Manage user"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\hijack\templates\hijack\contrib\admin\button.html:10
+msgctxt "verb"
+msgid "impersonate"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\hijack\templates\hijack\contrib\admin\button.html:12
+#, python-format
+msgid "impersonate %(username)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\hijack\templates\hijack\notification.html:6
+#, python-format
+msgid "You are currently working on behalf of <em>%(user)s</em>."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\hijack\templates\hijack\notification.html:16
+msgid "stop impersonating"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\hijack\templates\hijack\notification.html:20
+msgid "hide warning"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\forms.py:30
+msgid "Select format"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\change_form.html:9
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\change_list_export_item.html:4
+msgid "Export"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\change_list_import_item.html:4
+msgid "Import"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:18
+#, python-format
+msgid ""
+"\n"
+"                    Export %(len)s selected item.\n"
+"                "
+msgid_plural ""
+"\n"
+"                    Export %(len)s selected items.\n"
+"                "
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:52
+msgid "This exporter will export the following fields"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\export.html:83
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_form.html:24
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\dialog.html:52
+msgid "Submit"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_confirm.html:10
+msgid ""
+"Below is a preview of data to be imported. If you are satisfied with the "
+"results, click 'Confirm import'"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_confirm.html:12
+msgid "Confirm import"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_errors.html:19
+msgid "Line number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_errors.html:24
+msgid "View traceback"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:22
+msgid "New"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:25
+msgid "Skipped"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_preview.html:31
+msgid "Update"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:5
+msgid "Some rows failed to validate"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:5
+msgid ""
+"Please correct these errors in your data where possible, then reupload it "
+"using the form above."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:16
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:69
+msgid "Row"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\import_validation.html:53
+msgid "Non field specific"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\resource_fields_list.html:6
+msgid "This exporter will export the following fields: "
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\import_export\templates\admin\import_export\resource_fields_list.html:8
+msgid "This importer will import the following fields: "
+msgstr ""
+
+#. Translators: Model verbose name and instance representation,
+#. suitable to be an item in a list.
+#: .\venv\Lib\site-packages\unfold\contrib\inlines\admin.py:102
+#, python-format
+msgid "%(class_name)s %(instance)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\inlines\admin.py:114
+#, python-format
+msgid ""
+"Deleting %(class_name)s %(instance)s would require deleting the following "
+"protected related objects: %(related_objects)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history.html:7
+msgid ""
+"Choose a date from the list below to revert to a previous version of this "
+"object"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history.html:27
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:57
+msgid "entry"
+msgid_plural "entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history.html:30
+msgid "This object doesn't have a change history."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:16
+msgid ""
+"Press the 'Revert' button below to revert to this version of the object."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_form.html:20
+msgid "Press the 'Change History' button below to edit the history."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:19
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:55
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:10
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:26
+msgid "Date/time"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:23
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:59
+msgid "Comment"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:27
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:63
+msgid "Changed by"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:31
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:73
+msgid "Change reason"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:35
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\object_history_list.html:81
+msgid "Changes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\submit_line.html:10
+msgid "Revert"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\submit_line.html:16
+msgid "Change History"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\contrib\simple_history\templates\simple_history\submit_line.html:21
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:54
+msgid "Close"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\forms.py:74
+msgid "Select action to run"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\forms.py:130
+#, python-brace-format
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user’s "
+"password, but you can change the password using <a href=\"{}\" class=\"text-"
+"primary-600 dark:text-primary-500\">this form</a>."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\mixins\dataset_model_admin.py:56
+msgid ""
+"Items must be selected in order to perform actions on them. No items have "
+"been changed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\mixins\dataset_model_admin.py:69
+msgid "Dataset not found. No action performed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\mixins\formfield_model_admin.py:56
+#: .\venv\Lib\site-packages\unfold\mixins\formfield_model_admin.py:75
+msgid "Select value"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\mixins\formfield_model_admin.py:145
+#, python-brace-format
+msgid ""
+"Field <strong class=\"font-semibold\">{field_name}</strong> is not an "
+"autocomplete field. Please add it to the `autocomplete_fields` list."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\mixins\nested_inlines_model_admin.py:31
+msgid "You can not create nested object without parent"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:23
+#: .\venv\Lib\site-packages\unfold\templates\admin\dataset_actions.html:46
+msgid "Run the selected action"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:24
+#: .\venv\Lib\site-packages\unfold\templates\admin\dataset_actions.html:49
+msgid "Run"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:44
+#: .\venv\Lib\site-packages\unfold\templates\admin\dataset_actions.html:17
+msgid "Click here to select the objects across all pages"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:45
+#: .\venv\Lib\site-packages\unfold\templates\admin\dataset_actions.html:18
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\actions.html:51
+#: .\venv\Lib\site-packages\unfold\templates\admin\dataset_actions.html:24
+msgid "Clear selection"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\app_index.html:5
+#: .\venv\Lib\site-packages\unfold\templates\admin\base_site.html:3
+#: .\venv\Lib\site-packages\unfold\templates\admin\index.html:5
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:15
+#: .\venv\Lib\site-packages\unfold\templates\unfold\layouts\base.html:7
+msgid "Django site admin"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\app_list.html:12
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:9
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\app_list.html:48
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list.html:55
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:59
+msgid "You don’t have permission to view or edit anything."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\add_form.html:5
+msgid "After you've created a user, you’ll be able to edit more user options."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\change_password.html:20
+#, python-format
+msgid "Enter a new password for the user <strong>%(username)s</strong>."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\auth\user\change_password.html:30
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_form.html:32
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\account_links.html:18
+msgid "Change password"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_form_object_tools.html:6
+msgid "History"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_form_object_tools.html:12
+msgid "View on site"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\change_list_results.html:35
+msgid "Expand row"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:16
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:32
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the"
+" following protected related objects:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:48
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
+"All of the following related items will be deleted:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_confirmation.html:55
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:49
+msgid "Objects"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:15
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:28
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\delete_selected_confirmation.html:42
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\includes\object_delete_summary.html:5
+msgid "Summary"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:15
+msgid "Welcome back to"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:26
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this"
+" page. Would you like to login to a different account?"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:47
+msgid "Log in"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\login.html:55
+msgid "Forgotten your password or username?"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\object_history.html:60
+msgid ""
+"This object doesn’t have a change history. It probably wasn’t added via this"
+" admin site."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\pagination.html:12
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\welcomemsg.html:21
+msgid "Show all"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\search_form.html:18
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\command.html:23
+msgid "Type to search"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:29
+msgid "Save and continue editing"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:31
+msgid "Save and view"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:38
+msgid "Save and add another"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\admin\submit_line.html:44
+msgid "Save as new"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\logged_out.html:14
+msgid "You have been successfully logged out from the administration"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\logged_out.html:18
+msgid "Thanks for spending some quality time with the web site today."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\logged_out.html:23
+msgid "Log in again"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_done.html:8
+msgid "Your password was changed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\registration\password_change_form.html:19
+msgid ""
+"Please enter your old password, for security’s sake, and then enter your new"
+" password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\components\table.html:113
+msgid "No data"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\account_links.html:5
+msgid "View site"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\account_links.html:28
+msgid "Log out"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\actions_row.html:4
+msgid "More actions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\add_link.html:5
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\add_link.html:8
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:4
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_all.html:11
+msgid "All applications"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:31
+#: .\venv\Lib\site-packages\unfold\templates\unfold_crispy\layout\table_inline_formset.html:73
+msgid "Add"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\app_list_default.html:38
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\inline_links.html:17
+msgid "View"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\boolean.html:4
+msgid "True"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\boolean.html:4
+msgid "False"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:7
+msgid "Apply Filters"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:16
+msgid "Hide counts"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:20
+msgid "Show counts"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_actions.html:27
+msgid "Clear all filters"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_filter_button.html:5
+msgid "Filters"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_headers.html:27
+msgid "Select all rows"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_headers.html:41
+msgid "Toggle sorting"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_headers.html:49
+msgid "Remove from sorting"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\change_list_headers.html:55
+#, python-format
+msgid "Sorting priority: %(priority_number)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\command_help.html:6
+msgid "Navigate"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\command_help.html:17
+msgid "Select"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\command_history.html:6
+msgid "Recent searches"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\command_results.html:45
+msgid "Nothing matched your search"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\command_results.html:54
+#, python-format
+msgid ""
+"\n"
+"            Found <span class=\"font-medium text-important\">%(counter)s</span> result in %(time)s seconds\n"
+"        "
+msgid_plural ""
+"\n"
+"            Found <span class=\"font-medium text-important\">%(counter)s</span> results in %(time)s seconds\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\delete_submit_line.html:5
+msgid "No, take me back"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\delete_submit_line.html:9
+msgid "Yes, I’m sure"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\dialog.html:41
+msgid "Cancel"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\display_header.html:10
+msgid "Record picture"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\inline_delete_undo.html:5
+msgid "This item will be deleted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\inline_delete_undo.html:8
+msgid "Click to cancel"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\edit_inline\tabular_delete.html:4
+msgid "Remove"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:14
+msgid "No results found"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:18
+msgid ""
+"This page yielded into no results. Create a new item or reset your filters."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\empty_results.html:32
+msgid "Reset filters"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\field_readonly_value_file.html:8
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\clearable_file_input.html:6
+msgid "Image preview"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\field_readonly_value_file.html:13
+msgid "Click to download"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\header_back_button.html:7
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\header_back_button.html:15
+msgid "Go back"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\history.html:9
+msgid "Recent actions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\history.html:28
+msgid "Unknown content"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\messages\errornote.html:5
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\pagination_infinite.html:5
+msgid "Previous"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\pagination_infinite.html:9
+msgid "Next"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\search.html:9
+msgid "Search apps and models..."
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_branding.html:3
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_branding.html:6
+msgid "Django administration"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_icon.html:7
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_icon.html:9
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_icon.html:11
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_logo.html:5
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_logo.html:7
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\site_logo.html:9
+msgid "Home"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\tab_items.html:16
+msgid "General"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch.html:9
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch_dropdown.html:16
+msgid "Light"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch.html:16
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch_dropdown.html:23
+msgid "Dark"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch.html:23
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\theme_switch_dropdown.html:30
+msgid "System"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\unauthenticated_header.html:6
+msgid "Return to site"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\welcomemsg.html:21
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\helpers\welcomemsg.html:21
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\clearable_file_input.html:25
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\clearable_file_input_small.html:18
+msgid "Choose file to upload"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\password_toggle.html:5
+msgid "Toggle password visibility"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:28
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:29
+#, python-format
+msgid "Change selected %(model)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:34
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:35
+#, python-format
+msgid "Add another %(model)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:40
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:41
+#, python-format
+msgid "View selected %(model)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:46
+#: .\venv\Lib\site-packages\unfold\templates\unfold\widgets\related_widget_wrapper.html:47
+#, python-format
+msgid "Delete selected %(model)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templates\unfold_crispy\layout\table_inline_formset.html:75
+msgid "Add row"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templatetags\unfold.py:762
+msgid "Welcome"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\templatetags\unfold_list.py:123
+msgid "Select all objects on this page for an action"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\widgets.py:588
+#: .\venv\Lib\site-packages\unfold\widgets.py:629
+msgid "Date"
+msgstr ""
+
+#: .\venv\Lib\site-packages\unfold\widgets.py:969
+msgid "Select currency"
+msgstr ""
+
+#~ msgid "Хмельницька область"
+#~ msgstr "Khmelnytskyi Oblast"
+
+#~ msgid "Автономна Республіка Крим"
+#~ msgstr "Autonomous Republic of Crimea"
+
+#~ msgid "Івано-Франківська область"
+#~ msgstr "Ivano-Frankivsk Oblast"
+
+#~ msgid "Дослідження, символіка, історії регіонів."
+#~ msgstr "Research, symbolism, and regional stories."
+
+#~ msgid ""
+#~ "VyshyvankaDaily - це щоденний генератор українського орнаменту вишиванки, "
+#~ "побудований на дослідженні реальної символіки, кольорів і мотивів "
+#~ "традиційної вишивки. Щодня сайт показує новий орнамент, прив'язаний до "
+#~ "конкретного регіону України - усього їх 27: 24 області, Автономна Республіка"
+#~ " Крим, Київ і Севастополь."
+#~ msgstr ""
+#~ "VyshyvankaDaily is a daily generator of Ukrainian vyshyvanka patterns, built"
+#~ " on research into the real symbolism, colors, and motifs of traditional "
+#~ "embroidery. Every day the site shows a new pattern tied to a specific region"
+#~ " of Ukraine, 27 in total: 24 oblasts, the Autonomous Republic of Crimea, "
+#~ "Kyiv, and Sevastopol."
+
+#~ msgid ""
+#~ "Ідея проєкту проста: вишиванка - це не просто орнамент, а мова символів, яка"
+#~ " відрізняється від регіону до регіону. Полтавщина відома технікою білим по "
+#~ "білому, Борщівщина - насиченим чорним тлом, Крим - кримськотатарським "
+#~ "орнаментом орьнек із власною, окремою традицією. Ми прагнемо показати це "
+#~ "розмаїття чесно, з покликанням на реальні джерела там, де це можливо, і з "
+#~ "чітким розрізненням задокументованого й переказаного за традицією там, де "
+#~ "академічних джерел немає."
+#~ msgstr ""
+#~ "The idea behind the project is simple: a vyshyvanka isn't just an ornament, "
+#~ "it's a language of symbols that changes from region to region. Poltava is "
+#~ "known for its white-on-white technique, Borshchiv for its dense black "
+#~ "backgrounds, and Crimea for the Crimean Tatar ornek pattern, a separate "
+#~ "tradition in its own right. We try to show this variety honestly, citing "
+#~ "real sources wherever we can, and clearly separating what's documented from "
+#~ "what's passed down by tradition when academic sources aren't available."
+
+#~ msgid ""
+#~ "Кожен орнамент супроводжується описом символіки регіону та переліком джерел,"
+#~ " на які ми спирались - академічні праці, музейні колекції, визнання ЮНЕСКО. "
+#~ "Там, де конкретне джерело для окремого твердження ще не підтверджено, ми "
+#~ "прямо про це кажемо, а не видаємо здогад за факт."
+#~ msgstr ""
+#~ "Each pattern comes with a description of the region's symbolism and a list "
+#~ "of the sources we relied on: academic papers, museum collections, UNESCO "
+#~ "recognition. Where a specific claim isn't yet backed by a confirmed source, "
+#~ "we say so directly instead of presenting a guess as fact."
+
+#~ msgid ""
+#~ "Проєкт розробляє одна людина, самостійно - від бекенду до дослідження "
+#~ "джерел. Це означає, що деякі розділи (переклад, юридичні тексти, повна "
+#~ "перевірка кожного джерела) ще доопрацьовуються, і ми відкрито це позначаємо,"
+#~ " а не приховуємо."
+#~ msgstr ""
+#~ "The project is built by one person, alone, from the backend to the source "
+#~ "research. That means some parts (translation, legal pages, a full check of "
+#~ "every source) are still a work in progress, and we mark that openly instead "
+#~ "of hiding it."
+
+#~ msgid ""
+#~ "Якщо ви дослідник, музейний працівник чи просто маєте виправлення до опису "
+#~ "символіки конкретного регіону - напишіть нам через сторінку контактів."
+#~ msgstr ""
+#~ "If you're a researcher, a museum professional, or simply have a correction "
+#~ "to a region's description, reach out through the contact page."
+
+#~ msgid ""
+#~ "Питання щодо проєкту, виправлення до опису регіону чи пропозиції співпраці -"
+#~ " пишіть напряму на пошту нижче."
+#~ msgstr ""
+#~ "Questions about the project, corrections to a region's description, or "
+#~ "collaboration proposals: email us directly at the address below."
+
+#~ msgid "Адресу буде замінено на реальну перед публічним запуском."
+#~ msgstr "This address will be replaced with a real one before launch."
+
+#~ msgid ""
+#~ "Це чернетка, узгоджена з реальною роботою сайту, але не перевірена юристом. "
+#~ "Обов'язково доопрацювати перед публічним запуском."
+#~ msgstr ""
+#~ "This is a draft that matches how the site actually works, but it hasn't been"
+#~ " reviewed by a lawyer. It must be finalized before launch."
+
+#~ msgid ""
+#~ "Електронна адреса - для входу в акаунт і підтвердження реєстрації. IP-адреса"
+#~ " відправників форм зберігається виключно для боротьби зі спамом і "
+#~ "зловживаннями, з жодною іншою метою не використовується та не передається "
+#~ "третім особам."
+#~ msgstr ""
+#~ "Your email address is used to log into your account and confirm "
+#~ "registration. The IP address of form senders is stored solely to prevent "
+#~ "spam and abuse. It is not used for any other purpose and is not shared with "
+#~ "third parties."
+
+#~ msgid ""
+#~ "Дані не продаються й не передаються третім особам для маркетингу. Технічні "
+#~ "постачальники послуг (хостинг, відправлення листів підтвердження) обробляють"
+#~ " дані виключно в межах надання цих послуг."
+#~ msgstr ""
+#~ "We do not sell your data or share it with third parties for marketing "
+#~ "purposes. Technical service providers (hosting, sending confirmation emails)"
+#~ " process data only to the extent needed to provide those services."
+
+#~ msgid ""
+#~ "Ви можете видалити свій акаунт і пов'язані з ним дані в будь-який момент, "
+#~ "звернувшись через сторінку контактів."
+#~ msgstr ""
+#~ "You can delete your account and the data associated with it at any time by "
+#~ "reaching out through the contact page."
+
+#~ msgid ""
+#~ "Описи символіки й орнаментів на сайті засновані на дослідженні відкритих "
+#~ "джерел і, де можливо, супроводжуються покликанням на них. Частина контенту "
+#~ "базується на усній традиції, а не на письмових академічних джерелах - це "
+#~ "позначається окремо. Ми не гарантуємо абсолютної повноти чи наукової "
+#~ "бездоганності кожного опису й вітаємо обґрунтовані виправлення через "
+#~ "сторінку контактів."
+#~ msgstr ""
+#~ "Descriptions of symbolism and patterns on this site are based on research "
+#~ "into publicly available sources and, where possible, cite them directly. "
+#~ "Some content is based on oral tradition rather than written academic "
+#~ "sources, and this is marked separately. We do not guarantee that every "
+#~ "description is complete or scientifically flawless, and we welcome well-"
+#~ "founded corrections through the contact page."
+
+#~ msgid ""
+#~ "Ми можемо оновлювати ці умови без попереднього повідомлення. Актуальна "
+#~ "версія завжди доступна на цій сторінці."
+#~ msgstr ""
+#~ "We may update these terms without prior notice. The current version is "
+#~ "always available on this page."
