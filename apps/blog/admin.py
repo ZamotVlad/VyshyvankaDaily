@@ -3,7 +3,18 @@ from django.utils.html import format_html
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin
 
-from .models import BlogCategory, BlogPost, GuestPostSubmission
+from .models import Author, BlogCategory, BlogPost, GuestPostSubmission
+
+
+@admin.register(Author)
+class AuthorAdmin(ModelAdmin):
+    list_display = ("name", "slug", "post_count")
+    search_fields = ("name",)
+    prepopulated_fields = {"slug": ("name",)}
+
+    @admin.display(description="Статей")
+    def post_count(self, obj):
+        return obj.posts.count()
 
 
 @admin.register(BlogCategory)
@@ -46,7 +57,7 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
         (
             "Публікація",
             {
-                "fields": ("status", "post_type", "category", "published_at"),
+                "fields": ("status", "post_type", "category", "published_at", "blog_author"),
             },
         ),
         (

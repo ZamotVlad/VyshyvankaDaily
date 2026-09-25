@@ -5,6 +5,29 @@ from django_ckeditor_5.fields import CKEditor5Field
 from apps.core.models import SlugModel, TimeStampedModel
 
 
+class Author(TimeStampedModel, SlugModel):
+    """
+    Автор контенту сайту (статті блогу, описи регіонів). Редагується
+    виключно через адмінку - навмисно немає жодної публічної форми чи
+    поля на профілі звичайного користувача, щоб уникнути плутанини з
+    accounts.Profile (те, що бачить кожен зареєстрований відвідувач).
+    """
+
+    name = models.CharField(max_length=255)
+    bio = models.TextField(blank=True)
+    avatar_url = models.URLField(blank=True)
+    website_url = models.URLField(blank=True)
+
+    slug_source_field = "name"
+
+    class Meta:
+        verbose_name = "Автор"
+        verbose_name_plural = "Автори"
+
+    def __str__(self):
+        return self.name
+
+
 class BlogCategory(TimeStampedModel, SlugModel):
     """Категорія блогу (розділ 3.8 ТЗ). Перекладна."""
 
@@ -40,6 +63,14 @@ class BlogPost(TimeStampedModel, SlugModel):
         null=True,
         blank=True,
         related_name="blog_posts",
+    )
+    blog_author = models.ForeignKey(
+        "blog.Author",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="posts",
+        help_text="Публічно видимий автор статті (плашка на сторінці, сторінка автора).",
     )
     title = models.CharField(max_length=255, db_index=True)
     excerpt = models.TextField(help_text="Короткий опис для карток у списку статей.")
