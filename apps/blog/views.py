@@ -12,13 +12,20 @@ BLOG_PAGE_SIZE = 12
 
 
 def author_detail_view(request, slug):
+    from apps.patterns.models import Region
+
     author = get_object_or_404(Author, slug=slug)
     posts = (
         BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED, blog_author=author)
         .select_related("category")
         .order_by("-published_at")
     )
-    return render(request, "blog/author_detail.html", {"author": author, "posts": posts})
+    regions = Region.objects.verified().order_by("name")
+    return render(
+        request,
+        "blog/author_detail.html",
+        {"author": author, "posts": posts, "regions": regions},
+    )
 
 
 def blog_list_view(request):

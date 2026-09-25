@@ -17,8 +17,8 @@
   {% endif %}
 </div>
 
-<h2 class="vd-section-title mt-5">{% translate "Статті автора" %}</h2>
 {% if posts %}
+  <h2 class="vd-section-title mt-5">{% translate "Статті автора" %}</h2>
   <div class="vd-grid vd-grid--wide">
     {% for post in posts %}
       <a href="{% url 'blog:detail' post.slug %}" class="vd-card">
@@ -29,7 +29,22 @@
       </a>
     {% endfor %}
   </div>
-{% else %}
-  <p class="vd-muted">{% translate "Поки що немає опублікованих статей." %}</p>
+{% endif %}
+
+{% if regions %}
+  <h2 class="vd-section-title mt-5">{% translate "Описи регіонів" %}</h2>
+  <div class="vd-grid vd-grid--wide">
+    {% for region in regions %}
+      <a href="{% url 'patterns:region_detail' region.slug %}" class="vd-card">
+        <div class="vd-card__body">
+          <h3 class="vd-card__title">{{ region.name }}</h3>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if not posts and not regions %}
+  <p class="vd-muted">{% translate "Поки що немає опублікованих матеріалів." %}</p>
 {% endif %}
 {% endblock %}
