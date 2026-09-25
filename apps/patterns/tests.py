@@ -1011,3 +1011,20 @@ class ExportRegionContentTests(TestCase):
         check = StringIO()
         call_command("load_region_content", path, "--check", stdout=check)
         self.assertIn("збігаються", check.getvalue())
+
+
+class ViewCountColumnDroppedTests(TestCase):
+    def test_no_view_count_column(self):
+        from django.db import connection
+
+        from apps.blog.models import BlogPost
+
+        for model in (DailyPattern, BlogPost):
+            with connection.cursor() as cursor:
+                columns = [
+                    c.name
+                    for c in connection.introspection.get_table_description(
+                        cursor, model._meta.db_table
+                    )
+                ]
+            self.assertNotIn("view_count", columns)
