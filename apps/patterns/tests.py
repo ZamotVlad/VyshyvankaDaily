@@ -829,3 +829,46 @@ class ListPaginationTests(TestCase):
     def test_invalid_page_falls_back_gracefully(self):
         response = self.client.get(f"/regions/{self.region.slug}/?page=abc")
         self.assertEqual(response.status_code, 200)
+
+
+class QueryCountTests(TestCase):
+    """Кількість запитів не росте з кількістю карток (захист від N+1)."""
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username="q", password="pass12345")
+        self.regions = [make_region(f"Регіон Q{i}", rotation_order=200 + i) for i in range(10)]
+
+    def _add_patterns(self, count, region=None):
+        for i in range(count):
+            pattern = DailyPattern.objects.create(
+                date=date(2026, 3, 1) + timedelta(days=DailyPattern.objects.count()),
+                region=region or self.regions[i % len(self.regions)],
+                seed=f"q{i}",
+                algorithm_version=1,
+                svg_content="<svg></svg>",
+            )
+            SavedPattern.objects.create(user=self.user, pattern=pattern)
+
+    def _queries(self, url):
+        from django.db import connection
+        from django.test.utils import CaptureQueriesContext
+
+        with CaptureQueriesContext(connection) as ctx:
+            self.assertEqual(self.client.get(url).status_code, 200)
+        return len(ctx.captured_queries)
+
+    def _assert_constant(self, url, region=None):
+        self._add_patterns(1, region)
+        few = self._queries(url)
+        self._add_patterns(9, region)
+        self.assertEqual(self._queries(url), few)
+
+    def test_archive(self):
+        self._assert_constant("/archive/")
+
+    def test_region_page(self):
+        self._assert_constant(f"/regions/{self.regions[0].slug}/", region=self.regions[0])
+
+    def test_collection(self):
+        self.client.force_login(self.user)
+        self._assert_constant("/collection/")
