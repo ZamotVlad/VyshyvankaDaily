@@ -1,12 +1,41 @@
+import json
 from datetime import datetime
+from io import StringIO
 from pathlib import Path
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
+TARGETS = {
+    "users": [
+        "auth.User",
+        "accounts.Profile",
+        "account.EmailAddress",
+        "socialaccount.SocialAccount",
+    ],
+    "collections": ["patterns.SavedPattern"],
+    "patterns": ["patterns.DailyPattern"],
+    "content": [
+        "patterns.Source",
+        "patterns.Region",
+        "patterns.Motif",
+        "patterns.RegionPhoto",
+        "blog.Author",
+        "pages.StaticPage",
+    ],
+    "blog": ["blog.BlogCategory", "blog.BlogPost", "blog.GuestPostSubmission"],
+    "pages": ["pages.FAQCategory", "pages.FAQItem"],
+}
+
+# Паролі й IP не потрапляють у файли: "!" - непридатний пароль у Django.
+SCRUB = {
+    "auth.user": {"password": "!"},
+    "blog.guestpostsubmission": {"submitter_ip": None},
+}
+
 
 class Command(BaseCommand):
-    help = "Створює JSON-бекап даних, які не відтворюються з міграцій."
+    help = "JSON-бекап даних сайту без хешів паролів та IP-адрес."
 
     def add_arguments(self, parser):
         parser.add_argument("--output-dir", default="backups")
@@ -16,35 +45,26 @@ class Command(BaseCommand):
         out_dir.mkdir(parents=True, exist_ok=True)
         stamp = datetime.now().strftime("%Y-%m-%d_%H%M")
 
-        # Довідники (Region/Motif/Source) свідомо НЕ бекапимо: вони
-        # повністю відтворюються з міграцій командою migrate. Бекап
-        # потрібен лише для того, що створюють живі люди.
-        targets = {
-            "users": ["auth.User", "accounts.Profile"],
-            "collections": ["patterns.SavedPattern"],
-            "patterns": ["patterns.DailyPattern"],
-            "blog": ["blog.BlogPost", "blog.BlogCategory", "blog.GuestPostSubmission"],
-            "pages": ["pages.FAQCategory", "pages.FAQItem"],
-        }
+        for name, models in TARGETS.items():
+            buffer = StringIO()
+            call_command(
+                "dumpdata",
+                *models,
+                stdout=buffer,
+                natural_foreign=True,
+                natural_primary=True,
+            )
+            objects = json.loads(buffer.getvalue())
+            for obj in objects:
+                obj["fields"].update(SCRUB.get(obj["model"], {}))
 
-        for name, models in targets.items():
             path = out_dir / f"{stamp}_{name}.json"
-            with path.open("w", encoding="utf-8") as handle:
-                call_command(
-                    "dumpdata",
-                    *models,
-                    indent=2,
-                    stdout=handle,
-                    natural_foreign=True,
-                    natural_primary=True,
-                )
+            path.write_text(json.dumps(objects, ensure_ascii=False, indent=2), encoding="utf-8")
             size_kb = path.stat().st_size / 1024
             self.stdout.write(self.style.SUCCESS(f"{path} ({size_kb:.1f} КБ)"))
 
         self.stdout.write(
             self.style.WARNING(
-                "\nБекап зроблено. Обов'язково скопіюй файли з сервера до себе - "
-                "бекап, що лежить на тому самому диску, що й база, не рятує "
-                "від відмови цього диска."
+                "\nФайли містять email користувачів - зберігай їх приватно, поза репозиторієм."
             )
         )

@@ -430,3 +430,37 @@ class EnglishUiStringsTests(TestCase):
         self.client.force_login(get_user_model().objects.create_user(username="e", password="p"))
         response = self.client.post(f"/en/pattern/{pattern.date}/save/", follow=True)
         self.assertContains(response, "Saved to collection.")
+
+
+class BackupDataTests(TestCase):
+    def _run_backup(self):
+        import tempfile
+        from io import StringIO
+        from pathlib import Path
+
+        from django.core.management import call_command
+
+        tmp = Path(tempfile.mkdtemp())
+        call_command("backup_data", output_dir=str(tmp), stdout=StringIO())
+        return {p.name.split("_", 2)[-1]: p.read_text(encoding="utf-8") for p in tmp.iterdir()}
+
+    def test_no_password_hashes_or_submitter_ips(self):
+        from apps.blog.models import GuestPostSubmission
+
+        user = get_user_model().objects.create_user(username="u", password="secret-pass-1")
+        GuestPostSubmission.objects.create(
+            contact_name="T", email="t@example.com", proposed_topic="T", submitter_ip="9.9.9.9"
+        )
+        files = self._run_backup()
+        dump = "".join(files.values())
+        self.assertNotIn(user.password, dump)
+        self.assertNotIn("9.9.9.9", dump)
+        self.assertIn('"username": "u"', files["users.json"])
+
+    def test_includes_content_edited_in_admin(self):
+        from apps.blog.models import Author
+
+        Author.objects.create(name="Автор Бекапу")
+        files = self._run_backup()
+        self.assertIn("Автор Бекапу", files["content.json"])
+        self.assertIn('"model": "patterns.region"', files["content.json"])
