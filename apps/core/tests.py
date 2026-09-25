@@ -266,3 +266,25 @@ class SecurityHeadersMiddlewareTests(TestCase):
         response = self.client.get("/")
         self.assertIn("Permissions-Policy", response)
         self.assertIn("camera=()", response["Permissions-Policy"])
+
+
+@override_settings(ALLOWED_HOSTS=["vyshyvankadaily.live"], SECURE_SSL_REDIRECT=True)
+class WwwRedirectMiddlewareTests(TestCase):
+    def test_www_redirects_to_apex_keeping_path_and_query(self):
+        response = self.client.get(
+            "/en/archive/?region=x", HTTP_HOST="www.vyshyvankadaily.live", secure=True
+        )
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "https://vyshyvankadaily.live/en/archive/?region=x")
+
+    def test_plain_http_www_goes_straight_to_https_apex(self):
+        response = self.client.get("/", HTTP_HOST="www.vyshyvankadaily.live")
+        self.assertEqual(response["Location"], "https://vyshyvankadaily.live/")
+
+    def test_unknown_www_host_is_rejected(self):
+        response = self.client.get("/", HTTP_HOST="www.evil.com", secure=True)
+        self.assertEqual(response.status_code, 400)
+
+    def test_apex_is_served_normally(self):
+        response = self.client.get("/robots.txt", HTTP_HOST="vyshyvankadaily.live", secure=True)
+        self.assertEqual(response.status_code, 200)

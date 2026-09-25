@@ -1,3 +1,21 @@
+from django.conf import settings
+from django.http import HttpResponsePermanentRedirect
+
+
+class WwwRedirectMiddleware:
+    """www.<домен> -> <домен> (301), якщо <домен> є в ALLOWED_HOSTS."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        host = request.META.get("HTTP_HOST", "").split(":")[0].lower()
+        if host.startswith("www.") and host[4:] in settings.ALLOWED_HOSTS:
+            scheme = "https" if settings.SECURE_SSL_REDIRECT else request.scheme
+            return HttpResponsePermanentRedirect(f"{scheme}://{host[4:]}{request.get_full_path()}")
+        return self.get_response(request)
+
+
 class HideServerHeaderMiddleware:
     """
     Прибирає деталізацію версії із заголовка Server (ZAP/StackHawk:
