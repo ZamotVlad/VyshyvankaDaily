@@ -451,8 +451,3 @@ backups/
 *.sql
 *.dump
 og_check.png
-
-#CLAUDE
-CLAUDE.md
-CLAUDE.local.md
-.claude/settings.local.json
