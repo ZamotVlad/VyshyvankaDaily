@@ -480,10 +480,12 @@
   {
     "model": "blog.author",
     "uk": {
-      "name": "Владислав Замотайло"
+      "name": "Владислав Замотайло",
+      "bio": "Backend-розробник з України. Самостійно спроєктував і розробив VyshyvankaDaily -платформу, яка щодня показує орнамент вишиванки одного з 27 регіонів України з реальною історією символіки з музейних і наукових джерел. Пишу тут про культуру, орнаменти та технічну сторону проєкту."
     },
     "en": {
-      "name": "Vladyslav Zamotailo"
+      "name": "Vladyslav Zamotailo",
+      "bio": "Backend developer from Ukraine. I designed and built VyshyvankaDaily on my own: a platform that shows a vyshyvanka ornament from one of Ukraine's 27 regions every day, with the real history of its symbolism drawn from museum and academic sources. Here I write about culture, ornaments and the technical side of the project."
     }
   }
 ]
