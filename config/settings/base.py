@@ -17,6 +17,7 @@ environ.Env.read_env(BASE_DIR / ".env")
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+CANONICAL_HOST = env("CANONICAL_HOST", default="")
 
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 LANGUAGE_COOKIE_SAMESITE = "Lax"
@@ -48,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "apps.core.middleware.WwwRedirectMiddleware",
+    "apps.core.middleware.CanonicalHostMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

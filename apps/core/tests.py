@@ -288,3 +288,20 @@ class WwwRedirectMiddlewareTests(TestCase):
     def test_apex_is_served_normally(self):
         response = self.client.get("/robots.txt", HTTP_HOST="vyshyvankadaily.live", secure=True)
         self.assertEqual(response.status_code, 200)
+
+
+@override_settings(
+    ALLOWED_HOSTS=["vyshyvankadaily.live", "app-123.herokuapp.com"],
+    CANONICAL_HOST="vyshyvankadaily.live",
+    SECURE_SSL_REDIRECT=True,
+)
+class HerokuAppRedirectTests(TestCase):
+    def test_herokuapp_redirects_to_canonical_host(self):
+        response = self.client.get("/regions/?a=1", HTTP_HOST="app-123.herokuapp.com", secure=True)
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "https://vyshyvankadaily.live/regions/?a=1")
+
+    @override_settings(CANONICAL_HOST="")
+    def test_no_redirect_without_canonical_host(self):
+        response = self.client.get("/robots.txt", HTTP_HOST="app-123.herokuapp.com", secure=True)
+        self.assertEqual(response.status_code, 200)
