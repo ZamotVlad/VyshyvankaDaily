@@ -1,4 +1,4 @@
 -r base.txt
-gunicorn
-dj-database-url
-psycopg2-binary
+gunicorn==26.2.0
+dj-database-url==3.1.2
+psycopg2-binary==2.9.13
