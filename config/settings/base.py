@@ -294,11 +294,12 @@ LOGGING = {
     },
     "handlers": {
         "console": {"class": "logging.StreamHandler", "formatter": "simple"},
+        "null": {"class": "logging.NullHandler"},
     },
     "root": {"handlers": ["console"], "level": "WARNING"},
     "loggers": {
         "django.request": {"level": "ERROR"},
-        "django.security.DisallowedHost": {"handlers": [], "propagate": False},
+        "django.security.DisallowedHost": {"handlers": ["null"], "propagate": False},
         "apps": {"level": "INFO"},
     },
 }
