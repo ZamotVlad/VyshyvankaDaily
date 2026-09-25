@@ -43,6 +43,11 @@ class RobotsTxtTests(TestCase):
             self.assertIn(f"Disallow: {private}", body)
         self.assertIn("/sitemap.xml", body)
 
+    def test_blocks_english_versions_of_private_sections(self):
+        body = self.client.get("/robots.txt").content.decode()
+        for private in ("/en/accounts/", "/en/profile/settings/", "/en/collection/"):
+            self.assertIn(f"Disallow: {private}", body)
+
     def test_does_not_block_legal_pages(self):
         """Свідоме рішення: privacy/terms лишаються відкритими для індексації
         як сигнал довіри (порада SEO-спеціалістки, 26.07)."""

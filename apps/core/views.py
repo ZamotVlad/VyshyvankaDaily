@@ -73,13 +73,11 @@ def robots_txt(request):
     на canonical, інакше робот не побачить сам canonical-тег на
     заблокованій сторінці.
     """
+    private = ["/accounts/", "/profile/settings/", "/collection/", "/patterns/debug/"]
     lines = [
         "User-agent: *",
-        "Disallow: /accounts/",
-        "Disallow: /profile/settings/",
-        "Disallow: /collection/",
+        *(f"Disallow: {prefix}{path}" for path in private for prefix in ("", "/en")),
         "Disallow: /admin/",
-        "Disallow: /patterns/debug/",
         "",
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]

@@ -1,3 +1,4 @@
+import re
 from datetime import date, timedelta
 from unittest.mock import patch
 
@@ -689,3 +690,8 @@ class PatternDetailUrlTests(TestCase):
     def test_non_canonical_date_formats_are_404(self):
         for value in ["20260601", "2026-W22-1", "2026-06-01T00:00"]:
             self.assertEqual(self.client.get(f"/pattern/{value}/").status_code, 404, value)
+
+    def test_past_pattern_has_single_noindex_robots_tag(self):
+        response = self.client.get("/pattern/2026-06-01/")
+        robots = re.findall(r'<meta name="robots" content="([^"]+)"', response.content.decode())
+        self.assertEqual(robots, ["noindex, follow"])

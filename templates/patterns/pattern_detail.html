@@ -4,8 +4,9 @@
 
 {% block title %}{{ pattern.region.name }} - {{ pattern.date|date:"d E Y" }} - VyshyvankaDaily{% endblock %}
 
+{% block robots %}{% if is_today %}index, follow{% else %}noindex, follow{% endif %}{% endblock %}
+
 {% block extra_head %}
-{% if not is_today %}<meta name="robots" content="noindex, follow">{% endif %}
 {% jsonld_pattern pattern %}
 {% jsonld_breadcrumbs pattern.breadcrumbs %}
 <meta property="og:title" content="{{ pattern.region.name }} - {{ pattern.date|date:'d E Y' }}">
