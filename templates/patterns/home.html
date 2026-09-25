@@ -13,7 +13,7 @@
 {% block content %}
 {% if user.is_authenticated %}
   <div class="vd-status-bar">
-    <span><span aria-hidden="true">🔥</span> {{ user.profile.current_streak }} {% translate "днів поспіль" %}</span>
+    <span><span aria-hidden="true">🔥</span> {{ user.profile.displayed_streak }} {% translate "днів поспіль" %}</span>
     <span class="vd-sep" aria-hidden="true">◇</span>
     <span>{{ tour_completed }} / {{ tour_total }} {% translate "регіонів пройдено" %}</span>
     <a href="{% url 'patterns:my_collection' %}" class="ms-auto">{% translate "Моя колекція" %} →</a>

@@ -48,3 +48,36 @@ class ProfileSettingsViewTests(TestCase):
         )
         self.user.profile.refresh_from_db()
         self.assertEqual(self.user.profile.display_name, "Тестове ім'я")
+
+
+class DisplayedStreakTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+
+        self.user = get_user_model().objects.create_user(username="s", password="pass12345")
+        self.profile = self.user.profile
+        self.profile.current_streak = 5
+
+    def _set_last_active(self, days_ago):
+        from datetime import timedelta
+
+        from django.utils import timezone
+
+        self.profile.last_active_date = timezone.localdate() - timedelta(days=days_ago)
+        self.profile.save()
+
+    def test_streak_kept_if_active_today_or_yesterday(self):
+        for days_ago in (0, 1):
+            self._set_last_active(days_ago)
+            self.assertEqual(self.profile.displayed_streak, 5)
+
+    def test_streak_shown_as_zero_after_missed_day(self):
+        self._set_last_active(2)
+        self.assertEqual(self.profile.displayed_streak, 0)
+
+    def test_home_page_shows_zero_after_missed_day(self):
+        self._set_last_active(3)
+        self.client.force_login(self.user)
+        response = self.client.get("/")
+        self.assertContains(response, "0 днів поспіль")
+        self.assertNotContains(response, "5 днів поспіль")

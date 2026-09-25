@@ -36,3 +36,15 @@ class Profile(TimeStampedModel):
 
     def get_display_name(self) -> str:
         return self.display_name or self.user.get_username()
+
+    @property
+    def displayed_streak(self) -> int:
+        """Серія обнуляється для показу, якщо пропущено більше одного дня."""
+        from datetime import timedelta
+
+        from django.utils import timezone
+
+        yesterday = timezone.localdate() - timedelta(days=1)
+        if self.last_active_date and self.last_active_date >= yesterday:
+            return self.current_streak
+        return 0
