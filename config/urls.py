@@ -11,7 +11,7 @@ from apps.core.sitemaps import (
     RegionSitemap,
     StaticViewSitemap,
 )
-from apps.core.views import google_site_verification, robots_txt, set_language_view
+from apps.core.views import favicon, google_site_verification, robots_txt, set_language_view
 
 sitemaps = {
     "regions": RegionSitemap,
@@ -25,6 +25,7 @@ urlpatterns = [
     path("ckeditor5/", include("django_ckeditor_5.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("robots.txt", robots_txt, name="robots_txt"),
+    path("favicon.ico", favicon, name="favicon"),
     path(
         "googled602211b36b6f933.html",
         google_site_verification,

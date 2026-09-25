@@ -1,8 +1,9 @@
 import re
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.shortcuts import render
+from django.templatetags.static import static
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import check_for_language
 
@@ -105,3 +106,7 @@ def csrf_failure(request, reason=""):
     причина: форма була відкрита довго, чи натиснута кнопка "назад".
     """
     return render(request, "403_csrf.html", {"reason": reason}, status=403)
+
+
+def favicon(request):
+    return HttpResponsePermanentRedirect(static("favicon/favicon.png"))

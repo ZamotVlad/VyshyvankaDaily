@@ -319,3 +319,10 @@ class HerokuAppRedirectTests(TestCase):
     def test_no_redirect_without_canonical_host(self):
         response = self.client.get("/robots.txt", HTTP_HOST="app-123.herokuapp.com", secure=True)
         self.assertEqual(response.status_code, 200)
+
+
+class FaviconTests(TestCase):
+    def test_favicon_ico_redirects_to_static_icon(self):
+        response = self.client.get("/favicon.ico")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "/static/favicon/favicon.png")
