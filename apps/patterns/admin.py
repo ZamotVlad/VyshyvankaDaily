@@ -1,9 +1,11 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.utils.html import format_html
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin
 
 from .models import DailyPattern, Motif, Region, RegionPhoto, Source
+from .services.generation import CURRENT_ALGORITHM_VERSION, retry_fallback_pattern
+from .services.pattern_builder import build_svg_for_date
 
 
 class RegionPhotoInline(admin.TabularInline):
@@ -174,14 +176,22 @@ class SourceAdmin(ModelAdmin):
 
 @admin.register(DailyPattern)
 class DailyPatternAdmin(ModelAdmin):
-    # УВАГА: якщо в чинному файлі вже є дія force_regenerate_pattern
-    # (Stage 4, ADR 33) - перенеси її сюди з робочого коду. Я навмисно
-    # її не переписую, бо не пам'ятаю точну сигнатуру generate_daily_pattern
-    # і не хочу зламати те, що вже працює.
-    list_display = ("date", "region", "algorithm_version", "view_count")
-    list_filter = ("region", "algorithm_version")
+    list_display = ("date", "region", "generation_status", "algorithm_version", "view_count")
+    list_filter = ("generation_status", "region", "algorithm_version")
+    actions = ["retry_fallbacks"]
     date_hierarchy = "date"
     search_fields = ("region__name_uk",)
     readonly_fields = ("seed", "svg_content", "view_count")
     autocomplete_fields = ("region",)
     list_per_page = 50
+
+    @admin.action(description="Перегенерувати дні з резервним орнаментом")
+    def retry_fallbacks(self, request, queryset):
+        fixed = 0
+        for pattern in queryset.filter(generation_status=DailyPattern.GenerationStatus.FALLBACK):
+            try:
+                retry_fallback_pattern(pattern, CURRENT_ALGORITHM_VERSION, build_svg_for_date)
+                fixed += 1
+            except Exception as exc:
+                self.message_user(request, f"{pattern.date}: {exc}", messages.ERROR)
+        self.message_user(request, f"Перегенеровано: {fixed}")

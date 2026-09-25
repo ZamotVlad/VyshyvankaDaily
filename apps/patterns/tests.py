@@ -9,7 +9,11 @@ from django.test import RequestFactory, TestCase, override_settings
 from django.utils import timezone
 
 from apps.patterns.models import DailyPattern, Motif, Region, SavedPattern
-from apps.patterns.services.generation import NoFallbackAvailable, generate_daily_pattern
+from apps.patterns.services.generation import (
+    NoFallbackAvailable,
+    generate_daily_pattern,
+    retry_fallback_pattern,
+)
 from apps.patterns.services.pattern_builder import build_svg_for_date
 from apps.patterns.services.rotation import ROTATION_EPOCH, get_region_for_date
 from apps.patterns.services.seed import get_rng
@@ -124,6 +128,76 @@ class DailyPatternGenerationTests(TestCase):
     def test_no_fallback_raises_when_no_previous_pattern(self):
         with self.assertRaises(NoFallbackAvailable):
             generate_daily_pattern(ROTATION_EPOCH, 1, fake_failure)
+
+
+class FallbackRetryTests(TestCase):
+    def setUp(self):
+        Region.objects.all().update(is_active=False)
+        self.region_a = make_region("Регіон А", rotation_order=1)
+        self.region_b = make_region("Регіон Б", rotation_order=2)
+        self.day1 = ROTATION_EPOCH
+        self.day2 = ROTATION_EPOCH + timedelta(days=1)
+        generate_daily_pattern(self.day1, 1, fake_success)
+        self.fallback = generate_daily_pattern(self.day2, 1, fake_failure)
+
+    def test_fallback_uses_previous_day_region(self):
+        self.assertEqual(self.fallback.region, self.region_a)
+
+    def test_retry_restores_scheduled_region_and_content(self):
+        user = get_user_model().objects.create_user(username="u", password="pass12345")
+        SavedPattern.objects.create(user=user, pattern=self.fallback)
+
+        pattern = retry_fallback_pattern(self.fallback, 2, fake_success)
+
+        pattern.refresh_from_db()
+        self.assertEqual(pattern.pk, self.fallback.pk)
+        self.assertEqual(pattern.generation_status, DailyPattern.GenerationStatus.SUCCESS)
+        self.assertEqual(pattern.region, self.region_b)
+        self.assertEqual(pattern.svg_content, f"<svg>{self.day2}-{self.region_b.pk}</svg>")
+        self.assertEqual(pattern.algorithm_version, 2)
+        self.assertTrue(SavedPattern.objects.filter(pattern=pattern).exists())
+
+    def test_failed_retry_keeps_fallback_untouched(self):
+        with self.assertRaises(ValueError):
+            retry_fallback_pattern(self.fallback, 2, fake_failure)
+        self.fallback.refresh_from_db()
+        self.assertEqual(self.fallback.generation_status, DailyPattern.GenerationStatus.FALLBACK)
+        self.assertEqual(self.fallback.region, self.region_a)
+
+    def test_retry_ignores_successful_patterns(self):
+        success = DailyPattern.objects.get(date=self.day1)
+        svg_before = success.svg_content
+        retry_fallback_pattern(success, 2, fake_failure)
+        success.refresh_from_db()
+        self.assertEqual(success.svg_content, svg_before)
+
+    @patch(
+        "apps.patterns.management.commands.retry_fallback_patterns.build_svg_for_date", fake_success
+    )
+    def test_management_command_retries_all_fallbacks(self):
+        from io import StringIO
+
+        from django.core.management import call_command
+
+        out = StringIO()
+        call_command("retry_fallback_patterns", stdout=out)
+        self.fallback.refresh_from_db()
+        self.assertEqual(self.fallback.generation_status, DailyPattern.GenerationStatus.SUCCESS)
+        self.assertIn("1", out.getvalue())
+
+    @patch("apps.patterns.admin.build_svg_for_date", fake_success)
+    def test_admin_action_retries_selected_fallbacks(self):
+        admin_user = get_user_model().objects.create_superuser(
+            username="boss", email="boss@example.com", password="pass12345"
+        )
+        self.client.force_login(admin_user)
+        response = self.client.post(
+            "/vd/patterns/dailypattern/",
+            {"action": "retry_fallbacks", "_selected_action": [self.fallback.pk]},
+        )
+        self.assertEqual(response.status_code, 302)
+        self.fallback.refresh_from_db()
+        self.assertEqual(self.fallback.generation_status, DailyPattern.GenerationStatus.SUCCESS)
 
 
 class RealGenerationDeterminismTests(TestCase):

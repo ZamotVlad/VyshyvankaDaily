@@ -99,20 +99,24 @@ def generate_daily_pattern(
         return _get_existing_pattern(pattern_date)
 
 
-def force_regenerate_pattern(
+def retry_fallback_pattern(
     pattern: DailyPattern, algorithm_version: int, generate_fn: GenerateFn
 ) -> DailyPattern:
     """
-    Примусова перегенерація для адмінки (розділ 14.4 ТЗ) — виняткові
-    випадки. НЕ видаляє існуючий запис (щоб не каскадно видалити
-    SavedPattern користувачів) — перезаписує поля результату на тому
-    самому записі. Регіон лишається той, що вже призначений — ротація
-    стосується первинного призначення дня, не форс-перегенерації.
+    Перегенерувати день, де спрацював fallback: регіон за ротацією, новий вміст.
+    Той самий запис (SavedPattern користувачів лишаються). При збої - без змін.
     """
-    svg_content, motifs = generate_fn(pattern.date, pattern.region)
-    pattern.svg_content = svg_content
-    pattern.algorithm_version = algorithm_version
-    pattern.generation_status = DailyPattern.GenerationStatus.SUCCESS
-    pattern.save()
-    pattern.motifs_used.set(motifs)
+    if pattern.generation_status != DailyPattern.GenerationStatus.FALLBACK:
+        return pattern
+
+    region = get_region_for_date(pattern.date)
+    svg_content, motifs = generate_fn(pattern.date, region)
+    with transaction.atomic():
+        pattern.region = region
+        pattern.seed = date_to_seed(pattern.date)
+        pattern.svg_content = svg_content
+        pattern.algorithm_version = algorithm_version
+        pattern.generation_status = DailyPattern.GenerationStatus.SUCCESS
+        pattern.save()
+        pattern.motifs_used.set(motifs)
     return pattern
