@@ -227,6 +227,19 @@ class LanguageSwitchTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response["Location"], "/en/archive/")
 
+    def test_external_next_is_rejected(self):
+        for next_url in ["//evil.com", "//evil.com/archive/", "/\\evil.com"]:
+            for lang in ["uk", "en"]:
+                response = self.client.post("/i18n/setlang/", {"language": lang, "next": next_url})
+                self.assertEqual(response.status_code, 302)
+                self.assertIn(response["Location"], ["/", "/en/"])
+
+    def test_external_referer_keeps_only_path(self):
+        response = self.client.post(
+            "/i18n/setlang/", {"language": "en"}, HTTP_REFERER="https://evil.com/archive/"
+        )
+        self.assertEqual(response["Location"], "/en/archive/")
+
 
 class ContextProcessorTests(TestCase):
     def test_canonical_url_present_on_home(self):

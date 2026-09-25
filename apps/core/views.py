@@ -3,6 +3,7 @@ import re
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import check_for_language
 
 # Префікси НЕ-дефолтних мов (де prefix_default_language=False - українська
@@ -39,6 +40,8 @@ def set_language_view(request):
     stripped = _PREFIX_RE.sub("/", next_url, count=1)
     if not stripped.startswith("/"):
         stripped = "/" + stripped
+    if not url_has_allowed_host_and_scheme(stripped, allowed_hosts={request.get_host()}):
+        stripped = "/"
 
     if lang_code and check_for_language(lang_code):
         if lang_code != settings.LANGUAGE_CODE:
