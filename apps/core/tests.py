@@ -451,6 +451,13 @@ EN_MO = settings.BASE_DIR / "locale" / "en" / "LC_MESSAGES" / "django.mo"
 
 @skipUnless(EN_MO.exists(), "потрібен скомпільований django.mo (compilemessages)")
 class EnglishUiStringsTests(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        po = EN_MO.with_suffix(".po")
+        if po.stat().st_mtime > EN_MO.stat().st_mtime:
+            raise AssertionError("django.mo застарів: python manage.py compilemessages")
+
     def test_breadcrumbs_and_jsonld_are_translated(self):
         region = Region.objects.verified().first()
         body = self.client.get(f"/en/regions/{region.slug}/").content.decode()
