@@ -307,6 +307,32 @@ class SecurityHeadersMiddlewareTests(TestCase):
         for path in ["/", "/vd/login/"]:
             self.assertNotIn("cloudflareinsights", self.client.get(path)["Content-Security-Policy"])
 
+    def test_public_pages_use_self_hosted_fonts_only(self):
+        response = self.client.get("/")
+        csp = response["Content-Security-Policy"]
+        self.assertNotIn("googleapis", csp)
+        self.assertIn("font-src 'self';", csp)
+        html = response.content.decode()
+        self.assertNotIn("fonts.googleapis.com", html)
+        self.assertIn("fonts/fonts.css", html)
+        self.assertIn("fonts/unbounded-cyrillic.woff2", html)
+        en = self.client.get("/en/").content.decode()
+        self.assertIn("fonts/unbounded-latin.woff2", en)
+
+    def test_admin_keeps_google_fonts_for_its_theme(self):
+        csp = self.client.get("/vd/login/")["Content-Security-Policy"]
+        self.assertIn("https://fonts.gstatic.com", csp)
+
+    def test_scripts_are_deferred_and_touch_icon_linked(self):
+        html = self.client.get("/").content.decode()
+        self.assertIn('bootstrap.bundle.min.js" defer>', html)
+        self.assertIn('js/site.js" defer>', html)
+        self.assertIn('rel="apple-touch-icon"', html)
+
+    def test_font_files_are_served(self):
+        for name in ("fonts.css", "unbounded-cyrillic.woff2", "ptserif-400-latin.woff2"):
+            self.assertEqual(self.client.get(f"/static/fonts/{name}").status_code, 200)
+
     def test_html_is_gzip_compressed_when_client_accepts_it(self):
         plain = self.client.get("/regions/")
         compressed = self.client.get("/regions/", HTTP_ACCEPT_ENCODING="gzip")
@@ -357,6 +383,19 @@ class HerokuAppRedirectTests(TestCase):
     def test_no_redirect_without_canonical_host(self):
         response = self.client.get("/robots.txt", HTTP_HOST="app-123.herokuapp.com", secure=True)
         self.assertEqual(response.status_code, 200)
+
+
+class SecurityTxtTests(TestCase):
+    def test_security_txt_has_contact_and_future_expiry(self):
+        from datetime import datetime
+
+        response = self.client.get("/.well-known/security.txt")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "text/plain")
+        body = response.content.decode()
+        self.assertIn("Contact: mailto:vyshyvankadaily@gmail.com", body)
+        expires = re.search(r"Expires: (\S+)", body).group(1)
+        self.assertGreater(datetime.fromisoformat(expires), timezone.now())
 
 
 class FaviconTests(TestCase):

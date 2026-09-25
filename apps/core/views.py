@@ -1,9 +1,11 @@
 import re
+from datetime import timedelta
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.templatetags.static import static
+from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import check_for_language
 
@@ -83,6 +85,18 @@ def robots_txt(request):
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+def security_txt(request):
+    """RFC 9116: контакт для повідомлень про вразливості."""
+    expires = timezone.now() + timedelta(days=180)
+    lines = [
+        "Contact: mailto:vyshyvankadaily@gmail.com",
+        f"Expires: {expires.strftime('%Y-%m-%dT00:00:00Z')}",
+        "Preferred-Languages: uk, en",
+        f"Canonical: {request.scheme}://{request.get_host()}/.well-known/security.txt",
+    ]
+    return HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
 
 
 def google_site_verification(request):

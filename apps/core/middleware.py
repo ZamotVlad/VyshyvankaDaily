@@ -62,12 +62,16 @@ class ContentSecurityPolicyMiddleware:
             else "script-src 'self'; "
         )
 
-        response["Content-Security-Policy"] = (
-            "default-src 'self'; "
-            + script_src
-            + "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        # Google Fonts лишились тільки в темі адмінки.
+        fonts = (
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
             "font-src 'self' https://fonts.gstatic.com; "
-            "img-src 'self' data:; "
+            if is_admin
+            else "style-src 'self' 'unsafe-inline'; font-src 'self'; "
+        )
+
+        response["Content-Security-Policy"] = (
+            "default-src 'self'; " + script_src + fonts + "img-src 'self' data:; "
             "connect-src 'self'; "
             "object-src 'none'; "
             "base-uri 'self'; "

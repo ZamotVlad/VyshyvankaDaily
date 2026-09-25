@@ -15,9 +15,15 @@
 <meta name="description" content="{% block meta_description %}Щоденний генератор орнаменту української вишиванки з реальними джерелами символіки й традицій усіх 27 регіонів.{% endblock %}">
 <link rel="publisher" href="{% url 'patterns:home' %}">
 <link rel="icon" type="image/svg+xml" href="{% static 'logo/favicon.svg' %}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="{% static 'favicon/apple-touch-icon.png' %}">
+{% if LANGUAGE_CODE == "en" %}
+<link rel="preload" href="{% static 'fonts/unbounded-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{% static 'fonts/ptserif-400-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+{% else %}
+<link rel="preload" href="{% static 'fonts/unbounded-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{% static 'fonts/ptserif-400-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
+{% endif %}
+<link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
 <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'logo/logo.css' %}">
 <link rel="stylesheet" href="{% static 'css/vd.css' %}">
@@ -163,7 +169,7 @@
 </div>
 </footer>
 
-<script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'js/site.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}" defer></script>
+<script src="{% static 'js/site.js' %}" defer></script>
 </body>
 </html>
