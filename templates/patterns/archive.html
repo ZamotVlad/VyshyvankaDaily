@@ -56,11 +56,11 @@
   {% if page_obj.has_other_pages %}
     <nav class="vd-pagination">
       {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&region={{ selected_region_slug }}&date_from={{ date_from }}&date_to={{ date_to }}&sort={{ sort }}">←</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% if filter_query %}&{{ filter_query }}{% endif %}">←</a>
       {% endif %}
       <span class="is-current">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
       {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&region={{ selected_region_slug }}&date_from={{ date_from }}&date_to={{ date_to }}&sort={{ sort }}">→</a>
+        <a href="?page={{ page_obj.next_page_number }}{% if filter_query %}&{{ filter_query }}{% endif %}">→</a>
       {% endif %}
     </nav>
   {% endif %}

@@ -75,11 +75,19 @@ def robots_txt(request):
     навмисно НЕ блокуємо тут - краще дозволити сканування й покластись
     на canonical, інакше робот не побачить сам canonical-тег на
     заблокованій сторінці.
+
+    /pattern/ - виняток: окремі сторінки днів тонкі за вмістом і не
+    потрібні в індексі (рішення власника проєкту, 27.09.2026). Уже
+    мають noindex на самій сторінці (views.py, is_today == False) -
+    той тег лишається активним і прибере з видачі те, що вже
+    проіндексовано раніше. Disallow тут - додатково, щоб зупинити
+    подальше сканування нових днів.
     """
     private = ["/accounts/", "/profile/settings/", "/collection/", "/patterns/debug/"]
     lines = [
         "User-agent: *",
         *(f"Disallow: {prefix}{path}" for path in private for prefix in ("", "/en")),
+        *(f"Disallow: {prefix}/pattern/" for prefix in ("", "/en")),
         "Disallow: /admin/",
         "",
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",

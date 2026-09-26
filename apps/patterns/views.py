@@ -246,6 +246,17 @@ def archive_view(request):
     paginator = Paginator(patterns, ARCHIVE_PAGE_SIZE)
     page_obj = paginator.get_page(request.GET.get("page"))
 
+    filter_params = []
+    if region_slug:
+        filter_params.append(f"region={region_slug}")
+    if request.GET.get("date_from"):
+        filter_params.append(f"date_from={request.GET['date_from']}")
+    if request.GET.get("date_to"):
+        filter_params.append(f"date_to={request.GET['date_to']}")
+    if sort == "region":
+        filter_params.append("sort=region")
+    filter_query = "&".join(filter_params)
+
     context = {
         "page_obj": page_obj,
         "regions": Region.objects.verified().order_by("name"),
@@ -253,6 +264,7 @@ def archive_view(request):
         "date_from": request.GET.get("date_from", ""),
         "date_to": request.GET.get("date_to", ""),
         "sort": sort,
+        "filter_query": filter_query,
     }
     return render(request, "patterns/archive.html", context)
 
