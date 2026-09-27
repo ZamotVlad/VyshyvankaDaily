@@ -97,7 +97,7 @@
         <strong>{{ source.name }}</strong>
         {% if source.author_or_institution %} - {{ source.author_or_institution }}{% endif %}
         {% if source.publication_year %} ({{ source.publication_year }}){% endif %}
-        {% if source.reference %}<br><span class="vd-muted vd-small vd-source-ref">{{ source.reference|source_reference }}</span>{% endif %}
+        {% with ref=source.reference|source_reference %}{% if ref %}<br><span class="vd-muted vd-small vd-source-ref">{{ ref }}</span>{% endif %}{% endwith %}
       </li>
     {% endfor %}
   </ul>

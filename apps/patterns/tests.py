@@ -1063,29 +1063,30 @@ class PatternSvgEndpointTests(TestCase):
         self.assertIn('class="vd-hero__art" role="img" aria-label="Pattern: ', html)
 
 
-class SourceReferenceLabelTests(TestCase):
-    def test_service_label_translated_bibliography_kept(self):
-        from django.utils import translation
-
+class SourceReferenceTextOnlyTests(TestCase):
+    def test_urls_and_labels_removed_bibliography_kept(self):
         from apps.patterns.templatetags.source_tags import source_reference
 
-        ref = "К.: Наукова думка, 1988. Повний текст: archive.org/stream/x"
-        with translation.override("en"):
-            html = source_reference(ref)
-        self.assertIn("К.: Наукова думка, 1988. Full text:", html)
-        link = '<a href="http://archive.org/stream/x" rel="nofollow">archive.org/stream/x</a>'
-        self.assertIn(link, html)
-        with translation.override("uk"):
-            self.assertIn("Повний текст:", source_reference(ref))
-        self.assertIn("&lt;b&gt;", source_reference("<b>"))
+        cases = {
+            "К.: 1988. Повний текст: archive.org/stream/x": "К.: 1988.",
+            "chtyvo.org.ua/authors/Schybria_Volodymyr/. 2017.": "2017.",
+            "К.: Мистецтво, 2008. Національна премія ім. Т.Шевченка, 2012.": (
+                "К.: Мистецтво, 2008. Національна премія ім. Т.Шевченка, 2012."
+            ),
+            "Режим доступу: https://honchar.org.ua/to-learn/x-i198": "",
+            "ich.unesco.org, внесено 16.12.2021.": "внесено 16.12.2021.",
+        }
+        for ref, expected in cases.items():
+            self.assertEqual(source_reference(ref), expected, ref)
 
-    def test_rendered_link_is_not_double_escaped(self):
+    def test_rendered_without_links_and_escaped(self):
         from django.template import Context, Template
 
         out = Template("{% load source_tags %}{{ r|source_reference }}").render(
             Context({"r": "Повний текст: archive.org/x <script>"})
         )
-        self.assertIn('<a href="http://archive.org/x"', out)
+        self.assertNotIn("<a ", out)
+        self.assertNotIn("archive.org", out)
         self.assertIn("&lt;script&gt;", out)
 
 
