@@ -5,3 +5,4 @@ pytest-cov==7.1.0
 factory-boy==3.3.3
 ruff==0.16.9
 pre-commit==4.6.2
+Pillow==12.3.0
