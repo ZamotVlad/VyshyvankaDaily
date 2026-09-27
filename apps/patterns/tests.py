@@ -1058,6 +1058,10 @@ class PatternSvgEndpointTests(TestCase):
         self.assertIn('alt="Орнамент: SVG регіон, 01 вересня 2026"', html)
         self.assertNotIn("<rect/>", html)
 
+    def test_pattern_page_hero_label_follows_language(self):
+        html = self.client.get("/en/pattern/2026-09-01/").content.decode()
+        self.assertIn('class="vd-hero__art" role="img" aria-label="Pattern: ', html)
+
 
 class SourceReferenceLabelTests(TestCase):
     def test_service_label_translated_bibliography_kept(self):

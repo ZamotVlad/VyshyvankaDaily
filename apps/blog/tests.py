@@ -311,3 +311,23 @@ class BlogAdminTests(TestCase):
         )
         admin_instance = BlogCategoryAdmin(BlogCategory, django_admin.site)
         self.assertEqual(admin_instance.post_count(category), 1)
+
+
+class BlogCoverAltTests(TestCase):
+    def test_cover_alt_is_own_field_not_title(self):
+        category = BlogCategory.objects.create(name_uk="Техніки", slug="tech", is_active=True)
+        post = BlogPost.objects.create(
+            category=category,
+            title_uk="Символіка Полтавщини",
+            slug="cover-alt",
+            excerpt_uk="Опис",
+            body="<p>Текст</p>",
+            cover_image_url="https://example.com/sorochka.webp",
+            cover_image_alt_uk="Сорочка з Полтавщини, біла гладь",
+            status="published",
+            published_at=timezone.now(),
+        )
+        for url in ("/blog/", f"/blog/{post.slug}/"):
+            html = self.client.get(url).content.decode()
+            self.assertIn('alt="Сорочка з Полтавщини, біла гладь"', html)
+            self.assertNotIn('alt="Символіка Полтавщини"', html)

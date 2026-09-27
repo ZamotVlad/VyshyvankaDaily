@@ -80,6 +80,11 @@ class BlogPost(TimeStampedModel, SlugModel):
         config_name="default",
     )
     cover_image_url = models.URLField(blank=True)
+    cover_image_alt = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Що зображено на обкладинці. Не повторювати заголовок статті.",
+    )
     category = models.ForeignKey(
         BlogCategory,
         on_delete=models.PROTECT,

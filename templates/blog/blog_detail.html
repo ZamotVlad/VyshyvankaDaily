@@ -25,7 +25,7 @@
 
 <article class="vd-prose">
   {% if post.cover_image_url %}
-    <img src="{{ post.cover_image_url }}" alt="{{ post.title }}" class="mb-4" style="width: 100%; max-height: 420px; object-fit: cover;">
+    <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="mb-4" style="width: 100%; max-height: 420px; object-fit: cover;">
   {% endif %}
 
   {% if is_partner_content %}

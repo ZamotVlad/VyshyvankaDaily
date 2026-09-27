@@ -25,7 +25,7 @@
   </div>
 {% endif %}
 <section class="vd-hero">
-  <div class="vd-hero__art">
+  <div class="vd-hero__art" role="img" aria-label="{% blocktranslate with region=pattern.region.name date=pattern.date|date:'d E Y' %}Орнамент: {{ region }}, {{ date }}{% endblocktranslate %}">
     {{ pattern.svg_content|safe }}
   </div>
 

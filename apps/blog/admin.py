@@ -51,7 +51,14 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
         (
             "Основне",
             {
-                "fields": ("title", "slug", "excerpt", "body"),
+                "fields": (
+                    "title",
+                    "slug",
+                    "excerpt",
+                    "body",
+                    "cover_image_url",
+                    "cover_image_alt",
+                ),
             },
         ),
         (
