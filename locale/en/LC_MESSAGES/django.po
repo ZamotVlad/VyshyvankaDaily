@@ -5186,3 +5186,12 @@ msgstr "Profile updated."
 #~ msgstr ""
 #~ "We may update these terms without prior notice. The current version is "
 #~ "always available on this page."
+
+msgid "Орнамент вишиванки різних регіонів України"
+msgstr "Ukrainian Embroidery Patterns from Every Region"
+
+msgid "Шукаєте орнамент вишиванки своєї області? Дізнавайтесь значення візерунків та їх історію з VyshyvankaDaily! Новий орнамент щодня - зберіть свою колекцію!"
+msgstr "Find your region's vyshyvanka pattern and learn the meaning and history of Ukrainian embroidery ornaments. A new pattern every day - build your collection!"
+
+msgid "Щоденний генератор орнаменту української вишиванки з реальними джерелами символіки й традицій усіх 27 регіонів."
+msgstr "A daily Ukrainian embroidery pattern generator with real sources on the symbolism and traditions of all 27 regions."

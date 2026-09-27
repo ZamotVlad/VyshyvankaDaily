@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
-{% block title %}Орнамент вишиванки різних регіонів України | VyshyvankaDaily{% endblock %}
+{% block title %}{% translate "Орнамент вишиванки різних регіонів України" %} | VyshyvankaDaily{% endblock %}
 
-{% block meta_description %}Шукаєте орнамент вишиванки своєї області? Дізнавайтесь значення візерунків та їх історію з VyshyvankaDaily! Новий орнамент щодня - зберіть свою колекцію!{% endblock %}
+{% block meta_description %}{% translate "Шукаєте орнамент вишиванки своєї області? Дізнавайтесь значення візерунків та їх історію з VyshyvankaDaily! Новий орнамент щодня - зберіть свою колекцію!" %}{% endblock %}
 
 {% block extra_head %}
-<meta name="keywords" content="орнамент вишиванки, вишиванки різних регіонів україни, орнаменти вишиванок по регіонах">
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 {% endblock %}
 

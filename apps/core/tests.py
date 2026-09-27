@@ -648,3 +648,22 @@ class SiteVersionTests(TestCase):
         html = self.client.get("/").content.decode()
         self.assertIn(f"v{settings.SITE_VERSION}", html)
         self.assertNotIn("Beta", html)
+
+
+class LocalizedMetaTests(TestCase):
+    PAGES = ["/", "/regions/", "/blog/", "/archive/", "/faq/", "/about/", "/contacts/"]
+
+    def _meta(self, path):
+        html = self.client.get(path).content.decode()
+        title = re.search(r"<title>(.*?)</title>", html, re.S).group(1)
+        desc = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
+        return title + " " + desc
+
+    def test_english_pages_have_english_title_and_description(self):
+        for path in self.PAGES:
+            meta = self._meta("/en" + path)
+            self.assertIsNone(re.search("[А-Яа-яІіЇїЄєҐґ]", meta), f"/en{path}: {meta}")
+
+    def test_ukrainian_pages_keep_ukrainian_meta(self):
+        for path in self.PAGES:
+            self.assertRegex(self._meta(path), "[А-Яа-яІіЇїЄєҐґ]", path)
