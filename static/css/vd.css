@@ -834,12 +834,24 @@ a.vd-card:hover {
   }
 }
 
-/* Таблиці всередині статей блогу (вивід CKEditor) - захист від
-   переповнення на вузькому екрані, скрол лише в межах таблиці */
+/* Таблиці в текстах: текст переноситься, таблиця вміщується в ширину без скролу */
 .vd-prose table {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
+  display: table;
+  table-layout: auto;
+  max-width: 100%;
+}
+.vd-prose th,
+.vd-prose td {
+  overflow-wrap: break-word;
+  hyphens: auto;
+  vertical-align: top;
+}
+@media (max-width: 576px) {
+  .vd-prose th,
+  .vd-prose td {
+    padding: 6px 8px;
+    font-size: 15px;
+  }
 }
 
 /* ---------- Пошук на блозі - однорядна форма, щоб випадаючий список
