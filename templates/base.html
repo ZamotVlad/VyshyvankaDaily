@@ -51,9 +51,9 @@
 
     <nav class="vd-header__desktop" aria-label="{% translate 'Основна навігація' %}">
       <ul class="vd-nav">
-        <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
-        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'patterns:region_list' %}">{% translate "Регіони" %}</a></li>
+        <li><span class="vd-sep" aria-hidden="true">◇</span></li>
+        <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
         <li><span class="vd-sep" aria-hidden="true">◇</span></li>
         <li><a href="{% url 'pages:about' %}">{% translate "Про нас" %}</a></li>
         <li><span class="vd-sep" aria-hidden="true">◇</span></li>
@@ -96,9 +96,9 @@
   <div class="vd-mobile-panel" id="vdMobileNav" hidden>
     <div class="container">
       <ul class="vd-nav">
+        <li><a href="{% url 'patterns:region_list' %}">{% translate "Регіони" %}</a></li>
         <li><a href="{% url 'patterns:archive' %}">{% translate "Архів" %}</a></li>
         <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
-        <li><a href="{% url 'patterns:region_list' %}">{% translate "Регіони" %}</a></li>
         <li><a href="{% url 'pages:about' %}">{% translate "Про нас" %}</a></li>
         <li><a href="{% url 'pages:contact' %}">{% translate "Контакти" %}</a></li>
       </ul>
@@ -135,11 +135,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3 mb-4">
-      <h2>VyshyvankaDaily</h2>
+      <p class="vd-footer__title">VyshyvankaDaily</p>
       <p class="mb-0">{% translate "Щодня - новий орнамент твоєї землі." %}</p>
     </div>
     <div class="col-md-3 mb-4">
-      <h2>{% translate "Регіони" %}</h2>
+      <p class="vd-footer__title">{% translate "Регіони" %}</p>
       <ul>
         <li><a href="{% url 'patterns:region_detail' 'lvivska-oblast' %}">{% translate "Львівська область" %}</a></li>
         <li><a href="{% url 'patterns:region_detail' 'poltavska-oblast' %}">{% translate "Полтавська область" %}</a></li>
@@ -148,14 +148,14 @@
       </ul>
     </div>
     <div class="col-md-3 mb-4">
-      <h2>{% translate "Компанія" %}</h2>
+      <p class="vd-footer__title">{% translate "Компанія" %}</p>
       <ul>
         <li><a href="{% url 'pages:faq' %}">FAQ</a></li>
         <li><a href="{% url 'blog:propose' %}">{% translate "Запропонувати матеріал" %}</a></li>
       </ul>
     </div>
     <div class="col-md-3 mb-4">
-      <h2>{% translate "Правове" %}</h2>
+      <p class="vd-footer__title">{% translate "Правове" %}</p>
       <ul>
         <li><a href="{% url 'pages:terms' %}">{% translate "Умови використання" %}</a></li>
         <li><a href="{% url 'pages:privacy' %}">{% translate "Політика конфіденційності" %}</a></li>

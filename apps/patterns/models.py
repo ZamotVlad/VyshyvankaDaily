@@ -216,6 +216,12 @@ class Region(TimeStampedModel, SlugModel):
         ]
 
     @property
+    def short_name(self):
+        from .region_groups import short_name
+
+        return short_name(self)
+
+    @property
     def shown_colors(self):
         hidden = set(self.generator_only_colors or [])
         return [c for c in self.dominant_colors or [] if c not in hidden]

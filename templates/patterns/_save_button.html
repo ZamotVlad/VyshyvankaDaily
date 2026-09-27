@@ -6,11 +6,11 @@
     {% if is_saved %}
       <button type="submit" class="vd-btn vd-btn--danger">{% translate "Прибрати з колекції" %}</button>
     {% else %}
-      <button type="submit" class="vd-btn vd-btn--primary">{% translate "Зберегти в колекцію" %}</button>
+      <button type="submit" class="vd-btn {{ save_class|default:'vd-btn--primary' }}">{% translate "Зберегти в колекцію" %}</button>
     {% endif %}
   </form>
 {% else %}
-  <a href="{% url 'account_login' %}?next={{ request.path }}" class="vd-btn vd-btn--primary">
-    {% translate "Увійти, щоб зберегти" %}
+  <a href="{% url 'account_login' %}?next={{ request.path }}" class="vd-btn {{ save_class|default:'vd-btn--primary' }}">
+    {% if save_class %}{% translate "Зберегти орнамент" %}{% else %}{% translate "Увійти, щоб зберегти" %}{% endif %}
   </a>
 {% endif %}

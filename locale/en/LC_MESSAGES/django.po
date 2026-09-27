@@ -5226,3 +5226,126 @@ msgstr "Frequently asked questions about VyshyvankaDaily: how the pattern of the
 
 msgid "Також трапляються"
 msgstr "Also found"
+
+msgid "Щодня - нова вишиванка з одного з 27 регіонів України, з описом символіки за музейними й науковими джерелами."
+msgstr "Every day, a new vyshyvanka from one of Ukraine's 27 regions, with its symbolism described from museum and academic sources."
+
+msgid "Щодня сайт обирає новий регіон"
+msgstr "Every day the site picks a new region"
+
+msgid "Показує орнамент його вишиванки на сорочці"
+msgstr "It shows that region's embroidery pattern on a shirt"
+
+msgid "Читайте історію регіону: символіку, кольори й джерела"
+msgstr "Read the region's story: symbolism, colours and sources"
+
+msgid "Підтверджено джерелами"
+msgstr "Backed by sources"
+
+msgid "Опис спирається на музейні колекції та наукові праці."
+msgstr "The description is based on museum collections and academic works."
+
+msgid "Частина опису спирається на усну традицію регіону."
+msgstr "Part of the description relies on the region's oral tradition."
+
+msgid "Читати про регіон"
+msgstr "Read about the region"
+
+msgid "Зберегти орнамент"
+msgstr "Save the pattern"
+
+msgid "Реєстрація не обов'язкова: усі орнаменти, архів і сторінки регіонів відкриті для всіх. Акаунт потрібен лише, щоб за бажанням зберігати улюблені орнаменти у власну колекцію."
+msgstr "No sign-up needed: every pattern, the archive and all region pages are open to everyone. An account is only for saving your favourite patterns to your own collection, if you wish."
+
+msgid "Вишиванки регіонів України"
+msgstr "Vyshyvanka of Ukraine's Regions"
+
+msgid "Оберіть область, щоб прочитати про її орнамент, кольори й символіку."
+msgstr "Choose a region to read about its patterns, colours and symbolism."
+
+msgid "Заходьте щодня й збирайте власну колекцію орнаментів"
+msgstr "Come back every day and build your own pattern collection"
+
+msgid "Створити акаунт"
+msgstr "Create an account"
+
+msgid "Захід"
+msgstr "West"
+
+msgid "Центр"
+msgstr "Centre"
+
+msgid "Північ"
+msgstr "North"
+
+msgid "Схід"
+msgstr "East"
+
+msgid "Південь"
+msgstr "South"
+
+msgid "Вишиванка: %(name)s"
+msgstr "Vyshyvanka: %(name)s"
+
+msgid "Про VyshyvankaDaily: щоденний орнамент вишиванки з 27 регіонів України, місія проєкту, принципи роботи з джерелами і хто його веде."
+msgstr "About VyshyvankaDaily: a daily vyshyvanka pattern from Ukraine's 27 regions, the project's mission, how we work with sources and who runs it."
+
+msgid "Контакти VyshyvankaDaily: напишіть про неточність в описі регіону, співпрацю з музеєм чи майстринею, технічну помилку або питання щодо даних."
+msgstr "Contact VyshyvankaDaily: tell us about an error in a region description, a museum or craftswoman collaboration, a technical issue or a data question."
+
+msgid "Запропонуйте статтю про вишивку свого краю для блогу VyshyvankaDaily: історії сорочок і майстринь, музейні колекції, локальні техніки."
+msgstr "Propose an article about the embroidery of your region for the VyshyvankaDaily blog: stories of shirts and craftswomen, museum collections, local techniques."
+
+msgid "Першими будуть матеріали, для яких джерела вже зібрані: історія брокарівської вишивки, музейні сорочки та кримськотатарський орнамент орьнек."
+msgstr "The first articles will cover topics whose sources are already collected: the history of Brocard embroidery, museum shirts and the Crimean Tatar örnek ornament."
+
+msgid "А поки про вишивку кожної області можна прочитати на сторінках регіонів: там описані орнаменти, кольори й техніки з переліком музейних і наукових джерел."
+msgstr "In the meantime, you can read about the embroidery of every region on the region pages: they describe patterns, colours and techniques with a list of museum and academic sources."
+
+msgid "Вишиванки по регіонах"
+msgstr "Vyshyvanka by region"
+
+msgid "Маєте тему, історію сорочки чи майстрині свого краю?"
+msgstr "Have a topic, or the story of a shirt or craftswoman from your region?"
+
+msgid "В архіві зібрано орнаменти вишиванки за кожен день від запуску VyshyvankaDaily. Кожен день прив'язаний до одного з 27 регіонів України, а та сама дата завжди показує той самий орнамент, тож до будь-якого дня можна повернутися."
+msgstr "The archive holds the vyshyvanka pattern for every day since VyshyvankaDaily launched. Each day is tied to one of Ukraine's 27 regions, and the same date always shows the same pattern, so you can return to any day."
+
+msgid "Фільтр допоможе знайти всі дні конкретної області. Про саму традицію - символіку, кольори й джерела - читайте на сторінці регіону."
+msgstr "The filter helps you find all the days of a particular region. For the tradition itself - symbolism, colours and sources - read the region page."
+
+msgid "Співпраця"
+msgstr "Collaboration"
+
+msgid "Ми відкриті до співпраці з музеями, дослідниками, майстринями й етнобрендами: фото автентичних сорочок з дозволом на публікацію, консультації щодо символіки, спільні матеріали для блогу."
+msgstr "We are open to working with museums, researchers, craftswomen and ethno brands: photos of authentic shirts with permission to publish, advice on symbolism, joint articles for the blog."
+
+msgid "Якщо ви працюєте з музейною колекцією чи науковою працею про вишивку свого регіону, напишіть нам. Нові факти ми додаємо лише з перевірених джерел і вказуємо їх на сторінці регіону."
+msgstr "If you work with a museum collection or an academic study of your region's embroidery, write to us. We add new facts only from verified sources and list them on the region page."
+
+msgid "Які матеріали ми шукаємо"
+msgstr "What we are looking for"
+
+msgid "Історії конкретних сорочок, рушників чи майстринь вашого краю."
+msgstr "Stories of particular shirts, rushnyky or craftswomen from your region."
+
+msgid "Огляди музейних колекцій і виставок вишивки."
+msgstr "Reviews of museum collections and embroidery exhibitions."
+
+msgid "Пояснення технік і локальних назв візерунків."
+msgstr "Explanations of techniques and local names of patterns."
+
+msgid "Вимоги до матеріалу"
+msgstr "Requirements"
+
+msgid "Оригінальний текст, раніше не опублікований."
+msgstr "An original text that has not been published before."
+
+msgid "Факти з джерелами: музей, архів, наукова праця або записаний спогад з іменем і згодою людини."
+msgstr "Facts with sources: a museum, an archive, an academic work or a recorded memory with the person's name and consent."
+
+msgid "Фото - лише власні або з дозволом автора."
+msgstr "Photos: only your own or with the author's permission."
+
+msgid "%(name)s - автор описів регіонів на VyshyvankaDaily. Тексти про вишиванки регіонів України спираються на музейні колекції, наукові праці та інтерв'ю з етнографами, а перелік джерел є на сторінці кожного регіону."
+msgstr "%(name)s is the author of the region descriptions on VyshyvankaDaily. The texts about the vyshyvanka of Ukraine's regions are based on museum collections, academic works and interviews with ethnographers, and each region page lists its sources."

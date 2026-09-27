@@ -1,4 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Вкладки регіонів: без JS видно всі групи, з JS - по одній
+  document.querySelectorAll("[data-tabs]").forEach(function (root) {
+    var list = root.querySelector("[role=tablist]");
+    var tabs = root.querySelectorAll("[role=tab]");
+    var panels = root.querySelectorAll("[role=tabpanel]");
+    if (!list || !tabs.length) return;
+    var select = function (index, focus) {
+      tabs.forEach(function (tab, i) {
+        var on = i === index;
+        tab.setAttribute("aria-selected", on);
+        tab.tabIndex = on ? 0 : -1;
+        panels[i].hidden = !on;
+      });
+      if (focus) tabs[index].focus();
+    };
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () {
+        select(i, false);
+      });
+      tab.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight") select((i + 1) % tabs.length, true);
+        if (e.key === "ArrowLeft") select((i - 1 + tabs.length) % tabs.length, true);
+      });
+    });
+    list.hidden = false;
+    root.classList.add("is-ready");
+    select(0, false);
+  });
+
   // Мобільне меню на весь екран
   var burger = document.querySelector(".vd-burger");
   var panel = document.getElementById("vdMobileNav");

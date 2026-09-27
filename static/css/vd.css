@@ -198,10 +198,8 @@ a:hover {
   align-items: center;
   gap: 6px;
 }
-.vd-lang__form {
-  display: inline;
-}
 .vd-lang__btn {
+  text-decoration: none;
   background: none;
   border: none;
   color: var(--vd-muted);
@@ -359,6 +357,148 @@ a.vd-card:hover {
   margin-bottom: 22px;
 }
 
+/* Вступ на головній: H1 з ключем, пояснення і три кроки */
+.vd-intro {
+  padding: 32px 0 4px;
+}
+.vd-intro__title {
+  font-size: clamp(26px, 3.6vw, 42px);
+  line-height: 1.15;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+.vd-intro__lede {
+  font-size: clamp(17px, 1.8vw, 21px);
+  color: var(--vd-cream);
+  max-width: 760px;
+  margin: 0 0 18px;
+}
+.vd-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.vd-steps li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  padding: 12px 16px;
+}
+.vd-steps__num {
+  font-family: var(--vd-font-display);
+  color: var(--vd-red-text);
+  font-size: 18px;
+}
+.vd-intro + .vd-hero {
+  padding-top: 32px;
+}
+.vd-claim__hint {
+  font-size: 14px;
+  color: var(--vd-muted);
+  margin: -8px 0 14px;
+}
+.vd-hero__note {
+  font-size: 14px;
+  color: var(--vd-muted);
+  margin: 14px 0 0;
+  max-width: 520px;
+}
+
+/* Регіони на головній і в переліку: вкладки за частинами України */
+.vd-region-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0;
+}
+.vd-region-tabs__list[hidden] {
+  display: none;
+}
+.vd-region-tabs__tab {
+  background: none;
+  border: 1px solid var(--vd-border);
+  border-radius: 100px;
+  color: var(--vd-muted);
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.vd-region-tabs__tab:hover {
+  color: var(--vd-cream);
+}
+.vd-region-tabs__tab[aria-selected="true"] {
+  background: var(--vd-surface);
+  border-color: var(--vd-red);
+  color: var(--vd-cream);
+}
+.vd-region-tabs__heading {
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  margin: 20px 0 10px;
+}
+.vd-region-tabs.is-ready .vd-region-tabs__heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.vd-region-chips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+}
+@media (max-width: 576px) {
+  .vd-region-chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.vd-region-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  padding: 14px 16px;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  color: var(--vd-cream);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.vd-region-chip:hover {
+  border-color: var(--vd-red);
+  color: var(--vd-cream);
+}
+.vd-region-chip__swatches {
+  display: inline-flex;
+  flex: none;
+}
+.vd-region-chip__swatches span {
+  width: 8px;
+  height: 22px;
+  border: 1px solid var(--vd-border);
+}
+.vd-status-bar--soft {
+  margin-top: 36px;
+}
+
 /* Значок достовірності */
 .vd-claim {
   display: inline-flex;
@@ -387,7 +527,7 @@ a.vd-card:hover {
   padding-bottom: 8px;
 }
 .vd-ribbon__item {
-  flex: 0 0 96px;
+  flex: 0 0 104px;
   background: var(--vd-surface);
   border: 1px solid var(--vd-border);
   border-radius: var(--vd-radius);
@@ -408,6 +548,13 @@ a.vd-card:hover {
   color: var(--vd-muted);
   margin-top: 6px;
   display: block;
+}
+.vd-ribbon__region {
+  display: block;
+  font-size: 11px;
+  line-height: 1.25;
+  color: var(--vd-cream);
+  overflow-wrap: anywhere;
 }
 
 /* ---------- Форми ---------- */
@@ -545,7 +692,7 @@ a.vd-card:hover {
   color: var(--vd-muted);
   font-size: 15px;
 }
-.vd-footer h2 {
+.vd-footer__title {
   font-family: var(--vd-font-display);
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -1259,6 +1406,11 @@ form[id^="email_list"] button:hover {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 16px;
+}
+.vd-author-page__about {
+  max-width: 720px;
+  margin: 28px auto 0;
+  text-align: center;
 }
 .vd-author-page__bio {
   color: var(--vd-muted);

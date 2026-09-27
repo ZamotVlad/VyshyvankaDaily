@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class="vd-region-tabs" data-tabs>
+  <div class="vd-region-tabs__list" role="tablist" hidden>
+    {% for group in region_groups %}
+      <button type="button" role="tab" class="vd-region-tabs__tab" id="rtab-{{ group.key }}" aria-controls="rpanel-{{ group.key }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% if not forloop.first %} tabindex="-1"{% endif %}>{{ group.label }}</button>
+    {% endfor %}
+  </div>
+  {% for group in region_groups %}
+    <div class="vd-region-tabs__panel" role="tabpanel" id="rpanel-{{ group.key }}" aria-labelledby="rtab-{{ group.key }}">
+      <h3 class="vd-region-tabs__heading">{{ group.label }}</h3>
+      <ul class="vd-region-chips">
+        {% for region in group.regions %}
+          <li><a href="{% url 'patterns:region_detail' region.slug %}" class="vd-region-chip">
+            <span class="vd-region-chip__swatches" aria-hidden="true">{% for color in region.shown_colors|slice:":3" %}<span style="background-color: {{ color }};"></span>{% endfor %}</span>
+            <span>{{ region.short_name }}</span>
+          </a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</div>

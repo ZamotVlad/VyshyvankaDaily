@@ -17,6 +17,7 @@ from django.views.decorators.http import require_POST
 
 from apps.blog.models import Author
 from apps.patterns.models import DailyPattern, Region, SavedPattern
+from apps.patterns.region_groups import grouped_regions
 from apps.patterns.services.generation import (
     CURRENT_ALGORITHM_VERSION,
     NoFallbackAvailable,
@@ -85,6 +86,7 @@ def home_view(request):
         "ribbon": ribbon,
         "is_saved": _is_saved_by(request.user, pattern),
         "faq_highlights": faq_highlights,
+        "region_groups": grouped_regions(Region.objects.verified().order_by("rotation_order")),
     }
 
     if request.user.is_authenticated:
@@ -322,8 +324,12 @@ def region_list_view(request):
     для навігації, оскільки контент 27 регіонів готовий, а прямого
     способу переглянути їх усі не було).
     """
-    regions = Region.objects.verified().order_by("name")
-    return render(request, "patterns/region_list.html", {"regions": regions})
+    regions = list(Region.objects.verified().order_by("name"))
+    return render(
+        request,
+        "patterns/region_list.html",
+        {"regions": regions, "region_groups": grouped_regions(regions)},
+    )
 
 
 def debug_all_regions_view(request):

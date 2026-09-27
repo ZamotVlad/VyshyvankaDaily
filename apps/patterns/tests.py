@@ -590,7 +590,9 @@ class HomepageStatusBarTests(TestCase):
 
     def test_anonymous_sees_signup_call_not_streak_numbers(self):
         response = self.client.get("/")
-        self.assertContains(response, "Почни свій стрік")
+        self.assertContains(response, "Створити акаунт")
+        self.assertContains(response, "Реєстрація не обов'язкова")
+        self.assertNotContains(response, "днів поспіль")
 
     def test_authenticated_sees_streak_and_tour(self):
         self.client.force_login(self.user)
@@ -1135,3 +1137,70 @@ class GeneratorOnlyColorsTests(TestCase):
             self.skipTest("немає seed-регіонів")
         self.assertNotIn("#5B2C83", region.shown_colors)
         self.assertIn("#5B2C83", region.dominant_colors)
+
+
+class HomepageStructureTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон Г", rotation_order=52)
+
+    def test_single_keyword_h1_and_region_of_day_in_h2(self):
+        import re
+
+        html = self.client.get("/").content.decode()
+        h1 = re.findall(r"<h1[^>]*>(.*?)</h1>", html, re.S)
+        self.assertEqual(len(h1), 1)
+        self.assertIn("Орнамент вишиванки різних регіонів України", h1[0])
+        region_h2 = re.findall(r'<h2 class="vd-hero__region">(.*?)</h2>', html, re.S)
+        self.assertEqual(len(region_h2), 1)
+        self.assertTrue(region_h2[0].strip())
+
+    def test_english_home_has_english_h1(self):
+        html = self.client.get("/en/").content.decode()
+        self.assertIn(
+            '<h1 class="vd-intro__title">Ukrainian Embroidery Patterns from Every Region</h1>', html
+        )
+
+    def test_region_groups_link_every_region(self):
+        html = self.client.get("/").content.decode()
+        self.assertIn('role="tablist"', html)
+        self.assertIn(f'href="/regions/{self.region.slug}/"', html)
+
+    def test_footer_labels_are_not_headings(self):
+        html = self.client.get("/").content.decode()
+        footer = html[html.index("<footer") :]
+        self.assertNotIn("<h2", footer)
+
+
+class LanguageSwitcherLinkTests(TestCase):
+    def test_switcher_is_plain_links_crawlers_can_follow(self):
+        region = make_region("Мовний регіон", 53)
+        html = self.client.get(f"/regions/{region.slug}/").content.decode()
+        self.assertIn(f'href="/en/regions/{region.slug}/" hreflang="en"', html)
+        self.assertNotIn('action="/i18n/setlang/"', html)
+        html_en = self.client.get(f"/en/regions/{region.slug}/").content.decode()
+        self.assertIn(f'href="/regions/{region.slug}/" hreflang="uk"', html_en)
+
+
+class RegionGroupsTests(TestCase):
+    def test_short_name_follows_language(self):
+        from django.utils import translation
+
+        region = Region(slug="poltavska-oblast", name="Полтавська область")
+        with translation.override("uk"):
+            self.assertEqual(region.short_name, "Полтавщина")
+        with translation.override("en"):
+            self.assertEqual(region.short_name, "Poltava")
+
+    def test_unknown_slug_kept_in_groups(self):
+        from apps.patterns.region_groups import grouped_regions
+
+        known = Region(slug="lvivska-oblast", name="Львівська область")
+        extra = Region(slug="new-region", name="Новий регіон")
+        groups = grouped_regions([known, extra])
+        slugs = [r.slug for g in groups for r in g["regions"]]
+        self.assertEqual(sorted(slugs), ["lvivska-oblast", "new-region"])
+
+    def test_region_list_has_group_h2(self):
+        make_region("Регіон Д", 54)
+        html = self.client.get("/regions/").content.decode()
+        self.assertIn('<h2 class="vd-section-title">', html)

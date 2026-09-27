@@ -18,35 +18,45 @@
     <a href="{% url 'patterns:my_collection' %}" class="ms-auto">{% translate "Моя колекція" %} →</a>
   </div>
 {% endif %}
-{% if not user.is_authenticated %}
-  <div class="vd-status-bar">
-    <span><span aria-hidden="true">🔥</span> {% translate "Почни свій стрік - заходь щодня й зберігай улюблені орнаменти" %}</span>
-    <a href="{% url 'account_signup' %}" class="vd-btn vd-btn--primary ms-auto" aria-label="{% translate 'Почати реєстрацію зараз' %}">{% translate "Реєстрація" %}</a>
-  </div>
-{% endif %}
+
+<section class="vd-intro">
+  <h1 class="vd-intro__title">{% translate "Орнамент вишиванки різних регіонів України" %}</h1>
+  <p class="vd-intro__lede">{% translate "Щодня - нова вишиванка з одного з 27 регіонів України, з описом символіки за музейними й науковими джерелами." %}</p>
+  <ol class="vd-steps">
+    <li><span class="vd-steps__num" aria-hidden="true">1</span><span>{% translate "Щодня сайт обирає новий регіон" %}</span></li>
+    <li><span class="vd-steps__num" aria-hidden="true">2</span><span>{% translate "Показує орнамент його вишиванки на сорочці" %}</span></li>
+    <li><span class="vd-steps__num" aria-hidden="true">3</span><span>{% translate "Читайте історію регіону: символіку, кольори й джерела" %}</span></li>
+  </ol>
+</section>
+
 <section class="vd-hero">
   <div class="vd-hero__art" role="img" aria-label="{% blocktranslate with region=pattern.region.name date=pattern.date|date:'d E Y' %}Орнамент: {{ region }}, {{ date }}{% endblocktranslate %}">
     {{ pattern.svg_content|safe }}
   </div>
 
   <div>
-    <div class="vd-hero__date">{{ pattern.date|date:"d E Y" }}</div>
-    <h1 class="vd-hero__region">{{ pattern.region.name }}</h1>
+    <div class="vd-hero__date">{% translate "Орнамент дня" %} · {{ pattern.date|date:"d E Y" }}</div>
+    <h2 class="vd-hero__region">{{ pattern.region.name|capfirst }}</h2>
 
     {% if claim_type == "documented" %}
-      <span class="vd-claim vd-claim--documented">◇ {% translate "Задокументовано" %}</span>
+      <span class="vd-claim vd-claim--documented">◇ {% translate "Підтверджено джерелами" %}</span>
+      <p class="vd-claim__hint">{% translate "Опис спирається на музейні колекції та наукові праці." %}</p>
     {% else %}
       <span class="vd-claim">◇ {% translate "За традицією" %}</span>
+      <p class="vd-claim__hint">{% translate "Частина опису спирається на усну традицію регіону." %}</p>
     {% endif %}
 
     <div class="vd-hero__desc">{{ pattern.region.symbolism_description|truncatewords_html:45|safe }}</div>
 
     <div class="d-flex flex-wrap gap-2">
-      {% include "patterns/_save_button.html" %}
-      <a href="{% url 'patterns:region_detail' pattern.region.slug %}" class="vd-btn vd-btn--ghost">
-        {% translate "Про регіон" %}
+      <a href="{% url 'patterns:region_detail' pattern.region.slug %}" class="vd-btn vd-btn--primary">
+        {% translate "Читати про регіон" %} →
       </a>
+      {% include "patterns/_save_button.html" with save_class="vd-btn--ghost" %}
     </div>
+    {% if not user.is_authenticated %}
+      <p class="vd-hero__note">{% translate "Реєстрація не обов'язкова: усі орнаменти, архів і сторінки регіонів відкриті для всіх. Акаунт потрібен лише, щоб за бажанням зберігати улюблені орнаменти у власну колекцію." %}</p>
+    {% endif %}
   </div>
 </section>
 
@@ -56,9 +66,25 @@
     <a href="{% url 'patterns:pattern_detail' item.date|date:'Y-m-d' %}" class="vd-ribbon__item">
       {% include "includes/pattern_img.html" with pattern=item %}
       <span class="vd-ribbon__date">{{ item.date|date:"d.m" }}</span>
+      <span class="vd-ribbon__region">{{ item.region.short_name }}</span>
     </a>
   {% endfor %}
 </div>
+
+{% if region_groups %}
+<section class="vd-regions-home" aria-labelledby="regions-home-title">
+  <h2 class="vd-section-title" id="regions-home-title">{% translate "Вишиванки регіонів України" %}</h2>
+  <p class="vd-muted">{% translate "Оберіть область, щоб прочитати про її орнамент, кольори й символіку." %}</p>
+  {% include "includes/region_groups.html" %}
+</section>
+{% endif %}
+
+{% if not user.is_authenticated %}
+<div class="vd-status-bar vd-status-bar--soft">
+  <span>{% translate "Заходьте щодня й збирайте власну колекцію орнаментів" %}</span>
+  <a href="{% url 'account_signup' %}" class="vd-btn vd-btn--ghost ms-auto">{% translate "Створити акаунт" %}</a>
+</div>
+{% endif %}
 
 <section class="vd-landing" id="about-project">
   <button type="button" class="vd-landing__toggle" aria-expanded="false" aria-controls="landing-body">
