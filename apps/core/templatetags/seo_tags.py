@@ -1,6 +1,7 @@
 import json
 
 from django import template
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -103,8 +104,13 @@ def jsonld_article(context, post):
     if image:
         data["image"] = image
 
-    author = getattr(post, "guest_author_name", None)
+    blog_author = getattr(post, "blog_author", None)
+    author = getattr(post, "guest_author_name", None) or (blog_author.name if blog_author else None)
     data["author"] = {"@type": "Person" if author else "Organization", "name": author or SITE_NAME}
+    if blog_author and not getattr(post, "guest_author_name", None):
+        data["author"]["url"] = request.build_absolute_uri(
+            reverse("blog:author_detail", args=[blog_author.slug])
+        )
 
     return _script(data)
 

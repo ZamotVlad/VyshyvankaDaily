@@ -58,6 +58,10 @@ class BlogPostSitemap(Sitemap):
     def items(self):
         return BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED).order_by("-published_at")
 
+    def get_languages_for_item(self, item):
+        # Без англійського тексту EN-версія статті не індексується
+        return [code for code in self._languages() if code != "en" or item.has_english]
+
     def location(self, obj):
         return reverse("blog:detail", args=[obj.slug])
 

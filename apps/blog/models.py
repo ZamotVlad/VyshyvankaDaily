@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -79,6 +80,12 @@ class BlogPost(TimeStampedModel, SlugModel):
         help_text="HTML-вміст, санітизується при збереженні.",
         config_name="default",
     )
+    body_en = CKEditor5Field(
+        blank=True,
+        default="",
+        help_text="Англійський текст статті. Порожній - EN-версія не індексується.",
+        config_name="default",
+    )
     cover_image_url = models.URLField(blank=True)
     cover_image_alt = models.CharField(
         max_length=255,
@@ -145,13 +152,28 @@ class BlogPost(TimeStampedModel, SlugModel):
     def save(self, *args, **kwargs):
         import bleach
 
-        self.body = bleach.clean(
-            self.body,
-            tags=settings.ALLOWED_BLOG_HTML_TAGS,
-            attributes=settings.ALLOWED_BLOG_HTML_ATTRIBUTES,
-            strip=True,
-        )
+        for field in ("body", "body_en"):
+            setattr(
+                self,
+                field,
+                bleach.clean(
+                    getattr(self, field) or "",
+                    tags=settings.ALLOWED_BLOG_HTML_TAGS,
+                    attributes=settings.ALLOWED_BLOG_HTML_ATTRIBUTES,
+                    strip=True,
+                ),
+            )
         super().save(*args, **kwargs)
+
+    @property
+    def has_english(self):
+        return bool((self.body_en or "").strip())
+
+    @property
+    def localized_body(self):
+        if (get_language() or "").startswith("en") and self.has_english:
+            return self.body_en
+        return self.body
 
     @property
     def breadcrumbs(self):

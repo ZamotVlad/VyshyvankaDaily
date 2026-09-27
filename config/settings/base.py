@@ -334,7 +334,14 @@ ALLOWED_BLOG_HTML_TAGS = [
     "td",
     "code",
     "pre",
+    "figure",
+    "figcaption",
+    "img",
+    "aside",
 ]
 ALLOWED_BLOG_HTML_ATTRIBUTES = {
     "a": ["href", "title"],
+    "img": ["src", "alt", "width", "height", "loading", "decoding"],
+    "figure": ["class"],
+    "aside": ["class"],
 }

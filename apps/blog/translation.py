@@ -10,10 +10,8 @@ class BlogCategoryTranslationOptions(TranslationOptions):
 
 @register(BlogPost)
 class BlogPostTranslationOptions(TranslationOptions):
-    # "body" НЕ перекладне — CKEditor5Field не підтримується
-    # django-modeltranslation (відоме, задокументоване обмеження бібліотеки,
-    # issue #576 у репозиторії modeltranslation). Тіло статті спільне для
-    # обох мов; перекладними лишаються тільки текстові поля.
+    # body не реєструється: CKEditor5Field не підтримується modeltranslation
+    # (issue #576). Англійський текст - окреме поле BlogPost.body_en.
     fields = (
         "title",
         "excerpt",

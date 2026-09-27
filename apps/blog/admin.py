@@ -56,6 +56,7 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
                     "slug",
                     "excerpt",
                     "body",
+                    "body_en",
                     "cover_image_url",
                     "cover_image_alt",
                 ),

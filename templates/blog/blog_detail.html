@@ -4,6 +4,8 @@
 
 {% block title %}{{ post.seo_title|default:post.title }} - VyshyvankaDaily{% endblock %}
 
+{% block robots %}{% get_current_language as LANG %}{% if LANG == "en" and not post.has_english %}noindex, follow{% else %}index, follow{% endif %}{% endblock %}
+
 {% block meta_description %}{{ post.seo_description|default:post.excerpt|truncatewords:25 }}{% endblock %}
 
 {% block extra_head %}
@@ -17,15 +19,10 @@
 
 {% block content %}
 {% include "includes/breadcrumbs.html" with breadcrumbs=post.breadcrumbs %}
-<nav class="vd-small vd-muted mb-3">
-  <a href="{% url 'blog:list' %}">{% translate "Блог" %}</a>
-  <span class="vd-sep mx-2">◇</span>
-  {{ post.category.name }}
-</nav>
 
 <article class="vd-prose">
   {% if post.cover_image_url %}
-    <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="mb-4" style="width: 100%; max-height: 420px; object-fit: cover;">
+    <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="vd-article-cover" width="1100" height="825" fetchpriority="high">
   {% endif %}
 
   {% if is_partner_content %}
@@ -53,7 +50,7 @@
     </a>
   {% endif %}
 
-  {{ post.body|safe }}
+  {{ post.localized_body|safe }}
 
   {% if post.sources.exists %}
     <h2>{% translate "Джерела" %}</h2>
