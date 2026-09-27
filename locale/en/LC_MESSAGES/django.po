@@ -5296,11 +5296,8 @@ msgstr "Contact VyshyvankaDaily: tell us about an error in a region description,
 msgid "Запропонуйте статтю про вишивку свого краю для блогу VyshyvankaDaily: історії сорочок і майстринь, музейні колекції, локальні техніки."
 msgstr "Propose an article about the embroidery of your region for the VyshyvankaDaily blog: stories of shirts and craftswomen, museum collections, local techniques."
 
-msgid "Першими будуть матеріали, для яких джерела вже зібрані: історія брокарівської вишивки, музейні сорочки та кримськотатарський орнамент орьнек."
-msgstr "The first articles will cover topics whose sources are already collected: the history of Brocard embroidery, museum shirts and the Crimean Tatar örnek ornament."
-
-msgid "А поки про вишивку кожної області можна прочитати на сторінках регіонів: там описані орнаменти, кольори й техніки з переліком музейних і наукових джерел."
-msgstr "In the meantime, you can read about the embroidery of every region on the region pages: they describe patterns, colours and techniques with a list of museum and academic sources."
+msgid "Про вишивку кожної області можна прочитати на сторінках регіонів: там описані орнаменти, кольори й техніки з переліком музейних і наукових джерел."
+msgstr "You can read about the embroidery of every region on the region pages: they describe patterns, colours and techniques with a list of museum and academic sources."
 
 msgid "Вишиванки по регіонах"
 msgstr "Vyshyvanka by region"
