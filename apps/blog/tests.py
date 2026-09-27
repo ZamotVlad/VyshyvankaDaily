@@ -331,3 +331,102 @@ class BlogCoverAltTests(TestCase):
             html = self.client.get(url).content.decode()
             self.assertIn('alt="Сорочка з Полтавщини, біла гладь"', html)
             self.assertNotIn('alt="Символіка Полтавщини"', html)
+
+
+class BlogEnglishBodyTests(TestCase):
+    def setUp(self):
+        self.category = BlogCategory.objects.create(name_uk="Стиль", slug="style", is_active=True)
+
+    def _post(self, slug, body_en=""):
+        return BlogPost.objects.create(
+            category=self.category,
+            title_uk="Стаття",
+            title_en="Article",
+            slug=slug,
+            excerpt_uk="Опис",
+            body="<p>Український текст</p>",
+            body_en=body_en,
+            status="published",
+            published_at=timezone.now(),
+        )
+
+    def test_en_page_shows_english_body_and_is_indexable(self):
+        post = self._post("with-en", "<p>English text</p>")
+        html = self.client.get(f"/en/blog/{post.slug}/").content.decode()
+        self.assertIn("English text", html)
+        self.assertNotIn("Український текст", html)
+        self.assertIn('content="index, follow"', html)
+
+    def test_en_page_without_english_is_noindex(self):
+        post = self._post("no-en")
+        html = self.client.get(f"/en/blog/{post.slug}/").content.decode()
+        self.assertIn('content="noindex, follow"', html)
+        uk_html = self.client.get(f"/blog/{post.slug}/").content.decode()
+        self.assertIn('content="index, follow"', uk_html)
+
+    def test_sitemap_lists_en_only_with_english(self):
+        self._post("with-en", "<p>English</p>")
+        self._post("no-en")
+        body = self.client.get("/sitemap.xml").content.decode()
+        self.assertIn("/en/blog/with-en/", body)
+        self.assertNotIn("/en/blog/no-en/", body)
+        self.assertIn("/blog/no-en/", body)
+
+    def test_figures_survive_sanitizing(self):
+        post = self._post(
+            "figs",
+            '<figure class="vd-figure--pair"><img src="/static/a.webp" alt="Опис" '
+            'width="10" height="10" loading="lazy" onerror="x()"><figcaption>Фото</figcaption>'
+            '</figure><aside class="vd-callout"><p>Факт</p></aside>',
+        )
+        post.refresh_from_db()
+        self.assertIn('<figure class="vd-figure--pair">', post.body_en)
+        self.assertIn('alt="Опис"', post.body_en)
+        self.assertIn("<figcaption>Фото</figcaption>", post.body_en)
+        self.assertIn('<aside class="vd-callout">', post.body_en)
+        self.assertNotIn("onerror", post.body_en)
+
+
+class LoadBlogPostsCommandTests(TestCase):
+    def setUp(self):
+        from apps.blog.models import Author
+
+        Author.objects.create(name_uk="Владислав Замотайло", name_en="Vladyslav Zamotailo")
+
+    def test_article_file_loads_and_is_idempotent(self):
+        import io
+
+        call_command("load_blog_posts", "blog_posts.json", stdout=io.StringIO())
+        call_command("load_blog_posts", "blog_posts.json", stdout=io.StringIO())
+        post = BlogPost.objects.get(slug="z-chym-nosyty-vyshyvanku")
+        self.assertEqual(BlogPost.objects.count(), 1)
+        self.assertEqual(post.status, "published")
+        self.assertIsNotNone(post.published_at)
+        self.assertEqual(post.blog_author.name_uk, "Владислав Замотайло")
+        self.assertTrue(post.has_english)
+        for body in (post.body, post.body_en):
+            self.assertNotIn("—", body)
+            self.assertNotIn("instagram.com/liliia.rebrik</a>", body)
+            self.assertIn("<figure>", body)
+        self.assertIn('href="/regions/poltavska-oblast/"', post.body)
+        self.assertIn('href="/en/regions/poltavska-oblast/"', post.body_en)
+
+    def test_article_images_exist(self):
+        import json
+        import re
+        from pathlib import Path
+
+        from django.conf import settings
+
+        entry = json.loads(Path("blog_posts.json").read_text(encoding="utf-8"))[0]
+        paths = set(re.findall(r'src="/static/([^"]+)"', entry["uk"]["body"] + entry["en"]["body"]))
+        paths.add(entry["cover_image_url"].split("/static/", 1)[1])
+        for path in paths:
+            self.assertTrue((Path(settings.BASE_DIR) / "static" / path).exists(), path)
+
+    def test_dry_run_saves_nothing(self):
+        import io
+
+        call_command("load_blog_posts", "blog_posts.json", "--dry-run", stdout=io.StringIO())
+        self.assertFalse(BlogPost.objects.exists())
+        self.assertFalse(BlogCategory.objects.filter(slug="styling").exists())
