@@ -306,7 +306,8 @@ a.vd-card:hover {
   display: flex;
   justify-content: center;
 }
-.vd-pattern-card__art svg {
+.vd-pattern-card__art svg,
+.vd-pattern-card__art img {
   width: 100%;
   height: auto;
   max-height: 260px;
@@ -397,7 +398,8 @@ a.vd-card:hover {
 .vd-ribbon__item:hover {
   border-color: var(--vd-red);
 }
-.vd-ribbon__item svg {
+.vd-ribbon__item svg,
+.vd-ribbon__item img {
   width: 100%;
   height: 92px;
 }

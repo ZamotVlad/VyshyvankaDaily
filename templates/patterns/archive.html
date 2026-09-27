@@ -44,7 +44,7 @@
   <div class="vd-grid">
     {% for item in page_obj %}
       <a href="{% url 'patterns:pattern_detail' item.date|date:'Y-m-d' %}" class="vd-card">
-        <div class="vd-pattern-card__art">{{ item.svg_content|safe }}</div>
+        <div class="vd-pattern-card__art">{% include "includes/pattern_img.html" with pattern=item %}</div>
         <div class="vd-card__body">
           <h3 class="vd-card__title">{{ item.region.name }}</h3>
           <div class="vd-card__meta">{{ item.date|date:"d E Y" }}</div>

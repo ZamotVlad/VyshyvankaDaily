@@ -8,6 +8,7 @@ urlpatterns = [
     path("", views.home_view, name="home"),
     path("archive/", views.archive_view, name="archive"),
     path("collection/", views.my_collection_view, name="my_collection"),
+    path("pattern/<str:iso_date>.svg", views.pattern_svg_view, name="pattern_svg"),
     path("pattern/<str:iso_date>/", views.pattern_detail_view, name="pattern_detail"),
     path("pattern/<str:iso_date>/save/", views.toggle_save_view, name="toggle_save"),
     path("regions/", views.region_list_view, name="region_list"),

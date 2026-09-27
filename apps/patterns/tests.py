@@ -1028,3 +1028,32 @@ class ViewCountColumnDroppedTests(TestCase):
                     )
                 ]
             self.assertNotIn("view_count", columns)
+
+
+class PatternSvgEndpointTests(TestCase):
+    def setUp(self):
+        self.region = make_region("SVG регіон", 1)
+        self.pattern = DailyPattern.objects.create(
+            date=date(2026, 9, 1),
+            region=self.region,
+            seed="s",
+            algorithm_version=1,
+            svg_content='<svg xmlns="http://www.w3.org/2000/svg"><rect/></svg>',
+        )
+
+    def test_serves_cached_svg(self):
+        response = self.client.get("/pattern/2026-09-01.svg")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "image/svg+xml; charset=utf-8")
+        self.assertIn("immutable", response["Cache-Control"])
+        self.assertContains(response, "<rect/>")
+
+    def test_missing_or_noncanonical_date_is_404(self):
+        self.assertEqual(self.client.get("/pattern/2026-09-02.svg").status_code, 404)
+        self.assertEqual(self.client.get("/pattern/20260901.svg").status_code, 404)
+
+    def test_region_page_uses_img_thumbnails_with_alt(self):
+        html = self.client.get(f"/regions/{self.region.slug}/").content.decode()
+        self.assertIn('src="/pattern/2026-09-01.svg?v=', html)
+        self.assertIn('alt="Орнамент: SVG регіон, 01 вересня 2026"', html)
+        self.assertNotIn("<rect/>", html)

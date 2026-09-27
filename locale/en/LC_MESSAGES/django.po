@@ -5195,3 +5195,7 @@ msgstr "Find your region's vyshyvanka pattern and learn the meaning and history 
 
 msgid "Щоденний генератор орнаменту української вишиванки з реальними джерелами символіки й традицій усіх 27 регіонів."
 msgstr "A daily Ukrainian embroidery pattern generator with real sources on the symbolism and traditions of all 27 regions."
+
+#, python-format
+msgid "Орнамент: %(region)s, %(date)s"
+msgstr "Pattern: %(region)s, %(date)s"

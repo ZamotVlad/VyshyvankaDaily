@@ -54,7 +54,7 @@
 <div class="vd-ribbon">
   {% for item in ribbon %}
     <a href="{% url 'patterns:pattern_detail' item.date|date:'Y-m-d' %}" class="vd-ribbon__item">
-      {{ item.svg_content|safe }}
+      {% include "includes/pattern_img.html" with pattern=item %}
       <span class="vd-ribbon__date">{{ item.date|date:"d.m" }}</span>
     </a>
   {% endfor %}

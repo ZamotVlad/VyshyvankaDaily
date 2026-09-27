@@ -1,0 +1,1 @@
+{% load i18n %}<img src="{% url 'patterns:pattern_svg' pattern.date|date:'Y-m-d' %}?v={{ pattern.updated_at|date:'U' }}" width="508" height="600" loading="lazy" decoding="async" alt="{% blocktranslate with region=pattern.region.name date=pattern.date|date:'d E Y' %}Орнамент: {{ region }}, {{ date }}{% endblocktranslate %}">

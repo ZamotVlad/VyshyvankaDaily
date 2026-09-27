@@ -106,6 +106,15 @@ def _parse_iso_date(value: str) -> date:
     return parsed
 
 
+def pattern_svg_view(request, iso_date):
+    """SVG орнаменту як окремий файл: мініатюри кешуються браузером, HTML легшає."""
+    pattern = get_object_or_404(DailyPattern, date=_parse_iso_date(iso_date))
+    response = HttpResponse(pattern.svg_content, content_type="image/svg+xml; charset=utf-8")
+    # URL містить ?v=<updated_at>, тож вміст за адресою не змінюється
+    response["Cache-Control"] = "public, max-age=31536000, immutable"
+    return response
+
+
 def pattern_detail_view(request, iso_date):
     pattern_date = _parse_iso_date(iso_date)
 
@@ -196,8 +205,10 @@ def my_collection_view(request):
 def region_detail_view(request, slug):
     region = get_object_or_404(Region, slug=slug)
 
-    patterns = DailyPattern.objects.filter(region=region, date__lte=timezone.localdate()).order_by(
-        "-date"
+    patterns = (
+        DailyPattern.objects.filter(region=region, date__lte=timezone.localdate())
+        .select_related("region")
+        .order_by("-date")
     )
     patterns = Paginator(patterns, LIST_PAGE_SIZE).get_page(request.GET.get("page"))
 
