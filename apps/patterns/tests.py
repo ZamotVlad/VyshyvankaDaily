@@ -1074,3 +1074,12 @@ class SourceReferenceLabelTests(TestCase):
         with translation.override("uk"):
             self.assertIn("Повний текст:", source_reference(ref))
         self.assertIn("&lt;b&gt;", source_reference("<b>"))
+
+    def test_rendered_link_is_not_double_escaped(self):
+        from django.template import Context, Template
+
+        out = Template("{% load source_tags %}{{ r|source_reference }}").render(
+            Context({"r": "Повний текст: archive.org/x <script>"})
+        )
+        self.assertIn('<a href="http://archive.org/x"', out)
+        self.assertIn("&lt;script&gt;", out)

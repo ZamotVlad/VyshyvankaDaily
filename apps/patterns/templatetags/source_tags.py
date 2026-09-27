@@ -1,5 +1,6 @@
 from django import template
 from django.utils.html import urlize
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext
 
 register = template.Library()
@@ -13,4 +14,5 @@ def source_reference(value):
     text = value or ""
     for label in LABELS:
         text = text.replace(label, gettext(label))
-    return urlize(text, nofollow=True, autoescape=True)
+    # urlize з autoescape екранує весь текст, тож результат безпечний
+    return mark_safe(urlize(text, nofollow=True, autoescape=True))
