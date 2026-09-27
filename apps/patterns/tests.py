@@ -1057,3 +1057,20 @@ class PatternSvgEndpointTests(TestCase):
         self.assertIn('src="/pattern/2026-09-01.svg?v=', html)
         self.assertIn('alt="Орнамент: SVG регіон, 01 вересня 2026"', html)
         self.assertNotIn("<rect/>", html)
+
+
+class SourceReferenceLabelTests(TestCase):
+    def test_service_label_translated_bibliography_kept(self):
+        from django.utils import translation
+
+        from apps.patterns.templatetags.source_tags import source_reference
+
+        ref = "К.: Наукова думка, 1988. Повний текст: archive.org/stream/x"
+        with translation.override("en"):
+            html = source_reference(ref)
+        self.assertIn("К.: Наукова думка, 1988. Full text:", html)
+        link = '<a href="http://archive.org/stream/x" rel="nofollow">archive.org/stream/x</a>'
+        self.assertIn(link, html)
+        with translation.override("uk"):
+            self.assertIn("Повний текст:", source_reference(ref))
+        self.assertIn("&lt;b&gt;", source_reference("<b>"))

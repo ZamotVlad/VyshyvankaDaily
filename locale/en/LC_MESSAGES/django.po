@@ -5199,3 +5199,12 @@ msgstr "A daily Ukrainian embroidery pattern generator with real sources on the 
 #, python-format
 msgid "Орнамент: %(region)s, %(date)s"
 msgstr "Pattern: %(region)s, %(date)s"
+
+msgid "Повний текст:"
+msgstr "Full text:"
+
+msgid "Режим доступу:"
+msgstr "Available at:"
+
+msgid "Доступно:"
+msgstr "Available at:"

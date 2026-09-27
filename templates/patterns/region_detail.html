@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% load seo_tags %}
+{% load seo_tags source_tags %}
 
 {% block title %}{{ region.seo_title|default:region.name|add:" - VyshyvankaDaily" }}{% endblock %}
 
@@ -89,7 +89,7 @@
         <strong>{{ source.name }}</strong>
         {% if source.author_or_institution %} - {{ source.author_or_institution }}{% endif %}
         {% if source.publication_year %} ({{ source.publication_year }}){% endif %}
-        {% if source.reference %}<br><span class="vd-muted vd-small">{{ source.reference }}</span>{% endif %}
+        {% if source.reference %}<br><span class="vd-muted vd-small vd-source-ref">{{ source.reference|source_reference }}</span>{% endif %}
       </li>
     {% endfor %}
   </ul>

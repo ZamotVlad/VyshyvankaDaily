@@ -1236,3 +1236,7 @@ form[id^="email_list"] button:hover {
   color: var(--vd-muted);
   margin-bottom: 20px;
 }
+
+.vd-source-ref {
+  overflow-wrap: anywhere;
+}
