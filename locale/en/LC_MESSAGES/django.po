@@ -5223,3 +5223,6 @@ msgstr "An archive of vyshyvanka patterns: every generated day since the project
 
 msgid "Часті запитання про VyshyvankaDaily: як обирається орнамент дня, звідки описи символіки, навіщо акаунт і колекція."
 msgstr "Frequently asked questions about VyshyvankaDaily: how the pattern of the day is chosen, where the symbolism descriptions come from, and what the account is for."
+
+msgid "Також трапляються"
+msgstr "Also found"

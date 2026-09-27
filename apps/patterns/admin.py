@@ -58,7 +58,7 @@ class RegionAdmin(TranslationAdmin, ModelAdmin):
         (
             "Візуал",
             {
-                "fields": ("dominant_colors", "shirt_cut_type"),
+                "fields": ("dominant_colors", "accent_colors", "shirt_cut_type"),
             },
         ),
         (

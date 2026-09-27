@@ -1087,3 +1087,30 @@ class SourceReferenceLabelTests(TestCase):
         )
         self.assertIn('<a href="http://archive.org/x"', out)
         self.assertIn("&lt;script&gt;", out)
+
+
+class AccentColorsTests(TestCase):
+    def test_accent_row_shown_only_when_set(self):
+        region = make_region("Кольоровий регіон", 1)
+        url = f"/regions/{region.slug}/"
+        self.assertNotContains(self.client.get(url), "Також трапляються")
+        region.accent_colors = ["#2E7D32"]
+        region.save()
+        response = self.client.get(url)
+        self.assertContains(response, "Також трапляються")
+        self.assertContains(response, 'style="background-color: #2E7D32;"')
+
+    def test_accent_colors_validated(self):
+        region = make_region("Регіон", 1)
+        from django.core.exceptions import ValidationError
+
+        region.accent_colors = ["red"]
+        with self.assertRaises(ValidationError):
+            region.full_clean()
+
+    def test_seeded_regions_keep_generator_palette(self):
+        region = Region.objects.filter(slug="poltavska-oblast").first()
+        if region is None:
+            self.skipTest("немає seed-регіонів")
+        self.assertEqual(region.accent_colors, ["#D00000", "#6EC6E8"])
+        self.assertNotIn("#D00000", region.dominant_colors)

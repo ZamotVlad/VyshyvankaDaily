@@ -77,6 +77,14 @@
     <span class="vd-swatch" style="background-color: {{ color }}; width: 34px; height: 34px;" title="{{ color }}"></span>
   {% endfor %}
 </div>
+{% if region.accent_colors %}
+  <p class="vd-muted vd-small mb-2">{% translate "Також трапляються" %}</p>
+  <div class="vd-swatches mb-2">
+    {% for color in region.accent_colors %}
+      <span class="vd-swatch" style="background-color: {{ color }};" title="{{ color }}"></span>
+    {% endfor %}
+  </div>
+{% endif %}
 <p class="vd-muted vd-small">
   {% translate "Основні кольори орнаменту цього регіону - не повний перелік усіх відтінків, що зустрічаються в реальній вишивці." %}
 </p>

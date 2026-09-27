@@ -126,6 +126,12 @@ class Region(TimeStampedModel, SlugModel):
         validators=[validate_hex_colors],
         help_text='Список кольорових кодів (наприклад, ["#FF6B35", "#004E89"]).',
     )
+    accent_colors = models.JSONField(
+        default=list,
+        blank=True,
+        validators=[validate_hex_colors],
+        help_text="Кольори, що також трапляються. Лише для показу, на генерацію не впливають.",
+    )
     shirt_cut_type = models.CharField(
         max_length=255,
         blank=True,
