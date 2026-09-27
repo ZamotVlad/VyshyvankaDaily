@@ -1204,3 +1204,15 @@ class RegionGroupsTests(TestCase):
         make_region("Регіон Д", 54)
         html = self.client.get("/regions/").content.decode()
         self.assertIn('<h2 class="vd-section-title">', html)
+
+
+class StripeColorsTests(TestCase):
+    def test_stripe_merges_shown_and_accent_without_hidden_or_duplicates(self):
+        region = Region(
+            slug="x",
+            name="X",
+            dominant_colors=["#FFFFFF", "#5B2C83", "#D00000"],
+            generator_only_colors=["#5B2C83"],
+            accent_colors=["#D00000", "#C8913A"],
+        )
+        self.assertEqual(region.stripe_colors, ["#FFFFFF", "#D00000", "#C8913A"])

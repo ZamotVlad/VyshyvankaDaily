@@ -11,11 +11,12 @@
       <ul class="vd-region-chips">
         {% for region in group.regions %}
           <li><a href="{% url 'patterns:region_detail' region.slug %}" class="vd-region-chip">
-            <span class="vd-region-chip__swatches" aria-hidden="true">{% for color in region.shown_colors|slice:":3" %}<span style="background-color: {{ color }};"></span>{% endfor %}</span>
-            <span>{{ region.short_name }}</span>
+            <span class="vd-region-chip__name">{{ region.short_name }}</span>
+            <span class="vd-region-chip__stripe" aria-hidden="true">{% for color in region.stripe_colors %}<span style="background-color: {{ color }};"></span>{% endfor %}</span>
           </a></li>
         {% endfor %}
       </ul>
     </div>
   {% endfor %}
 </div>
+<p class="vd-region-tabs__note">{% translate "Кольорова смужка - основні кольори вишивки регіону. Повну палітру й пояснення шукайте на сторінці області." %}</p>

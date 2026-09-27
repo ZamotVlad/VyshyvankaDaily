@@ -5346,3 +5346,6 @@ msgstr "Photos: only your own or with the author's permission."
 
 msgid "%(name)s - автор описів регіонів на VyshyvankaDaily. Тексти про вишиванки регіонів України спираються на музейні колекції, наукові праці та інтерв'ю з етнографами, а перелік джерел є на сторінці кожного регіону."
 msgstr "%(name)s is the author of the region descriptions on VyshyvankaDaily. The texts about the vyshyvanka of Ukraine's regions are based on museum collections, academic works and interviews with ethnographers, and each region page lists its sources."
+
+msgid "Кольорова смужка - основні кольори вишивки регіону. Повну палітру й пояснення шукайте на сторінці області."
+msgstr "The colour stripe shows the main embroidery colours of the region. The full palette and its explanation are on the region page."

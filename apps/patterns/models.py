@@ -222,6 +222,14 @@ class Region(TimeStampedModel, SlugModel):
         return short_name(self)
 
     @property
+    def stripe_colors(self):
+        colors = []
+        for color in self.shown_colors + list(self.accent_colors or []):
+            if color not in colors:
+                colors.append(color)
+        return colors[:6]
+
+    @property
     def shown_colors(self):
         hidden = set(self.generator_only_colors or [])
         return [c for c in self.dominant_colors or [] if c not in hidden]
