@@ -23,7 +23,7 @@
     <a href="{% url 'patterns:region_detail' region.slug %}" class="vd-card">
       <div class="vd-card__body">
         <div class="vd-swatches mb-3">
-          {% for color in region.dominant_colors|slice:":5" %}
+          {% for color in region.shown_colors|slice:":5" %}
             <span class="vd-swatch" style="background-color: {{ color }};"></span>
           {% endfor %}
         </div>

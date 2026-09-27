@@ -132,6 +132,12 @@ class Region(TimeStampedModel, SlugModel):
         validators=[validate_hex_colors],
         help_text="Кольори, що також трапляються. Лише для показу, на генерацію не впливають.",
     )
+    generator_only_colors = models.JSONField(
+        default=list,
+        blank=True,
+        validators=[validate_hex_colors],
+        help_text="Кольори генератора без підтвердження в джерелах: на сторінці не показуються.",
+    )
     shirt_cut_type = models.CharField(
         max_length=255,
         blank=True,
@@ -208,6 +214,11 @@ class Region(TimeStampedModel, SlugModel):
             {"label": _("Регіони"), "url": reverse("patterns:region_list")},
             {"label": self.name},
         ]
+
+    @property
+    def shown_colors(self):
+        hidden = set(self.generator_only_colors or [])
+        return [c for c in self.dominant_colors or [] if c not in hidden]
 
     def __str__(self):
         return self.name

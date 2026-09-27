@@ -73,7 +73,7 @@
 {% endwith %}
 <h2 class="vd-section-title">{% translate "Домінуючі кольори" %}</h2>
 <div class="vd-swatches mb-2">
-  {% for color in region.dominant_colors %}
+  {% for color in region.shown_colors %}
     <span class="vd-swatch" style="background-color: {{ color }}; width: 34px; height: 34px;" title="{{ color }}"></span>
   {% endfor %}
 </div>

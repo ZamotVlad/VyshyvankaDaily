@@ -1114,3 +1114,23 @@ class AccentColorsTests(TestCase):
             self.skipTest("немає seed-регіонів")
         self.assertEqual(region.accent_colors, ["#D00000", "#6EC6E8"])
         self.assertNotIn("#D00000", region.dominant_colors)
+
+
+class GeneratorOnlyColorsTests(TestCase):
+    def test_hidden_colors_not_shown_but_kept_for_generator(self):
+        region = make_region("Прихований колір", 1)
+        region.dominant_colors = ["#FFFFFF", "#5B2C83", "#D00000"]
+        region.generator_only_colors = ["#5B2C83"]
+        region.save()
+        self.assertEqual(region.shown_colors, ["#FFFFFF", "#D00000"])
+        for url in (f"/regions/{region.slug}/", "/regions/"):
+            html = self.client.get(url).content.decode()
+            self.assertNotIn("background-color: #5B2C83", html)
+            self.assertIn("background-color: #D00000", html)
+
+    def test_seeded_kyiv_hides_unconfirmed_colors(self):
+        region = Region.objects.filter(slug="kyivska-oblast").first()
+        if region is None:
+            self.skipTest("немає seed-регіонів")
+        self.assertNotIn("#5B2C83", region.shown_colors)
+        self.assertIn("#5B2C83", region.dominant_colors)
