@@ -1,17 +1,7 @@
 {% load i18n %}
 {% get_current_language as CURRENT_LANGUAGE %}
 <div class="vd-lang mb-0">
-  <form action="{% url 'set_language' %}" method="post" class="vd-lang__form">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ request.path }}">
-    <input name="language" type="hidden" value="uk">
-    <button type="submit" class="vd-lang__btn {% if CURRENT_LANGUAGE == 'uk' %}is-active{% endif %}">UA</button>
-  </form>
+  <a href="{{ lang_paths.uk|default:'/' }}" hreflang="uk" lang="uk" class="vd-lang__btn{% if CURRENT_LANGUAGE == 'uk' %} is-active{% endif %}"{% if CURRENT_LANGUAGE == 'uk' %} aria-current="true"{% endif %}>UA</a>
   <span class="vd-lang__sep" aria-hidden="true">/</span>
-  <form action="{% url 'set_language' %}" method="post" class="vd-lang__form">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ request.path }}">
-    <input name="language" type="hidden" value="en">
-    <button type="submit" class="vd-lang__btn {% if CURRENT_LANGUAGE == 'en' %}is-active{% endif %}">EN</button>
-  </form>
+  <a href="{{ lang_paths.en|default:'/en/' }}" hreflang="en" lang="en" class="vd-lang__btn{% if CURRENT_LANGUAGE == 'en' %} is-active{% endif %}"{% if CURRENT_LANGUAGE == 'en' %} aria-current="true"{% endif %}>EN</a>
 </div>

@@ -32,6 +32,7 @@
 {% endif %}
 
 {% if regions %}
+  <p class="vd-author-page__about">{% blocktranslate with name=author.name %}{{ name }} - автор описів регіонів на VyshyvankaDaily. Тексти про вишиванки регіонів України спираються на музейні колекції, наукові праці та інтерв'ю з етнографами, а перелік джерел є на сторінці кожного регіону.{% endblocktranslate %} <a href="{% url 'pages:about' %}">{% translate "Про проєкт" %}</a></p>
   <h2 class="vd-section-title mt-5">{% translate "Описи регіонів" %}</h2>
   <div class="vd-grid vd-grid--wide">
     {% for region in regions %}

@@ -14,17 +14,20 @@ def seo(request):
         canonical_url = f"{canonical_url}?page={page}"
 
     hreflang_links = []
+    lang_paths = {}
     try:
         for code, _ in settings.LANGUAGES:
-            url = request.build_absolute_uri(translate_url(request.path, code))
-            hreflang_links.append((code, url))
+            lang_paths[code] = translate_url(request.path, code)
+            hreflang_links.append((code, request.build_absolute_uri(lang_paths[code])))
     except Exception:
         hreflang_links = []
+        lang_paths = {}
     if hreflang_links:
         hreflang_links.append(("x-default", dict(hreflang_links)[settings.LANGUAGE_CODE]))
 
     return {
         "canonical_url": canonical_url,
         "hreflang_links": hreflang_links,
+        "lang_paths": lang_paths,
         "site_version": settings.SITE_VERSION,
     }

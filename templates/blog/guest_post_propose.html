@@ -2,12 +2,32 @@
 {% load i18n %}
 
 {% block title %}{% translate "Запропонувати матеріал" %} - VyshyvankaDaily{% endblock %}
+{% block meta_description %}{% translate "Запропонуйте статтю про вишивку свого краю для блогу VyshyvankaDaily: історії сорочок і майстринь, музейні колекції, локальні техніки." %}{% endblock %}
 
 {% block content %}
 <h1>{% translate "Запропонувати гостьовий пост" %}</h1>
 <p class="vd-muted mb-4" style="max-width: 460px;">
   {% translate "Розкажіть коротко про тему, яку хочете розкрити. Ми відповімо, якщо матеріал підійде." %}
 </p>
+
+<div class="vd-doc mb-4">
+  <section>
+    <h2>{% translate "Які матеріали ми шукаємо" %}</h2>
+    <ul>
+      <li>{% translate "Історії конкретних сорочок, рушників чи майстринь вашого краю." %}</li>
+      <li>{% translate "Огляди музейних колекцій і виставок вишивки." %}</li>
+      <li>{% translate "Пояснення технік і локальних назв візерунків." %}</li>
+    </ul>
+  </section>
+  <section>
+    <h2>{% translate "Вимоги до матеріалу" %}</h2>
+    <ul>
+      <li>{% translate "Оригінальний текст, раніше не опублікований." %}</li>
+      <li>{% translate "Факти з джерелами: музей, архів, наукова праця або записаний спогад з іменем і згодою людини." %}</li>
+      <li>{% translate "Фото - лише власні або з дозволом автора." %}</li>
+    </ul>
+  </section>
+</div>
 
 <form method="post" class="vd-form">
   {% csrf_token %}
