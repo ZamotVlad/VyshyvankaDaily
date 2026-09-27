@@ -717,10 +717,36 @@ a.vd-card:hover {
   color: var(--vd-red);
 }
 
+/* Мобільне меню на весь екран під шапкою; сторінка під ним не прокручується */
 .vd-mobile-panel {
+  position: fixed;
+  top: var(--vd-header-h, 64px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border-top: 1px solid var(--vd-border);
-  background: var(--vd-surface);
-  padding: 16px 0 20px;
+  background: var(--vd-bg);
+  padding: 20px 0 calc(32px + env(safe-area-inset-bottom, 0px));
+}
+.vd-mobile-panel[hidden] {
+  display: none;
+}
+html.vd-menu-open {
+  overflow: hidden;
+}
+/* інакше body з overflow-x стає контейнером прокрутки і шапка перестає бути sticky */
+html.vd-menu-open body {
+  overflow: visible;
+}
+.vd-burger__close,
+.vd-burger[aria-expanded="true"] .vd-burger__open {
+  display: none;
+}
+.vd-burger[aria-expanded="true"] .vd-burger__close {
+  display: inline;
 }
 .vd-mobile-panel .vd-nav {
   flex-direction: column;
@@ -728,8 +754,9 @@ a.vd-card:hover {
   gap: 2px;
 }
 .vd-mobile-panel .vd-nav a {
-  padding: 12px 4px;
-  font-size: 14px;
+  display: block;
+  padding: 14px 4px;
+  font-size: 18px;
 }
 .vd-mobile-panel .vd-nav a::after {
   left: 4px;
@@ -744,7 +771,8 @@ a.vd-card:hover {
   border-top: 1px solid var(--vd-border);
 }
 .vd-mobile-panel .vd-auth a {
-  padding: 10px 4px;
+  padding: 12px 4px;
+  font-size: 16px;
 }
 
 /* До 900px - ховаємо десктопну навігацію, показуємо бургер */

@@ -1,4 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Мобільне меню на весь екран
+  var burger = document.querySelector(".vd-burger");
+  var panel = document.getElementById("vdMobileNav");
+  if (burger && panel) {
+    var header = document.querySelector(".vd-header");
+    var setMenu = function (open) {
+      if (open) {
+        document.documentElement.style.setProperty(
+          "--vd-header-h",
+          header.getBoundingClientRect().bottom + "px"
+        );
+      }
+      panel.hidden = !open;
+      burger.setAttribute("aria-expanded", open);
+      document.documentElement.classList.toggle("vd-menu-open", open);
+    };
+    burger.addEventListener("click", function () {
+      setMenu(panel.hidden);
+    });
+    panel.addEventListener("click", function (e) {
+      if (e.target.closest("a")) setMenu(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !panel.hidden) setMenu(false);
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 1060 && !panel.hidden) setMenu(false);
+    });
+  }
+
   // Розгортка "Що таке VyshyvankaDaily" на головній
   var landingToggle = document.querySelector(".vd-landing__toggle");
   if (landingToggle) {

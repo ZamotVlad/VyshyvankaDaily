@@ -87,13 +87,13 @@
       {% endif %}
     </div>
 
-    <button class="vd-burger" type="button" data-bs-toggle="collapse" data-bs-target="#vdMobileNav"
-            aria-controls="vdMobileNav" aria-expanded="false" aria-label="{% translate 'Меню' %}">
-      ☰
+    <button class="vd-burger" type="button" aria-controls="vdMobileNav" aria-expanded="false"
+            aria-label="{% translate 'Меню' %}">
+      <span class="vd-burger__open" aria-hidden="true">☰</span><span class="vd-burger__close" aria-hidden="true">✕</span>
     </button>
   </div>
 
-  <div class="collapse vd-mobile-panel" id="vdMobileNav">
+  <div class="vd-mobile-panel" id="vdMobileNav" hidden>
     <div class="container">
       <ul class="vd-nav">
         <li><a href="{% url 'patterns:archive' %}">{% translate "Архів" %}</a></li>
