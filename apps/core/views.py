@@ -82,12 +82,19 @@ def robots_txt(request):
     той тег лишається активним і прибере з видачі те, що вже
     проіндексовано раніше. Disallow тут - додатково, щоб зупинити
     подальше сканування нових днів.
+
+    Фільтри блогу (?category=, ?q=) - дублі списку статей, не індексуємо.
     """
     private = ["/accounts/", "/profile/settings/", "/collection/", "/patterns/debug/"]
     lines = [
         "User-agent: *",
         *(f"Disallow: {prefix}{path}" for path in private for prefix in ("", "/en")),
         *(f"Disallow: {prefix}/pattern/" for prefix in ("", "/en")),
+        *(
+            f"Disallow: {prefix}/blog/?{param}="
+            for prefix in ("", "/en")
+            for param in ("category", "q")
+        ),
         "Disallow: /admin/",
         "",
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",

@@ -6,6 +6,8 @@
 
 {% block robots %}{% get_current_language as LANG %}{% if LANG == "en" and not post.has_english %}noindex, follow{% else %}index, follow{% endif %}{% endblock %}
 
+{% block meta_author %}{% if post.guest_author_name %}{{ post.guest_author_name }}{% elif post.blog_author %}{{ post.blog_author.name }}{% else %}VyshyvankaDaily{% endif %}{% endblock %}
+
 {% block meta_description %}{{ post.seo_description|default:post.excerpt|truncatewords:25 }}{% endblock %}
 
 {% block extra_head %}

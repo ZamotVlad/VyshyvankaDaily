@@ -340,7 +340,7 @@ ALLOWED_BLOG_HTML_TAGS = [
     "aside",
 ]
 ALLOWED_BLOG_HTML_ATTRIBUTES = {
-    "a": ["href", "title"],
+    "a": ["href", "title", "target", "rel"],
     "img": ["src", "alt", "width", "height", "loading", "decoding"],
     "figure": ["class"],
     "aside": ["class"],

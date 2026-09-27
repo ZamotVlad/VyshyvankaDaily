@@ -430,3 +430,39 @@ class LoadBlogPostsCommandTests(TestCase):
         call_command("load_blog_posts", "blog_posts.json", "--dry-run", stdout=io.StringIO())
         self.assertFalse(BlogPost.objects.exists())
         self.assertFalse(BlogCategory.objects.filter(slug="styling").exists())
+
+
+class FirstArticleSeoTests(TestCase):
+    def setUp(self):
+        import io
+
+        from apps.blog.models import Author
+
+        Author.objects.create(name_uk="Владислав Замотайло", name_en="Vladyslav Zamotailo")
+        call_command("load_blog_posts", "blog_posts.json", stdout=io.StringIO())
+        self.post = BlogPost.objects.get(slug="z-chym-nosyty-vyshyvanku")
+
+    def test_seo_title_differs_from_h1_in_both_languages(self):
+        for lang in ("uk", "en"):
+            title = getattr(self.post, f"title_{lang}")
+            seo_title = getattr(self.post, f"seo_title_{lang}")
+            self.assertTrue(seo_title)
+            self.assertNotIn(seo_title.split(":")[0], title)
+
+    def test_author_meta_is_article_author(self):
+        html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
+        self.assertIn('<meta name="author" content="Владислав Замотайло">', html)
+        html = self.client.get(f"/en/blog/{self.post.slug}/").content.decode()
+        self.assertIn('<meta name="author" content="Vladyslav Zamotailo">', html)
+
+    def test_only_museum_and_fashion_week_links_are_external(self):
+        import re
+
+        for body in (self.post.body, self.post.body_en):
+            external = re.findall(r'<a href="(https?://[^"]+)"([^>]*)>', body)
+            hosts = {re.sub(r"https?://([^/]+)/.*", r"\1", href) for href, _ in external}
+            self.assertEqual(hosts, {"museum.mincult.gov.ua", "fashionweek.ua"})
+            for _, attrs in external:
+                self.assertIn('rel="noopener"', attrs)
+            self.assertNotIn('href="https://www.instagram.com', body)
+            self.assertNotIn('href="http://instagram.com', body)
