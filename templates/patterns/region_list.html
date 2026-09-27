@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
-{% block title %}{% translate "Усі регіони" %} - VyshyvankaDaily{% endblock %}
+{% block title %}{% translate "Вишиванки по регіонах України: орнаменти всіх областей" %} - VyshyvankaDaily{% endblock %}
+
+{% block meta_description %}{% translate "Орнамент вишиванки по областях: символіка, кольори й техніки всіх 27 регіонів України, від Полтавщини до Криму, з музейними та науковими джерелами." %}{% endblock %}
 
 {% block extra_head %}
-<meta name="keywords" content="вишиванки по регіонах україни, орнамент вишиванки по областях">
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 {% endblock %}
 

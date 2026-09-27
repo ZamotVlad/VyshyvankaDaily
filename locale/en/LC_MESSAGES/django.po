@@ -5208,3 +5208,18 @@ msgstr "Available at:"
 
 msgid "Доступно:"
 msgstr "Available at:"
+
+msgid "Вишиванки по регіонах України: орнаменти всіх областей"
+msgstr "Vyshyvanka by Region: Ukrainian Embroidery Patterns"
+
+msgid "Орнамент вишиванки по областях: символіка, кольори й техніки всіх 27 регіонів України, від Полтавщини до Криму, з музейними та науковими джерелами."
+msgstr "Embroidery patterns by oblast: the symbolism, colours and techniques of all 27 regions of Ukraine, from Poltava to Crimea, with museum and academic sources."
+
+msgid "Статті про українську вишивку: техніки, символіка орнаментів, історії майстринь і музейних колекцій з різних регіонів України."
+msgstr "Articles on Ukrainian embroidery: techniques, ornament symbolism and the stories of craftswomen and museum collections from across Ukraine."
+
+msgid "Архів орнаментів вишиванки: кожен згенерований день від запуску проєкту з регіоном і датою. Фільтр за регіоном і періодом."
+msgstr "An archive of vyshyvanka patterns: every generated day since the project began, with its region and date. Filter by region and period."
+
+msgid "Часті запитання про VyshyvankaDaily: як обирається орнамент дня, звідки описи символіки, навіщо акаунт і колекція."
+msgstr "Frequently asked questions about VyshyvankaDaily: how the pattern of the day is chosen, where the symbolism descriptions come from, and what the account is for."

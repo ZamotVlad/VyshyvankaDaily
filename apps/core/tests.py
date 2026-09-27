@@ -667,3 +667,14 @@ class LocalizedMetaTests(TestCase):
     def test_ukrainian_pages_keep_ukrainian_meta(self):
         for path in self.PAGES:
             self.assertRegex(self._meta(path), "[А-Яа-яІіЇїЄєҐґ]", path)
+
+
+class PageSpecificMetaTests(TestCase):
+    def test_list_pages_have_their_own_description(self):
+        default = "Щоденний генератор орнаменту української вишиванки"
+        for path in ["/regions/", "/blog/", "/archive/", "/faq/"]:
+            html = self.client.get(path).content.decode()
+            desc = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
+            self.assertNotIn(default, desc, path)
+            self.assertLessEqual(len(desc), 160, path)
+        self.assertContains(self.client.get("/regions/"), "<title>Вишиванки по регіонах України")
