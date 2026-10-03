@@ -244,7 +244,16 @@ class Region(TimeStampedModel, SlugModel):
         так чернетка не потрапить на публічну сторінку навіть якщо
         десь забути умову в розмітці.
         """
-        return self.blog_posts.filter(status="published")
+        from django.db.models import Q
+
+        from apps.blog.models import BlogPost
+
+        mentions = Q(related_region=self) | Q(body__contains=f"/regions/{self.slug}/")
+        return (
+            BlogPost.objects.filter(mentions, status="published")
+            .select_related("category")
+            .order_by("-published_at")
+        )
 
 
 class MotifQuerySet(models.QuerySet):

@@ -746,3 +746,85 @@ class TableOfContentsTests(TestCase):
         self.assertIn('<h2 id="odin">', html)
         self.assertNotIn("data-toc", html)
         self.assertNotIn("vd-pagetoc--compact", html)
+
+
+class AnalyticsAndAccessibilityTests(TestCase):
+    def test_no_analytics_without_website_id(self):
+        response = self.client.get("/")
+        self.assertNotIn("umami", response.content.decode())
+        self.assertNotIn("umami", response["Content-Security-Policy"])
+        self.assertIn("script-src 'self';", response["Content-Security-Policy"])
+
+    @override_settings(UMAMI_WEBSITE_ID="abc-123")
+    def test_umami_script_and_csp_only_when_enabled(self):
+        response = self.client.get("/")
+        html = response.content.decode()
+        self.assertIn('src="https://cloud.umami.is/script.js" data-website-id="abc-123"', html)
+        csp = response["Content-Security-Policy"]
+        self.assertIn("script-src 'self' https://cloud.umami.is", csp)
+        self.assertIn("connect-src 'self' https://cloud.umami.is", csp)
+        privacy = self.client.get("/privacy-policy/").content.decode()
+        self.assertIn("Umami", privacy)
+        self.assertNotIn("Sentry", privacy)
+
+    def test_skip_link_and_back_to_top(self):
+        html = self.client.get("/").content.decode()
+        self.assertIn('class="vd-skip-link" href="#main-content"', html)
+        self.assertIn('id="main-content"', html)
+        self.assertIn("data-to-top", html)
+        en = self.client.get("/en/").content.decode()
+        self.assertIn("Skip to content", en)
+
+
+class ArticleRegionLinkTests(TestCase):
+    def setUp(self):
+        from django.utils import translation
+
+        from apps.blog.models import BlogCategory, BlogPost
+        from apps.patterns.models import Region
+
+        self.region = Region.objects.filter(slug="poltavska-oblast").first()
+        if self.region is None:
+            with translation.override("uk"):
+                self.region = Region.objects.create(
+                    name="Полтавська область",
+                    slug="poltavska-oblast",
+                    symbolism_description="<p>Текст</p>",
+                    dominant_colors=["#FFFFFF", "#C9BFA9"],
+                    rotation_order=902,
+                )
+        self.post = BlogPost.objects.create(
+            category=BlogCategory.objects.create(name_uk="Стиль", slug="style"),
+            title_uk="Стаття про стиль",
+            slug="style-article",
+            excerpt_uk="Опис",
+            body='<h2>Розділ</h2><p><a href="/regions/poltavska-oblast/">полтавська</a></p>'
+            '<img src="/static/blog/a.webp" alt="x">',
+            body_en='<p><a href="/en/regions/poltavska-oblast/">Poltava</a></p>'
+            '<img src="/static/blog/b.webp" alt="y">',
+            cover_image_url="https://vyshyvankadaily.live/static/blog/cover.webp",
+            status="published",
+            published_at=timezone.now(),
+        )
+
+    def test_region_page_lists_article_that_links_to_it(self):
+        html = self.client.get("/regions/poltavska-oblast/").content.decode()
+        self.assertIn('href="/blog/style-article/"', html)
+        self.assertIn('href="#articles"', html)
+
+    def test_article_lists_mentioned_regions(self):
+        html = self.client.get("/blog/style-article/").content.decode()
+        self.assertIn('id="regions"', html)
+        self.assertIn('href="/regions/poltavska-oblast/" class="vd-region-chip"', html)
+        en = self.client.get("/en/blog/style-article/").content.decode()
+        self.assertIn('href="/en/regions/poltavska-oblast/" class="vd-region-chip"', en)
+        self.assertIn("Regions in this article", en)
+
+    def test_sitemap_lists_article_images(self):
+        body = self.client.get("/sitemap.xml").content.decode()
+        self.assertIn('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"', body)
+        self.assertIn(
+            "<image:loc>https://vyshyvankadaily.live/static/blog/cover.webp</image:loc>", body
+        )
+        self.assertIn("<image:loc>http://example.com/static/blog/a.webp</image:loc>", body)
+        self.assertIn("<image:loc>http://example.com/static/blog/b.webp</image:loc>", body)

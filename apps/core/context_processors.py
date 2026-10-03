@@ -31,3 +31,13 @@ def seo(request):
         "lang_paths": lang_paths,
         "site_version": settings.SITE_VERSION,
     }
+
+
+def analytics(request):
+    if request.path.startswith("/vd/"):
+        return {}
+    return {
+        "umami_website_id": settings.UMAMI_WEBSITE_ID,
+        "umami_script_url": settings.UMAMI_SCRIPT_URL,
+        "sentry_enabled": bool(getattr(settings, "SENTRY_DSN", "")),
+    }

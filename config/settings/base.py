@@ -18,6 +18,10 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 CANONICAL_HOST = env("CANONICAL_HOST", default="")
+
+# Статистика відвідувань без cookies (Umami). Порожній ID - скрипт не підключається.
+UMAMI_WEBSITE_ID = env("UMAMI_WEBSITE_ID", default="")
+UMAMI_SCRIPT_URL = env("UMAMI_SCRIPT_URL", default="https://cloud.umami.is/script.js")
 SITE_VERSION = "1.2.0"
 
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
@@ -80,6 +84,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.seo",
+                "apps.core.context_processors.analytics",
             ],
         },
     },

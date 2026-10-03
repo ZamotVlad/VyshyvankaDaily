@@ -5349,3 +5349,18 @@ msgstr "%(name)s is the author of the region descriptions on VyshyvankaDaily. Th
 
 msgid "Кольорова смужка - основні кольори вишивки регіону. Повну палітру й пояснення шукайте на сторінці області."
 msgstr "The colour stripe shows the main embroidery colours of the region. The full palette and its explanation are on the region page."
+
+msgid "Перейти до вмісту"
+msgstr "Skip to content"
+
+msgid "Нагору"
+msgstr "Back to top"
+
+msgid "Регіони в цій статті"
+msgstr "Regions in this article"
+
+msgid "Umami - знеособлена статистика відвідувань без кукі: які сторінки відкривають, з якої країни й пристрою. IP-адреси не зберігаються."
+msgstr "Umami - anonymous visit statistics without cookies: which pages are opened, from which country and device. IP addresses are not stored."
+
+msgid "Sentry - звіти про технічні помилки сайту, без IP-адрес і даних акаунта."
+msgstr "Sentry - reports about technical errors on the site, without IP addresses or account data."

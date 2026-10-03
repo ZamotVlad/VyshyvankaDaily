@@ -1,3 +1,5 @@
+import re
+
 from django.conf import settings
 from django.db import models
 from django.utils.translation import get_language
@@ -168,6 +170,14 @@ class BlogPost(TimeStampedModel, SlugModel):
     @property
     def has_english(self):
         return bool((self.body_en or "").strip())
+
+    @property
+    def image_urls(self):
+        """Обкладинка й фото з тексту статті (обидві мови), без повторів."""
+        found = [self.cover_image_url] if self.cover_image_url else []
+        for body in (self.body, self.body_en):
+            found += re.findall(r'<img[^>]+src="([^"]+)"', body or "")
+        return list(dict.fromkeys(found))
 
     @property
     def localized_body(self):

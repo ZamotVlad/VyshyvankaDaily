@@ -70,6 +70,32 @@ document.addEventListener("DOMContentLoaded", function () {
     update();
   }
 
+  // Кнопка «нагору» на довгих сторінках
+  var toTop = document.querySelector("[data-to-top]");
+  if (toTop && document.documentElement.scrollHeight > window.innerHeight * 3) {
+    toTop.hidden = false;
+    var topTicking = false;
+    var syncTop = function () {
+      toTop.classList.toggle("is-visible", window.scrollY > window.innerHeight * 1.5);
+      topTicking = false;
+    };
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!topTicking) {
+          topTicking = true;
+          requestAnimationFrame(syncTop);
+        }
+      },
+      { passive: true }
+    );
+    toTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0 });
+      document.getElementById("main-content").focus({ preventScroll: true });
+    });
+    syncTop();
+  }
+
   // Мобільне меню на весь екран
   var burger = document.querySelector(".vd-burger");
   var panel = document.getElementById("vdMobileNav");

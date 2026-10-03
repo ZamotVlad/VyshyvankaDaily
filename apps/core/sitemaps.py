@@ -68,6 +68,17 @@ class BlogPostSitemap(Sitemap):
     def lastmod(self, obj):
         return obj.updated_at
 
+    def _urls(self, page, protocol, domain):
+        # Фото статті - в image sitemap, щоб потрапляли в Google Картинки
+        urls = super()._urls(page, protocol, domain)
+        for url in urls:
+            post = url["item"][0] if isinstance(url["item"], tuple) else url["item"]
+            url["images"] = [
+                src if src.startswith("http") else f"{protocol}://{domain}{src}"
+                for src in post.image_urls
+            ]
+        return urls
+
 
 class AuthorSitemap(Sitemap):
     changefreq = "monthly"

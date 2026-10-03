@@ -1628,3 +1628,70 @@ html {
   height: 180px;
   object-fit: cover;
 }
+
+/* ---------- Доступність і навігація ---------- */
+.vd-skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 2000;
+  padding: 10px 16px;
+  background: var(--vd-red);
+  color: #fff;
+  font-family: var(--vd-font-display);
+  font-size: 14px;
+  border-radius: var(--vd-radius);
+  text-decoration: none;
+}
+.vd-skip-link:focus {
+  top: 12px;
+  color: #fff;
+}
+main:focus {
+  outline: none;
+}
+.vd-to-top {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 900;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--vd-border);
+  background: var(--vd-surface);
+  color: var(--vd-cream);
+  font-size: 20px;
+  line-height: 1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s,
+    border-color 0.15s ease;
+}
+.vd-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.vd-to-top:hover,
+.vd-to-top:focus-visible {
+  border-color: var(--vd-red);
+  color: var(--vd-red-text);
+}
+@media (min-width: 1200px) {
+  .vd-to-top {
+    display: none;
+  }
+}
+.vd-prose .vd-region-chips--article {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.vd-prose .vd-region-chip {
+  text-decoration: none;
+}

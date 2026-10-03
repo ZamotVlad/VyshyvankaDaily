@@ -61,14 +61,18 @@
   </div>
 {% endif %}
 
-{% with posts=region.published_blog_posts %}
+{% with posts=region_posts %}
   {% if posts %}
-    <h2 class="vd-section-title">{% translate "Статті про цей регіон" %}</h2>
+    <h2 class="vd-section-title" id="articles">{% translate "Статті про цей регіон" %}</h2>
     <div class="vd-grid vd-grid--wide">
       {% for post in posts %}
         <a href="{% url 'blog:detail' post.slug %}" class="vd-card">
+          {% if post.cover_image_url %}
+            <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="vd-card__cover" width="400" height="180" loading="lazy" decoding="async">
+          {% endif %}
           <div class="vd-card__body">
             <h3 class="vd-card__title">{{ post.title }}</h3>
+            <p class="vd-card__meta mb-0">{{ post.excerpt|truncatewords:16 }}</p>
           </div>
         </a>
       {% endfor %}

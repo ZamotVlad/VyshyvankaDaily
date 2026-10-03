@@ -1,3 +1,5 @@
+from urllib.parse import urlsplit
+
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
 
@@ -38,6 +40,17 @@ class HideServerHeaderMiddleware:
         return response
 
 
+def _analytics_origins():
+    """Домен Umami додається в CSP лише коли статистику увімкнено."""
+    if not settings.UMAMI_WEBSITE_ID:
+        return ""
+    parts = urlsplit(settings.UMAMI_SCRIPT_URL)
+    origins = [f"{parts.scheme}://{parts.netloc}"]
+    if parts.netloc == "cloud.umami.is":
+        origins.append("https://api-gateway.umami.dev")
+    return "".join(f" {o}" for o in origins)
+
+
 class ContentSecurityPolicyMiddleware:
     """
     CSP: суворий для публічного сайту (script-src без unsafe-inline/
@@ -56,10 +69,11 @@ class ContentSecurityPolicyMiddleware:
         response = self.get_response(request)
 
         is_admin = request.path.startswith(self.ADMIN_PREFIX)
+        analytics = "" if is_admin else _analytics_origins()
         script_src = (
             "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
             if is_admin
-            else "script-src 'self'; "
+            else f"script-src 'self'{analytics}; "
         )
 
         # Google Fonts лишились тільки в темі адмінки.
@@ -72,7 +86,7 @@ class ContentSecurityPolicyMiddleware:
 
         response["Content-Security-Policy"] = (
             "default-src 'self'; " + script_src + fonts + "img-src 'self' data:; "
-            "connect-src 'self'; "
+            f"connect-src 'self'{analytics}; "
             "object-src 'none'; "
             "base-uri 'self'; "
             "frame-ancestors 'none';"

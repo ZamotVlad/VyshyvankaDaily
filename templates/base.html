@@ -45,6 +45,7 @@
 <link rel="alternate" type="application/rss+xml" title="VyshyvankaDaily - блог" href="{% url 'blog_feed' %}">
 </head>
 <body class="d-flex flex-column min-vh-100">
+<a class="vd-skip-link" href="#main-content">{% translate "Перейти до вмісту" %}</a>
 
 <header class="vd-header">
   <div class="container">
@@ -121,7 +122,7 @@
   </div>
 </header>
 
-<main id="main-content" class="flex-grow-1 container py-4">
+<main id="main-content" class="flex-grow-1 container py-4" tabindex="-1">
 {% if messages %}
   <div class="mb-4">
     {% for message in messages %}
@@ -171,6 +172,8 @@
 </footer>
 
 <script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}" defer></script>
+<button type="button" class="vd-to-top" data-to-top hidden aria-label="{% translate 'Нагору' %}">↑</button>
 <script src="{% static 'js/site.js' %}" defer></script>
+{% if umami_website_id %}<script src="{{ umami_script_url }}" data-website-id="{{ umami_website_id }}" data-do-not-track="true" defer></script>{% endif %}
 </body>
 </html>

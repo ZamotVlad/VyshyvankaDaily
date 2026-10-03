@@ -57,3 +57,17 @@ SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 31536000  # 1 рік
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_HSTS_PRELOAD = False
+
+# ---------- Помилки в Sentry ----------
+# Вмикається лише з SENTRY_DSN у config vars. Без IP, cookies і email відвідувачів.
+SENTRY_DSN = env("SENTRY_DSN", default="")
+if SENTRY_DSN:
+    import sentry_sdk
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        environment="production",
+        release=SITE_VERSION,  # noqa: F405
+        send_default_pii=False,
+        traces_sample_rate=0.0,
+    )

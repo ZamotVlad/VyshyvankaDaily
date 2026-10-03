@@ -1,3 +1,5 @@
+import re
+
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db import models
@@ -56,6 +58,18 @@ def blog_list_view(request):
     return render(request, "blog/blog_list.html", context)
 
 
+def _mentioned_regions(post, body):
+    """Регіони, на які посилається стаття, у порядку згадки (+ прив'язаний регіон)."""
+    from apps.patterns.models import Region
+
+    slugs = re.findall(r'href="(?:/en)?/regions/([a-z0-9-]+)/"', body)
+    if post.related_region_id:
+        slugs.insert(0, post.related_region.slug)
+    slugs = list(dict.fromkeys(slugs))
+    regions = {r.slug: r for r in Region.objects.filter(slug__in=slugs)}
+    return [regions[slug] for slug in slugs if slug in regions]
+
+
 def blog_detail_view(request, slug):
     post = get_object_or_404(BlogPost.objects.select_related("category"), slug=slug)
 
@@ -68,14 +82,18 @@ def blog_detail_view(request, slug):
         .order_by("-published_at")[:3]
     )
 
-    body, toc = build_toc(post.localized_body, reserved=("sources",))
+    body, toc = build_toc(post.localized_body, reserved=("sources", "regions"))
     if post.sources.exists():
         toc.append({"id": "sources", "title": _("Джерела")})
+    mentioned_regions = _mentioned_regions(post, body)
+    if mentioned_regions:
+        toc.append({"id": "regions", "title": _("Регіони в цій статті")})
 
     context = {
         "post": post,
         "body": body,
         "toc": toc,
+        "mentioned_regions": mentioned_regions,
         "related_posts": related_posts,
         "is_partner_content": post.post_type != BlogPost.PostType.EDITORIAL,
     }

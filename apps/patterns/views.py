@@ -215,7 +215,12 @@ def region_detail_view(request, slug):
     )
     patterns = Paginator(patterns, LIST_PAGE_SIZE).get_page(request.GET.get("page"))
 
-    body, toc = build_toc(region.symbolism_description, reserved=("colors", "sources", "ornaments"))
+    body, toc = build_toc(
+        region.symbolism_description, reserved=("articles", "colors", "sources", "ornaments")
+    )
+    region_posts = list(region.published_blog_posts)
+    if region_posts:
+        toc.append({"id": "articles", "title": _("Статті про цей регіон")})
     toc.append({"id": "colors", "title": _("Домінуючі кольори")})
     if region.sources.exists():
         toc.append({"id": "sources", "title": _("Джерела")})
@@ -225,6 +230,7 @@ def region_detail_view(request, slug):
         "region": region,
         "body": body,
         "toc": toc,
+        "region_posts": region_posts,
         "claim_type": region.get_claim_type(),
         "patterns": patterns,
         "site_author": Author.objects.first(),

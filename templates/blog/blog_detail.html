@@ -65,6 +65,18 @@
       {% endfor %}
     </ul>
   {% endif %}
+
+  {% if mentioned_regions %}
+    <h2 id="regions">{% translate "Регіони в цій статті" %}</h2>
+    <ul class="vd-region-chips vd-region-chips--article">
+      {% for region in mentioned_regions %}
+        <li><a href="{% url 'patterns:region_detail' region.slug %}" class="vd-region-chip">
+          <span class="vd-region-chip__name">{{ region.short_name }}</span>
+          <span class="vd-region-chip__stripe" aria-hidden="true">{% for color in region.stripe_colors %}<span style="background-color: {{ color }};"></span>{% endfor %}</span>
+        </a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </article>
 {% if toc|length > 1 %}<aside class="vd-with-toc__aside">{% include "includes/toc.html" %}</aside>{% endif %}
 </div>
