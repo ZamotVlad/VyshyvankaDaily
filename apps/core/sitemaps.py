@@ -29,7 +29,21 @@ class DailyPatternSitemap(Sitemap):
         return obj.updated_at
 
 
-class RegionSitemap(Sitemap):
+class ImageSitemapMixin:
+    """Додає до запису sitemap фото (image sitemap) з image_urls(obj)."""
+
+    def _urls(self, page, protocol, domain):
+        urls = super()._urls(page, protocol, domain)
+        for url in urls:
+            obj = url["item"][0] if isinstance(url["item"], tuple) else url["item"]
+            url["images"] = [
+                src if src.startswith("http") else f"{protocol}://{domain}{src}"
+                for src in self.image_urls(obj)
+            ]
+        return urls
+
+
+class RegionSitemap(ImageSitemapMixin, Sitemap):
     """27 сторінок регіонів - основний SEO-хаб проєкту."""
 
     changefreq = "monthly"
@@ -39,7 +53,7 @@ class RegionSitemap(Sitemap):
     x_default = True
 
     def items(self):
-        return Region.objects.verified().order_by("name")
+        return Region.objects.verified().prefetch_related("photos").order_by("name")
 
     def location(self, obj):
         return reverse("patterns:region_detail", args=[obj.slug])
@@ -47,8 +61,12 @@ class RegionSitemap(Sitemap):
     def lastmod(self, obj):
         return obj.updated_at
 
+    def image_urls(self, obj):
+        # Лише справжні фото з адмінки, без згенерованих орнаментів
+        return [photo.image_url for photo in obj.photos.all() if photo.is_active]
 
-class BlogPostSitemap(Sitemap):
+
+class BlogPostSitemap(ImageSitemapMixin, Sitemap):
     changefreq = "monthly"
     priority = 0.7
     i18n = True
@@ -68,16 +86,8 @@ class BlogPostSitemap(Sitemap):
     def lastmod(self, obj):
         return obj.updated_at
 
-    def _urls(self, page, protocol, domain):
-        # Фото статті - в image sitemap, щоб потрапляли в Google Картинки
-        urls = super()._urls(page, protocol, domain)
-        for url in urls:
-            post = url["item"][0] if isinstance(url["item"], tuple) else url["item"]
-            url["images"] = [
-                src if src.startswith("http") else f"{protocol}://{domain}{src}"
-                for src in post.image_urls
-            ]
-        return urls
+    def image_urls(self, obj):
+        return obj.image_urls
 
 
 class AuthorSitemap(Sitemap):

@@ -828,3 +828,27 @@ class ArticleRegionLinkTests(TestCase):
         )
         self.assertIn("<image:loc>http://example.com/static/blog/a.webp</image:loc>", body)
         self.assertIn("<image:loc>http://example.com/static/blog/b.webp</image:loc>", body)
+
+
+class RegionImageSitemapTests(TestCase):
+    def test_only_active_real_photos_and_no_ornaments(self):
+        from apps.patterns.models import Region, RegionPhoto
+
+        region = Region.objects.verified().first()
+        body = self.client.get("/sitemap.xml").content.decode()
+        self.assertNotIn(".svg</image:loc>", body)
+        RegionPhoto.objects.create(
+            region=region,
+            thumbnail_url="https://example.org/t.webp",
+            image_url="https://example.org/real-shirt.webp",
+        )
+        RegionPhoto.objects.create(
+            region=region,
+            thumbnail_url="https://example.org/t2.webp",
+            image_url="https://example.org/hidden.webp",
+            is_active=False,
+        )
+        body = self.client.get("/sitemap.xml").content.decode()
+        self.assertIn("<image:loc>https://example.org/real-shirt.webp</image:loc>", body)
+        self.assertNotIn("hidden.webp", body)
+        self.assertNotIn("example.org/t.webp", body)
