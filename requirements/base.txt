@@ -1,4 +1,4 @@
-Django==5.2.17
+Django==6.1.1
 django-modeltranslation==0.20.6
 django-environ==0.14.0
 python-slugify==9.1.1
