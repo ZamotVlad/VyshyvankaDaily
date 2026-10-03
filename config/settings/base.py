@@ -280,6 +280,24 @@ CKEDITOR_5_CONFIGS = {
             "|",
             "sourceEditing",
         ],
+        # H2 потрапляють у «Зміст» сторінки, H3 - ні.
+        "heading": {
+            "options": [
+                {"model": "paragraph", "title": "Абзац", "class": "ck-heading_paragraph"},
+                {
+                    "model": "heading2",
+                    "view": "h2",
+                    "title": "Розділ H2 (у змісті)",
+                    "class": "ck-heading_heading2",
+                },
+                {
+                    "model": "heading3",
+                    "view": "h3",
+                    "title": "Підрозділ H3",
+                    "class": "ck-heading_heading3",
+                },
+            ]
+        },
     },
 }
 
