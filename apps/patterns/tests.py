@@ -1115,7 +1115,7 @@ class AccentColorsTests(TestCase):
         region = Region.objects.filter(slug="poltavska-oblast").first()
         if region is None:
             self.skipTest("немає seed-регіонів")
-        self.assertEqual(region.accent_colors, ["#D00000", "#6EC6E8"])
+        self.assertEqual(region.accent_colors, ["#D00000", "#6EC6E8", "#C8913A"])
         self.assertNotIn("#D00000", region.dominant_colors)
 
 
