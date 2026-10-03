@@ -17,6 +17,8 @@
 
 {% block content %}
 {% include "includes/breadcrumbs.html" with breadcrumbs=region.breadcrumbs %}
+<div class="vd-with-toc">
+<div class="vd-with-toc__main">
 <h1>{{ region.name }}</h1>
 
 {% if region.slug == "ar-krym" or region.slug == "m-sevastopol" %}
@@ -31,14 +33,16 @@
   <span class="vd-claim">◇ {% translate "За традицією" %}</span>
 {% endif %}
 
+{% include "includes/toc.html" with compact=True %}
+
 <div class="vd-prose mt-3">
-  {{ region.symbolism_description|safe }}
+  {{ body|safe }}
 </div>
 
 {% if site_author %}
   <a href="{% url 'blog:author_detail' site_author.slug %}" class="vd-author-byline">
     {% if site_author.avatar_url %}
-      <img src="{{ site_author.avatar_url }}" alt="{{ site_author.name }}" class="vd-author-byline__avatar">
+      <img src="{{ site_author.avatar_url }}" alt="{{ site_author.name }}" class="vd-author-byline__avatar" width="32" height="32">
     {% endif %}
     <span class="vd-author-byline__name">{% translate "Автор" %}: {{ site_author.name }}</span>
   </a>
@@ -71,7 +75,7 @@
     </div>
   {% endif %}
 {% endwith %}
-<h2 class="vd-section-title">{% translate "Домінуючі кольори" %}</h2>
+<h2 class="vd-section-title" id="colors">{% translate "Домінуючі кольори" %}</h2>
 <div class="vd-swatches mb-2">
   {% for color in region.shown_colors %}
     <span class="vd-swatch" style="background-color: {{ color }}; width: 34px; height: 34px;" title="{{ color }}"></span>
@@ -90,7 +94,7 @@
 </p>
 
 {% if region.sources.exists %}
-  <h2 class="vd-section-title">{% translate "Джерела" %}</h2>
+  <h2 class="vd-section-title" id="sources">{% translate "Джерела" %}</h2>
   <ul class="vd-prose">
     {% for source in region.sources.all %}
       <li>
@@ -103,7 +107,11 @@
   </ul>
 {% endif %}
 
-<h2 class="vd-section-title">{% translate "Орнаменти цього регіону" %}</h2>
+</div>
+{% if toc|length > 1 %}<aside class="vd-with-toc__aside">{% include "includes/toc.html" %}</aside>{% endif %}
+</div>
+
+<h2 class="vd-section-title" id="ornaments">{% translate "Орнаменти цього регіону" %}</h2>
 {% if patterns %}
   <div class="vd-grid">
     {% for item in patterns %}

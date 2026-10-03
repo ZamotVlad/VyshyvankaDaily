@@ -8,6 +8,7 @@ from django_ratelimit.decorators import ratelimit
 
 from apps.blog.forms import GuestPostSubmissionForm
 from apps.blog.models import Author, BlogCategory, BlogPost
+from apps.core.toc import build_toc
 from apps.core.utils import client_ip
 
 BLOG_PAGE_SIZE = 12
@@ -67,8 +68,14 @@ def blog_detail_view(request, slug):
         .order_by("-published_at")[:3]
     )
 
+    body, toc = build_toc(post.localized_body, reserved=("sources",))
+    if post.sources.exists():
+        toc.append({"id": "sources", "title": _("Джерела")})
+
     context = {
         "post": post,
+        "body": body,
+        "toc": toc,
         "related_posts": related_posts,
         "is_partner_content": post.post_type != BlogPost.PostType.EDITORIAL,
     }

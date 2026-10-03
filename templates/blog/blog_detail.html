@@ -22,7 +22,8 @@
 {% block content %}
 {% include "includes/breadcrumbs.html" with breadcrumbs=post.breadcrumbs %}
 
-<article class="vd-prose">
+<div class="vd-with-toc">
+<article class="vd-prose vd-with-toc__main">
   {% if post.cover_image_url %}
     <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="vd-article-cover" width="1100" height="825" fetchpriority="high">
   {% endif %}
@@ -46,16 +47,18 @@
   {% if post.blog_author %}
     <a href="{% url 'blog:author_detail' post.blog_author.slug %}" class="vd-author-byline">
       {% if post.blog_author.avatar_url %}
-        <img src="{{ post.blog_author.avatar_url }}" alt="{{ post.blog_author.name }}" class="vd-author-byline__avatar">
+        <img src="{{ post.blog_author.avatar_url }}" alt="{{ post.blog_author.name }}" class="vd-author-byline__avatar" width="32" height="32">
       {% endif %}
       <span class="vd-author-byline__name">{% translate "Автор" %}: {{ post.blog_author.name }}</span>
     </a>
   {% endif %}
 
-  {{ post.localized_body|safe }}
+  {% include "includes/toc.html" with compact=True %}
+
+  {{ body|safe }}
 
   {% if post.sources.exists %}
-    <h2>{% translate "Джерела" %}</h2>
+    <h2 id="sources">{% translate "Джерела" %}</h2>
     <ul>
       {% for source in post.sources.all %}
         <li>{{ source.name }}{% if source.author_or_institution %} - {{ source.author_or_institution }}{% endif %}</li>
@@ -63,6 +66,8 @@
     </ul>
   {% endif %}
 </article>
+{% if toc|length > 1 %}<aside class="vd-with-toc__aside">{% include "includes/toc.html" %}</aside>{% endif %}
+</div>
 
 {% if related_posts %}
   <h2 class="vd-section-title">{% translate "Читайте також" %}</h2>

@@ -1,0 +1,15 @@
+{% load i18n %}{% if toc|length > 1 %}{% if compact %}
+<details class="vd-pagetoc vd-pagetoc--compact">
+  <summary class="vd-pagetoc__title">{% translate "Зміст" %}</summary>
+  <ol class="vd-pagetoc__list">
+    {% for item in toc %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
+  </ol>
+</details>
+{% else %}
+<nav class="vd-pagetoc vd-pagetoc--side" aria-label="{% translate 'Зміст сторінки' %}" data-toc>
+  <p class="vd-pagetoc__title">{% translate "Зміст" %}</p>
+  <ol class="vd-pagetoc__list">
+    {% for item in toc %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}
+  </ol>
+</nav>
+{% endif %}{% endif %}

@@ -685,3 +685,64 @@ class PageSpecificMetaTests(TestCase):
             self.assertNotIn(default, desc, path)
             self.assertLessEqual(len(desc), 160, path)
         self.assertContains(self.client.get("/regions/"), "<title>Вишиванки по регіонах України")
+
+
+class TableOfContentsTests(TestCase):
+    def test_build_toc_adds_unique_latin_ids(self):
+        from apps.core.toc import build_toc
+
+        html, items = build_toc(
+            '<h2>Кольори: чому їх немає</h2><p>x</p><h2 class="a">Кольори: чому їх немає</h2>'
+            "<h3>Не в змісті</h3><h2>Sources</h2>",
+            reserved=("sources",),
+        )
+        self.assertEqual(
+            [i["id"] for i in items],
+            ["kolori-chomu-ikh-nemaie", "kolori-chomu-ikh-nemaie-2", "sources-2"],
+        )
+        self.assertIn('<h2 id="kolori-chomu-ikh-nemaie">', html)
+        self.assertIn('<h2 id="kolori-chomu-ikh-nemaie-2" class="a">', html)
+        self.assertNotIn("<h3 id", html)
+
+    def test_region_page_has_toc_in_both_languages(self):
+        from django.utils import translation
+
+        from apps.patterns.models import Region
+
+        with translation.override("uk"):
+            region = Region.objects.create(
+                name="Тестова область",
+                slug="test-toc",
+                symbolism_description="<h2>Перший розділ</h2><p>a</p><h2>Другий</h2><p>b</p>",
+                symbolism_description_en="<h2>First part</h2><p>a</p><h2>Second</h2><p>b</p>",
+                dominant_colors=["#000000"],
+                rotation_order=901,
+            )
+        html = self.client.get(f"/regions/{region.slug}/").content.decode()
+        self.assertIn('<h2 id="pershii-rozdil">', html)
+        self.assertIn('href="#pershii-rozdil"', html)
+        self.assertIn('href="#colors"', html)
+        self.assertIn('id="colors"', html)
+        self.assertIn('href="#ornaments"', html)
+        self.assertIn("data-toc", html)
+        en = self.client.get(f"/en/regions/{region.slug}/").content.decode()
+        self.assertIn('<h2 id="first-part">', en)
+        self.assertIn('href="#first-part"', en)
+        self.assertIn(">Contents<", en)
+
+    def test_single_heading_has_no_toc(self):
+        from apps.blog.models import BlogCategory, BlogPost
+
+        post = BlogPost.objects.create(
+            category=BlogCategory.objects.create(name_uk="К", slug="k"),
+            title_uk="Т",
+            slug="one-h2",
+            excerpt_uk="о",
+            body="<h2>Один</h2><p>текст</p>",
+            status="published",
+            published_at=timezone.now(),
+        )
+        html = self.client.get(f"/blog/{post.slug}/").content.decode()
+        self.assertIn('<h2 id="odin">', html)
+        self.assertNotIn("data-toc", html)
+        self.assertNotIn("vd-pagetoc--compact", html)
