@@ -28,6 +28,48 @@ document.addEventListener("DOMContentLoaded", function () {
     select(0, false);
   });
 
+  // Зміст: підсвічує розділ, який зараз читають
+  var toc = document.querySelector("[data-toc]");
+  if (toc) {
+    var links = {};
+    toc.querySelectorAll("a[href^='#']").forEach(function (a) {
+      links[decodeURIComponent(a.getAttribute("href").slice(1))] = a;
+    });
+    var headings = Object.keys(links)
+      .map(function (id) {
+        return document.getElementById(id);
+      })
+      .filter(Boolean);
+    var current = null;
+    var setCurrent = function (id) {
+      if (id === current) return;
+      if (current && links[current]) links[current].removeAttribute("aria-current");
+      current = id;
+      if (links[id]) links[id].setAttribute("aria-current", "true");
+    };
+    var update = function () {
+      var active = headings[0];
+      headings.forEach(function (h) {
+        if (h.getBoundingClientRect().top < 140) active = h;
+      });
+      if (active) setCurrent(active.id);
+    };
+    var ticking = false;
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          update();
+          ticking = false;
+        });
+      },
+      { passive: true }
+    );
+    update();
+  }
+
   // Мобільне меню на весь екран
   var burger = document.querySelector(".vd-burger");
   var panel = document.getElementById("vdMobileNav");

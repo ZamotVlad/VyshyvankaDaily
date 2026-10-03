@@ -1418,7 +1418,8 @@ form[id^="email_list"] button:hover {
   border-color: var(--vd-red);
   color: var(--vd-cream);
 }
-.vd-author-byline__avatar {
+.vd-author-byline .vd-author-byline__avatar {
+  max-width: none;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -1524,4 +1525,106 @@ form[id^="email_list"] button:hover {
   .vd-prose figure.vd-figure--pair {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---------- Зміст сторінки ---------- */
+html {
+  scroll-padding-top: 96px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+.vd-pagetoc__title {
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  margin: 0 0 10px;
+}
+.vd-pagetoc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.vd-pagetoc__list a {
+  display: block;
+  padding: 6px 0 6px 14px;
+  border-left: 2px solid var(--vd-border);
+  color: var(--vd-cream);
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.vd-pagetoc__list a:hover {
+  color: var(--vd-red-text);
+}
+.vd-pagetoc__list a[aria-current="true"] {
+  border-left-color: var(--vd-red);
+  color: var(--vd-red-text);
+}
+.vd-pagetoc--compact {
+  margin: 4px 0 28px;
+  padding: 14px 18px;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+}
+.vd-pagetoc--compact summary {
+  cursor: pointer;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.vd-pagetoc--compact summary::-webkit-details-marker {
+  display: none;
+}
+.vd-pagetoc--compact summary::after {
+  content: "+";
+  font-size: 18px;
+  color: var(--vd-red-text);
+}
+.vd-pagetoc--compact[open] summary::after {
+  content: "−";
+}
+.vd-pagetoc--compact[open] .vd-pagetoc__list {
+  margin-top: 10px;
+}
+.vd-with-toc__aside {
+  display: none;
+}
+@media (min-width: 1200px) {
+  .vd-with-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 760px) 280px;
+    justify-content: space-between;
+    gap: 56px;
+    align-items: start;
+  }
+  .vd-with-toc__aside {
+    display: block;
+    position: sticky;
+    top: 96px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding: 18px 20px;
+    background: var(--vd-surface);
+    border: 1px solid var(--vd-border);
+    border-radius: var(--vd-radius);
+    scrollbar-width: thin;
+  }
+  .vd-pagetoc--compact {
+    display: none;
+  }
+}
+.vd-card__cover {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
 }

@@ -16,6 +16,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.blog.models import Author
+from apps.core.toc import build_toc
 from apps.patterns.models import DailyPattern, Region, SavedPattern
 from apps.patterns.region_groups import grouped_regions
 from apps.patterns.services.generation import (
@@ -214,8 +215,16 @@ def region_detail_view(request, slug):
     )
     patterns = Paginator(patterns, LIST_PAGE_SIZE).get_page(request.GET.get("page"))
 
+    body, toc = build_toc(region.symbolism_description, reserved=("colors", "sources", "ornaments"))
+    toc.append({"id": "colors", "title": _("Домінуючі кольори")})
+    if region.sources.exists():
+        toc.append({"id": "sources", "title": _("Джерела")})
+    toc.append({"id": "ornaments", "title": _("Орнаменти цього регіону")})
+
     context = {
         "region": region,
+        "body": body,
+        "toc": toc,
         "claim_type": region.get_claim_type(),
         "patterns": patterns,
         "site_author": Author.objects.first(),
