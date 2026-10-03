@@ -5364,3 +5364,12 @@ msgstr "Umami - anonymous visit statistics without cookies: which pages are open
 
 msgid "Sentry - звіти про технічні помилки сайту, без IP-адрес і даних акаунта."
 msgstr "Sentry - reports about technical errors on the site, without IP addresses or account data."
+
+#: apps/core/templatetags/seo_tags.py
+msgid "Україна"
+msgstr "Ukraine"
+
+#: apps/core/templatetags/seo_tags.py
+#, python-format
+msgid "Орнамент дня: %(region)s, %(date)s"
+msgstr "Pattern of the day: %(region)s, %(date)s"

@@ -1,13 +1,18 @@
 import json
 
 from django import template
+from django.templatetags.static import static
 from django.urls import reverse
+from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 register = template.Library()
 
 SITE_NAME = "VyshyvankaDaily"
+CONTACT_EMAIL = "vyshyvankadaily@gmail.com"
+SAME_AS = ["https://ko-fi.com/vyshyvankadaily"]
+PERSON_SOURCE_TYPES = {"academic"}
 
 
 def _script(data):
@@ -20,20 +25,59 @@ def _script(data):
     return mark_safe(f'<script type="application/ld+json">{payload}</script>')
 
 
+def _home(request):
+    return request.build_absolute_uri("/")
+
+
+def _logo(request):
+    return {
+        "@type": "ImageObject",
+        "url": request.build_absolute_uri(static("favicon/apple-touch-icon.png")),
+        "width": 180,
+        "height": 180,
+    }
+
+
+def _publisher(request):
+    home = _home(request)
+    return {
+        "@type": "Organization",
+        "@id": f"{home}#organization",
+        "name": SITE_NAME,
+        "url": home,
+        "logo": _logo(request),
+    }
+
+
+def _word_count(html):
+    return len(strip_tags(html or "").split())
+
+
+def _citations(sources):
+    items = []
+    for source in sources:
+        entry = {"@type": "CreativeWork", "name": source.name}
+        if source.author_or_institution:
+            kind = "Person" if source.source_type in PERSON_SOURCE_TYPES else "Organization"
+            entry["author"] = {"@type": kind, "name": source.author_or_institution}
+        if source.publication_year:
+            entry["datePublished"] = str(source.publication_year)
+        items.append(entry)
+    return items
+
+
 @register.simple_tag(takes_context=True)
 def jsonld_site(context):
     """Organization + WebSite - на кожній сторінці, з base.html."""
     request = context["request"]
-    home = request.build_absolute_uri("/")
+    home = _home(request)
+    organization = _publisher(request)
+    organization["email"] = CONTACT_EMAIL
+    organization["sameAs"] = SAME_AS
     data = {
         "@context": "https://schema.org",
         "@graph": [
-            {
-                "@type": "Organization",
-                "@id": f"{home}#organization",
-                "name": SITE_NAME,
-                "url": home,
-            },
+            organization,
             {
                 "@type": "WebSite",
                 "@id": f"{home}#website",
@@ -77,13 +121,15 @@ def jsonld_breadcrumbs(context, breadcrumbs):
 def jsonld_article(context, post):
     """BlogPosting для статті блогу."""
     request = context["request"]
-    home = request.build_absolute_uri("/")
+    url = request.build_absolute_uri(request.path)
     data = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "headline": post.title,
-        "url": request.build_absolute_uri(request.path),
-        "publisher": {"@type": "Organization", "name": SITE_NAME, "url": home},
+        "url": url,
+        "mainEntityOfPage": {"@type": "WebPage", "@id": url},
+        "inLanguage": context.get("LANGUAGE_CODE", "uk"),
+        "publisher": _publisher(request),
     }
 
     # getattr замість прямого звернення: поля можуть називатись інакше,
@@ -91,6 +137,10 @@ def jsonld_article(context, post):
     excerpt = getattr(post, "excerpt", None)
     if excerpt:
         data["description"] = str(excerpt)
+
+    words = _word_count(context.get("body") or getattr(post, "body", ""))
+    if words:
+        data["wordCount"] = words
 
     published = getattr(post, "published_at", None)
     if published:
@@ -112,48 +162,72 @@ def jsonld_article(context, post):
             reverse("blog:author_detail", args=[blog_author.slug])
         )
 
+    sources = getattr(post, "sources", None)
+    if sources is not None:
+        citations = _citations(sources.all())
+        if citations:
+            data["citation"] = citations
+
+    return _script(data)
+
+
+@register.simple_tag(takes_context=True)
+def jsonld_region(context, region):
+    """Article для сторінки регіону: текст про вишивку з джерелами як citation."""
+    request = context["request"]
+    url = request.build_absolute_uri(request.path)
+    data = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": region.seo_title or region.name,
+        "url": url,
+        "mainEntityOfPage": {"@type": "WebPage", "@id": url},
+        "inLanguage": context.get("LANGUAGE_CODE", "uk"),
+        "image": request.build_absolute_uri(static("og/fallback.png")),
+        "author": {"@type": "Organization", "name": SITE_NAME, "url": _home(request)},
+        "publisher": _publisher(request),
+        "about": {
+            "@type": "Place",
+            "name": region.name,
+            "containedInPlace": {"@type": "Country", "name": _("Україна")},
+        },
+    }
+    if region.seo_description:
+        data["description"] = region.seo_description
+    words = _word_count(context.get("body") or region.symbolism_description)
+    if words:
+        data["wordCount"] = words
+    if region.created_at:
+        data["datePublished"] = region.created_at.isoformat()
+    if region.updated_at:
+        data["dateModified"] = region.updated_at.isoformat()
+    citations = _citations(region.sources.all())
+    if citations:
+        data["citation"] = citations
     return _script(data)
 
 
 @register.simple_tag(takes_context=True)
 def jsonld_pattern(context, pattern):
-    """VisualArtwork для згенерованого орнаменту дня."""
+    """ImageObject для згенерованого орнаменту дня (SVG)."""
     request = context["request"]
     region = pattern.region
+    date = pattern.date.isoformat()
     data = {
         "@context": "https://schema.org",
-        "@type": "VisualArtwork",
-        "name": f"{region.name} - {pattern.date.isoformat()}",
+        "@type": "ImageObject",
+        "name": f"{region.name} - {date}",
+        "caption": _("Орнамент дня: %(region)s, %(date)s") % {"region": region.name, "date": date},
         "url": request.build_absolute_uri(request.path),
-        "dateCreated": pattern.date.isoformat(),
-        "artform": "Embroidery pattern",
-        "creator": {"@type": "Organization", "name": SITE_NAME},
-        "locationCreated": {"@type": "Place", "name": region.name},
+        "contentUrl": request.build_absolute_uri(reverse("patterns:pattern_svg", args=[date])),
+        "encodingFormat": "image/svg+xml",
+        "datePublished": date,
+        "creator": {"@type": "Organization", "name": SITE_NAME, "url": _home(request)},
+        "contentLocation": {"@type": "Place", "name": region.name},
     }
-    description = getattr(region, "symbolism_description", None)
+    description = getattr(region, "seo_description", None) or strip_tags(
+        getattr(region, "symbolism_description", "") or ""
+    )
     if description:
         data["description"] = str(description)[:300]
     return _script(data)
-
-
-@register.simple_tag
-def jsonld_faq(categories):
-    """
-    FAQPage. Чесне застереження: з 2023 року Google показує FAQ-збагачені
-    результати лише для авторитетних урядових і медичних сайтів, тож
-    видимого рich-сніпета це нам не дасть. Розмітка все одно корисна для
-    машинного розуміння структури сторінки, але без завищених очікувань.
-    """
-    entities = []
-    for category in categories or []:
-        for item in category.items.all():
-            entities.append(
-                {
-                    "@type": "Question",
-                    "name": item.question,
-                    "acceptedAnswer": {"@type": "Answer", "text": item.answer},
-                }
-            )
-    if not entities:
-        return ""
-    return _script({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": entities})

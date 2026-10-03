@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from apps.blog.models import BlogCategory, BlogPost
 from apps.pages.models import FAQCategory, FAQItem
-from apps.patterns.models import DailyPattern, Region
+from apps.patterns.models import DailyPattern, Region, Source
 
 
 class SlugTransliterationTests(TestCase):
@@ -143,7 +143,7 @@ class JsonLdTests(TestCase):
         for script in scripts:
             self.assertNotIn("<", script)
 
-    def test_pattern_page_emits_visualartwork_jsonld(self):
+    def test_pattern_page_emits_imageobject_jsonld(self):
         region = Region.objects.create(
             name="Тестова область",
             symbolism_description="Опис символіки регіону.",
@@ -158,14 +158,18 @@ class JsonLdTests(TestCase):
             algorithm_version=1,
             svg_content="<svg>1</svg>",
         )
-        html = self.client.get(f"/pattern/{pattern.date.isoformat()}/").content.decode()
+        iso = pattern.date.isoformat()
+        html = self.client.get(f"/pattern/{iso}/").content.decode()
         blocks = extract_jsonld(html)
         types = [b.get("@type") for b in blocks]
-        self.assertIn("VisualArtwork", types)
+        self.assertIn("ImageObject", types)
+        self.assertNotIn("VisualArtwork", types)
 
-        artwork = next(b for b in blocks if b.get("@type") == "VisualArtwork")
-        self.assertIn(region.name, artwork["name"])
-        self.assertEqual(artwork["locationCreated"]["name"], region.name)
+        image = next(b for b in blocks if b.get("@type") == "ImageObject")
+        self.assertIn(region.name, image["name"])
+        self.assertTrue(image["contentUrl"].endswith(f"/pattern/{iso}.svg"))
+        self.assertEqual(image["encodingFormat"], "image/svg+xml")
+        self.assertEqual(image["contentLocation"]["name"], region.name)
 
     def test_blog_post_emits_blogposting_jsonld(self):
         category = BlogCategory.objects.create(name="Категорія")
@@ -186,27 +190,61 @@ class JsonLdTests(TestCase):
         article = next(b for b in blocks if b.get("@type") == "BlogPosting")
         self.assertEqual(article["headline"], post.title)
         self.assertEqual(article["description"], post.excerpt)
+        self.assertEqual(article["mainEntityOfPage"]["@id"], article["url"])
+        self.assertIn("logo", article["publisher"])
+        self.assertGreater(article["wordCount"], 0)
 
-    def test_faq_page_emits_faqpage_jsonld_with_items(self):
+    def test_region_page_emits_article_with_citations(self):
+        region = Region.objects.create(
+            name="Тестова область",
+            symbolism_description="<p>Опис символіки регіону.</p>",
+            seo_title="Тестовий заголовок",
+            seo_description="Тестовий опис.",
+            dominant_colors=["#000000"],
+            shirt_cut_type="Тестовий крій",
+            rotation_order=1,
+        )
+        source = Source.objects.create(
+            name="Тестовий каталог",
+            source_type="museum",
+            author_or_institution="Тестовий музей",
+            reference="Тест.",
+            publication_year=2013,
+        )
+        region.sources.add(source)
+        html = self.client.get(f"/regions/{region.slug}/").content.decode()
+        blocks = extract_jsonld(html)
+        article = next(b for b in blocks if b.get("@type") == "Article")
+        self.assertEqual(article["headline"], "Тестовий заголовок")
+        self.assertEqual(article["description"], "Тестовий опис.")
+        self.assertEqual(article["about"]["name"], region.name)
+        self.assertEqual(article["citation"][0]["name"], "Тестовий каталог")
+        self.assertEqual(article["citation"][0]["author"]["@type"], "Organization")
+        self.assertEqual(article["citation"][0]["datePublished"], "2013")
+
+    def test_organization_has_logo_and_email(self):
+        html = self.client.get("/").content.decode()
+        org = next(
+            node
+            for block in extract_jsonld(html)
+            for node in block.get("@graph", [block])
+            if node.get("@type") == "Organization"
+        )
+        self.assertTrue(org["logo"]["url"].endswith(".png"))
+        self.assertEqual(org["email"], "vyshyvankadaily@gmail.com")
+        self.assertIn("https://ko-fi.com/vyshyvankadaily", org["sameAs"])
+
+    def test_faq_page_has_no_faqpage_jsonld(self):
         category = FAQCategory.objects.create(name="Загальні питання", order=999)
         FAQItem.objects.create(
             category=category,
             question="Унікальне тестове запитання?",
             answer="Тестова відповідь.",
         )
-        html = self.client.get("/faq/").content.decode()
-        blocks = extract_jsonld(html)
-        types = [b.get("@type") for b in blocks]
-        self.assertIn("FAQPage", types)
-
-        faq = next(b for b in blocks if b.get("@type") == "FAQPage")
-        questions = [entity["name"] for entity in faq["mainEntity"]]
-        self.assertIn("Унікальне тестове запитання?", questions)
-
-    def test_faq_page_omits_jsonld_when_no_items(self):
-        """jsonld_faq повертає порожній рядок, коли питань немає - перевіряємо, що тег не падає."""
         response = self.client.get("/faq/")
         self.assertEqual(response.status_code, 200)
+        types = [b.get("@type") for b in extract_jsonld(response.content.decode())]
+        self.assertNotIn("FAQPage", types)
 
 
 class PrivatePageIndexingTests(TestCase):

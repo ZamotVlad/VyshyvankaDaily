@@ -7,6 +7,7 @@
 {% block meta_description %}{{ region.seo_description|default:region.symbolism_description|striptags|truncatewords:25 }}{% endblock %}
 
 {% block extra_head %}
+{% jsonld_region region %}
 {% jsonld_breadcrumbs region.breadcrumbs %}
 {% if region.target_keyword %}<meta name="keywords" content="{{ region.target_keyword }}">{% endif %}
 <meta property="og:title" content="{{ region.seo_title|default:region.name }}">
