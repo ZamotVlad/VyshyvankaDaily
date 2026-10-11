@@ -25,7 +25,9 @@
 <div class="vd-with-toc">
 <article class="vd-prose vd-with-toc__main">
   {% if post.cover_image_url %}
-    <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="vd-article-cover" width="1100" height="825" fetchpriority="high">
+    <div class="vd-article-cover">
+      <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" width="1600" height="900" fetchpriority="high">
+    </div>
   {% endif %}
 
   {% if is_partner_content %}

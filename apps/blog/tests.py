@@ -454,6 +454,11 @@ class FirstArticleSeoTests(TestCase):
             self.assertTrue(seo_title)
             self.assertNotIn(seo_title.split(":")[0], title)
 
+    def test_cover_sits_in_fixed_ratio_frame(self):
+        html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
+        frame = r'<div class="vd-article-cover">\s*<img src="[^"]+" alt="[^"]*"'
+        self.assertRegex(html, frame + r' width="1600" height="900"')
+
     def test_author_meta_is_article_author(self):
         html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
         self.assertIn('<meta name="author" content="Владислав Замотайло">', html)
