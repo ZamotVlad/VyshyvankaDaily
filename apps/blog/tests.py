@@ -395,11 +395,14 @@ class LoadBlogPostsCommandTests(TestCase):
 
     def test_article_file_loads_and_is_idempotent(self):
         import io
+        import json
+        from pathlib import Path
 
         call_command("load_blog_posts", "blog_posts.json", stdout=io.StringIO())
         call_command("load_blog_posts", "blog_posts.json", stdout=io.StringIO())
         post = BlogPost.objects.get(slug="z-chym-nosyty-vyshyvanku")
-        self.assertEqual(BlogPost.objects.count(), 1)
+        entries = json.loads(Path("blog_posts.json").read_text(encoding="utf-8"))
+        self.assertEqual(BlogPost.objects.count(), len(entries))
         self.assertEqual(post.status, "published")
         self.assertIsNotNone(post.published_at)
         self.assertEqual(post.blog_author.name_uk, "Владислав Замотайло")
@@ -418,11 +421,13 @@ class LoadBlogPostsCommandTests(TestCase):
 
         from django.conf import settings
 
-        entry = json.loads(Path("blog_posts.json").read_text(encoding="utf-8"))[0]
-        paths = set(re.findall(r'src="/static/([^"]+)"', entry["uk"]["body"] + entry["en"]["body"]))
-        paths.add(entry["cover_image_url"].split("/static/", 1)[1])
-        for path in paths:
-            self.assertTrue((Path(settings.BASE_DIR) / "static" / path).exists(), path)
+        for entry in json.loads(Path("blog_posts.json").read_text(encoding="utf-8")):
+            body = entry["uk"]["body"] + entry["en"]["body"]
+            self.assertNotRegex(body, r'<img[^>]+src="https?://', entry["slug"])
+            paths = set(re.findall(r'src="/static/([^"]+)"', body))
+            paths.add(entry["cover_image_url"].split("/static/", 1)[1])
+            for path in paths:
+                self.assertTrue((Path(settings.BASE_DIR) / "static" / path).exists(), path)
 
     def test_dry_run_saves_nothing(self):
         import io
