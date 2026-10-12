@@ -483,13 +483,20 @@ class FirstArticleSeoTests(TestCase):
         en = self.client.get(f"/en/blog/{self.post.slug}/").content.decode()
         self.assertIn("Updated", en)
 
-    def test_author_box_shows_bio(self):
+    def test_author_page_has_person_schema_linked_from_article(self):
+        import json
+        import re
+
         author = self.post.blog_author
         author.bio_uk = "Засновник проєкту"
         author.save()
-        html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
-        self.assertIn('class="vd-author-box"', html)
-        self.assertIn("Засновник проєкту", html)
+        page = self.client.get(f"/blog/author/{author.slug}/").content.decode()
+        blocks = [json.loads(b) for b in re.findall(r'application/ld\+json">(.*?)</script>', page)]
+        profile = next(b for b in blocks if b.get("@type") == "ProfilePage")
+        self.assertEqual(profile["mainEntity"]["description"], "Засновник проєкту")
+        article = self.client.get(f"/blog/{self.post.slug}/").content.decode()
+        self.assertIn(f'"@id": "{profile["mainEntity"]["@id"]}"', article)
+        self.assertNotIn("vd-author-box", article)
 
     def test_author_meta_is_article_author(self):
         html = self.client.get(f"/blog/{self.post.slug}/").content.decode()

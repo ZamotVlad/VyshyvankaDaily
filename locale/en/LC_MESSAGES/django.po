@@ -5376,6 +5376,3 @@ msgstr "Pattern of the day: %(region)s, %(date)s"
 
 msgid "Оновлено"
 msgstr "Updated"
-
-msgid "Про автора"
-msgstr "About the author"

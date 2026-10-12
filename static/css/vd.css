@@ -1401,31 +1401,6 @@ form[id^="email_list"] button:hover {
 }
 
 /* ---------- Плашка автора ---------- */
-.vd-author-box {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  margin: 2.2em 0 1.6em;
-  padding: 18px 20px;
-  background: var(--vd-surface);
-  border: 1px solid var(--vd-border);
-  border-radius: var(--vd-radius);
-}
-.vd-prose .vd-author-box__avatar {
-  flex: 0 0 64px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.vd-prose .vd-author-box__name {
-  margin: 0 0 4px;
-  font-family: var(--vd-font-display);
-  font-size: 1rem;
-}
-.vd-prose .vd-author-box__bio {
-  margin: 0;
-}
 .vd-author-byline {
   display: inline-flex;
   align-items: center;

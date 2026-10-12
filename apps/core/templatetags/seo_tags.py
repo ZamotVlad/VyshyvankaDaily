@@ -158,9 +158,11 @@ def jsonld_article(context, post):
     author = getattr(post, "guest_author_name", None) or (blog_author.name if blog_author else None)
     data["author"] = {"@type": "Person" if author else "Organization", "name": author or SITE_NAME}
     if blog_author and not getattr(post, "guest_author_name", None):
-        data["author"]["url"] = request.build_absolute_uri(
+        author_url = request.build_absolute_uri(
             reverse("blog:author_detail", args=[blog_author.slug])
         )
+        data["author"]["url"] = author_url
+        data["author"]["@id"] = f"{author_url}#person"
 
     sources = getattr(post, "sources", None)
     if sources is not None:
@@ -168,6 +170,29 @@ def jsonld_article(context, post):
         if citations:
             data["citation"] = citations
 
+    return _script(data)
+
+
+@register.simple_tag(takes_context=True)
+def jsonld_person(context, author):
+    """ProfilePage + Person для сторінки автора; @id збігається з author у статтях."""
+    request = context["request"]
+    url = request.build_absolute_uri(request.path)
+    person = {"@type": "Person", "@id": f"{url}#person", "name": author.name, "url": url}
+    if author.bio:
+        person["description"] = author.bio
+    if author.avatar_url:
+        person["image"] = request.build_absolute_uri(author.avatar_url)
+    if author.website_url:
+        person["sameAs"] = [author.website_url]
+    person["worksFor"] = {"@id": f"{_home(request)}#organization"}
+    data = {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "url": url,
+        "inLanguage": context.get("LANGUAGE_CODE", "uk"),
+        "mainEntity": person,
+    }
     return _script(data)
 
 

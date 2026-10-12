@@ -69,18 +69,6 @@
     </ul>
   {% endif %}
 
-  {% if post.blog_author and post.blog_author.bio %}
-    <aside class="vd-author-box" aria-label="{% translate "Про автора" %}">
-      {% if post.blog_author.avatar_url %}
-        <img src="{{ post.blog_author.avatar_url }}" alt="{{ post.blog_author.name }}" class="vd-author-box__avatar" width="64" height="64" loading="lazy" decoding="async">
-      {% endif %}
-      <div>
-        <p class="vd-author-box__name"><a href="{% url 'blog:author_detail' post.blog_author.slug %}">{{ post.blog_author.name }}</a></p>
-        <p class="vd-small vd-author-box__bio">{{ post.blog_author.bio }}</p>
-      </div>
-    </aside>
-  {% endif %}
-
   {% if mentioned_regions %}
     <h2 id="regions">{% translate "Регіони в цій статті" %}</h2>
     <ul class="vd-region-chips vd-region-chips--article">

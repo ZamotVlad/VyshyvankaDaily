@@ -1,9 +1,13 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n seo_tags %}
 
 {% block title %}{{ author.name }} - VyshyvankaDaily{% endblock %}
 
 {% block meta_description %}{{ author.bio|truncatewords:25 }}{% endblock %}
+
+{% block extra_head %}
+{% jsonld_person author %}
+{% endblock %}
 
 {% block content %}
 <div class="vd-author-page">
