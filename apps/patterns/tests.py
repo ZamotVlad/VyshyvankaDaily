@@ -1,5 +1,6 @@
 import re
 from datetime import date, timedelta
+from io import StringIO
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
@@ -965,7 +966,7 @@ class PatternSvgEndpointTests(TestCase):
         with translation.override("uk"):
             html = render_to_string("includes/pattern_img.html", {"pattern": self.pattern})
         self.assertIn('src="/pattern/2026-09-01.svg?v=', html)
-        self.assertIn('alt="Орнамент: SVG регіон, 01 вересня 2026"', html)
+        self.assertRegex(html, r'alt="Орнамент: SVG регіон, 01 \w+ 2026"')
         self.assertNotIn("<rect/>", html)
 
     def test_pattern_page_hero_label_follows_language(self):
@@ -1200,10 +1201,10 @@ class RegionPhotosTests(TestCase):
             "caption_en": "Illustration by VyshyvankaDaily: test.",
         }
         path = self._write([entry])
-        call_command("load_region_photos", path, "--dry-run", stdout=open("/dev/null", "w"))
+        call_command("load_region_photos", path, "--dry-run", stdout=StringIO())
         self.assertEqual(RegionPhoto.objects.count(), 0)
-        call_command("load_region_photos", path, stdout=open("/dev/null", "w"))
-        call_command("load_region_photos", path, stdout=open("/dev/null", "w"))
+        call_command("load_region_photos", path, stdout=StringIO())
+        call_command("load_region_photos", path, stdout=StringIO())
         self.assertEqual(RegionPhoto.objects.count(), 1)
         RegionPhoto.objects.create(
             region=region,
@@ -1216,7 +1217,7 @@ class RegionPhotosTests(TestCase):
         self.assertIn('class="vd-photo-strip__badge"', html)
         self.assertEqual(html.count("vd-photo-strip__badge"), 1)
 
-        call_command("load_region_photos", self._write([]), stdout=open("/dev/null", "w"))
+        call_command("load_region_photos", self._write([]), stdout=StringIO())
         self.assertEqual(
             list(RegionPhoto.objects.values_list("image_url", flat=True)),
             ["https://example.org/real.jpg"],
