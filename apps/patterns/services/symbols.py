@@ -5,6 +5,7 @@ from functools import cache
 from pathlib import Path
 
 from django.urls import reverse
+from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 
 from apps.patterns.models import Motif, Region
@@ -134,7 +135,7 @@ def page_markdown(lang):
         out += ["", f"### {group['title']}", group["intro"]]
         for sym in group["symbols"]:
             out += ["", f"**{sym['name']}**", *sym["text"]]
-    out += ["", f"### {c['ornek_title']}", *c["ornek"]]
+    out += ["", f"### {c['ornek_title']}", *map(strip_tags, c["ornek"])]
     out += [f"- {a}: {b}" for a, b in c["ornek_rows"]]
     out += ["", f"### {c['names_title']}", *c["names"], "", f"### {c['new_title']}", *c["new"]]
     out += ["", f"### {c['why_title']}", *c["why"], "", f"### {c['faq_title']}"]

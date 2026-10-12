@@ -54,7 +54,7 @@
   <div class="vd-sym vd-sym--wide">
     <div class="vd-sym__tile">{{ page.ornek_art }}</div>
     <div class="vd-sym__body">
-      {% for p in page.ornek %}<p>{{ p }}</p>{% endfor %}
+      {% for p in page.ornek %}<p>{{ p|safe }}</p>{% endfor %}
       <p class="vd-sym__where"><span>{{ page.regions_label }}:</span>{% for r in page.ornek_region_links %} <a href="{{ r.url }}">{{ r.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</p>
     </div>
   </div>
@@ -79,7 +79,7 @@
             <th scope="row"><a href="#{{ row.anchor }}">{{ row.symbol }}</a></th>
             <td>{{ row.meaning }}</td>
             <td>{{ row.who }}</td>
-            <td>{% for r in row.region_links %}<a href="{{ r.url }}">{{ r.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+            <td>{% for r in row.region_links %}{{ r.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
           </tr>
         {% endfor %}
       </tbody>
