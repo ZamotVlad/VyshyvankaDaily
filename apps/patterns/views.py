@@ -210,15 +210,8 @@ def my_collection_view(request):
 def region_detail_view(request, slug):
     region = get_object_or_404(Region, slug=slug)
 
-    patterns = (
-        DailyPattern.objects.filter(region=region, date__lte=timezone.localdate())
-        .select_related("region")
-        .order_by("-date")
-    )
-    patterns = Paginator(patterns, LIST_PAGE_SIZE).get_page(request.GET.get("page"))
-
     body, toc = build_toc(
-        region.symbolism_description, reserved=("articles", "colors", "sources", "ornaments")
+        region.symbolism_description, reserved=("articles", "colors", "sources", "gallery")
     )
     region_posts = list(region.published_blog_posts)
     if region_posts:
@@ -226,7 +219,6 @@ def region_detail_view(request, slug):
     toc.append({"id": "colors", "title": _("Домінуючі кольори")})
     if region.sources.exists():
         toc.append({"id": "sources", "title": _("Джерела")})
-    toc.append({"id": "ornaments", "title": _("Орнаменти цього регіону")})
 
     context = {
         "region": region,
@@ -234,7 +226,7 @@ def region_detail_view(request, slug):
         "toc": toc,
         "region_posts": region_posts,
         "claim_type": region.get_claim_type(),
-        "patterns": patterns,
+        "photos": [p for p in region.photos.all() if p.is_active],
         "site_author": Author.objects.first(),
     }
     return render(request, "patterns/region_detail.html", context)

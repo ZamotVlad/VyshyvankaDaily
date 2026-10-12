@@ -887,7 +887,7 @@ class TableOfContentsTests(TestCase):
         self.assertIn('href="#pershii-rozdil"', html)
         self.assertIn('href="#colors"', html)
         self.assertIn('id="colors"', html)
-        self.assertIn('href="#ornaments"', html)
+        self.assertNotIn('href="#ornaments"', html)
         self.assertIn("data-toc", html)
         en = self.client.get(f"/en/regions/{region.slug}/").content.decode()
         self.assertIn('<h2 id="first-part">', en)

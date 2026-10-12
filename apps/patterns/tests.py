@@ -821,12 +821,11 @@ class ListPaginationTests(TestCase):
             )
             SavedPattern.objects.create(user=self.user, pattern=pattern)
 
-    def test_region_page_shows_12_patterns_per_page(self):
-        first = self.client.get(f"/regions/{self.region.slug}/")
-        second = self.client.get(f"/regions/{self.region.slug}/?page=2")
-        self.assertEqual(len(first.context["patterns"]), 12)
-        self.assertEqual(len(second.context["patterns"]), 3)
-        self.assertContains(first, "?page=2")
+    def test_region_page_links_archive_instead_of_pattern_grid(self):
+        response = self.client.get(f"/regions/{self.region.slug}/")
+        self.assertNotIn("patterns", response.context)
+        self.assertContains(response, f"/archive/?region={self.region.slug}")
+        self.assertNotContains(response, "?page=2")
 
     def test_collection_shows_12_per_page_and_full_total(self):
         self.client.force_login(self.user)
@@ -1054,8 +1053,8 @@ class PatternSvgEndpointTests(TestCase):
         self.assertEqual(self.client.get("/pattern/2026-09-02.svg").status_code, 404)
         self.assertEqual(self.client.get("/pattern/20260901.svg").status_code, 404)
 
-    def test_region_page_uses_img_thumbnails_with_alt(self):
-        html = self.client.get(f"/regions/{self.region.slug}/").content.decode()
+    def test_region_archive_uses_img_thumbnails_with_alt(self):
+        html = self.client.get(f"/archive/?region={self.region.slug}").content.decode()
         self.assertIn('src="/pattern/2026-09-01.svg?v=', html)
         self.assertIn('alt="Орнамент: SVG регіон, 01 вересня 2026"', html)
         self.assertNotIn("<rect/>", html)
@@ -1263,3 +1262,65 @@ class RegionMapTests(TestCase):
         pattern = motif_pattern("x", big, ["#000000", "#FFFFFF"])
         self.assertIn('stroke="#000000"', pattern)
         self.assertIn('stroke="#FFFDF8"', pattern)
+
+
+class RegionPhotosTests(TestCase):
+    def _write(self, entries):
+        import json
+        import tempfile
+
+        f = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8")
+        json.dump(entries, f, ensure_ascii=False)
+        f.close()
+        return f.name
+
+    def test_load_region_photos_syncs_and_page_shows_gallery(self):
+        from django.core.management import call_command
+
+        from apps.patterns.models import RegionPhoto
+
+        region = make_region("Регіон Ф", 88)
+        entry = {
+            "region": region.slug,
+            "image": "/static/regions/x/a.webp",
+            "thumbnail": "/static/regions/x/a-thumb.webp",
+            "caption_uk": "Ілюстрація VyshyvankaDaily: тест.",
+            "caption_en": "Illustration by VyshyvankaDaily: test.",
+        }
+        path = self._write([entry])
+        call_command("load_region_photos", path, "--dry-run", stdout=open("/dev/null", "w"))
+        self.assertEqual(RegionPhoto.objects.count(), 0)
+        call_command("load_region_photos", path, stdout=open("/dev/null", "w"))
+        call_command("load_region_photos", path, stdout=open("/dev/null", "w"))
+        self.assertEqual(RegionPhoto.objects.count(), 1)
+        RegionPhoto.objects.create(
+            region=region,
+            image_url="https://example.org/real.jpg",
+            thumbnail_url="https://example.org/t.jpg",
+        )
+
+        html = self.client.get(f"/regions/{region.slug}/").content.decode()
+        self.assertIn('id="gallery"', html)
+        self.assertIn('class="vd-photo-strip__badge"', html)
+        self.assertEqual(html.count("vd-photo-strip__badge"), 1)
+
+        call_command("load_region_photos", self._write([]), stdout=open("/dev/null", "w"))
+        self.assertEqual(
+            list(RegionPhoto.objects.values_list("image_url", flat=True)),
+            ["https://example.org/real.jpg"],
+        )
+
+    def test_repo_photos_file_points_to_existing_files(self):
+        import json
+        from pathlib import Path
+
+        from django.conf import settings
+
+        root = Path(settings.BASE_DIR)
+        entries = json.loads((root / "region_photos.json").read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(entries), 27)
+        for e in entries:
+            for key in ("image", "thumbnail"):
+                self.assertTrue((root / e[key].lstrip("/")).exists(), e[key])
+            self.assertTrue(e["caption_uk"].startswith("Ілюстрація"))
+            self.assertTrue(e["caption_en"].startswith("Illustration"))

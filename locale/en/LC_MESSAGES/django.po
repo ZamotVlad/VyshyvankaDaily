@@ -5491,3 +5491,12 @@ msgstr "Motif on the map"
 
 msgid "Відкрити сторінку регіону"
 msgstr "Open the region page"
+
+msgid "Галерея"
+msgstr "Gallery"
+
+msgid "Ілюстрація"
+msgstr "Illustration"
+
+msgid "Усі орнаменти дня цього регіону - в архіві"
+msgstr "All patterns of the day for this region are in the archive"

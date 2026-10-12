@@ -1308,8 +1308,9 @@ html.vd-menu-open body {
   margin-bottom: 8px;
 }
 .vd-photo-strip__item {
-  flex: 0 0 110px;
-  height: 110px;
+  position: relative;
+  flex: 0 0 200px;
+  height: 150px;
   padding: 0;
   border: 1px solid var(--vd-border);
   border-radius: var(--vd-radius);
@@ -1327,6 +1328,22 @@ html.vd-menu-open body {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+.vd-photo-strip__badge {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(28, 24, 21, 0.85);
+  color: var(--vd-cream);
+  font-family: var(--vd-font-display);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.vd-region-archive {
+  margin: 28px 0 8px;
 }
 
 .vd-lightbox {

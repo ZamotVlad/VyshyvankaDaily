@@ -452,3 +452,7 @@ class RegionPhoto(TimeStampedModel):
 
     def __str__(self):
         return f"{self.region.name} - фото {self.pk}"
+
+    @property
+    def is_illustration(self):
+        return self.source_note.startswith("Ілюстрація")
