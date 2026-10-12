@@ -1704,3 +1704,13 @@ main:focus {
 .vd-prose .vd-region-chip {
   text-decoration: none;
 }
+.vd-prose aside.vd-callout ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.vd-prose aside.vd-callout li {
+  margin-bottom: 6px;
+}
+.vd-prose aside.vd-callout li:last-child {
+  margin-bottom: 0;
+}
