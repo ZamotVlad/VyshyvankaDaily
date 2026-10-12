@@ -7,6 +7,10 @@ def about_view(request):
     return render(request, "pages/about.html")
 
 
+def sources_view(request):
+    return render(request, "pages/sources.html")
+
+
 def terms_view(request):
     return render(request, "pages/terms.html")
 

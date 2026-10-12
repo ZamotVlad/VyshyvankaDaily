@@ -5376,3 +5376,82 @@ msgstr "Pattern of the day: %(region)s, %(date)s"
 
 msgid "Оновлено"
 msgstr "Updated"
+
+msgid "Як ми працюємо з джерелами"
+msgstr "How we work with sources"
+
+msgid "Звідки VyshyvankaDaily бере факти про українську вишивку: рівні джерел, музеї й наукові видання, тлумачення символів, кольори регіонів, зображення і виправлення помилок."
+msgstr "Where VyshyvankaDaily gets its facts about Ukrainian embroidery: source levels, museums and academic publications, interpretation of symbols, regional colours, images and corrections."
+
+msgid "Усе, що ви читаєте на сторінках регіонів і в статтях, має джерело. Тут пояснюємо, які джерела ми використовуємо, як перевіряємо факти і що робимо з помилками."
+msgstr "Everything you read on the region pages and in the articles has a source. This page explains which sources we use, how we check facts and what we do about mistakes."
+
+msgid "Звідки ми беремо факти"
+msgstr "Where our facts come from"
+
+msgid "Кожне джерело ми відносимо до одного з трьох рівнів надійності."
+msgstr "We assign every source to one of three levels of reliability."
+
+msgid "Рівень А - музеї та їхні каталоги, наукові видання, державні установи, ЮНЕСКО і Національний перелік елементів нематеріальної культурної спадщини України."
+msgstr "Level A: museums and their catalogues, academic publications, state institutions, UNESCO and Ukraine's National List of Intangible Cultural Heritage."
+
+msgid "Рівень Б - Суспільне й регіональні медіа, коли в матеріалі говорить названий фахівець: музейник, етнограф, дослідниця чи майстриня."
+msgstr "Level B: Suspilne and regional media, when a named specialist speaks in the piece: a museum curator, an ethnographer, a researcher or a craftswoman."
+
+msgid "Рівень В - медіа без названого фахівця, блоги, магазини вишиванок. Нових фактів звідси ми не беремо, лише звіряємо з ними вже знайдене."
+msgstr "Level C: media without a named specialist, blogs and vyshyvanka shops. We take no new facts from them and only use them to cross-check what we have already found."
+
+msgid "Що показує розділ «Джерела»"
+msgstr "What the Sources section shows"
+
+msgid "Під текстом регіону чи статті є розділ «Джерела». На сторінках регіонів там лише джерела рівня А: назва праці, автор або установа, рік. У статтях блогу до них можуть додаватися матеріали рівня Б з названим фахівцем. В інших випадках джерела рівня Б допомагають перевірити факти й додати подробиці, а в тексті ми прямо називаємо, хто це сказав і де."
+msgstr "Below each region text or article there is a Sources section. On region pages it lists only level A sources: the title of the work, the author or institution and the year. Blog articles may also list level B pieces with a named specialist. Otherwise level B sources help us check facts and add detail, and the text names who said it and where."
+
+msgid "Джерела подаємо текстом, без посилань. У статтях блогу можуть бути посилання на авторитетні ресурси: Вікіпедію, музеї, державні установи. На соцмережі й комерційні сайти ми не посилаємось."
+msgstr "Sources are given as text, without links. Blog articles may link to authoritative resources such as Wikipedia, museums and state institutions. We do not link to social networks or commercial sites."
+
+msgid "Факт, тлумачення і переказ"
+msgstr "Fact, interpretation and folk account"
+
+msgid "Символіка орнаменту - здебільшого тлумачення, і різні дослідники пояснюють той самий знак по-різному. Тому тлумачення ми подаємо з указанням, кому воно належить: «за поясненням музею», «на думку дослідниці». Легенди й повір'я позначаємо як переказ і не видаємо за встановлений факт."
+msgstr "The symbolism of an ornament is mostly a matter of interpretation, and researchers explain the same sign in different ways. So we always say whose interpretation it is: \"according to the museum\", \"in the researcher's view\". Legends and beliefs are marked as folk accounts and never presented as established fact."
+
+msgid "Коли джерела розходяться, наприклад у датуванні, ми пишемо про розбіжність або тримаємось версії надійнішого джерела. Те, що підтвердити не вдалося, до тексту не потрапляє."
+msgstr "When sources disagree, for example on a date, we either mention the disagreement or follow the more reliable source. Anything we could not confirm stays out of the text."
+
+msgid "Кольори на сторінках регіонів"
+msgstr "Colours on the region pages"
+
+msgid "Основні кольори регіону - це палітра, з якої будується орнамент дня. У блоці «Також трапляються» - кольори, які джерела згадують для регіону, але які не є головними. Обидва переліки неповні: справжня вишивка знає більше відтінків, ніж можна звести до кількох зразків."
+msgstr "A region's main colours are the palette used to build the ornament of the day. The \"Also found\" block shows colours that sources mention for the region but that are not the main ones. Neither list is complete: real embroidery uses more shades than a few swatches can capture."
+
+msgid "Орнамент дня створює алгоритм. Він будує візерунок з мотивів, описаних для регіону, і фарбує його в палітру регіону. Це стилізація за мотивами, а не копія конкретної сорочки з музею. Для однієї дати результат завжди той самий."
+msgstr "The ornament of the day is created by an algorithm. It builds a pattern from motifs described for the region and colours it in the region's palette. It is a stylisation based on those motifs, not a copy of a particular museum shirt. The same date always gives the same result."
+
+msgid "Зображення"
+msgstr "Images"
+
+msgid "Власні схеми й ілюстрації позначаємо в підписі."
+msgstr "Our own diagrams and illustrations are marked as such in the caption."
+
+msgid "Фото з Wikimedia Commons подаємо з автором і ліцензією."
+msgstr "Photos from Wikimedia Commons are credited with the author and licence."
+
+msgid "Фото з музеїв і від майстринь публікуємо лише з дозволу й з підписом автора."
+msgstr "Photos from museums and craftswomen are published only with permission and a credit."
+
+msgid "Ми не генеруємо фотореалістичних зображень «старовинних» вишиванок чи музейних експонатів."
+msgstr "We do not generate photorealistic images of \"antique\" vyshyvankas or museum objects."
+
+msgid "Перевірка перед публікацією"
+msgstr "Checks before publication"
+
+msgid "Перед публікацією кожен текст вичитуємо вручну: звіряємо імена, дати, назви сіл і музеїв із джерелом. Англійська версія спирається на ті самі джерела, що й українська. Назви джерел лишаємо мовою оригіналу."
+msgstr "Every text is proofread by hand before publication: names, dates, villages and museums are checked against the source. The English version relies on the same sources as the Ukrainian one. Source titles are kept in the original language."
+
+msgid "Якщо ви знайшли помилку"
+msgstr "If you find a mistake"
+
+#, python-format
+msgid "Напишіть нам через <a href=\"%(contact_url)s\">сторінку контактів</a>. Ми перевіримо й виправимо текст, а на сторінці з'явиться нова дата «Оновлено». Будемо вдячні, якщо додасте посилання на джерело."
+msgstr "Write to us via the <a href=\"%(contact_url)s\">contact page</a>. We will check and correct the text, and the page will show a new \"Updated\" date. A link to your source is very welcome."

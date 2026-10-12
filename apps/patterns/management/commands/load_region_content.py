@@ -1,9 +1,11 @@
 import hashlib
 import json
 
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
+from apps.core.indexnow import bilingual_urls, submit
 from apps.patterns.models import Region
 
 # Ключ у JSON -> поле моделі (без мовного суфікса).
@@ -45,7 +47,7 @@ class Command(BaseCommand):
             return
 
         dry_run = options["dry_run"]
-        updated, not_found = [], []
+        updated, not_found, pinged = [], [], []
         with transaction.atomic():
             for entry in entries:
                 region = Region.objects.filter(slug=entry["slug"]).first()
@@ -53,8 +55,10 @@ class Command(BaseCommand):
                     not_found.append(entry["slug"])
                     continue
                 changed = self._apply(region, entry)
-                if not dry_run:
+                # без змін не зберігаємо: інакше дата «Оновлено» = дата кожного запуску
+                if changed and not dry_run:
                     region.save()
+                    pinged += bilingual_urls("patterns:region_detail", region.slug)
                 label = "[БУЛО Б]" if dry_run else "[OK]"
                 self.stdout.write(f"  {label} {region.slug}: {', '.join(changed) or 'без змін'}")
                 updated.append(region.slug)
@@ -67,6 +71,8 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"Не знайдено в базі: {', '.join(not_found)}"))
         if dry_run:
             self.stdout.write(self.style.WARNING("Це був --dry-run, у базу нічого не записано."))
+        elif pinged and settings.INDEXNOW_KEY:
+            self.stdout.write(f"IndexNow: {len(pinged)} адрес, відповідь {submit(pinged)}")
 
     def _read(self, path):
         try:

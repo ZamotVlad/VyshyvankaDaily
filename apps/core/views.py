@@ -2,12 +2,13 @@ import re
 from datetime import timedelta
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.templatetags.static import static
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import check_for_language
+from django.views.decorators.cache import cache_page
 
 # Префікси НЕ-дефолтних мов (де prefix_default_language=False - українська
 # без префіксу, решта з ним). Зараз лише "en", але список сам розшириться,
@@ -175,6 +176,9 @@ def llms_txt(request):
         f"- [Блог]({base}/blog/) / [Blog]({base}/en/blog/)",
         f"- [Часті питання]({base}/faq/) / [FAQ]({base}/en/faq/)",
         f"- [Про проєкт]({base}/about/) / [About]({base}/en/about/)",
+        f"- [Як ми працюємо з джерелами]({base}/sources/) / [How we work with sources]"
+        f"({base}/en/sources/): рівні джерел, тлумачення, кольори, зображення, виправлення",
+        f"- [Повні тексти для AI / Full texts]({base}/llms-full.txt)",
         "",
         "## Регіони / Regions",
     ]
@@ -194,3 +198,43 @@ def llms_txt(request):
             )
     lines.append("")
     return HttpResponse("\n".join(lines), content_type="text/plain; charset=utf-8")
+
+
+def indexnow_key(request, key):
+    """Файл ключа IndexNow: /<ключ>.txt з тим самим ключем усередині."""
+    if not settings.INDEXNOW_KEY or key != settings.INDEXNOW_KEY:
+        raise Http404
+    return HttpResponse(key, content_type="text/plain; charset=utf-8")
+
+
+@cache_page(60 * 60)
+def llms_full_txt(request):
+    """Повні тексти регіонів і статей обома мовами для AI-систем (llmstxt.org)."""
+    from apps.blog.models import BlogPost
+    from apps.core.llms import html_to_markdown
+    from apps.patterns.models import Region
+
+    base = f"{request.scheme}://{request.get_host()}"
+    parts = [
+        "# VyshyvankaDaily: повні тексти / full texts",
+        "",
+        "> Орнаменти української вишивки 27 регіонів України з джерелами, а також статті блогу. "
+        "Кожен розділ - окрема сторінка сайту українською, а потім англійською. Короткий "
+        f"перелік сторінок: {base}/llms.txt. Як ми працюємо з джерелами: {base}/sources/.",
+    ]
+    for r in Region.objects.order_by("name_uk"):
+        parts += ["", f"## {r.name_uk}", f"URL: {base}/regions/{r.slug}/", ""]
+        parts.append(html_to_markdown(r.symbolism_description_uk))
+        if r.symbolism_description_en:
+            parts += ["", f"## {r.name_en or r.name_uk} (English)"]
+            parts += [f"URL: {base}/en/regions/{r.slug}/", ""]
+            parts.append(html_to_markdown(r.symbolism_description_en))
+    posts = BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED, published_at__isnull=False)
+    for post in posts:
+        parts += ["", f"## {post.title_uk}", f"URL: {base}/blog/{post.slug}/", ""]
+        parts.append(html_to_markdown(post.body))
+        if post.body_en and post.title_en:
+            parts += ["", f"## {post.title_en} (English)", f"URL: {base}/en/blog/{post.slug}/", ""]
+            parts.append(html_to_markdown(post.body_en))
+    parts.append("")
+    return HttpResponse("\n".join(parts), content_type="text/plain; charset=utf-8")

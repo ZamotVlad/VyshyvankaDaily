@@ -1,11 +1,13 @@
 import hashlib
 import json
 
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.utils import timezone
 
 from apps.blog.models import Author, BlogCategory, BlogPost
+from apps.core.indexnow import bilingual_urls, submit
 
 TEXT_FIELDS = (
     "title",
@@ -15,6 +17,13 @@ TEXT_FIELDS = (
     "target_keyword",
     "cover_image_alt",
 )
+
+
+def _ping(command, urls):
+    if not urls or not settings.INDEXNOW_KEY:
+        return
+    status = submit(urls)
+    command.stdout.write(f"IndexNow: {len(urls)} адрес, відповідь {status}")
 
 
 def _snapshot(post):
@@ -46,6 +55,7 @@ class Command(BaseCommand):
             raise CommandError(f"Не вдалося прочитати файл: {exc}") from exc
 
         dry_run = options["dry_run"]
+        self.changed = []
         with transaction.atomic():
             for entry in entries:
                 self._load(entry)
@@ -53,6 +63,8 @@ class Command(BaseCommand):
                 transaction.set_rollback(True)
         if dry_run:
             self.stdout.write(self.style.WARNING("Dry-run: нічого не збережено."))
+        else:
+            _ping(self, self.changed)
 
     def _load(self, entry):
         author = Author.objects.filter(name_uk=entry["author_name_uk"]).first()
@@ -86,6 +98,8 @@ class Command(BaseCommand):
         if created or _snapshot(post) != before:
             post.save()
             label = "створено" if created else "оновлено"
+            if post.status == BlogPost.Status.PUBLISHED:
+                self.changed += bilingual_urls("blog:detail", post.slug)
         else:
             label = "без змін"
         extra = ", нова категорія" if cat_created else ""

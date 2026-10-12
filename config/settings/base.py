@@ -18,6 +18,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 CANONICAL_HOST = env("CANONICAL_HOST", default="")
+INDEXNOW_KEY = env("INDEXNOW_KEY", default="")
 
 # Статистика відвідувань без cookies (Umami). Порожній ID - скрипт не підключається.
 UMAMI_WEBSITE_ID = env("UMAMI_WEBSITE_ID", default="")

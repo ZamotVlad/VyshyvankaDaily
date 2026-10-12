@@ -3,7 +3,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django_ratelimit.decorators import ratelimit
 
 from apps.blog.feeds import BlogFeed
@@ -16,6 +16,8 @@ from apps.core.sitemaps import (
 from apps.core.views import (
     favicon,
     google_site_verification,
+    indexnow_key,
+    llms_full_txt,
     llms_txt,
     robots_txt,
     security_txt,
@@ -39,6 +41,8 @@ urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("robots.txt", robots_txt, name="robots_txt"),
     path("llms.txt", llms_txt, name="llms_txt"),
+    path("llms-full.txt", llms_full_txt, name="llms_full_txt"),
+    re_path(r"^(?P<key>[A-Za-z0-9-]{8,128})\.txt$", indexnow_key, name="indexnow_key"),
     path(".well-known/security.txt", security_txt, name="security_txt"),
     path("favicon.ico", favicon, name="favicon"),
     path(

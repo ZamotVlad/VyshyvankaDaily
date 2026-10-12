@@ -121,6 +121,7 @@ class StaticViewSitemap(Sitemap):
             "patterns:region_list",
             "blog:list",
             "pages:about",
+            "pages:sources",
             "pages:faq",
             "pages:contact",
             "pages:terms",

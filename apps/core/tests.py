@@ -102,6 +102,86 @@ class LlmsTxtTests(TestCase):
         self.assertRegex(html, r'Оновлено: <time datetime="[^"]+">')
 
 
+class IndexNowTests(TestCase):
+    @override_settings(INDEXNOW_KEY="abc123def456")
+    def test_key_file_served_only_for_configured_key(self):
+        response = self.client.get("/abc123def456.txt")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode(), "abc123def456")
+        self.assertEqual(self.client.get("/wrongkey1234.txt").status_code, 404)
+
+    def test_key_file_404_without_key(self):
+        self.assertEqual(self.client.get("/abc123def456.txt").status_code, 404)
+
+    @override_settings(INDEXNOW_KEY="abc123def456", CANONICAL_HOST="vyshyvankadaily.live")
+    def test_submit_posts_urls_to_indexnow(self):
+        from unittest import mock
+
+        from apps.core import indexnow
+
+        with mock.patch("urllib.request.urlopen") as urlopen:
+            urlopen.return_value.__enter__.return_value.status = 200
+            status = indexnow.submit(
+                ["https://vyshyvankadaily.live/a/", "https://vyshyvankadaily.live/a/"]
+            )
+        self.assertEqual(status, 200)
+        request = urlopen.call_args[0][0]
+        payload = json.loads(request.data)
+        self.assertEqual(request.full_url, indexnow.ENDPOINT)
+        self.assertEqual(payload["urlList"], ["https://vyshyvankadaily.live/a/"])
+        self.assertEqual(payload["keyLocation"], "https://vyshyvankadaily.live/abc123def456.txt")
+
+    def test_submit_does_nothing_without_key(self):
+        from unittest import mock
+
+        from apps.core import indexnow
+
+        with mock.patch("urllib.request.urlopen") as urlopen:
+            self.assertIsNone(indexnow.submit(["https://vyshyvankadaily.live/a/"]))
+        urlopen.assert_not_called()
+
+    @override_settings(INDEXNOW_KEY="abc123def456", CANONICAL_HOST="vyshyvankadaily.live")
+    def test_region_loader_saves_and_pings_only_changed(self):
+        import io
+        from unittest import mock
+
+        from django.core.management import call_command
+
+        with mock.patch("apps.patterns.management.commands.load_region_content.submit") as submit:
+            call_command("load_region_content", "region_content.json", stdout=io.StringIO())
+            first = submit.call_args[0][0] if submit.called else []
+            stamps = dict(Region.objects.values_list("slug", "updated_at"))
+            submit.reset_mock()
+            call_command("load_region_content", "region_content.json", stdout=io.StringIO())
+        self.assertTrue(any("/en/regions/" in url for url in first))
+        submit.assert_not_called()
+        self.assertEqual(dict(Region.objects.values_list("slug", "updated_at")), stamps)
+
+
+class LlmsFullTxtTests(TestCase):
+    def test_full_texts_in_markdown(self):
+        region = Region.objects.exclude(symbolism_description_uk="").first()
+        response = self.client.get("/llms-full.txt")
+        self.assertEqual(response.status_code, 200)
+        text = response.content.decode()
+        self.assertIn(f"## {region.name_uk}", text)
+        self.assertIn(f"/regions/{region.slug}/", text)
+        self.assertNotIn("<p>", text)
+
+
+class SourcesPageTests(TestCase):
+    def test_page_in_both_languages_and_linked(self):
+        uk = self.client.get("/sources/").content.decode()
+        self.assertIn("<h1>Як ми працюємо з джерелами</h1>", uk)
+        en = self.client.get("/en/sources/").content.decode()
+        self.assertIn("<h1>How we work with sources</h1>", en)
+        self.assertIn('href="/en/contacts/"', en)
+        home = self.client.get("/").content.decode()
+        self.assertIn('href="/sources/"', home)
+        sitemap = self.client.get("/sitemap.xml").content.decode()
+        self.assertIn("/sources/", sitemap)
+
+
 class SitemapTests(TestCase):
     def test_returns_parseable_xml(self):
         response = self.client.get("/sitemap.xml")
