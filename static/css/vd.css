@@ -1807,8 +1807,8 @@ main:focus {
 .vd-map__seam {
   fill: none;
   stroke: #6b5a48;
-  stroke-opacity: 0.55;
-  stroke-width: 1.6;
+  stroke-opacity: 0.45;
+  stroke-width: 1;
   stroke-dasharray: 3.2 2.4;
 }
 .vd-map__pin {
@@ -1831,7 +1831,7 @@ main:focus {
 .vd-map__rg.is-on .vd-map__seam {
   stroke: var(--vd-red);
   stroke-opacity: 1;
-  stroke-width: 2.2;
+  stroke-width: 1.8;
   animation: vd-map-march 1.2s linear infinite;
 }
 .vd-map__svg.is-dim .vd-map__rg:not(.is-on) {
@@ -1993,5 +1993,11 @@ main:focus {
   }
   .vd-map__svg {
     transform: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .vd-map-open .vd-to-top {
+    display: none;
   }
 }

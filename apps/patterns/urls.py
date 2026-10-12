@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from apps.patterns import views
 
@@ -6,7 +7,10 @@ app_name = "patterns"
 
 urlpatterns = [
     path("", views.home_view, name="home"),
-    path("archive/", views.archive_view, name="archive"),
+    path(
+        "archive/",
+        RedirectView.as_view(pattern_name="patterns:region_list", permanent=True),
+    ),
     path("collection/", views.my_collection_view, name="my_collection"),
     path("pattern/<str:iso_date>.svg", views.pattern_svg_view, name="pattern_svg"),
     path("pattern/<str:iso_date>/", views.pattern_detail_view, name="pattern_detail"),

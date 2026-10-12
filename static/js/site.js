@@ -336,6 +336,7 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
       sel.hidden = true;
       idle.hidden = false;
       panel.classList.remove("is-open");
+      document.body.classList.remove("vd-map-open");
       highlight(null);
       var inGroup = regions.filter(function (r) {
         return r.getAttribute("data-group") === group;
@@ -360,6 +361,7 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
     sel.hidden = false;
     idle.hidden = true;
     panel.classList.add("is-open");
+    document.body.classList.add("vd-map-open");
     highlight(el);
     animateVB(fit([el], 60));
   }

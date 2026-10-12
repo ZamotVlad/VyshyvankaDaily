@@ -1,6 +1,6 @@
 import logging
 from collections.abc import Callable
-from datetime import date
+from datetime import date, timedelta
 
 from django.db import IntegrityError, transaction
 
@@ -9,6 +9,17 @@ from apps.patterns.services.rotation import get_region_for_date
 from apps.patterns.services.seed import date_to_seed
 
 logger = logging.getLogger(__name__)
+
+# Повне коло ротації: старші орнаменти не зберігаємо, крім доданих у колекції.
+KEEP_DAYS = 27
+
+
+def prune_old_patterns(today: date) -> int:
+    deleted, _ = DailyPattern.objects.filter(
+        date__lt=today - timedelta(days=KEEP_DAYS), saved_by__isnull=True
+    ).delete()
+    return deleted
+
 
 GenerateFn = Callable[[date, Region], tuple]
 
@@ -94,9 +105,16 @@ def generate_daily_pattern(
             return _get_existing_pattern(pattern_date)
 
     try:
-        return _create_success(pattern_date, region, seed, algorithm_version, svg_content, motifs)
+        pattern = _create_success(
+            pattern_date, region, seed, algorithm_version, svg_content, motifs
+        )
     except IntegrityError:
         return _get_existing_pattern(pattern_date)
+    try:
+        prune_old_patterns(pattern_date)
+    except Exception:
+        logger.exception("Не вдалося прибрати старі орнаменти")
+    return pattern
 
 
 def retry_fallback_pattern(

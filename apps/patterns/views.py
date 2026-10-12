@@ -1,5 +1,5 @@
 import logging
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from django.conf import settings
 from django.contrib import messages
@@ -126,10 +126,19 @@ def pattern_detail_view(request, iso_date):
     if pattern_date > timezone.localdate():
         raise Http404("Дата в майбутньому")
 
-    pattern = get_object_or_404(
-        DailyPattern.objects.select_related("region").prefetch_related("motifs_used"),
-        date=pattern_date,
+    pattern = (
+        DailyPattern.objects.select_related("region")
+        .prefetch_related("motifs_used")
+        .filter(date=pattern_date)
+        .first()
     )
+    if pattern is None:
+        # Старі дні не зберігаємо: ведемо на сторінку регіону того дня.
+        try:
+            region = get_region_for_date(pattern_date)
+        except Region.DoesNotExist:
+            raise Http404 from None
+        return redirect("patterns:region_detail", slug=region.slug)
 
     previous_pattern = DailyPattern.objects.filter(date__lt=pattern_date).order_by("-date").first()
     next_pattern = (
@@ -230,65 +239,6 @@ def region_detail_view(request, slug):
         "site_author": Author.objects.first(),
     }
     return render(request, "patterns/region_detail.html", context)
-
-
-def _parse_date_param(value: str | None) -> date | None:
-    if not value:
-        return None
-    try:
-        return datetime.strptime(value, "%Y-%m-%d").date()
-    except ValueError:
-        return None
-
-
-def archive_view(request):
-    today = timezone.localdate()
-    patterns = DailyPattern.objects.filter(date__lte=today).select_related("region")
-
-    region_slug = request.GET.get("region", "")
-    if region_slug:
-        region = Region.objects.verified().filter(slug=region_slug).first()
-        if region is not None:
-            patterns = patterns.filter(region=region)
-
-    date_from = _parse_date_param(request.GET.get("date_from"))
-    date_to = _parse_date_param(request.GET.get("date_to"))
-    if date_from:
-        patterns = patterns.filter(date__gte=date_from)
-    if date_to:
-        patterns = patterns.filter(date__lte=date_to)
-
-    sort = request.GET.get("sort")
-    if sort == "region":
-        patterns = patterns.order_by("region__name", "-date")
-    else:
-        sort = "date"
-        patterns = patterns.order_by("-date")
-
-    paginator = Paginator(patterns, ARCHIVE_PAGE_SIZE)
-    page_obj = paginator.get_page(request.GET.get("page"))
-
-    filter_params = []
-    if region_slug:
-        filter_params.append(f"region={region_slug}")
-    if request.GET.get("date_from"):
-        filter_params.append(f"date_from={request.GET['date_from']}")
-    if request.GET.get("date_to"):
-        filter_params.append(f"date_to={request.GET['date_to']}")
-    if sort == "region":
-        filter_params.append("sort=region")
-    filter_query = "&".join(filter_params)
-
-    context = {
-        "page_obj": page_obj,
-        "regions": Region.objects.verified().order_by("name"),
-        "selected_region_slug": region_slug,
-        "date_from": request.GET.get("date_from", ""),
-        "date_to": request.GET.get("date_to", ""),
-        "sort": sort,
-        "filter_query": filter_query,
-    }
-    return render(request, "patterns/archive.html", context)
 
 
 def debug_pattern_view(request, iso_date):

@@ -372,7 +372,7 @@ class DailyPattern(TimeStampedModel):
         from django.urls import reverse
 
         return [
-            {"label": _("Архів"), "url": reverse("patterns:archive")},
+            {"label": _("Регіони"), "url": reverse("patterns:region_list")},
             {
                 "label": self.region.name,
                 "url": reverse("patterns:region_detail", args=[self.region.slug]),

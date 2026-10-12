@@ -117,7 +117,6 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return [
             "patterns:home",
-            "patterns:archive",
             "patterns:region_list",
             "blog:list",
             "pages:about",

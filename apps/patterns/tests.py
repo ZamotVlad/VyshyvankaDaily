@@ -343,54 +343,6 @@ class MissingCoverageTests(TestCase):
         response = self.client.get("/regions/does-not-exist/")
         self.assertEqual(response.status_code, 404)
 
-    def test_archive_date_range_filter(self):
-        response = self.client.get("/archive/?date_from=2026-06-05&date_to=2026-06-15")
-        self.assertEqual(response.status_code, 200)
-        dates_in_result = [p.date for p in response.context["page_obj"]]
-        self.assertEqual(dates_in_result, [date(2026, 6, 10)])
-
-
-class ArchiveViewTests(TestCase):
-    def setUp(self):
-        self.region = make_region("Регіон А", rotation_order=1)
-        self.other_region = make_region("Регіон Я", rotation_order=2)
-        DailyPattern.objects.create(
-            date=date(2026, 6, 1),
-            region=self.region,
-            seed="s1",
-            algorithm_version=1,
-            svg_content="<svg>1</svg>",
-        )
-        DailyPattern.objects.create(
-            date=date(2026, 6, 5),
-            region=self.other_region,
-            seed="s2",
-            algorithm_version=1,
-            svg_content="<svg>2</svg>",
-        )
-
-    def test_archive_returns_200(self):
-        response = self.client.get("/archive/")
-        self.assertEqual(response.status_code, 200)
-
-    def test_nonexistent_region_filter_is_ignored_not_empty(self):
-        """Розділ 10.1 ТЗ: невалідне значення ігнорується, показує ВСІ
-        патерни (обидва регіони), не порожній стан і не лише один."""
-        response = self.client.get("/archive/?region=does-not-exist")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["page_obj"].object_list), 2)
-
-    def test_deactivated_region_filter_is_ignored_not_empty(self):
-        self.region.is_active = False
-        self.region.save()
-        response = self.client.get(f"/archive/?region={self.region.slug}")
-        self.assertEqual(len(response.context["page_obj"].object_list), 2)
-
-    def test_sort_by_region_name(self):
-        response = self.client.get("/archive/?sort=region")
-        regions_in_order = [p.region.name for p in response.context["page_obj"]]
-        self.assertEqual(regions_in_order, sorted(regions_in_order))
-
 
 class SavedPatternToggleTests(TestCase):
     def setUp(self):
@@ -613,49 +565,6 @@ class LandingSectionTests(TestCase):
         self.assertContains(response, 'aria-controls="landing-body"')
 
 
-class ArchiveFilterTests(TestCase):
-    def setUp(self):
-        self.region_a = make_region("Регіон А", 1)
-        self.region_b = make_region("Регіон Б", 2)
-        DailyPattern.objects.create(
-            date=date(2026, 5, 1),
-            region=self.region_a,
-            seed="a1",
-            algorithm_version=1,
-            svg_content="<svg>a1</svg>",
-        )
-        DailyPattern.objects.create(
-            date=date(2026, 5, 10),
-            region=self.region_b,
-            seed="b1",
-            algorithm_version=1,
-            svg_content="<svg>b1</svg>",
-        )
-
-    def test_filter_by_region(self):
-        response = self.client.get(f"/archive/?region={self.region_a.slug}")
-        self.assertEqual(response.status_code, 200)
-        region_ids = [p.region_id for p in response.context["page_obj"].object_list]
-        self.assertEqual(region_ids, [self.region_a.id])
-
-    def test_filter_by_date_range(self):
-        response = self.client.get("/archive/?date_from=2026-05-05&date_to=2026-05-15")
-        dates = [p.date for p in response.context["page_obj"].object_list]
-        self.assertEqual(dates, [date(2026, 5, 10)])
-
-    def test_invalid_date_param_is_ignored(self):
-        response = self.client.get("/archive/?date_from=not-a-date")
-        self.assertEqual(response.status_code, 200)
-
-    def test_sort_by_region(self):
-        response = self.client.get("/archive/?sort=region")
-        self.assertEqual(response.context["sort"], "region")
-
-    def test_default_sort_is_date(self):
-        response = self.client.get("/archive/")
-        self.assertEqual(response.context["sort"], "date")
-
-
 class RegionListViewTests(TestCase):
     def test_returns_200_and_lists_verified_regions(self):
         make_region("Видимий регіон", 1, verified=True)
@@ -871,9 +780,6 @@ class QueryCountTests(TestCase):
         self._add_patterns(9, region)
         self.assertEqual(self._queries(url), few)
 
-    def test_archive(self):
-        self._assert_constant("/archive/")
-
     def test_region_page(self):
         self._assert_constant(f"/regions/{self.regions[0].slug}/", region=self.regions[0])
 
@@ -1053,8 +959,11 @@ class PatternSvgEndpointTests(TestCase):
         self.assertEqual(self.client.get("/pattern/2026-09-02.svg").status_code, 404)
         self.assertEqual(self.client.get("/pattern/20260901.svg").status_code, 404)
 
-    def test_region_archive_uses_img_thumbnails_with_alt(self):
-        html = self.client.get(f"/archive/?region={self.region.slug}").content.decode()
+    def test_thumbnail_include_uses_img_with_alt(self):
+        from django.utils import translation
+
+        with translation.override("uk"):
+            html = render_to_string("includes/pattern_img.html", {"pattern": self.pattern})
         self.assertIn('src="/pattern/2026-09-01.svg?v=', html)
         self.assertIn('alt="Орнамент: SVG регіон, 01 вересня 2026"', html)
         self.assertNotIn("<rect/>", html)
@@ -1327,3 +1236,36 @@ class RegionPhotosTests(TestCase):
                 self.assertTrue((root / e[key].lstrip("/")).exists(), e[key])
             self.assertTrue(e["caption_uk"].startswith("Ілюстрація"))
             self.assertTrue(e["caption_en"].startswith("Illustration"))
+
+
+class PatternRetentionTests(TestCase):
+    def setUp(self):
+        self.region = make_region("Регіон К", 300)
+        self.user = get_user_model().objects.create_user(username="keep", password="pass12345")
+
+    def _pattern(self, d):
+        return DailyPattern.objects.create(
+            date=d, region=self.region, seed=str(d), algorithm_version=1, svg_content="<svg/>"
+        )
+
+    def test_prune_keeps_last_27_days_and_saved(self):
+        from apps.patterns.services.generation import KEEP_DAYS, prune_old_patterns
+
+        today = date(2026, 10, 12)
+        old = self._pattern(today - timedelta(days=KEEP_DAYS + 1))
+        saved = self._pattern(today - timedelta(days=KEEP_DAYS + 2))
+        recent = self._pattern(today - timedelta(days=KEEP_DAYS))
+        SavedPattern.objects.create(user=self.user, pattern=saved)
+        prune_old_patterns(today)
+        dates = set(DailyPattern.objects.values_list("date", flat=True))
+        self.assertNotIn(old.date, dates)
+        self.assertIn(saved.date, dates)
+        self.assertIn(recent.date, dates)
+
+    def test_old_pattern_page_redirects_to_region_and_archive_redirects(self):
+        response = self.client.get("/pattern/2026-01-05/")
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("/regions/", response["Location"])
+        response = self.client.get("/archive/")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "/regions/")

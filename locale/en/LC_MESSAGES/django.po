@@ -5500,3 +5500,12 @@ msgstr "Illustration"
 
 msgid "Усі орнаменти дня цього регіону - в архіві"
 msgstr "All patterns of the day for this region are in the archive"
+
+msgid "Реєстрація не обов'язкова: орнамент дня, сторінки регіонів і блог відкриті для всіх. Акаунт потрібен лише, щоб за бажанням зберігати улюблені орнаменти у власну колекцію."
+msgstr "No sign-up needed: the pattern of the day, all region pages and the blog are open to everyone. An account is only for saving your favourite patterns to your own collection, if you wish."
+
+msgid "Вишиванки різних регіонів України відрізняються не лише кольором, а й самою логікою узору - на сайті зібрані різні види вишиванок по регіонах, кожен зі своєю палітрою й технікою. Полтавщина тримається техніки білим по білому, Борщівщина - щільним чорним тлом, а Крим показує кримськотатарський орнамент орьнек, який належить до окремої традиції. Ми не зводимо ці відмінності до одного узагальненого «українського орнаменту» - кожен регіон отримує власний, окремо досліджений опис, а мапа регіонів показує, як різняться орнаменти вишиванок по всій країні."
+msgstr "Vyshyvankas from different regions of Ukraine differ not just in color but in the very logic of the pattern - the site brings together different kinds of vyshyvanka by region, each with its own palette and technique. Poltava sticks to its white-on-white technique, Borshchiv to a dense black background, and Crimea shows the Crimean Tatar ornek pattern, which belongs to a separate tradition entirely. We don't flatten these differences into one generalized 'Ukrainian pattern' - each region gets its own, separately researched description, and the regions map shows how vyshyvanka patterns differ across the whole country."
+
+msgid "Орнаменти останніх 27 днів, повне коло регіонів, лишаються на сайті. Зареєстровані користувачі можуть зберігати улюблені орнаменти у власну колекцію та відстежувати, скільки регіонів вони вже 'пройшли' за час використання сайту."
+msgstr "Patterns from the last 27 days, a full cycle of regions, stay on the site. Registered users can save their favourite patterns to a personal collection and track how many regions they've 'completed' over time."

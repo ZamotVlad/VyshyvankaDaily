@@ -210,14 +210,14 @@ class SitemapTests(TestCase):
 
 class OpenGraphTests(TestCase):
     def test_common_og_tags_on_every_page(self):
-        body = self.client.get("/archive/").content.decode()
-        self.assertIn('<meta property="og:url" content="http://testserver/archive/">', body)
+        body = self.client.get("/faq/").content.decode()
+        self.assertIn('<meta property="og:url" content="http://testserver/faq/">', body)
         self.assertIn('<meta property="og:site_name" content="VyshyvankaDaily">', body)
         self.assertIn('<meta property="og:locale" content="uk_UA">', body)
         self.assertIn('<meta name="twitter:card" content="summary_large_image">', body)
 
     def test_og_locale_follows_language(self):
-        body = self.client.get("/en/archive/").content.decode()
+        body = self.client.get("/en/faq/").content.decode()
         self.assertIn('<meta property="og:locale" content="en_US">', body)
         self.assertIn('<meta property="og:locale:alternate" content="uk_UA">', body)
 
@@ -438,20 +438,20 @@ class ContextProcessorTests(TestCase):
         self.assertTrue(response.context["canonical_url"].endswith("/"))
 
     def test_canonical_url_includes_page_param(self):
-        response = self.client.get("/archive/?page=2")
+        response = self.client.get("/blog/?page=2")
         self.assertIn("page=2", response.context["canonical_url"])
 
     def test_head_hreflang_lists_both_languages_and_x_default(self):
-        for path in ["/archive/", "/en/archive/"]:
+        for path in ["/faq/", "/en/faq/"]:
             body = self.client.get(path).content.decode()
-            self.assertIn('hreflang="uk" href="http://testserver/archive/"', body)
-            self.assertIn('hreflang="en" href="http://testserver/en/archive/"', body)
-            self.assertIn('hreflang="x-default" href="http://testserver/archive/"', body)
+            self.assertIn('hreflang="uk" href="http://testserver/faq/"', body)
+            self.assertIn('hreflang="en" href="http://testserver/en/faq/"', body)
+            self.assertIn('hreflang="x-default" href="http://testserver/faq/"', body)
 
     def test_canonical_ignores_invalid_or_first_page_param(self):
         for query in ["?page=abc", "?page=1", "?page=-3", "?page=0"]:
-            response = self.client.get(f"/archive/{query}")
-            self.assertEqual(response.context["canonical_url"], "http://testserver/archive/")
+            response = self.client.get(f"/blog/{query}")
+            self.assertEqual(response.context["canonical_url"], "http://testserver/blog/")
 
 
 class SecurityHeadersMiddlewareTests(TestCase):
@@ -822,7 +822,7 @@ class SiteVersionTests(TestCase):
 
 
 class LocalizedMetaTests(TestCase):
-    PAGES = ["/", "/regions/", "/blog/", "/archive/", "/faq/", "/about/", "/contacts/"]
+    PAGES = ["/", "/regions/", "/blog/", "/faq/", "/about/", "/contacts/"]
 
     def _meta(self, path):
         html = self.client.get(path).content.decode()
@@ -843,7 +843,7 @@ class LocalizedMetaTests(TestCase):
 class PageSpecificMetaTests(TestCase):
     def test_list_pages_have_their_own_description(self):
         default = "Щоденний генератор орнаменту української вишиванки"
-        for path in ["/regions/", "/blog/", "/archive/", "/faq/"]:
+        for path in ["/regions/", "/blog/", "/faq/"]:
             html = self.client.get(path).content.decode()
             desc = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
             self.assertNotIn(default, desc, path)
