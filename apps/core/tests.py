@@ -926,7 +926,8 @@ class AnalyticsAndAccessibilityTests(TestCase):
         self.assertIn('src="https://cloud.umami.is/script.js" data-website-id="abc-123"', html)
         csp = response["Content-Security-Policy"]
         self.assertIn("script-src 'self' https://cloud.umami.is", csp)
-        self.assertIn("connect-src 'self' https://cloud.umami.is", csp)
+        self.assertIn("connect-src 'self' https://cloud.umami.is https://gateway.umami.is", csp)
+        self.assertNotIn("gateway", csp.split("script-src")[1].split(";")[0])
         privacy = self.client.get("/privacy-policy/").content.decode()
         self.assertIn("Umami", privacy)
         self.assertNotIn("Sentry", privacy)

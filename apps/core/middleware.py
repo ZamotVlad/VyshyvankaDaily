@@ -46,15 +46,20 @@ class HideServerHeaderMiddleware:
         return response
 
 
+# Umami Cloud шле події не на домен скрипта, а на окремі шлюзи.
+UMAMI_CLOUD_GATEWAYS = ("https://gateway.umami.is", "https://api-gateway.umami.dev")
+
+
 def _analytics_origins():
-    """Домен Umami додається в CSP лише коли статистику увімкнено."""
+    """Домени Umami для CSP (скрипт, відправка подій) - лише коли статистику увімкнено."""
     if not settings.UMAMI_WEBSITE_ID:
-        return ""
+        return "", ""
     parts = urlsplit(settings.UMAMI_SCRIPT_URL)
-    origins = [f"{parts.scheme}://{parts.netloc}"]
+    script = f" {parts.scheme}://{parts.netloc}"
+    connect = script
     if parts.netloc == "cloud.umami.is":
-        origins.append("https://api-gateway.umami.dev")
-    return "".join(f" {o}" for o in origins)
+        connect += "".join(f" {o}" for o in UMAMI_CLOUD_GATEWAYS)
+    return script, connect
 
 
 class ContentSecurityPolicyMiddleware:
@@ -75,7 +80,7 @@ class ContentSecurityPolicyMiddleware:
         response = self.get_response(request)
 
         is_admin = request.path.startswith(self.ADMIN_PREFIX)
-        analytics = "" if is_admin else _analytics_origins()
+        analytics, analytics_connect = ("", "") if is_admin else _analytics_origins()
         script_src = (
             "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
             if is_admin
@@ -92,7 +97,7 @@ class ContentSecurityPolicyMiddleware:
 
         response["Content-Security-Policy"] = (
             "default-src 'self'; " + script_src + fonts + "img-src 'self' data:; "
-            f"connect-src 'self'{analytics}; "
+            f"connect-src 'self'{analytics_connect}; "
             "object-src 'none'; "
             "base-uri 'self'; "
             "frame-ancestors 'none';"
