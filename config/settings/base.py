@@ -23,7 +23,7 @@ INDEXNOW_KEY = env("INDEXNOW_KEY", default="")
 # Статистика відвідувань без cookies (Umami). Порожній ID - скрипт не підключається.
 UMAMI_WEBSITE_ID = env("UMAMI_WEBSITE_ID", default="")
 UMAMI_SCRIPT_URL = env("UMAMI_SCRIPT_URL", default="https://cloud.umami.is/script.js")
-SITE_VERSION = "1.2.0"
+SITE_VERSION = "1.5.0"
 
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
 LANGUAGE_COOKIE_SAMESITE = "Lax"
