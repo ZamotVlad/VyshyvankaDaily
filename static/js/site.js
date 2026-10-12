@@ -207,15 +207,15 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
   wrapper.style.position = "relative";
   input.parentNode.insertBefore(wrapper, input);
   wrapper.appendChild(input);
-  input.style.paddingRight = "40px";
+  input.style.paddingRight = "48px";
 
   var toggle = document.createElement("button");
   toggle.type = "button";
   toggle.innerHTML = EYE_CLOSED;
   toggle.setAttribute("aria-label", "Показати пароль");
   toggle.style.cssText =
-    "position:absolute; right:8px; top:50%; transform:translateY(-50%); " +
-    "background:none; border:none; cursor:pointer; padding:0; display:flex; color: var(--vd-muted);";
+    "position:absolute; right:2px; top:50%; transform:translateY(-50%); " +
+    "background:none; border:none; cursor:pointer; padding:12px; display:flex; color: var(--vd-muted);";
   wrapper.appendChild(toggle);
 
   toggle.addEventListener("click", function () {
@@ -246,6 +246,8 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
   var active = null;
   var group = "";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // На сенсорних екранах наближення без анімації: перемальовування SVG з візерунками дороге.
+  var instantZoom = reduce || window.matchMedia("(hover: none)").matches;
 
   // Ширина підписів під текст; підпис не виходить за межі мапи.
   root.querySelectorAll(".vd-map__lbl").forEach(function (l) {
@@ -276,7 +278,7 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
   }
 
   function animateVB(to) {
-    if (reduce) {
+    if (instantZoom) {
       vb = to;
       svg.setAttribute("viewBox", to.join(" "));
       return;
