@@ -518,6 +518,17 @@ class SecurityHeadersMiddlewareTests(TestCase):
 
 @override_settings(ALLOWED_HOSTS=["vyshyvankadaily.live"], SECURE_SSL_REDIRECT=True)
 class WwwRedirectMiddlewareTests(TestCase):
+    def test_redirects_carry_security_headers(self):
+        for kwargs in (
+            {"HTTP_HOST": "vyshyvankadaily.live"},
+            {"HTTP_HOST": "www.vyshyvankadaily.live", "secure": True},
+        ):
+            response = self.client.get("/", **kwargs)
+            self.assertEqual(response.status_code, 301)
+            self.assertIn("default-src 'self'", response["Content-Security-Policy"])
+            self.assertEqual(response["X-Frame-Options"], "DENY")
+            self.assertIn("camera=()", response["Permissions-Policy"])
+
     def test_www_redirects_to_apex_keeping_path_and_query(self):
         response = self.client.get(
             "/en/archive/?region=x", HTTP_HOST="www.vyshyvankadaily.live", secure=True

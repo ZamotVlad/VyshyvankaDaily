@@ -55,6 +55,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Першими - щоб заголовки безпеки мали й редиректи (http->https, www, //)
+    "apps.core.middleware.ContentSecurityPolicyMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.core.middleware.HideServerHeaderMiddleware",
     "apps.core.middleware.CanonicalHostMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -66,9 +70,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "apps.core.middleware.HideServerHeaderMiddleware",
-    "apps.core.middleware.ContentSecurityPolicyMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
