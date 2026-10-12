@@ -530,6 +530,15 @@ class WwwRedirectMiddlewareTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class DoubleSlashRedirectTests(TestCase):
+    def test_collapses_repeated_slashes(self):
+        response = self.client.get("/x", PATH_INFO="//llms-full.txt")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "/llms-full.txt")
+        response = self.client.get("/x", PATH_INFO="/en//sources/", QUERY_STRING="a=1")
+        self.assertEqual(response["Location"], "/en/sources/?a=1")
+
+
 @override_settings(
     ALLOWED_HOSTS=["vyshyvankadaily.live", "app-123.herokuapp.com"],
     CANONICAL_HOST="vyshyvankadaily.live",

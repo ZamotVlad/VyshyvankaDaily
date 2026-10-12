@@ -1,3 +1,4 @@
+import re
 from urllib.parse import urlsplit
 
 from django.conf import settings
@@ -20,6 +21,11 @@ class CanonicalHostMiddleware:
         if target:
             scheme = "https" if settings.SECURE_SSL_REDIRECT else request.scheme
             return HttpResponsePermanentRedirect(f"{scheme}://{target}{request.get_full_path()}")
+        # /a//b -> /a/b: інакше адреса з подвійною косою віддає 404
+        if "//" in request.path:
+            path = re.sub(r"/{2,}", "/", request.path)
+            query = request.META.get("QUERY_STRING")
+            return HttpResponsePermanentRedirect(f"{path}?{query}" if query else path)
         return self.get_response(request)
 
 
