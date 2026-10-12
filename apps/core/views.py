@@ -139,3 +139,58 @@ def csrf_failure(request, reason=""):
 
 def favicon(request):
     return HttpResponsePermanentRedirect(static("favicon/favicon.png"))
+
+
+def _plain_description(text):
+    """SEO-опис без закликів на кшталт «- читайте на VyshyvankaDaily!»."""
+    text = re.sub(r"\s+-\s+(читайте |дивіться )?[^-.!?]*VyshyvankaDaily!?\s*$", "", text or "")
+    sentences = re.split(r"(?<=[.!?])\s+", text)
+    return " ".join(s for s in sentences if "VyshyvankaDaily" not in s).strip()
+
+
+def llms_txt(request):
+    """Опис сайту для AI-пошуку (llmstxt.org): що це, регіони, статті."""
+    from apps.blog.models import BlogPost
+    from apps.patterns.models import Region
+
+    base = f"{request.scheme}://{request.get_host()}"
+    regions = list(Region.objects.order_by("name_uk"))
+    posts = list(
+        BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED, published_at__isnull=False)
+    )
+    lines = [
+        "# VyshyvankaDaily",
+        "",
+        "> Орнаменти української вишивки 27 регіонів України: символіка, кольори, техніки й "
+        "перевірені джерела (музеї, наукові видання), а також статті про вишиванку, рушники "
+        "й українську культуру. Двомовний сайт: українська (основна) і англійська (/en/).",
+        "",
+        "> Ornaments of Ukrainian embroidery from 27 regions of Ukraine: symbolism, colours, "
+        "techniques and verified sources (museums, academic publications), plus articles on the "
+        "vyshyvanka, rushnyky and Ukrainian culture. English version under /en/.",
+        "",
+        "## Головне / Main",
+        f"- [Орнамент дня / Ornament of the day]({base}/): щодня новий орнамент одного з регіонів",
+        f"- [Вишиванки по регіонах]({base}/regions/) / [Regions]({base}/en/regions/)",
+        f"- [Блог]({base}/blog/) / [Blog]({base}/en/blog/)",
+        f"- [Часті питання]({base}/faq/) / [FAQ]({base}/en/faq/)",
+        f"- [Про проєкт]({base}/about/) / [About]({base}/en/about/)",
+        "",
+        "## Регіони / Regions",
+    ]
+    for r in regions:
+        desc = _plain_description(r.seo_description_uk)
+        lines.append(
+            f"- [{r.name_uk}]({base}/regions/{r.slug}/) / [{r.name_en or r.name_uk}]"
+            f"({base}/en/regions/{r.slug}/)" + (f": {desc}" if desc else "")
+        )
+    if posts:
+        lines += ["", "## Статті / Articles"]
+        for post in posts:
+            desc = _plain_description(post.seo_description_uk or post.excerpt_uk)
+            en = f" / [{post.title_en}]({base}/en/blog/{post.slug}/)" if post.title_en else ""
+            lines.append(
+                f"- [{post.title_uk}]({base}/blog/{post.slug}/){en}" + (f": {desc}" if desc else "")
+            )
+    lines.append("")
+    return HttpResponse("\n".join(lines), content_type="text/plain; charset=utf-8")

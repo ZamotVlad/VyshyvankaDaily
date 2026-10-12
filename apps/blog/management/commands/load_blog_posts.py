@@ -17,6 +17,12 @@ TEXT_FIELDS = (
 )
 
 
+def _snapshot(post):
+    fields = ["blog_author_id", "category_id", "status", "cover_image_url", "body", "body_en"]
+    fields += [f"{f}_{lang}" for f in TEXT_FIELDS for lang in ("uk", "en")]
+    return {f: getattr(post, f) for f in fields}
+
+
 def _digest(value):
     return hashlib.sha256((value or "").encode("utf-8")).hexdigest()[:12]
 
@@ -63,6 +69,7 @@ class Command(BaseCommand):
         created = post is None
         if created:
             post = BlogPost(slug=entry["slug"])
+        before = None if created else _snapshot(post)
 
         post.blog_author = author
         post.category = category
@@ -75,9 +82,12 @@ class Command(BaseCommand):
         post.body_en = entry["en"]["body"]
         if post.status == BlogPost.Status.PUBLISHED and not post.published_at:
             post.published_at = timezone.now()
-        post.save()
-
-        label = "створено" if created else "оновлено"
+        # без змін не зберігаємо, щоб updated_at (дата «Оновлено») лишалась чесною
+        if created or _snapshot(post) != before:
+            post.save()
+            label = "створено" if created else "оновлено"
+        else:
+            label = "без змін"
         extra = ", нова категорія" if cat_created else ""
         self.stdout.write(
             f"  [OK] {post.slug}: {label}{extra}; "

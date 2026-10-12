@@ -5373,3 +5373,9 @@ msgstr "Ukraine"
 #, python-format
 msgid "Орнамент дня: %(region)s, %(date)s"
 msgstr "Pattern of the day: %(region)s, %(date)s"
+
+msgid "Оновлено"
+msgstr "Updated"
+
+msgid "Про автора"
+msgstr "About the author"

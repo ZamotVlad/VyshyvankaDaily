@@ -42,7 +42,8 @@
     </p>
   {% endif %}
   <p class="vd-muted vd-small">
-    {{ post.published_at|date:"d E Y" }}
+    <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"d E Y" }}</time>
+    {% if post.published_at and post.updated_at.date > post.published_at.date %} · {% translate "Оновлено" %}: <time datetime="{{ post.updated_at|date:'c' }}">{{ post.updated_at|date:"d E Y" }}</time>{% endif %}
     {% if post.guest_author_name %} · {{ post.guest_author_name }}{% endif %}
   </p>
 
@@ -66,6 +67,18 @@
         <li>{{ source.name }}{% if source.author_or_institution %} - {{ source.author_or_institution }}{% endif %}</li>
       {% endfor %}
     </ul>
+  {% endif %}
+
+  {% if post.blog_author and post.blog_author.bio %}
+    <aside class="vd-author-box" aria-label="{% translate "Про автора" %}">
+      {% if post.blog_author.avatar_url %}
+        <img src="{{ post.blog_author.avatar_url }}" alt="{{ post.blog_author.name }}" class="vd-author-box__avatar" width="64" height="64" loading="lazy" decoding="async">
+      {% endif %}
+      <div>
+        <p class="vd-author-box__name"><a href="{% url 'blog:author_detail' post.blog_author.slug %}">{{ post.blog_author.name }}</a></p>
+        <p class="vd-small vd-author-box__bio">{{ post.blog_author.bio }}</p>
+      </div>
+    </aside>
   {% endif %}
 
   {% if mentioned_regions %}

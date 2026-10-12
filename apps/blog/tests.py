@@ -414,6 +414,17 @@ class LoadBlogPostsCommandTests(TestCase):
         self.assertIn('href="/regions/poltavska-oblast/"', post.body)
         self.assertIn('href="/en/regions/poltavska-oblast/"', post.body_en)
 
+    def test_reload_without_changes_keeps_updated_at(self):
+        import io
+
+        call_command("load_blog_posts", "blog_posts.json", stdout=io.StringIO())
+        stamps = dict(BlogPost.objects.values_list("slug", "updated_at"))
+        out = io.StringIO()
+        call_command("load_blog_posts", "blog_posts.json", stdout=out)
+        self.assertEqual(dict(BlogPost.objects.values_list("slug", "updated_at")), stamps)
+        self.assertNotIn("оновлено", out.getvalue())
+        self.assertIn("без змін", out.getvalue())
+
     def test_article_images_exist(self):
         import json
         import re
@@ -458,6 +469,27 @@ class FirstArticleSeoTests(TestCase):
         html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
         frame = r'<div class="vd-article-cover">\s*<img src="[^"]+" alt="[^"]*"'
         self.assertRegex(html, frame + r' width="1600" height="900"')
+
+    def test_updated_date_only_after_real_edit(self):
+        from datetime import timedelta
+
+        html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
+        self.assertNotIn("Оновлено", html)
+        BlogPost.objects.filter(pk=self.post.pk).update(
+            published_at=self.post.updated_at - timedelta(days=3)
+        )
+        html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
+        self.assertIn("Оновлено", html)
+        en = self.client.get(f"/en/blog/{self.post.slug}/").content.decode()
+        self.assertIn("Updated", en)
+
+    def test_author_box_shows_bio(self):
+        author = self.post.blog_author
+        author.bio_uk = "Засновник проєкту"
+        author.save()
+        html = self.client.get(f"/blog/{self.post.slug}/").content.decode()
+        self.assertIn('class="vd-author-box"', html)
+        self.assertIn("Засновник проєкту", html)
 
     def test_author_meta_is_article_author(self):
         html = self.client.get(f"/blog/{self.post.slug}/").content.decode()

@@ -65,6 +65,43 @@ class RobotsTxtTests(TestCase):
         self.assertNotIn("privacy", body)
 
 
+class LlmsTxtTests(TestCase):
+    def test_lists_regions_and_articles_in_both_languages(self):
+        from apps.blog.models import Author
+
+        author = Author.objects.create(name_uk="Автор", name_en="Author")
+        category = BlogCategory.objects.create(slug="traditions", name_uk="Традиції")
+        BlogPost.objects.create(
+            slug="rushnyk",
+            title_uk="Рушник",
+            title_en="Rushnyk",
+            status=BlogPost.Status.PUBLISHED,
+            published_at=timezone.now(),
+            blog_author=author,
+            category=category,
+        )
+        BlogPost.objects.create(
+            slug="chernetka", title_uk="Чернетка", blog_author=author, category=category
+        )
+        response = self.client.get("/llms.txt")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response["Content-Type"].startswith("text/plain"))
+        text = response.content.decode()
+        self.assertTrue(text.startswith("# VyshyvankaDaily"))
+        region = Region.objects.first()
+        self.assertIn(f"/regions/{region.slug}/)", text)
+        self.assertIn(f"/en/regions/{region.slug}/)", text)
+        self.assertIn("/blog/rushnyk/)", text)
+        self.assertIn("/en/blog/rushnyk/)", text)
+        self.assertNotIn("chernetka", text)
+        self.assertNotIn("на VyshyvankaDaily", text)
+
+    def test_region_page_shows_updated_date(self):
+        region = Region.objects.first()
+        html = self.client.get(f"/regions/{region.slug}/").content.decode()
+        self.assertRegex(html, r'Оновлено: <time datetime="[^"]+">')
+
+
 class SitemapTests(TestCase):
     def test_returns_parseable_xml(self):
         response = self.client.get("/sitemap.xml")

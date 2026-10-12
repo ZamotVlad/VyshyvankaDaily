@@ -98,6 +98,9 @@
   {% translate "Основні кольори орнаменту цього регіону - не повний перелік усіх відтінків, що зустрічаються в реальній вишивці." %}
 </p>
 
+{% if region.updated_at %}
+  <p class="vd-muted vd-small">{% translate "Оновлено" %}: <time datetime="{{ region.updated_at|date:'c' }}">{{ region.updated_at|date:"d E Y" }}</time></p>
+{% endif %}
 {% if region.sources.exists %}
   <h2 class="vd-section-title" id="sources">{% translate "Джерела" %}</h2>
   <ul class="vd-prose">

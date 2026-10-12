@@ -16,6 +16,7 @@ from apps.core.sitemaps import (
 from apps.core.views import (
     favicon,
     google_site_verification,
+    llms_txt,
     robots_txt,
     security_txt,
     set_language_view,
@@ -37,6 +38,7 @@ urlpatterns = [
     path("ckeditor5/", include("django_ckeditor_5.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("robots.txt", robots_txt, name="robots_txt"),
+    path("llms.txt", llms_txt, name="llms_txt"),
     path(".well-known/security.txt", security_txt, name="security_txt"),
     path("favicon.ico", favicon, name="favicon"),
     path(
