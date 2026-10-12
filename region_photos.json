@@ -1,26 +1,10 @@
 [
   {
     "region": "vinnytska-oblast",
-    "image": "/static/regions/vinnytska-oblast/vinnytska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/vinnytska-oblast/vinnytska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Геометричний квадрат» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Geometric square motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
-    "order": 0
-  },
-  {
-    "region": "vinnytska-oblast",
     "image": "/static/regions/vinnytska-oblast/vinnytska-oblast-embroidery-closeup.webp",
     "thumbnail": "/static/regions/vinnytska-oblast/vinnytska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Геометричний квадрат» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Geometric square motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "volynska-oblast",
-    "image": "/static/regions/volynska-oblast/volynska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/volynska-oblast/volynska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Зірки і ромби» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Stars and rhombuses motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -29,14 +13,6 @@
     "thumbnail": "/static/regions/volynska-oblast/volynska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Зірки і ромби» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Stars and rhombuses motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "dnipropetrovska-oblast",
-    "image": "/static/regions/dnipropetrovska-oblast/dnipropetrovska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/dnipropetrovska-oblast/dnipropetrovska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Солярний знак» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Solar sign motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -45,14 +21,6 @@
     "thumbnail": "/static/regions/dnipropetrovska-oblast/dnipropetrovska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Солярний знак» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Solar sign motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "donetska-oblast",
-    "image": "/static/regions/donetska-oblast/donetska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/donetska-oblast/donetska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Квітковий букет» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Flower bouquet motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -61,14 +29,6 @@
     "thumbnail": "/static/regions/donetska-oblast/donetska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Квітковий букет» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Flower bouquet motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "zhytomyrska-oblast",
-    "image": "/static/regions/zhytomyrska-oblast/zhytomyrska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/zhytomyrska-oblast/zhytomyrska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Розетка» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Rosette motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -77,14 +37,6 @@
     "thumbnail": "/static/regions/zhytomyrska-oblast/zhytomyrska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Розетка» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Rosette motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "zakarpatska-oblast",
-    "image": "/static/regions/zakarpatska-oblast/zakarpatska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/zakarpatska-oblast/zakarpatska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Кривулька» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Kryvulka motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -93,14 +45,6 @@
     "thumbnail": "/static/regions/zakarpatska-oblast/zakarpatska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Кривулька» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Kryvulka motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "zaporizka-oblast",
-    "image": "/static/regions/zaporizka-oblast/zaporizka-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/zaporizka-oblast/zaporizka-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: чоловіча сорочка з вишивкою лише на комірі, у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a men's shirt embroidered only on the collar, in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -109,14 +53,6 @@
     "thumbnail": "/static/regions/zaporizka-oblast/zaporizka-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Коло з розеткою» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Circle with a rosette motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "ivano-frankivska-oblast",
-    "image": "/static/regions/ivano-frankivska-oblast/ivano-frankivska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/ivano-frankivska-oblast/ivano-frankivska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Гуцульська лінія» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Hutsul line motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -125,14 +61,6 @@
     "thumbnail": "/static/regions/ivano-frankivska-oblast/ivano-frankivska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Гуцульська лінія» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Hutsul line motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "kyivska-oblast",
-    "image": "/static/regions/kyivska-oblast/kyivska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/kyivska-oblast/kyivska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Виноградне гроно» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Bunch of grapes motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -141,14 +69,6 @@
     "thumbnail": "/static/regions/kyivska-oblast/kyivska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Виноградне гроно» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Bunch of grapes motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "kirovohradska-oblast",
-    "image": "/static/regions/kirovohradska-oblast/kirovohradska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/kirovohradska-oblast/kirovohradska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Вазон» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Flowerpot motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -157,14 +77,6 @@
     "thumbnail": "/static/regions/kirovohradska-oblast/kirovohradska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Вазон» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Flowerpot motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "luhanska-oblast",
-    "image": "/static/regions/luhanska-oblast/luhanska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/luhanska-oblast/luhanska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Рослинно-геометричний узор» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Plant and geometric pattern motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -173,14 +85,6 @@
     "thumbnail": "/static/regions/luhanska-oblast/luhanska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Рослинно-геометричний узор» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Plant and geometric pattern motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "lvivska-oblast",
-    "image": "/static/regions/lvivska-oblast/lvivska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/lvivska-oblast/lvivska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Сосонка (яворівка)» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Sosonka (Yavoriv style) motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -189,14 +93,6 @@
     "thumbnail": "/static/regions/lvivska-oblast/lvivska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Сосонка (яворівка)» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Sosonka (Yavoriv style) motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "mykolaivska-oblast",
-    "image": "/static/regions/mykolaivska-oblast/mykolaivska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/mykolaivska-oblast/mykolaivska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Сосонка» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Sosonka motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -205,14 +101,6 @@
     "thumbnail": "/static/regions/mykolaivska-oblast/mykolaivska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Сосонка» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Sosonka motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "odeska-oblast",
-    "image": "/static/regions/odeska-oblast/odeska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/odeska-oblast/odeska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Двоголовий орел» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Double-headed eagle motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -221,14 +109,6 @@
     "thumbnail": "/static/regions/odeska-oblast/odeska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Двоголовий орел» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Double-headed eagle motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "poltavska-oblast",
-    "image": "/static/regions/poltavska-oblast/poltavska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/poltavska-oblast/poltavska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Ламане гільце» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Broken sprig motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -237,14 +117,6 @@
     "thumbnail": "/static/regions/poltavska-oblast/poltavska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Ламане гільце» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Broken sprig motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "rivnenska-oblast",
-    "image": "/static/regions/rivnenska-oblast/rivnenska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/rivnenska-oblast/rivnenska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Простий геометричний візерунок» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Simple geometric pattern motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -253,14 +125,6 @@
     "thumbnail": "/static/regions/rivnenska-oblast/rivnenska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Простий геометричний візерунок» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Simple geometric pattern motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "sumska-oblast",
-    "image": "/static/regions/sumska-oblast/sumska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/sumska-oblast/sumska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Птах» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Bird motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -269,14 +133,6 @@
     "thumbnail": "/static/regions/sumska-oblast/sumska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Птах» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Bird motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "ternopilska-oblast",
-    "image": "/static/regions/ternopilska-oblast/ternopilska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/ternopilska-oblast/ternopilska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Калина з пташками» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Guelder rose with birds motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -285,14 +141,6 @@
     "thumbnail": "/static/regions/ternopilska-oblast/ternopilska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Калина з пташками» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Guelder rose with birds motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "kharkivska-oblast",
-    "image": "/static/regions/kharkivska-oblast/kharkivska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/kharkivska-oblast/kharkivska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Дерево життя» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Tree of life motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -301,14 +149,6 @@
     "thumbnail": "/static/regions/kharkivska-oblast/kharkivska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Дерево життя» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Tree of life motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "khersonska-oblast",
-    "image": "/static/regions/khersonska-oblast/khersonska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/khersonska-oblast/khersonska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Світове дерево» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the World tree motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -317,14 +157,6 @@
     "thumbnail": "/static/regions/khersonska-oblast/khersonska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Світове дерево» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the World tree motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "khmelnytska-oblast",
-    "image": "/static/regions/khmelnytska-oblast/khmelnytska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/khmelnytska-oblast/khmelnytska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Ромб із засіяним полем» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Rhombus with a sown field motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -333,14 +165,6 @@
     "thumbnail": "/static/regions/khmelnytska-oblast/khmelnytska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Ромб із засіяним полем» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Rhombus with a sown field motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "cherkaska-oblast",
-    "image": "/static/regions/cherkaska-oblast/cherkaska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/cherkaska-oblast/cherkaska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Дрібний геометричний стібок» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Fine geometric stitch motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -349,14 +173,6 @@
     "thumbnail": "/static/regions/cherkaska-oblast/cherkaska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Дрібний геометричний стібок» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Fine geometric stitch motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "chernivetska-oblast",
-    "image": "/static/regions/chernivetska-oblast/chernivetska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/chernivetska-oblast/chernivetska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Букет троянд» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Bouquet of roses motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -365,14 +181,6 @@
     "thumbnail": "/static/regions/chernivetska-oblast/chernivetska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Букет троянд» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Bouquet of roses motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
-  },
-  {
-    "region": "chernihivska-oblast",
-    "image": "/static/regions/chernihivska-oblast/chernihivska-oblast-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/chernihivska-oblast/chernihivska-oblast-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Орликовий мотив» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Eagle motif motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
     "order": 0
   },
   {
@@ -381,7 +189,7 @@
     "thumbnail": "/static/regions/chernihivska-oblast/chernihivska-oblast-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Орликовий мотив» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Eagle motif motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
+    "order": 0
   },
   {
     "region": "ar-krym",
@@ -393,19 +201,11 @@
   },
   {
     "region": "m-kyiv",
-    "image": "/static/regions/m-kyiv/m-kyiv-vyshyvanka-illustration.webp",
-    "thumbnail": "/static/regions/m-kyiv/m-kyiv-vyshyvanka-illustration-thumb.webp",
-    "caption_uk": "Ілюстрація VyshyvankaDaily: сорочка з мотивом «Виноградне гроно» у кольорах регіону. Умовне зображення, не реконструкція конкретної сорочки.",
-    "caption_en": "Illustration by VyshyvankaDaily: a shirt with the Bunch of grapes motif in the region's colours. A stylised image, not a reconstruction of a real shirt.",
-    "order": 0
-  },
-  {
-    "region": "m-kyiv",
     "image": "/static/regions/m-kyiv/m-kyiv-embroidery-closeup.webp",
     "thumbnail": "/static/regions/m-kyiv/m-kyiv-embroidery-closeup-thumb.webp",
     "caption_uk": "Ілюстрація VyshyvankaDaily: мотив «Виноградне гроно» у кольорах регіону, крупний план. Умовне зображення, не реконструкція конкретної вишивки.",
     "caption_en": "Illustration by VyshyvankaDaily: close-up of the Bunch of grapes motif in the region's colours. A stylised image, not a reconstruction of a real piece.",
-    "order": 1
+    "order": 0
   },
   {
     "region": "m-sevastopol",

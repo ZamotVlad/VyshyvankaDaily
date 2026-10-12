@@ -24,7 +24,6 @@
           {% for r in m.items %}{% if r.today %}<g class="vd-map__today" transform="translate({{ r.cx }} {{ r.cy }})"><circle class="vd-map__today-ring" r="9"/><g class="vd-map__lbl vd-map__lbl--today" transform="translate(0 -28)"><rect x="-44" y="-11" width="88" height="22" rx="11"/><text y="4.5">{% translate "Регіон дня" %}</text></g></g>{% endif %}{% endfor %}
         </g>
       </svg>
-      <div class="vd-map__tip" hidden></div>
     </div>
     <aside class="vd-map__panel" aria-live="polite">
       <div class="vd-map__idle">

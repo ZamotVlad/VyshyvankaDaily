@@ -821,10 +821,10 @@ class ListPaginationTests(TestCase):
             )
             SavedPattern.objects.create(user=self.user, pattern=pattern)
 
-    def test_region_page_links_archive_instead_of_pattern_grid(self):
+    def test_region_page_has_no_pattern_grid(self):
         response = self.client.get(f"/regions/{self.region.slug}/")
         self.assertNotIn("patterns", response.context)
-        self.assertContains(response, f"/archive/?region={self.region.slug}")
+        self.assertNotContains(response, f"/archive/?region={self.region.slug}")
         self.assertNotContains(response, "?page=2")
 
     def test_collection_shows_12_per_page_and_full_total(self):
@@ -1125,10 +1125,13 @@ class GeneratorOnlyColorsTests(TestCase):
         region.generator_only_colors = ["#5B2C83"]
         region.save()
         self.assertEqual(region.shown_colors, ["#FFFFFF", "#D00000"])
-        for url in (f"/regions/{region.slug}/", "/regions/"):
-            html = self.client.get(url).content.decode()
-            self.assertNotIn("background-color: #5B2C83", html)
-            self.assertIn("background-color: #D00000", html)
+        html = self.client.get(f"/regions/{region.slug}/").content.decode()
+        self.assertNotIn("background-color: #5B2C83", html)
+        self.assertIn("background-color: #D00000", html)
+        listing = self.client.get("/regions/").content.decode()
+        card = re.search(rf'href="/regions/{region.slug}/" class="vd-card">.*?</a>', listing, re.S)
+        self.assertNotIn("#5B2C83", card.group(0))
+        self.assertIn("background-color: #D00000", card.group(0))
 
     def test_seeded_kyiv_hides_unconfirmed_colors(self):
         region = Region.objects.filter(slug="kyivska-oblast").first()

@@ -218,7 +218,6 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
   var svg = root.querySelector(".vd-map__svg");
   var layer = root.querySelector(".vd-map__regions");
   var box = root.querySelector(".vd-map__box");
-  var tip = root.querySelector(".vd-map__tip");
   var panel = root.querySelector(".vd-map__panel");
   var regions = Array.prototype.slice.call(root.querySelectorAll(".vd-map__rg"));
   var labels = {};
@@ -233,13 +232,18 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
   var group = "";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Ширина підписів під текст.
+  // Ширина підписів під текст; підпис не виходить за межі мапи.
   root.querySelectorAll(".vd-map__lbl").forEach(function (l) {
     var t = l.querySelector("text");
     var r = l.querySelector("rect");
     var w = t.getComputedTextLength() + 22;
     r.setAttribute("width", w);
     r.setAttribute("x", -w / 2);
+    var m = /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/.exec(l.getAttribute("transform") || "");
+    if (!m || !l.hasAttribute("data-for")) return;
+    var x = Math.min(Math.max(+m[1], w / 2 + 4), W - w / 2 - 4);
+    var y = Math.min(Math.max(+m[2], 15), H - 15);
+    l.setAttribute("transform", "translate(" + x + " " + y + ")");
   });
 
   // Поява грає один раз за сесію.
@@ -278,12 +282,20 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
 
   function fit(els, pad) {
     var x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
-    els.forEach(function (el) {
-      var b = el.querySelector(".vd-map__linen").getBBox();
+    function add(b) {
       x1 = Math.min(x1, b.x);
       y1 = Math.min(y1, b.y);
       x2 = Math.max(x2, b.x + b.width);
       y2 = Math.max(y2, b.y + b.height);
+    }
+    els.forEach(function (el) {
+      add(el.querySelector(".vd-map__linen").getBBox());
+      var l = labels[el.getAttribute("data-slug")];
+      if (l) {
+        var m = /translate\(([-\d.]+) ([-\d.]+)\)/.exec(l.getAttribute("transform"));
+        var rb = l.querySelector("rect");
+        if (m) add({ x: +m[1] - rb.getAttribute("width") / 2, y: +m[2] - 11, width: +rb.getAttribute("width"), height: 22 });
+      }
     });
     var w = x2 - x1 + pad * 2;
     var h = y2 - y1 + pad * 2;
@@ -310,22 +322,6 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
     if (el && raise !== false && root.classList.contains("is-ready") && layer.lastElementChild !== el) {
       layer.appendChild(el);
     }
-  }
-
-  function showTip(el, e) {
-    if (!e) {
-      tip.hidden = true;
-      return;
-    }
-    var rb = box.getBoundingClientRect();
-    tip.innerHTML = "";
-    tip.appendChild(document.createTextNode(el.getAttribute("data-name")));
-    var small = document.createElement("small");
-    small.textContent = el.getAttribute("data-motif");
-    tip.appendChild(small);
-    tip.style.left = e.clientX - rb.left + "px";
-    tip.style.top = e.clientY - rb.top + "px";
-    tip.hidden = false;
   }
 
   function field(name) {
@@ -370,16 +366,10 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
 
   regions.forEach(function (el) {
     el.addEventListener("pointerenter", function (e) {
-      if (e.pointerType !== "mouse") return;
-      highlight(el);
-      showTip(el, e);
-    });
-    el.addEventListener("pointermove", function (e) {
-      if (e.pointerType === "mouse") showTip(el, e);
+      if (e.pointerType === "mouse") highlight(el);
     });
     el.addEventListener("pointerleave", function () {
       highlight(active);
-      showTip(el);
     });
     el.addEventListener("focus", function () {
       highlight(el, false);
@@ -391,7 +381,6 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
       // Другий клік по вибраному регіону - перехід на його сторінку.
       if (active === el) return;
       e.preventDefault();
-      showTip(el);
       select(el);
     });
   });

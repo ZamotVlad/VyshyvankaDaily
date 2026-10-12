@@ -16,7 +16,12 @@ CELL = 3
 CITIES = ("m-kyiv", "m-sevastopol")
 WHITE = "#FFFFFF"
 # Зсув підписів там, де сусідні назви накладаються.
-LABEL_NUDGE = {"cherkaska-oblast": (-22, 10), "ternopilska-oblast": (-10, 10)}
+LABEL_NUDGE = {
+    "cherkaska-oblast": (-22, 10),
+    "ternopilska-oblast": (-10, 10),
+    "ivano-frankivska-oblast": (6, -12),
+    "zakarpatska-oblast": (-4, 12),
+}
 
 
 @cache

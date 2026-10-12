@@ -118,7 +118,6 @@
 {% if toc|length > 1 %}<aside class="vd-with-toc__aside">{% include "includes/toc.html" %}</aside>{% endif %}
 </div>
 
-<p class="vd-region-archive"><a href="{% url 'patterns:archive' %}?region={{ region.slug }}">{% translate "Усі орнаменти дня цього регіону - в архіві" %} →</a></p>
 <div class="vd-lightbox" id="photo-lightbox" hidden>
   <button type="button" class="vd-lightbox__close" aria-label="{% translate 'Закрити' %}">×</button>
   <img class="vd-lightbox__img" src="" alt="">

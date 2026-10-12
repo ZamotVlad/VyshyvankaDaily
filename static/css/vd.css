@@ -1342,9 +1342,6 @@ html.vd-menu-open body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-.vd-region-archive {
-  margin: 28px 0 8px;
-}
 
 .vd-lightbox {
   position: fixed;
@@ -1885,28 +1882,7 @@ main:focus {
   transform-origin: center;
   animation: vd-map-pulse 2.2s ease-out infinite;
 }
-.vd-map__tip {
-  position: absolute;
-  z-index: 2;
-  pointer-events: none;
-  background: var(--vd-surface-2);
-  border: 1px solid var(--vd-border);
-  border-radius: 8px;
-  padding: 7px 12px;
-  font-size: 15px;
-  line-height: 1.35;
-  white-space: nowrap;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
-  transform: translate(-50%, calc(-100% - 14px));
-}
-.vd-map__tip small {
-  display: block;
-  color: var(--vd-muted);
-  font-size: 13px;
-}
 .vd-map__panel {
-  position: sticky;
-  top: 16px;
   min-height: 260px;
   background: var(--vd-surface);
   border: 1px solid var(--vd-border);
@@ -2004,8 +1980,7 @@ main:focus {
   .vd-map__panel.is-open {
     transform: none;
   }
-  .vd-map__idle,
-  .vd-map__tip {
+  .vd-map__idle {
     display: none;
   }
 }
