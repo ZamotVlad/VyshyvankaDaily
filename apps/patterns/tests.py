@@ -1269,3 +1269,30 @@ class PatternRetentionTests(TestCase):
         response = self.client.get("/archive/")
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response["Location"], "/regions/")
+
+
+class SymbolsPageTests(TestCase):
+    def test_symbols_page_ua_and_en(self):
+        html = self.client.get("/symbols/").content.decode()
+        self.assertIn("<h1>Символи на вишиванці", html)
+        self.assertIn('"@type": "DefinedTermSet"', html)
+        self.assertIn('href="/regions/vinnytska-oblast/"', html)
+        self.assertIn('class="vd-sym__art"', html)
+        self.assertNotIn("—", html)
+        en = self.client.get("/en/symbols/").content.decode()
+        self.assertIn("<h1>Ukrainian embroidery symbols", en)
+        self.assertIn('href="/en/regions/vinnytska-oblast/"', en)
+
+    def test_symbols_in_nav_sitemap_and_llms(self):
+        self.assertContains(self.client.get("/"), 'href="/symbols/"')
+        self.assertContains(self.client.get("/sitemap.xml"), "/symbols/")
+        self.assertContains(self.client.get("/llms.txt"), "/symbols/")
+        self.assertContains(self.client.get("/llms-full.txt"), "Символи на вишиванці")
+
+    def test_every_symbol_key_has_art(self):
+        from apps.patterns.services.symbols import data
+
+        keys = {s["key"] for g in data()["uk"]["groups"] for s in g["symbols"]}
+        en_keys = {s["key"] for g in data()["en"]["groups"] for s in g["symbols"]}
+        self.assertEqual(keys, en_keys)
+        self.assertTrue(keys <= set(data()["art"]))

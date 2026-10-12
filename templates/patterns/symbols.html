@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load i18n static seo_tags %}
+
+{% block title %}{{ page.seo_title }} - VyshyvankaDaily{% endblock %}
+{% block meta_description %}{{ page.seo_description }}{% endblock %}
+
+{% block extra_head %}
+<meta property="og:type" content="article">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
+{% jsonld_symbols page %}
+{% jsonld_breadcrumbs breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+{% include "includes/breadcrumbs.html" with breadcrumbs=breadcrumbs %}
+<header class="vd-sym-hero">
+  <p class="vd-sym-hero__eyebrow">{{ page.eyebrow }}</p>
+  <h1>{{ page.title }}</h1>
+  <p class="vd-sym-hero__lede">{{ page.lead }}</p>
+  <div class="vd-sym-hero__strip" aria-hidden="true">
+    {% for group in page.groups %}{% for s in group.symbols|slice:":3" %}<span class="vd-sym-hero__tile" style="--i:{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}">{{ s.art }}</span>{% endfor %}{% endfor %}
+  </div>
+</header>
+
+<div class="vd-with-toc">
+<article class="vd-with-toc__main">
+{% include "includes/toc.html" with compact=True %}
+<div class="vd-prose vd-sym-page">
+  <aside class="vd-callout"><p><strong>{{ page.short_title }}</strong></p><ul>{% for item in page.short %}<li>{{ item }}</li>{% endfor %}</ul></aside>
+
+  <h2 id="what">{{ page.answer_title }}</h2>
+  {% for p in page.answer %}<p>{{ p }}</p>{% endfor %}
+
+  {% for group in page.groups %}
+    <h2 id="{{ group.id }}">{{ group.title }}</h2>
+    <p>{{ group.intro }}</p>
+    <div class="vd-sym-list">
+      {% for s in group.symbols %}
+        <section class="vd-sym" id="symbol-{{ s.key }}">
+          <div class="vd-sym__tile">{{ s.art }}</div>
+          <div class="vd-sym__body">
+            <h3>{{ s.name }}</h3>
+            {% for p in s.text %}<p>{{ p }}</p>{% endfor %}
+            {% if s.region_links %}
+              <p class="vd-sym__where"><span>{{ page.regions_label }}:</span>{% for r in s.region_links %} <a href="{{ r.url }}">{{ r.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</p>
+            {% endif %}
+          </div>
+        </section>
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+  <h2 id="ornek">{{ page.ornek_title }}</h2>
+  <div class="vd-sym vd-sym--wide">
+    <div class="vd-sym__tile">{{ page.ornek_art }}</div>
+    <div class="vd-sym__body">
+      {% for p in page.ornek %}<p>{{ p }}</p>{% endfor %}
+      <p class="vd-sym__where"><span>{{ page.regions_label }}:</span>{% for r in page.ornek_region_links %} <a href="{{ r.url }}">{{ r.name }}</a>{% if not forloop.last %},{% endif %}{% endfor %}</p>
+    </div>
+  </div>
+  <table>
+    <caption>{{ page.ornek_table_caption }}</caption>
+    <tbody>{% for row in page.ornek_rows %}<tr><th scope="row">{{ row.0 }}</th><td>{{ row.1 }}</td></tr>{% endfor %}</tbody>
+  </table>
+
+  <h2 id="names">{{ page.names_title }}</h2>
+  {% for p in page.names %}<p>{{ p }}</p>{% endfor %}
+
+  <h2 id="new">{{ page.new_title }}</h2>
+  {% for p in page.new %}<p>{{ p }}</p>{% endfor %}
+
+  <h2 id="table">{{ page.table_title }}</h2>
+  <div class="vd-sym-table">
+    <table>
+      <thead><tr>{% for h in page.table_head %}<th scope="col">{{ h }}</th>{% endfor %}</tr></thead>
+      <tbody>
+        {% for row in page.table %}
+          <tr>
+            <th scope="row"><a href="#{{ row.anchor }}">{{ row.symbol }}</a></th>
+            <td>{{ row.meaning }}</td>
+            <td>{{ row.who }}</td>
+            <td>{% for r in row.region_links %}<a href="{{ r.url }}">{{ r.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="why">{{ page.why_title }}</h2>
+  {% for p in page.why %}<p>{{ p }}</p>{% endfor %}
+
+  <h2 id="faq">{{ page.faq_title }}</h2>
+  {% for q, a in page.faq %}<h3>{{ q }}</h3><p>{{ a }}</p>{% endfor %}
+
+  <h2 id="sources">{{ page.sources_title }}</h2>
+  <ul>{% for s in page.sources %}<li>{{ s }}</li>{% endfor %}</ul>
+
+  <p>{{ page.error_line|safe }}</p>
+</div>
+</article>
+<aside class="vd-with-toc__aside">{% include "includes/toc.html" %}</aside>
+</div>
+{% endblock %}

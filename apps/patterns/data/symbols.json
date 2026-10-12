@@ -1,0 +1,885 @@
+{
+ "art": {
+  "romb": {
+   "motif": "Ромб із засіяним полем"
+  },
+  "khrest": {
+   "grid": [
+    "....#....",
+    "...###...",
+    "....#....",
+    ".#..#..#.",
+    "#########",
+    ".#..#..#.",
+    "....#....",
+    "...###...",
+    "....#...."
+   ]
+  },
+  "zirka": {
+   "motif": "Зірки і ромби"
+  },
+  "sontse": {
+   "motif": "Коло з розеткою"
+  },
+  "kryvulka": {
+   "motif": "Кривулька"
+  },
+  "hodynnyk": {
+   "grid": [
+    "#########",
+    ".#######.",
+    "..#####..",
+    "...###...",
+    "....#....",
+    "...###...",
+    "..#####..",
+    ".#######.",
+    "#########"
+   ]
+  },
+  "derevo": {
+   "motif": "Дерево життя"
+  },
+  "vazon": {
+   "motif": "Вазон"
+  },
+  "ruzha": {
+   "motif": "Букет троянд"
+  },
+  "kalyna": {
+   "motif": "Калина з пташками"
+  },
+  "vynohrad": {
+   "motif": "Виноградне гроно"
+  },
+  "sosonka": {
+   "motif": "Сосонка"
+  },
+  "ptakh": {
+   "motif": "Птах"
+  },
+  "orel": {
+   "motif": "Двоголовий орел"
+  },
+  "svitove": {
+   "motif": "Світове дерево"
+  },
+  "ornek": {
+   "motif": "Марам (дерево життя)",
+   "colors": [
+    "#C9506B",
+    "#4E8B5C",
+    "#D9A441"
+   ]
+  }
+ },
+ "uk": {
+  "title": "Символи на вишиванці: що означають орнаменти української вишивки",
+  "seo_title": "Символи на вишиванці: значення орнаментів",
+  "seo_description": "Що означають символи на вишиванці: ромб, хрест, зірка, дерево життя, ружа, калина, птахи й орьнек. Значення орнаментів за музеями та дослідниками, по регіонах.",
+  "eyebrow": "Довідник",
+  "lead": "Символи на вишиванці - це геометричні, рослинні й зооморфні мотиви: ромб, хрест, зірка, дерево життя, вазон, ружа, калина, птахи. Їхні значення - тлумачення музеїв, дослідників і самих майстринь, і в різних регіонах той самий знак пояснюють по-різному. Тут зібрано головні символи української вишивки, значення яких ми можемо підтвердити джерелами, і регіони, де вони трапляються.",
+  "short_title": "Коротко",
+  "short": [
+   "Ромб, хрест і зірку найчастіше пояснюють через сонце, землю й захист. За Вінницьким обласним художнім музеєм, ромб - союз Сонця й Землі та родючість, хрест - гармонія й оберіг, зірка - оберіг від зла й хвороб.",
+   "Дерево життя - спільний для всієї України символ, але кожен регіон зображує його по-своєму: з вазона на Слобожанщині, як «Дерево Роду» на Одещині, як Світове дерево на Херсонщині.",
+   "Той самий знак може мати різні пояснення: двоголового орла на Чернігівщині, Одещині й Кіровоградщині тлумачать трьома різними способами.",
+   "У кримськотатарському орьнеку квітка позначає людину: за описом ЮНЕСКО, мигдаль - незаміжню дівчину, тюльпан - юнака, троянда - заміжню жінку.",
+   "Багато значень відомі лише з переказу, тому біля кожного тлумачення ми вказуємо, хто так пояснює."
+  ],
+  "answer_title": "Що означають символи на вишиванці",
+  "answer": [
+   "Символи на вишиванці поділяють на три великі групи: геометричні (ромб, хрест, зірка, коло, ламані лінії), рослинні (дерево життя, вазон, ружа, калина, виноград) і зооморфні (птахи, тварини). Більшість тлумачень пов'язує їх із сонцем, землею, родючістю, родом і захистом, але точне значення знака залежить від регіону й від того, хто його пояснює.",
+   "Важливо розрізняти задокументоване й переказане. Музей пояснює символи зі своєї колекції, дослідниця записує назви узорів у селі, а частина значень живе лише в усній традиції. Тому біля кожного символу вказано, чиє це тлумачення, а переказ позначено як переказ. Орнамент вишиванки часто сильніше прив'язаний до місця, ніж до значення: на Борщівщині за узором нерідко можна вгадати навіть село."
+  ],
+  "groups": [
+   {
+    "id": "heometrychni-symvoly",
+    "title": "Геометричні символи вишиванки: ромб, хрест, зірка, сонце",
+    "intro": "Геометрія - найдавніший шар українського орнаменту. На Закарпатті найдавнішою формою узору вважають кривульку, на Чернігівщині найархаїчніший мотив - ромби з «ріжками» й «хвостиками». На Поділлі, як нагадує дослідниця Анна Стрельцова, побутує понад половину з півтораста варіантів хрестового орнаменту.",
+    "symbols": [
+     {
+      "key": "romb",
+      "name": "Ромб",
+      "text": [
+       "Ромб - чи не найпоширеніший знак у вишивці. За поясненням Вінницького обласного художнього музею, ромб означає союз Сонця й Землі та родючість, а дослідниця Олександра Голосна, описуючи вишивку Сумщини, тлумачить хрести й ромби як символи небесних світил і вогню.",
+       "На Одещині, за Анною Стрельцовою, ромб - найпоширеніший мотив, але порожнім його майже не лишають: середину заповнюють хрестиком, ромбиком чи квадратом. На Волині менший ромб вписують у більший, і пласка вишивка набуває глибини."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "sumska-oblast",
+       "odeska-oblast",
+       "volynska-oblast",
+       "chernihivska-oblast",
+       "zakarpatska-oblast"
+      ]
+     },
+     {
+      "key": "khrest",
+      "name": "Хрест",
+      "text": [
+       "За поясненням Вінницького обласного художнього музею, хрест - знак гармонії й оберіг. На Одещині дрібні хрести ділять композицію на горизонтальні ряди, зазвичай три, а великі косі хрести й хрести з п'яти квадратиків стоять окремо.",
+       "На Дніпропетровщині хрести й косі хрести входять у густу систему геометричних знаків: на одній сорочці там могло зустрітися більше символів, ніж у деяких областях за всю традицію."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "odeska-oblast",
+       "dnipropetrovska-oblast",
+       "ivano-frankivska-oblast"
+      ]
+     },
+     {
+      "key": "zirka",
+      "name": "Зірка і восьмикутна розета",
+      "text": [
+       "Вінницький обласний художній музей пояснює зірку як оберіг від зла й хвороб. На Хустщині Закарпаття сорочки з восьмикутною зіркою-розетою намагалися вишивати вже заміжнім жінкам, а самі зірки там називали «звізди» й «косички».",
+       "На Житомирщині найпоширеніший мотив - розетка з ламаних ліній, восьмикутних зірок і ромбів. Заслужена майстриня народної творчості Валентина Димова називає зірку головним орнаментом південної вишивки."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "zakarpatska-oblast",
+       "zhytomyrska-oblast",
+       "mykolaivska-oblast",
+       "m-kyiv"
+      ]
+     },
+     {
+      "key": "sontse",
+      "name": "Сонячні знаки",
+      "text": [
+       "Солярні, тобто сонячні, знаки в геометричних формах дослідники фіксують у багатьох регіонах України. На Запоріжжі сонце - це велике коло з розеткою всередині, розраховане на погляд здалеку, а на Дніпропетровщині солярні знаки стоять поруч із хрестами, зірками, трикутниками й квадратами.",
+       "Вінницький обласний художній музей пояснює сваргу як символ сонячного культу, домашнього вогнища й родинного щастя. На Сватівщині Луганщини смуги ромбів і солярних знаків вишивали на вуставці й угорі рукава."
+      ],
+      "regions": [
+       "zaporizka-oblast",
+       "dnipropetrovska-oblast",
+       "vinnytska-oblast",
+       "luhanska-oblast"
+      ]
+     },
+     {
+      "key": "kryvulka",
+      "name": "Кривулька",
+      "text": [
+       "Кривулька - ритмічний зигзаг уздовж смуги. На Закарпатті це найдавніша форма узору, і геометричний шар там не зник, а лишився поруч із пізнішими квітами.",
+       "«Кривулька» є й серед подільських назв орнаментів, які записав Юхим Сіцинський, а на Яворівщині Львівщини ранні узори складалися з дрібних «кривульок» і «пупочок»."
+      ],
+      "regions": [
+       "zakarpatska-oblast",
+       "khmelnytska-oblast",
+       "lvivska-oblast"
+      ]
+     },
+     {
+      "key": "hodynnyk",
+      "name": "Пісочний годинник",
+      "text": [
+       "Два трикутники, з'єднані вершинами, - менш очевидний символ слобожанської вишивки. За переказом, він нагадує про вічність буття й перехід між світами.",
+       "Документального підтвердження цього тлумачення немає, тож це саме переказ, а не встановлене значення."
+      ],
+      "regions": [
+       "kharkivska-oblast"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "roslynni-symvoly",
+    "title": "Рослинні символи: дерево життя, вазон, ружа, калина",
+    "intro": "Рослинний орнамент поширився у вишивці пізніше за геометричний. Наприкінці XIX століття його підсилила брокарівська вишивка: схеми троянд, винограду й квітів хрестиком вкладали в упаковку мила. На Житомирщині найдавніші рослинні мотиви - барвінок і берізка, а хміль і виноград з'явилися пізніше.",
+    "symbols": [
+     {
+      "key": "derevo",
+      "name": "Дерево життя",
+      "text": [
+       "Дерево життя - спільний для всієї України символ, але, як пояснює кураторка проєкту «Слобожанський код» Ольга Сошнікова, кожен регіон зображує його по-своєму. На слобожанських рушниках коріння дерева часто росте з вазона, і дослідники називають таке зображення «жінка - вазон», символом матері й продовження роду.",
+       "На Одещині, за Стрельцовою, це геометризоване «Дерево Роду» з одним-шістьма ярусами гілок. На Херсонщині, за традицією, головна ідеограма - Світове дерево як образ Матері-Землі. На Кіровоградщині на старовинних зразках збереглася символіка ранніх землеробів: образ Великої богині, зображеної як пташка або світове дерево."
+      ],
+      "regions": [
+       "kharkivska-oblast",
+       "odeska-oblast",
+       "khersonska-oblast",
+       "kirovohradska-oblast",
+       "sumska-oblast",
+       "mykolaivska-oblast"
+      ]
+     },
+     {
+      "key": "vazon",
+      "name": "Вазон",
+      "text": [
+       "За поясненням Вінницького обласного художнього музею, вазон - це і є дерево життя. На рушниках Катеринославщини, за дослідженням З. Маріної, головний сюжет - дерево життя з вазона, часом у вигляді стилізованої жіночої фігури, з голубами, півнями, павичами й качками на гілках.",
+       "На Кіровоградщині пізні вазони, квіти й бутони вишивали з надзвичайним реалізмом."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "dnipropetrovska-oblast",
+       "kirovohradska-oblast",
+       "kyivska-oblast"
+      ]
+     },
+     {
+      "key": "ruzha",
+      "name": "Ружа (троянда)",
+      "text": [
+       "Ружа, або троянда, - найпоширеніша квітка брокарівської вишивки. За поясненням Вінницького обласного художнього музею, ружа означає поєднання жіночого й чоловічого начал, що дає життя усьому.",
+       "На Донеччині пишна квітка, яку часто називають трояндою, - це повна «ружа», схожа на шипшину. У Кіцмані на Буковині вишивали великі букети троянд, а на Кіровоградщині троянди червоним і чорним хрестиком - найуживаніший мотив за даними етнолабораторії «Баба Єлька»."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "donetska-oblast",
+       "chernivetska-oblast",
+       "kirovohradska-oblast",
+       "luhanska-oblast"
+      ]
+     },
+     {
+      "key": "kalyna",
+      "name": "Калина",
+      "text": [
+       "На Борщівщині улюблений мотив - калина між двома пташками. Значення калини й птахів різні автори тлумачать по-різному, тож однієї «правильної» версії немає.",
+       "На Запоріжжі калина стоїть поруч із колом-сонцем і ромбом із крапкою серед великих простих форм, а на київських сорочках кетяги калини розкидали по рукаву в шаховому порядку."
+      ],
+      "regions": [
+       "ternopilska-oblast",
+       "zaporizka-oblast",
+       "m-kyiv",
+       "dnipropetrovska-oblast"
+      ]
+     },
+     {
+      "key": "vynohrad",
+      "name": "Виноград",
+      "text": [
+       "Виноградне гроно належить до брокарівської групи рослинного орнаменту. На Чернігівщині виноград з'являється в XIX столітті разом із червоно-чорними кольорами, а на київських сорочках виноградні грона розкидали по рукаву в шаховому порядку або компонували хвилястими гілками.",
+       "На Одещині, за спостереженням Стрельцової, місцеві вважають виноград запозиченням від молдован чи болгар."
+      ],
+      "regions": [
+       "m-kyiv",
+       "chernihivska-oblast",
+       "odeska-oblast",
+       "kirovohradska-oblast",
+       "zhytomyrska-oblast"
+      ]
+     },
+     {
+      "key": "sosonka",
+      "name": "Сосонка і дубове листя",
+      "text": [
+       "Сосонка - стилізоване деревце. Назва «сосонка» є серед подільських назв орнаментів, записаних Юхимом Сіцинським, а на Миколаївщині сосонки, дубове листя й шишки хмелю - основа вишивки початку XX століття.",
+       "Дуб, за поясненням Вінницького обласного художнього музею, означає чоловічу силу. На Кіровоградщині для чоловічих сорочок характерні саме дубочки або геометрична вишивка."
+      ],
+      "regions": [
+       "khmelnytska-oblast",
+       "mykolaivska-oblast",
+       "kirovohradska-oblast",
+       "vinnytska-oblast"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "ptakhy-i-tvaryny",
+    "title": "Птахи й тварини на вишиванці",
+    "intro": "Зооморфні мотиви трапляються рідше за рослинні, але саме вони найбільше залежать від місцевої традиції.",
+    "symbols": [
+     {
+      "key": "ptakh",
+      "name": "Птахи",
+      "text": [
+       "На весільних рушниках Донеччини, за традицією, птахи додавали узору казковості й означали побажання щастя молодій родині. На Слобожанщині, за словами Ольги Сошнікової, у вишивці багато птахів, тварин, квітів і людей.",
+       "Майстриня Любов Паранюк у таврійській вишивці Миколаївщини пояснює птахів як свободу й кохання."
+      ],
+      "regions": [
+       "donetska-oblast",
+       "kharkivska-oblast",
+       "mykolaivska-oblast",
+       "sumska-oblast",
+       "chernivetska-oblast"
+      ]
+     },
+     {
+      "key": "orel",
+      "name": "Двоголовий орел",
+      "text": [
+       "Двоголовий орел - мандрівний мотив, і три регіони пояснюють його по-різному. На Чернігівщині, за переказом, давній «орликовий» мотив з часом перетворився на рослинні елементи. На Одещині його пов'язують із молдовською та румунською традицією декору, поряд із церковною короною й хрестом.",
+       "На Кіровоградщині двоголовий орел, за традицією, означає єдність чоловічого й жіночого начал."
+      ],
+      "regions": [
+       "chernihivska-oblast",
+       "odeska-oblast",
+       "kirovohradska-oblast"
+      ]
+     },
+     {
+      "key": "svitove",
+      "name": "Світове дерево і тварини Херсонщини",
+      "text": [
+       "Херсонська вишивка вирізняється багатим зооморфним рядом: кінь, заєць, риба, жаби, півень, сова, голуб, зозуля і навіть муха, метелик, павук. Окремі символи підбирали під конкретну людину, тому без живих носіїв традиції цю систему вже не розшифрувати повністю.",
+       "Є й правило з весілля: на рушнику, на який ставали молодята, нічого живого не вишивали, бо не можна топтати живе."
+      ],
+      "regions": [
+       "khersonska-oblast"
+      ]
+     }
+    ]
+   }
+  ],
+  "ornek_title": "Кримськотатарський орьнек: квіти, що позначають людей",
+  "ornek": [
+   "Орьнек - кримськотатарський орнамент із системою приблизно з 35 символів. У 2021 році його внесли до Репрезентативного списку нематеріальної культурної спадщини людства ЮНЕСКО. Наскрізний символ - «марам», дерево життя. Це окрема традиція, а не різновид материкової української вишиванки.",
+   "Окремо стоять родові знаки: жіночий «егрі дал», вигнута гілка мінливості й розвитку, і чоловіче родове дерево - знак надійності й сили."
+  ],
+  "ornek_table_caption": "Квіти орьнеку за описом ЮНЕСКО",
+  "ornek_rows": [
+   [
+    "Мигдаль",
+    "незаміжня жінка або дівчина"
+   ],
+   [
+    "Тюльпан",
+    "юнак"
+   ],
+   [
+    "Троянда",
+    "заміжня жінка"
+   ],
+   [
+    "Гвоздика",
+    "літня людина"
+   ],
+   [
+    "Тополя або кипарис",
+    "дорослий чоловік"
+   ],
+   [
+    "Тюльпан усередині троянди",
+    "кохання, союз чоловіка й жінки"
+   ]
+  ],
+  "ornek_regions": [
+   "ar-krym",
+   "m-sevastopol"
+  ],
+  "names_title": "Як називали узори в селах",
+  "names": [
+   "Багато символів відомі не за значенням, а за народною назвою. У зібранні Юхима Сіцинського, укладеному на межі XIX-XX століть і опрацьованому Оленою Климчик, збереглися десятки подільських назв. За характером техніки: «круті роги», «семиріг», «безконечник», «кривулька». За рослинами: «сосонка», «вівсик», «реп'яхи», «горицвіт», «хмелики», «петрушка», «фасульки», «рута», «яблучка», «сливки».",
+   "На Закарпатті сорочки називали за розміщенням орнаменту й кольором: заспульниця, хрестата, косиця, білениця, червонятка. У Колядівці на Луганщині вишивали орнамент «рачки», а на Підгір'ї - ромби з гачками «баранячі ріжки»."
+  ],
+  "new_title": "Нові символи: таврійська вишивка Миколаївщини",
+  "new": [
+   "Символи вишивки з'являються й сьогодні. Миколаївські майстрині переносять на тканину таврійський розпис. Майстриня Любов Паранюк пояснює його знаки так: човник - друг-помічник, матула - удача й доля, рибки - достаток, великі хвилі - сила життя, птахи - свобода й кохання. Восени 2025 року таврійський розпис подали на включення до Національного переліку нематеріальної культурної спадщини."
+  ],
+  "table_title": "Символи на вишиванці за регіонами: таблиця",
+  "table_head": [
+   "Символ",
+   "Як пояснюють",
+   "Хто так пояснює",
+   "Де трапляється"
+  ],
+  "table_rows": [
+   [
+    "romb",
+    "союз Сонця й Землі, родючість",
+    "Вінницький обласний художній музей"
+   ],
+   [
+    "khrest",
+    "гармонія, оберіг",
+    "Вінницький обласний художній музей"
+   ],
+   [
+    "zirka",
+    "оберіг від зла й хвороб",
+    "Вінницький обласний художній музей"
+   ],
+   [
+    "sontse",
+    "сонце; сварга - сонячний культ, вогнище, родинне щастя",
+    "дослідники; Вінницький обласний художній музей"
+   ],
+   [
+    "hodynnyk",
+    "вічність буття, перехід між світами",
+    "переказ, без документального підтвердження"
+   ],
+   [
+    "derevo",
+    "мати й продовження роду («жінка - вазон»)",
+    "дослідники Слобожанщини"
+   ],
+   [
+    "ruzha",
+    "поєднання жіночого й чоловічого начал",
+    "Вінницький обласний художній музей"
+   ],
+   [
+    "sosonka",
+    "дуб - чоловіча сила",
+    "Вінницький обласний художній музей"
+   ],
+   [
+    "ptakh",
+    "побажання щастя молодій родині",
+    "традиція Донеччини"
+   ],
+   [
+    "orel",
+    "єдність чоловічого й жіночого начал",
+    "традиція Кіровоградщини"
+   ]
+  ],
+  "why_title": "Чому значення символів різняться",
+  "why": [
+   "Значення символу - не словникове слово, а тлумачення. Його дає музей, дослідник, майстриня чи переказ, і вони можуть розходитися. Двоголовий орел має три пояснення в трьох регіонах, калину й птахів на Борщівщині різні автори тлумачать по-різному, а символи Херсонщини без живих носіїв традиції вже повністю не розшифрувати.",
+   "Тому символи на вишиванці варто читати обережно: краще знати, хто дав тлумачення, ніж приписувати узору прадавню силу без джерела. Те саме стосується кольорів: на Миколаївщині, як наголошує етнограф, червоний і чорний не несли окремого символічного навантаження."
+  ],
+  "faq_title": "Часті питання про символи на вишиванці",
+  "faq": [
+   [
+    "Що означає ромб на вишиванці?",
+    "За поясненням Вінницького обласного художнього музею, ромб означає союз Сонця й Землі та родючість. Дослідниця Олександра Голосна тлумачить хрести й ромби у вишивці Сумщини як символи небесних світил і вогню. Ромб - один із найпоширеніших знаків: на Одещині його середину майже завжди заповнюють хрестиком, ромбиком чи квадратом."
+   ],
+   [
+    "Що символізує дерево життя у вишивці?",
+    "Дерево життя - спільний для всієї України символ, який кожен регіон зображує по-своєму. На Слобожанщині його коріння росте з вазона, і дослідники називають це зображення «жінка - вазон», символом матері й продовження роду. На Херсонщині, за традицією, Світове дерево - образ Матері-Землі."
+   ],
+   [
+    "Що означає двоголовий орел на вишиванці?",
+    "Єдиного значення немає. На Чернігівщині, за переказом, давній «орликовий» мотив згодом перетворився на рослинні елементи. На Одещині орла пов'язують із молдовською та румунською традицією декору. На Кіровоградщині, за традицією, двоголовий орел означає єдність чоловічого й жіночого начал."
+   ],
+   [
+    "Що означають квіти в кримськотатарському орнаменті?",
+    "У кримськотатарському орьнеку квітка позначає людину. За описом ЮНЕСКО, мигдаль - незаміжня жінка чи дівчина, тюльпан - юнак, троянда - заміжня жінка, гвоздика - літня людина, тополя або кипарис - дорослий чоловік, а тюльпан усередині троянди - кохання."
+   ],
+   [
+    "Чи кожен узор на вишиванці має значення?",
+    "Ні. Частина узорів відома лише за народною назвою, як-от подільські «семиріг» чи «безконечник», а частина значень існує тільки в переказі. Кольори теж не завжди символічні: на Миколаївщині червоний і чорний, за словами етнографа, окремого символічного навантаження не несли."
+   ]
+  ],
+  "sources_title": "Джерела",
+  "sources": [
+   "Вінницький обласний художній музей. Інтернет-виставка жіночих сорочок Вінниччини до Всесвітнього дня вишиванки.",
+   "Слобожанський код. Українська вишивка. Харківський історичний музей ім. М. Ф. Сумцова, ГО «КЛІО ХАБ».",
+   "Голосна О. С. Історія української вишиванки на Сумщині. Суми, 2017.",
+   "Стрельцова А. До питання про мотиви в орнаментиці ткацьких виробів українців Одещини.",
+   "Климчик О. Подільські вишивки кінця ХІХ - початку ХХ ст., зібрані Ю. Сіцинським // Україна, 1993, № 1.",
+   "Пилип Р. І. Художня вишивка українців Закарпаття ХІХ - першої пол. ХХ ст. Ужгород, 2012.",
+   "Маріна З. П. Українська вишивка на Катеринославщині. 2013.",
+   "Щибря В. Народний одяг Середньої Наддніпрянщини кінця ХІХ - початку ХХІ ст.: локальні особливості. ІМФЕ ім. М. Рильського НАН України, 2017.",
+   "Херсонська обласна універсальна наукова бібліотека ім. Олеся Гончара. Краєзнавство Таврії: народне вбрання Південної України.",
+   "Миколаївський обласний центр народної творчості. Українська вишиванка: виготовлення вишиванок по регіонах (південний регіон).",
+   "Орьнек - кримськотатарський орнамент і знання про нього. Репрезентативний список нематеріальної культурної спадщини людства ЮНЕСКО, 2021.",
+   "Акчуріна-Муфтієва Н. М., Заатов І. А. Кримськотатарське декоративно-ужиткове мистецтво // Енциклопедія Сучасної України. 2014.",
+   "Інтерв'ю з майстринями й музейниками на Суспільному (2020-2024)."
+  ],
+  "error_line": "Якщо ви побачили помилку - <a href=\"/contacts/\">напишіть нам</a>.",
+  "regions_label": "Де трапляється",
+  "nav_label": "Символи"
+ },
+ "en": {
+  "title": "Ukrainian embroidery symbols: what the patterns on a vyshyvanka mean",
+  "seo_title": "Ukrainian Embroidery Symbols and Their Meanings",
+  "seo_description": "What Ukrainian embroidery symbols mean: rhombus, cross, star, tree of life, rose, guelder rose, birds and Crimean Tatar ornek, per museums and researchers.",
+  "eyebrow": "Guide",
+  "lead": "Ukrainian embroidery symbols are geometric, plant and animal motifs: the rhombus, cross, star, tree of life, flowerpot, rose, guelder rose and birds. Their meanings are interpretations by museums, researchers and embroiderers themselves, and the same sign is explained differently from region to region. This page gathers the main symbols of the vyshyvanka whose meanings we can back with sources, and the regions where they appear.",
+  "short_title": "In short",
+  "short": [
+   "The rhombus, cross and star are most often explained through the sun, the earth and protection. According to the Vinnytsia Regional Art Museum, the rhombus stands for the union of Sun and Earth and fertility, the cross for harmony and protection, the star for protection from evil and illness.",
+   "The tree of life is shared by all of Ukraine, but every region draws it its own way. It grows from a flowerpot in Slobozhanshchyna, as the Tree of Kin in the Odesa region, as the World Tree in the Kherson region.",
+   "The same sign can carry different meanings: the double-headed eagle is explained in three different ways in the Chernihiv, Odesa and Kirovohrad regions.",
+   "In Crimean Tatar ornek a flower stands for a person: according to UNESCO, the almond is an unmarried girl, the tulip a young man, the rose a married woman.",
+   "Many meanings survive only in oral tradition, so for every interpretation we say who gives it."
+  ],
+  "answer_title": "What do the symbols on a vyshyvanka mean?",
+  "answer": [
+   "Ukrainian embroidery symbols fall into three large groups: geometric (rhombus, cross, star, circle, zigzag lines), plant (tree of life, flowerpot, rose, guelder rose, grapes) and zoomorphic (birds, animals). Most interpretations link them to the sun, the earth, fertility, family and protection, but the exact meaning of a sign depends on the region and on who explains it.",
+   "It matters to tell the documented from the retold. A museum explains the symbols in its own collection, a researcher records the names of patterns in a village, and some meanings live only in oral tradition. So next to each symbol we name whose interpretation it is, and oral tradition is marked as such. A vyshyvanka pattern is often tied more closely to a place than to a meaning: in the Borshchiv area the pattern can often tell you the village."
+  ],
+  "groups": [
+   {
+    "id": "geometric-symbols",
+    "title": "Geometric embroidery symbols: rhombus, cross, star, sun",
+    "intro": "Geometry is the oldest layer of Ukrainian ornament. In Zakarpattia the oldest form of pattern is the kryvulka zigzag, and in the Chernihiv region the most archaic motif is a rhombus with little horns and tails. In Podillia, as researcher Anna Streltsova notes, more than half of some one hundred and fifty variants of cross ornament are found.",
+    "symbols": [
+     {
+      "key": "romb",
+      "name": "Rhombus",
+      "text": [
+       "The rhombus is perhaps the most common sign in embroidery. According to the Vinnytsia Regional Art Museum, it stands for the union of Sun and Earth and for fertility. Researcher Oleksandra Holosna, describing embroidery of the Sumy region, reads crosses and rhombuses as symbols of the heavenly bodies and fire.",
+       "In the Odesa region, according to Anna Streltsova, the rhombus is the most common motif, but it is almost never left empty: its centre is filled with a cross, a smaller rhombus or a square. In Volyn a smaller rhombus is set inside a larger one, giving flat embroidery a sense of depth."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "sumska-oblast",
+       "odeska-oblast",
+       "volynska-oblast",
+       "chernihivska-oblast",
+       "zakarpatska-oblast"
+      ]
+     },
+     {
+      "key": "khrest",
+      "name": "Cross",
+      "text": [
+       "According to the Vinnytsia Regional Art Museum, the cross is a sign of harmony and a protective charm. In the Odesa region small crosses divide the composition into horizontal rows, usually three, while large diagonal crosses and crosses made of five squares stand on their own.",
+       "In the Dnipropetrovsk region crosses and diagonal crosses belong to a dense system of geometric signs: one shirt there could hold more symbols than some regions use in their whole tradition."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "odeska-oblast",
+       "dnipropetrovska-oblast",
+       "ivano-frankivska-oblast"
+      ]
+     },
+     {
+      "key": "zirka",
+      "name": "Star and eight-pointed rosette",
+      "text": [
+       "The Vinnytsia Regional Art Museum explains the star as protection from evil and illness. In the Khust area of Zakarpattia, shirts with an eight-pointed star rosette were made for women who were already married, and the stars themselves were called zvizdy and kosychky.",
+       "In the Zhytomyr region the most common motif is a rosette of zigzags, eight-pointed stars and rhombuses. Honoured folk art master Valentyna Dymova calls the star the main ornament of southern embroidery."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "zakarpatska-oblast",
+       "zhytomyrska-oblast",
+       "mykolaivska-oblast",
+       "m-kyiv"
+      ]
+     },
+     {
+      "key": "sontse",
+      "name": "Sun signs",
+      "text": [
+       "Solar signs in geometric form are recorded by researchers in many regions of Ukraine. In Zaporizhzhia the sun is a large circle with a rosette inside, made to be read from a distance, while in the Dnipropetrovsk region solar signs sit beside crosses, stars, triangles and squares.",
+       "The Vinnytsia Regional Art Museum explains the svarha as a symbol of the sun cult, the family hearth and family happiness. In the Svatove area of the Luhansk region, bands of rhombuses and solar signs were stitched on the shoulder piece and the top of the sleeve."
+      ],
+      "regions": [
+       "zaporizka-oblast",
+       "dnipropetrovska-oblast",
+       "vinnytska-oblast",
+       "luhanska-oblast"
+      ]
+     },
+     {
+      "key": "kryvulka",
+      "name": "Kryvulka (zigzag)",
+      "text": [
+       "The kryvulka is a rhythmic zigzag running along a band. In Zakarpattia it is the oldest form of pattern, and the geometric layer did not disappear there but stayed beside the later flowers.",
+       "Kryvulka is also among the Podillia pattern names recorded by Yukhym Sitsynskyi, and in the Yavoriv area of the Lviv region early patterns were made of small kryvulky and pupochky."
+      ],
+      "regions": [
+       "zakarpatska-oblast",
+       "khmelnytska-oblast",
+       "lvivska-oblast"
+      ]
+     },
+     {
+      "key": "hodynnyk",
+      "name": "Hourglass",
+      "text": [
+       "Two triangles joined at their tips are a less obvious symbol of Slobozhanshchyna embroidery. According to oral tradition, the sign recalls the eternity of being and the passage between worlds.",
+       "There is no documentary support for this reading, so it is a retold belief rather than an established meaning."
+      ],
+      "regions": [
+       "kharkivska-oblast"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "plant-symbols",
+    "title": "Plant symbols: tree of life, flowerpot, rose, guelder rose",
+    "intro": "Plant ornament spread in embroidery later than geometry. At the end of the 19th century it was boosted by Brocard embroidery: cross-stitch charts of roses, grapes and flowers came packed with soap. In the Zhytomyr region the oldest plant motifs are periwinkle and birch, while hops and grapes appeared later.",
+    "symbols": [
+     {
+      "key": "derevo",
+      "name": "Tree of life",
+      "text": [
+       "The tree of life is a symbol shared by all of Ukraine, but, as Olha Soshnikova, curator of the Slobozhanskyi Kod project, explains, every region draws it its own way. On Slobozhanshchyna towels the roots of the tree often grow from a flowerpot, and researchers call this image the woman-flowerpot, a symbol of the mother and the continuation of the family.",
+       "In the Odesa region, according to Streltsova, it is a geometric Tree of Kin with one to six tiers of branches. In the Kherson region, by tradition, the main ideogram is the World Tree as an image of Mother Earth. In the Kirovohrad region old pieces keep the imagery of early farmers: the Great Goddess shown as a bird or a world tree."
+      ],
+      "regions": [
+       "kharkivska-oblast",
+       "odeska-oblast",
+       "khersonska-oblast",
+       "kirovohradska-oblast",
+       "sumska-oblast",
+       "mykolaivska-oblast"
+      ]
+     },
+     {
+      "key": "vazon",
+      "name": "Flowerpot",
+      "text": [
+       "According to the Vinnytsia Regional Art Museum, the flowerpot is the tree of life itself. On towels of the Katerynoslav area, according to research by Z. Marina, the main subject is a tree of life growing from a flowerpot, sometimes as a stylised female figure, with doves, roosters, peacocks and ducks on its branches.",
+       "In the Kirovohrad region later flowerpots, flowers and buds were stitched with remarkable realism."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "dnipropetrovska-oblast",
+       "kirovohradska-oblast",
+       "kyivska-oblast"
+      ]
+     },
+     {
+      "key": "ruzha",
+      "name": "Rose (ruzha)",
+      "text": [
+       "The rose, or ruzha, is the most common flower of Brocard embroidery. According to the Vinnytsia Regional Art Museum, the rose means the union of the female and male principles that gives life to everything.",
+       "In the Donetsk region the lush flower often called a rose is a full ruzha resembling a wild rose. In Kitsman in Bukovyna large bouquets of roses were embroidered, and in the Kirovohrad region red and black cross-stitch roses are the most common motif according to the Baba Yelka ethnolab."
+      ],
+      "regions": [
+       "vinnytska-oblast",
+       "donetska-oblast",
+       "chernivetska-oblast",
+       "kirovohradska-oblast",
+       "luhanska-oblast"
+      ]
+     },
+     {
+      "key": "kalyna",
+      "name": "Guelder rose (kalyna)",
+      "text": [
+       "In the Borshchiv area the favourite motif is a guelder rose between two birds. Different authors interpret the guelder rose and the birds differently, so there is no single correct reading.",
+       "In Zaporizhzhia the guelder rose stands beside the sun circle and the rhombus with a dot among large simple shapes. On Kyiv shirts, clusters of guelder rose were scattered across the sleeve in a chequered pattern."
+      ],
+      "regions": [
+       "ternopilska-oblast",
+       "zaporizka-oblast",
+       "m-kyiv",
+       "dnipropetrovska-oblast"
+      ]
+     },
+     {
+      "key": "vynohrad",
+      "name": "Grapes",
+      "text": [
+       "The bunch of grapes belongs to the Brocard group of plant ornament. In the Chernihiv region grapes appear in the 19th century together with red and black colours. On Kyiv shirts, bunches of grapes were scattered across the sleeve in a chequered pattern or arranged as wavy branches.",
+       "In the Odesa region, as Streltsova observed, local people consider the grape motif a borrowing from Moldovans or Bulgarians."
+      ],
+      "regions": [
+       "m-kyiv",
+       "chernihivska-oblast",
+       "odeska-oblast",
+       "kirovohradska-oblast",
+       "zhytomyrska-oblast"
+      ]
+     },
+     {
+      "key": "sosonka",
+      "name": "Sosonka and oak leaves",
+      "text": [
+       "The sosonka is a stylised little tree. The name is among the Podillia pattern names recorded by Yukhym Sitsynskyi, and in the Mykolaiv region sosonky, oak leaves and hop cones form the basis of early 20th-century embroidery.",
+       "The oak, according to the Vinnytsia Regional Art Museum, means male strength. In the Kirovohrad region men's shirts typically carry small oaks or geometric embroidery."
+      ],
+      "regions": [
+       "khmelnytska-oblast",
+       "mykolaivska-oblast",
+       "kirovohradska-oblast",
+       "vinnytska-oblast"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "birds-and-animals",
+    "title": "Birds and animals in Ukrainian embroidery",
+    "intro": "Animal motifs are rarer than plant ones, but they depend most of all on local tradition.",
+    "symbols": [
+     {
+      "key": "ptakh",
+      "name": "Birds",
+      "text": [
+       "On wedding towels of the Donetsk region, by tradition, birds added a fairy-tale quality to the pattern and wished happiness to the young family. In Slobozhanshchyna, according to Olha Soshnikova, embroidery shows many birds, animals, flowers and people.",
+       "Embroiderer Liubov Paraniuk explains birds in the Tavrian embroidery of the Mykolaiv region as freedom and love."
+      ],
+      "regions": [
+       "donetska-oblast",
+       "kharkivska-oblast",
+       "mykolaivska-oblast",
+       "sumska-oblast",
+       "chernivetska-oblast"
+      ]
+     },
+     {
+      "key": "orel",
+      "name": "Double-headed eagle",
+      "text": [
+       "The double-headed eagle is a wandering motif, and three regions explain it differently. In the Chernihiv region, according to oral tradition, the old orlykovyi eagle motif gradually turned into plant elements. In the Odesa region it is linked to Moldovan and Romanian decorative tradition, alongside the church crown and the cross.",
+       "In the Kirovohrad region the double-headed eagle, by tradition, means the unity of the male and female principles."
+      ],
+      "regions": [
+       "chernihivska-oblast",
+       "odeska-oblast",
+       "kirovohradska-oblast"
+      ]
+     },
+     {
+      "key": "svitove",
+      "name": "World Tree and the animals of the Kherson region",
+      "text": [
+       "Kherson embroidery stands out for its wide range of animals: horse, hare, fish, frogs, rooster, owl, dove, cuckoo and even the fly, butterfly and spider. Some symbols were chosen for a particular person, so without living bearers of the tradition this system can no longer be fully decoded.",
+       "There is also a wedding rule: nothing living was embroidered on the towel the couple stood on, because the living must not be trodden on."
+      ],
+      "regions": [
+       "khersonska-oblast"
+      ]
+     }
+    ]
+   }
+  ],
+  "ornek_title": "Crimean Tatar ornek: flowers that stand for people",
+  "ornek": [
+   "Ornek is the Crimean Tatar ornament with a system of about 35 symbols. In 2021 it was inscribed on UNESCO's Representative List of the Intangible Cultural Heritage of Humanity. Its recurring symbol is the maram, the tree of life. This is a separate tradition, not a variety of mainland Ukrainian embroidery.",
+   "Family signs stand apart: the female egri dal, a curved branch of change and growth, and the male family tree, a sign of reliability and strength."
+  ],
+  "ornek_table_caption": "Ornek flowers as described by UNESCO",
+  "ornek_rows": [
+   [
+    "Almond",
+    "an unmarried woman or girl"
+   ],
+   [
+    "Tulip",
+    "a young man"
+   ],
+   [
+    "Rose",
+    "a married woman"
+   ],
+   [
+    "Carnation",
+    "an elderly person"
+   ],
+   [
+    "Poplar or cypress",
+    "an adult man"
+   ],
+   [
+    "Tulip inside a rose",
+    "love, the union of a man and a woman"
+   ]
+  ],
+  "ornek_regions": [
+   "ar-krym",
+   "m-sevastopol"
+  ],
+  "names_title": "What villages called their patterns",
+  "names": [
+   "Many symbols are known not by meaning but by a folk name. The collection of Yukhym Sitsynskyi, compiled at the turn of the 20th century and studied by Olena Klymchyk, preserves dozens of Podillia names. Some come from the technique: kruti rohy (steep horns), semyrih (seven horns), bezkonechnyk (the endless one), kryvulka. Others come from plants: sosonka, vivsyk, repiakhy, horytsvit, khmelyky, petrushka, fasulky, ruta, yabluchka, slyvky.",
+   "In Zakarpattia shirts were named after where the ornament sat and its colour: zaspulnytsia, khrestata, kosytsia, bilenytsia, chervoniatka. In Koliadivka in the Luhansk region women stitched the rachky pattern, and in Pidhiria rhombuses with hooks called baranyachi rizhky, little ram's horns."
+  ],
+  "new_title": "New symbols: Tavrian embroidery of the Mykolaiv region",
+  "new": [
+   "Embroidery symbols are still being created. Embroiderers in the Mykolaiv region carry Tavrian painting over to fabric. Embroiderer Liubov Paraniuk explains its signs this way. A small boat is a friend and helper, a matula basket is luck and fate, fish are plenty, big waves are the force of life, birds are freedom and love. In autumn 2025 Tavrian painting was submitted for inclusion in Ukraine's National List of Intangible Cultural Heritage."
+  ],
+  "table_title": "Ukrainian embroidery symbols by region: table",
+  "table_head": [
+   "Symbol",
+   "How it is explained",
+   "Who explains it",
+   "Where it appears"
+  ],
+  "table_rows": [
+   [
+    "romb",
+    "union of Sun and Earth, fertility",
+    "Vinnytsia Regional Art Museum"
+   ],
+   [
+    "khrest",
+    "harmony, protection",
+    "Vinnytsia Regional Art Museum"
+   ],
+   [
+    "zirka",
+    "protection from evil and illness",
+    "Vinnytsia Regional Art Museum"
+   ],
+   [
+    "sontse",
+    "the sun; svarha - sun cult, hearth, family happiness",
+    "researchers; Vinnytsia Regional Art Museum"
+   ],
+   [
+    "hodynnyk",
+    "eternity of being, passage between worlds",
+    "oral tradition, no documentary support"
+   ],
+   [
+    "derevo",
+    "the mother and the continuation of the family (woman-flowerpot)",
+    "researchers of Slobozhanshchyna"
+   ],
+   [
+    "ruzha",
+    "union of the female and male principles",
+    "Vinnytsia Regional Art Museum"
+   ],
+   [
+    "sosonka",
+    "oak - male strength",
+    "Vinnytsia Regional Art Museum"
+   ],
+   [
+    "ptakh",
+    "a wish of happiness to the young family",
+    "Donetsk region tradition"
+   ],
+   [
+    "orel",
+    "unity of the male and female principles",
+    "Kirovohrad region tradition"
+   ]
+  ],
+  "why_title": "Why the meanings of symbols differ",
+  "why": [
+   "The meaning of a symbol is not a dictionary entry but an interpretation. It comes from a museum, a researcher, an embroiderer or oral tradition, and they can disagree. The double-headed eagle has three explanations in three regions. The guelder rose and birds of the Borshchiv area are read differently by different authors. The symbols of the Kherson region can no longer be fully decoded without living bearers of the tradition.",
+   "So Ukrainian embroidery symbols are best read with care: it is better to know who gave an interpretation than to credit a pattern with ancient power without a source. The same goes for colours: in the Mykolaiv region, as an ethnographer stresses, red and black carried no separate symbolic meaning."
+  ],
+  "faq_title": "FAQ about Ukrainian embroidery symbols",
+  "faq": [
+   [
+    "What does the rhombus mean on a vyshyvanka?",
+    "According to the Vinnytsia Regional Art Museum, the rhombus stands for the union of Sun and Earth and for fertility. Researcher Oleksandra Holosna reads crosses and rhombuses in Sumy region embroidery as symbols of the heavenly bodies and fire. The rhombus is one of the most common signs: in the Odesa region its centre is almost always filled with a cross, a smaller rhombus or a square."
+   ],
+   [
+    "What does the tree of life symbolise in embroidery?",
+    "The tree of life is a symbol shared by all of Ukraine, and every region draws it its own way. In Slobozhanshchyna its roots grow from a flowerpot, and researchers call this image the woman-flowerpot, a symbol of the mother and the continuation of the family. In the Kherson region, by tradition, the World Tree is an image of Mother Earth."
+   ],
+   [
+    "What does the double-headed eagle mean on a vyshyvanka?",
+    "There is no single meaning. In the Chernihiv region, according to oral tradition, the old orlykovyi eagle motif gradually turned into plant elements. In the Odesa region the eagle is linked to Moldovan and Romanian decorative tradition. In the Kirovohrad region, by tradition, it means the unity of the male and female principles."
+   ],
+   [
+    "What do flowers mean in Crimean Tatar ornament?",
+    "In Crimean Tatar ornek a flower stands for a person. According to UNESCO, the almond is an unmarried woman or girl, the tulip a young man, the rose a married woman, the carnation an elderly person. The poplar or cypress stands for an adult man, and a tulip inside a rose means love."
+   ],
+   [
+    "Does every pattern on a vyshyvanka have a meaning?",
+    "No. Some patterns are known only by a folk name, such as semyrih or bezkonechnyk in Podillia, and some meanings exist only in oral tradition. Colours are not always symbolic either: in the Mykolaiv region, according to an ethnographer, red and black carried no separate symbolic meaning."
+   ]
+  ],
+  "sources_title": "Sources",
+  "error_line": "If you notice a mistake, please <a href=\"/en/contacts/\">let us know</a>.",
+  "regions_label": "Where it appears",
+  "nav_label": "Symbols",
+  "sources": [
+   "Вінницький обласний художній музей. Інтернет-виставка жіночих сорочок Вінниччини до Всесвітнього дня вишиванки.",
+   "Слобожанський код. Українська вишивка. Харківський історичний музей ім. М. Ф. Сумцова, ГО «КЛІО ХАБ».",
+   "Голосна О. С. Історія української вишиванки на Сумщині. Суми, 2017.",
+   "Стрельцова А. До питання про мотиви в орнаментиці ткацьких виробів українців Одещини.",
+   "Климчик О. Подільські вишивки кінця ХІХ - початку ХХ ст., зібрані Ю. Сіцинським // Україна, 1993, № 1.",
+   "Пилип Р. І. Художня вишивка українців Закарпаття ХІХ - першої пол. ХХ ст. Ужгород, 2012.",
+   "Маріна З. П. Українська вишивка на Катеринославщині. 2013.",
+   "Щибря В. Народний одяг Середньої Наддніпрянщини кінця ХІХ - початку ХХІ ст.: локальні особливості. ІМФЕ ім. М. Рильського НАН України, 2017.",
+   "Херсонська обласна універсальна наукова бібліотека ім. Олеся Гончара. Краєзнавство Таврії: народне вбрання Південної України.",
+   "Миколаївський обласний центр народної творчості. Українська вишиванка: виготовлення вишиванок по регіонах (південний регіон).",
+   "Орьнек - кримськотатарський орнамент і знання про нього. Репрезентативний список нематеріальної культурної спадщини людства ЮНЕСКО, 2021.",
+   "Акчуріна-Муфтієва Н. М., Заатов І. А. Кримськотатарське декоративно-ужиткове мистецтво // Енциклопедія Сучасної України. 2014.",
+   "Інтерв'ю з майстринями й музейниками на Суспільному (2020-2024)."
+  ]
+ }
+}

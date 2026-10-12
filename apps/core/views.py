@@ -173,6 +173,8 @@ def llms_txt(request):
         "## Головне / Main",
         f"- [Орнамент дня / Ornament of the day]({base}/): щодня новий орнамент одного з регіонів",
         f"- [Вишиванки по регіонах]({base}/regions/) / [Regions]({base}/en/regions/)",
+        f"- [Символи на вишиванці]({base}/symbols/) / [Ukrainian embroidery symbols]"
+        f"({base}/en/symbols/): значення ромба, хреста, зірки, дерева життя й інших мотивів",
         f"- [Блог]({base}/blog/) / [Blog]({base}/en/blog/)",
         f"- [Часті питання]({base}/faq/) / [FAQ]({base}/en/faq/)",
         f"- [Про проєкт]({base}/about/) / [About]({base}/en/about/)",
@@ -222,6 +224,12 @@ def llms_full_txt(request):
         "Кожен розділ - окрема сторінка сайту українською, а потім англійською. Короткий "
         f"перелік сторінок: {base}/llms.txt. Як ми працюємо з джерелами: {base}/sources/.",
     ]
+    from apps.patterns.services.symbols import data as symbols_data
+    from apps.patterns.services.symbols import page_markdown
+
+    for lang, prefix in (("uk", ""), ("en", "/en")):
+        parts += ["", f"## {symbols_data()[lang]['title']}", f"URL: {base}{prefix}/symbols/", ""]
+        parts.append(page_markdown(lang))
     for r in Region.objects.order_by("name_uk"):
         parts += ["", f"## {r.name_uk}", f"URL: {base}/regions/{r.slug}/", ""]
         parts.append(html_to_markdown(r.symbolism_description_uk))

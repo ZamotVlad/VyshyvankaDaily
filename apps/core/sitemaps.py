@@ -118,6 +118,7 @@ class StaticViewSitemap(Sitemap):
         return [
             "patterns:home",
             "patterns:region_list",
+            "patterns:symbols",
             "blog:list",
             "pages:about",
             "pages:sources",
@@ -132,7 +133,9 @@ class StaticViewSitemap(Sitemap):
         return "daily" if item == "patterns:home" else "yearly"
 
     def priority(self, item):
-        return 1.0 if item == "patterns:home" else 0.5
+        if item == "patterns:home":
+            return 1.0
+        return 0.8 if item in ("patterns:region_list", "patterns:symbols") else 0.5
 
     def location(self, item):
         return reverse(item)

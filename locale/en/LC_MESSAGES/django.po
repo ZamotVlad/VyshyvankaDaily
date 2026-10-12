@@ -5509,3 +5509,6 @@ msgstr "Vyshyvankas from different regions of Ukraine differ not just in color b
 
 msgid "Орнаменти останніх 27 днів, повне коло регіонів, лишаються на сайті. Зареєстровані користувачі можуть зберігати улюблені орнаменти у власну колекцію та відстежувати, скільки регіонів вони вже 'пройшли' за час використання сайту."
 msgstr "Patterns from the last 27 days, a full cycle of regions, stay on the site. Registered users can save their favourite patterns to a personal collection and track how many regions they've 'completed' over time."
+
+msgid "Символи"
+msgstr "Symbols"

@@ -256,3 +256,45 @@ def jsonld_pattern(context, pattern):
     if description:
         data["description"] = str(description)[:300]
     return _script(data)
+
+
+@register.simple_tag(takes_context=True)
+def jsonld_symbols(context, page):
+    """Article + DefinedTermSet для сторінки символів: кожен символ - окремий термін."""
+    request = context["request"]
+    url = request.build_absolute_uri(request.path)
+    terms = [
+        {
+            "@type": "DefinedTerm",
+            "@id": f"{url}#symbol-{i}",
+            "name": term["name"],
+            "description": term["description"],
+            "inDefinedTermSet": {"@id": f"{url}#symbols"},
+        }
+        for i, term in enumerate(page["terms"], start=1)
+    ]
+    data = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "headline": page["seo_title"],
+                "description": page["seo_description"],
+                "url": url,
+                "mainEntityOfPage": {"@type": "WebPage", "@id": url},
+                "inLanguage": context.get("LANGUAGE_CODE", "uk"),
+                "image": request.build_absolute_uri(static("og/fallback.png")),
+                "author": {"@type": "Organization", "name": SITE_NAME, "url": _home(request)},
+                "publisher": _publisher(request),
+                "about": {"@id": f"{url}#symbols"},
+                "citation": [{"@type": "CreativeWork", "name": s} for s in page["sources"]],
+            },
+            {
+                "@type": "DefinedTermSet",
+                "@id": f"{url}#symbols",
+                "name": page["title"],
+                "hasDefinedTerm": terms,
+            },
+        ],
+    }
+    return _script(data)

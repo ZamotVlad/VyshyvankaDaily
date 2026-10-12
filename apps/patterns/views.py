@@ -27,6 +27,7 @@ from apps.patterns.services.generation import (
 from apps.patterns.services.pattern_builder import build_svg_for_date
 from apps.patterns.services.region_map import build_region_map
 from apps.patterns.services.rotation import get_region_for_date
+from apps.patterns.services.symbols import build_page as build_symbols_page
 
 logger = logging.getLogger(__name__)
 
@@ -348,3 +349,12 @@ def _update_streak(profile):
 
     profile.last_active_date = today
     profile.save()
+
+
+def symbols_view(request):
+    page = build_symbols_page(request.LANGUAGE_CODE)
+    return render(
+        request,
+        "patterns/symbols.html",
+        {"page": page, "toc": page["toc"], "breadcrumbs": [{"label": page["nav_label"]}]},
+    )

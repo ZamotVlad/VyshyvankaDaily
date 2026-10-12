@@ -2001,3 +2001,131 @@ main:focus {
     display: none;
   }
 }
+
+/* ---------- Символи вишиванки (/symbols/) ---------- */
+
+.vd-sym-hero {
+  margin: 8px 0 28px;
+}
+.vd-sym-hero__eyebrow {
+  font-family: var(--vd-font-display);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-red-text);
+  margin: 0 0 8px;
+}
+.vd-sym-hero h1 {
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.vd-sym-hero__lede {
+  max-width: 68ch;
+  color: var(--vd-cream);
+  font-size: 18px;
+}
+.vd-sym-hero__strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  overflow: hidden;
+  margin-top: 22px;
+  padding: 14px;
+  background: #e7decf url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='1.1' fill='%23d9cfbd' opacity='.6'/%3E%3Crect width='1.1' height='4' fill='%23fff' opacity='.25'/%3E%3C/svg%3E");
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08), 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+.vd-sym-hero__tile {
+  flex: 0 0 auto;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  animation: vd-sym-stitch 0.9s steps(12) both;
+  animation-delay: calc(var(--i) * 70ms);
+}
+.vd-sym-hero__tile svg {
+  width: 100%;
+  height: 100%;
+}
+.vd-sym-list {
+  display: grid;
+  gap: 18px;
+  margin: 18px 0 8px;
+}
+.vd-sym {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding: 18px;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: 10px;
+  scroll-margin-top: 90px;
+}
+.vd-sym--wide {
+  margin: 14px 0 18px;
+}
+.vd-sym__tile {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  background: #e7decf url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='1.1' fill='%23d9cfbd' opacity='.6'/%3E%3Crect width='1.1' height='4' fill='%23fff' opacity='.25'/%3E%3C/svg%3E");
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+.vd-sym__art {
+  width: 100%;
+  height: 100%;
+}
+.vd-sym__body h3 {
+  margin: 0 0 8px;
+}
+.vd-sym__body p {
+  margin: 0 0 10px;
+}
+.vd-sym__where {
+  font-size: 15px;
+  color: var(--vd-muted);
+}
+.vd-sym__where span {
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vd-red-text);
+}
+.vd-sym-page table caption {
+  caption-side: top;
+  text-align: left;
+  color: var(--vd-muted);
+  font-size: 14px;
+  padding-bottom: 6px;
+}
+.vd-sym-table {
+  overflow-x: auto;
+}
+@keyframes vd-sym-stitch {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+@media (max-width: 576px) {
+  .vd-sym {
+    grid-template-columns: 1fr;
+  }
+  .vd-sym__tile {
+    width: 140px;
+  }
+  .vd-sym-hero__tile {
+    width: 64px;
+    height: 64px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vd-sym-hero__tile {
+    animation: none;
+  }
+}
