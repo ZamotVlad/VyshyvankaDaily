@@ -266,12 +266,13 @@ def jsonld_symbols(context, page):
     terms = [
         {
             "@type": "DefinedTerm",
-            "@id": f"{url}#symbol-{i}",
+            "@id": f"{url}#symbol-{term['key']}",
+            "url": f"{url}#symbol-{term['key']}",
             "name": term["name"],
             "description": term["description"],
             "inDefinedTermSet": {"@id": f"{url}#symbols"},
         }
-        for i, term in enumerate(page["terms"], start=1)
+        for term in page["terms"]
     ]
     data = {
         "@context": "https://schema.org",
@@ -287,6 +288,8 @@ def jsonld_symbols(context, page):
                 "author": {"@type": "Organization", "name": SITE_NAME, "url": _home(request)},
                 "publisher": _publisher(request),
                 "about": {"@id": f"{url}#symbols"},
+                "datePublished": page["date_published"],
+                "dateModified": page["date_modified"],
                 "citation": [{"@type": "CreativeWork", "name": s} for s in page["sources"]],
             },
             {

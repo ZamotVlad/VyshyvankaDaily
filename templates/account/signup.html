@@ -25,7 +25,7 @@
 
 <form method="post" class="vd-form">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form.as_div }}
   <button type="submit" class="vd-btn vd-btn--primary">{% translate "Зареєструватися" %}</button>
 </form>
 {% endblock %}

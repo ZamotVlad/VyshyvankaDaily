@@ -165,8 +165,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Лайтбокс для фото регіону
   var lightbox = document.getElementById("photo-lightbox");
   if (lightbox) {
-    var lightboxImg = lightbox.querySelector(".vd-lightbox__img");
     var lightboxCaption = lightbox.querySelector(".vd-lightbox__caption");
+    var lightboxImg = document.createElement("img");
+    lightboxImg.className = "vd-lightbox__img";
+    lightbox.insertBefore(lightboxImg, lightboxCaption);
     var closeBtn = lightbox.querySelector(".vd-lightbox__close");
 
     document.querySelectorAll(".vd-photo-strip__item").forEach(function (btn) {

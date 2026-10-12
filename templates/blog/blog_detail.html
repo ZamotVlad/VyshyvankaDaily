@@ -42,8 +42,8 @@
     </p>
   {% endif %}
   <p class="vd-muted vd-small">
-    <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"d E Y" }}</time>
-    {% if post.published_at and post.updated_at.date > post.published_at.date %} · {% translate "Оновлено" %}: <time datetime="{{ post.updated_at|date:'c' }}">{{ post.updated_at|date:"d E Y" }}</time>{% endif %}
+    <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"d E Y" }}</time>
+    {% if post.published_at and post.updated_at.date > post.published_at.date %} · {% translate "Оновлено" %}: <time datetime="{{ post.updated_at|date:'Y-m-d' }}">{{ post.updated_at|date:"d E Y" }}</time>{% endif %}
     {% if post.guest_author_name %} · {{ post.guest_author_name }}{% endif %}
   </p>
 

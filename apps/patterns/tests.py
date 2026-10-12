@@ -1282,6 +1282,10 @@ class SymbolsPageTests(TestCase):
         self.assertNotIn("—", html)
         en = self.client.get("/en/symbols/").content.decode()
         self.assertIn("<h1>Ukrainian embroidery symbols", en)
+        self.assertIn('"@id": "http://testserver/symbols/#symbol-romb"', html)
+        self.assertIn('id="symbol-romb"', html)
+        self.assertIn('"dateModified": "2026-10-12"', html)
+        self.assertIn('<time datetime="2026-10-12">', html)
         self.assertIn('href="/en/regions/vinnytska-oblast/"', en)
 
     def test_symbols_in_nav_sitemap_and_llms(self):

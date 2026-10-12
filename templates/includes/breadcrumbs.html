@@ -1,5 +1,5 @@
 {% load i18n %}
-<nav aria-label="{% translate 'Хлібні крихти' %}" class="vd-small vd-muted mb-3">
+<nav aria-label="{% translate 'Хлібні крихти' %}" class="vd-crumbs vd-small vd-muted mb-3">
   <a href="{% url 'patterns:home' %}">{% translate "Головна" %}</a>
   {% for crumb in breadcrumbs %}
     <span class="vd-sep mx-1">◇</span>

@@ -1,6 +1,7 @@
 """Сторінка «Символи вишиванки»: тексти з data/symbols.json + схеми мотивів хрестиком."""
 
 import json
+from datetime import date
 from functools import cache
 from pathlib import Path
 
@@ -106,13 +107,16 @@ def build_page(lang):
     ]
     return {
         **content,
+        "date_published": data()["date_published"],
+        "date_modified": data()["date_modified"],
+        "updated": date.fromisoformat(data()["date_modified"]),
         "groups": groups,
         "table": rows,
         "toc": toc,
         "ornek_art": _art("ornek", content["ornek_title"], motifs),
         "ornek_region_links": _regions(content["ornek_regions"], by_slug),
         "terms": [
-            {"name": s["name"], "description": " ".join(s["text"])}
+            {"key": s["key"], "name": s["name"], "description": " ".join(s["text"])}
             for g in content["groups"]
             for s in g["symbols"]
         ],

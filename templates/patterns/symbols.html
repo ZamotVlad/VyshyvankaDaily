@@ -95,6 +95,7 @@
   <h2 id="sources">{{ page.sources_title }}</h2>
   <ul>{% for s in page.sources %}<li>{{ s }}</li>{% endfor %}</ul>
 
+  <p class="vd-muted vd-small">{% translate "Оновлено" %}: <time datetime="{{ page.date_modified }}">{{ page.updated|date:"d E Y" }}</time></p>
   <p>{{ page.error_line|safe }}</p>
 </div>
 </article>

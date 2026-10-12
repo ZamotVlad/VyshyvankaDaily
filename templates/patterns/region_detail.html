@@ -23,7 +23,7 @@
 <h1>{{ region.name }}</h1>
 
 {% if region.slug == "ar-krym" or region.slug == "m-sevastopol" %}
-  <p style="color: var(--vd-red); font-family: var(--vd-font-display); font-size: 14px; letter-spacing: 0.04em;">
+  <p style="color: var(--vd-red-text); font-family: var(--vd-font-display); font-size: 14px; letter-spacing: 0.04em;">
     {% translate "Крим - це Україна" %} ❤️
   </p>
 {% endif %}
@@ -98,7 +98,7 @@
 </p>
 
 {% if region.updated_at %}
-  <p class="vd-muted vd-small">{% translate "Оновлено" %}: <time datetime="{{ region.updated_at|date:'c' }}">{{ region.updated_at|date:"d E Y" }}</time></p>
+  <p class="vd-muted vd-small">{% translate "Оновлено" %}: <time datetime="{{ region.updated_at|date:'Y-m-d' }}">{{ region.updated_at|date:"d E Y" }}</time></p>
 {% endif %}
 {% if region.sources.exists %}
   <h2 class="vd-section-title" id="sources">{% translate "Джерела" %}</h2>
@@ -120,7 +120,6 @@
 
 <div class="vd-lightbox" id="photo-lightbox" hidden>
   <button type="button" class="vd-lightbox__close" aria-label="{% translate 'Закрити' %}">×</button>
-  <img class="vd-lightbox__img" src="" alt="">
   <div class="vd-lightbox__caption"></div>
 </div>
 {% endblock %}

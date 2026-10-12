@@ -65,6 +65,15 @@ a {
 a:hover {
   color: var(--vd-cream);
 }
+p a:not([class]),
+.vd-prose li a:not([class]),
+td a:not([class]),
+.vd-crumbs a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+}
 
 .vd-muted {
   color: var(--vd-muted);
@@ -595,7 +604,8 @@ a.vd-card:hover {
 .vd-form {
   max-width: 460px;
 }
-.vd-form p {
+.vd-form p,
+.vd-form > div {
   margin-bottom: 18px;
 }
 .vd-form label {
@@ -640,6 +650,11 @@ a.vd-card:hover {
 }
 .vd-form ul.errorlist {
   color: var(--vd-red);
+}
+.vd-form .helptext ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* ---------- Повідомлення ---------- */
