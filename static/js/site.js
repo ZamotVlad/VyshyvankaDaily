@@ -210,3 +210,222 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
     toggle.setAttribute("aria-label", isPassword ? "Приховати пароль" : "Показати пароль");
   });
 });
+
+// Мапа регіонів на /regions/: наведення, вибір з наближенням, частини України.
+(function () {
+  var root = document.querySelector("[data-vd-map]");
+  if (!root) return;
+  var svg = root.querySelector(".vd-map__svg");
+  var layer = root.querySelector(".vd-map__regions");
+  var box = root.querySelector(".vd-map__box");
+  var tip = root.querySelector(".vd-map__tip");
+  var panel = root.querySelector(".vd-map__panel");
+  var regions = Array.prototype.slice.call(root.querySelectorAll(".vd-map__rg"));
+  var labels = {};
+  root.querySelectorAll(".vd-map__lbl[data-for]").forEach(function (l) {
+    labels[l.getAttribute("data-for")] = l;
+  });
+  var W = +svg.getAttribute("data-w");
+  var H = +svg.getAttribute("data-h");
+  var full = [0, 0, W, H];
+  var vb = full.slice();
+  var active = null;
+  var group = "";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Ширина підписів під текст.
+  root.querySelectorAll(".vd-map__lbl").forEach(function (l) {
+    var t = l.querySelector("text");
+    var r = l.querySelector("rect");
+    var w = t.getComputedTextLength() + 22;
+    r.setAttribute("width", w);
+    r.setAttribute("x", -w / 2);
+  });
+
+  // Поява грає один раз за сесію.
+  var seen = false;
+  try {
+    seen = sessionStorage.getItem("vdMapSeen") === "1";
+    sessionStorage.setItem("vdMapSeen", "1");
+  } catch (e) {}
+  if (seen || reduce) {
+    root.classList.add("is-ready");
+  } else {
+    setTimeout(function () {
+      root.classList.add("is-ready");
+    }, regions.length * 50 + 1500);
+  }
+
+  function animateVB(to) {
+    if (reduce) {
+      vb = to;
+      svg.setAttribute("viewBox", to.join(" "));
+      return;
+    }
+    var from = vb.slice();
+    var t0 = performance.now();
+    function step(now) {
+      var t = Math.min(1, (now - t0) / 650);
+      var k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      vb = from.map(function (v, i) {
+        return v + (to[i] - v) * k;
+      });
+      svg.setAttribute("viewBox", vb.join(" "));
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function fit(els, pad) {
+    var x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+    els.forEach(function (el) {
+      var b = el.querySelector(".vd-map__linen").getBBox();
+      x1 = Math.min(x1, b.x);
+      y1 = Math.min(y1, b.y);
+      x2 = Math.max(x2, b.x + b.width);
+      y2 = Math.max(y2, b.y + b.height);
+    });
+    var w = x2 - x1 + pad * 2;
+    var h = y2 - y1 + pad * 2;
+    if (w / h > W / H) {
+      var nh = (w * H) / W;
+      y1 -= (nh - h) / 2;
+      h = nh;
+    } else {
+      var nw = (h * W) / H;
+      x1 -= (nw - w) / 2;
+      w = nw;
+    }
+    return [x1 - pad, y1 - pad, w, h];
+  }
+
+  function highlight(el, raise) {
+    regions.forEach(function (r) {
+      var on = r === el || r === active;
+      r.classList.toggle("is-on", on);
+      var l = labels[r.getAttribute("data-slug")];
+      if (l) l.classList.toggle("is-show", on || (group && r.getAttribute("data-group") === group));
+    });
+    svg.classList.toggle("is-dim", !!(el || active));
+    if (el && raise !== false && root.classList.contains("is-ready") && layer.lastElementChild !== el) {
+      layer.appendChild(el);
+    }
+  }
+
+  function showTip(el, e) {
+    if (!e) {
+      tip.hidden = true;
+      return;
+    }
+    var rb = box.getBoundingClientRect();
+    tip.innerHTML = "";
+    tip.appendChild(document.createTextNode(el.getAttribute("data-name")));
+    var small = document.createElement("small");
+    small.textContent = el.getAttribute("data-motif");
+    tip.appendChild(small);
+    tip.style.left = e.clientX - rb.left + "px";
+    tip.style.top = e.clientY - rb.top + "px";
+    tip.hidden = false;
+  }
+
+  function field(name) {
+    return panel.querySelector('[data-f="' + name + '"]');
+  }
+
+  function select(el) {
+    active = el;
+    var sel = panel.querySelector(".vd-map__sel");
+    var idle = panel.querySelector(".vd-map__idle");
+    if (!el) {
+      sel.hidden = true;
+      idle.hidden = false;
+      panel.classList.remove("is-open");
+      highlight(null);
+      var inGroup = regions.filter(function (r) {
+        return r.getAttribute("data-group") === group;
+      });
+      animateVB(group ? fit(inGroup, 30) : full);
+      return;
+    }
+    field("group").textContent = el.getAttribute("data-group-label");
+    field("name").textContent = el.getAttribute("data-name");
+    field("teaser").textContent = el.getAttribute("data-teaser");
+    field("motif").textContent = el.getAttribute("data-motif");
+    field("url").href = el.getAttribute("href");
+    var sw = field("colors");
+    sw.innerHTML = "";
+    el.getAttribute("data-colors").split(" ").forEach(function (c) {
+      if (!c) return;
+      var s = document.createElement("span");
+      s.className = "vd-swatch";
+      s.style.backgroundColor = c;
+      sw.appendChild(s);
+    });
+    sel.hidden = false;
+    idle.hidden = true;
+    panel.classList.add("is-open");
+    highlight(el);
+    animateVB(fit([el], 60));
+  }
+
+  regions.forEach(function (el) {
+    el.addEventListener("pointerenter", function (e) {
+      if (e.pointerType !== "mouse") return;
+      highlight(el);
+      showTip(el, e);
+    });
+    el.addEventListener("pointermove", function (e) {
+      if (e.pointerType === "mouse") showTip(el, e);
+    });
+    el.addEventListener("pointerleave", function () {
+      highlight(active);
+      showTip(el);
+    });
+    el.addEventListener("focus", function () {
+      highlight(el, false);
+    });
+    el.addEventListener("blur", function () {
+      if (!active) highlight(null);
+    });
+    el.addEventListener("click", function (e) {
+      // Другий клік по вибраному регіону - перехід на його сторінку.
+      if (active === el) return;
+      e.preventDefault();
+      showTip(el);
+      select(el);
+    });
+  });
+
+  panel.querySelector(".vd-map__close").addEventListener("click", function () {
+    select(null);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && active) select(null);
+  });
+
+  root.querySelectorAll(".vd-map__chip").forEach(function (b) {
+    b.addEventListener("click", function () {
+      group = b.getAttribute("data-group");
+      root.querySelectorAll(".vd-map__chip").forEach(function (x) {
+        x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      });
+      regions.forEach(function (r) {
+        r.classList.toggle("is-in", r.getAttribute("data-group") === group);
+      });
+      svg.classList.toggle("is-grouped", !!group);
+      select(null);
+    });
+  });
+
+  if (!reduce && window.matchMedia("(hover: hover)").matches) {
+    box.addEventListener("pointermove", function (e) {
+      var r = box.getBoundingClientRect();
+      svg.style.setProperty("--ry", ((e.clientX - r.left) / r.width - 0.5) * 5 + "deg");
+      svg.style.setProperty("--rx", -((e.clientY - r.top) / r.height - 0.5) * 5 + "deg");
+    });
+    box.addEventListener("pointerleave", function () {
+      svg.style.setProperty("--rx", "0deg");
+      svg.style.setProperty("--ry", "0deg");
+    });
+  }
+})();

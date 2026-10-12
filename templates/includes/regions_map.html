@@ -1,0 +1,49 @@
+{% load i18n cache %}
+{% cache 86400 vd_regions_map LANGUAGE_CODE today_slug %}
+{% with m=region_map %}
+<section class="vd-map" data-vd-map aria-labelledby="vd-map-title">
+  <h2 class="vd-section-title" id="vd-map-title">{% translate "Мапа вишиванок регіонів" %}</h2>
+  <p class="vd-muted vd-map__lede">{% translate "Кожна область вишита своїм мотивом у своїх кольорах. Наведіть, щоб побачити назву, натисніть, щоб відкрити картку регіону." %}</p>
+  <div class="vd-map__chips" role="group" aria-label="{% translate 'Частини України' %}">
+    <button type="button" class="vd-map__chip" data-group="" aria-pressed="true">{% translate "Уся Україна" %}</button>
+    {% for key, label in m.groups %}<button type="button" class="vd-map__chip" data-group="{{ key }}" aria-pressed="false">{{ label }}</button>{% endfor %}
+  </div>
+  <div class="vd-map__stage">
+    <div class="vd-map__box">
+      <svg class="vd-map__svg" viewBox="0 0 {{ m.width }} {{ m.height }}" data-w="{{ m.width }}" data-h="{{ m.height }}" role="group" aria-label="{% translate 'Мапа регіонів України' %}">
+        <defs>
+          <pattern id="vd-linen" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#E7DECF"/><rect width="4" height="1.1" fill="#D9CFBD" opacity=".55"/><rect width="1.1" height="4" fill="#FFF" opacity=".22"/></pattern>
+          <pattern id="vd-linen-raw" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#C9BBA3"/><rect width="4" height="1.1" fill="#B9AA90" opacity=".55"/><rect width="1.1" height="4" fill="#FFF" opacity=".15"/></pattern>
+          {% for r in m.items %}<path id="vd-p-{{ r.slug }}" d="{{ r.d }}"/><clipPath id="vd-c-{{ r.slug }}"><use href="#vd-p-{{ r.slug }}"/></clipPath>{{ r.pattern }}{% endfor %}
+        </defs>
+        <g class="vd-map__regions">
+          {% for r in m.items %}<a class="vd-map__rg{% if r.small %} is-small{% endif %}{% if r.raw %} is-raw{% endif %}{% if r.today %} is-today{% endif %}" href="{{ r.url }}" style="--i:{{ r.index }}" aria-label="{{ r.name }}" data-slug="{{ r.slug }}" data-group="{{ r.group }}" data-name="{{ r.name }}" data-group-label="{{ r.group_label }}" data-motif="{{ r.motif }}" data-colors="{{ r.colors_attr }}" data-teaser="{{ r.teaser }}"><use class="vd-map__linen" href="#vd-p-{{ r.slug }}"/><use class="vd-map__motif" href="#vd-p-{{ r.slug }}" fill="url(#vd-m-{{ r.slug }})"/><use class="vd-map__seam" href="#vd-p-{{ r.slug }}" clip-path="url(#vd-c-{{ r.slug }})"/>{% if r.small %}<circle class="vd-map__pin" cx="{{ r.cx }}" cy="{{ r.cy }}" r="7"/><circle class="vd-map__pin-dot" cx="{{ r.cx }}" cy="{{ r.cy }}" r="2.6"/>{% endif %}</a>{% endfor %}
+        </g>
+        <g class="vd-map__labels" aria-hidden="true">
+          {% for r in m.items %}<g class="vd-map__lbl{% if r.today %} is-today{% endif %}" data-for="{{ r.slug }}" transform="translate({{ r.label_x }} {{ r.label_y }})"><rect x="-40" y="-11" width="80" height="22" rx="11"/><text y="4.5">{{ r.short_name }}</text></g>{% endfor %}
+          {% for r in m.items %}{% if r.today %}<g class="vd-map__today" transform="translate({{ r.cx }} {{ r.cy }})"><circle class="vd-map__today-ring" r="9"/><g class="vd-map__lbl vd-map__lbl--today" transform="translate(0 -28)"><rect x="-44" y="-11" width="88" height="22" rx="11"/><text y="4.5">{% translate "Регіон дня" %}</text></g></g>{% endif %}{% endfor %}
+        </g>
+      </svg>
+      <div class="vd-map__tip" hidden></div>
+    </div>
+    <aside class="vd-map__panel" aria-live="polite">
+      <div class="vd-map__idle">
+        <p class="vd-map__eyebrow">{% translate "Як користуватись" %}</p>
+        <p class="vd-map__title">{% translate "Оберіть регіон" %}</p>
+        <p class="vd-muted">{% translate "Наведення показує назву, клік відкриває картку регіону. Кнопки над мапою наближують частину України." %}</p>
+        <p class="vd-muted">{% translate "Червона мітка - регіон, якому присвячено орнамент дня." %}</p>
+      </div>
+      <div class="vd-map__sel" hidden>
+        <button type="button" class="vd-map__close" aria-label="{% translate 'Закрити' %}">×</button>
+        <p class="vd-map__eyebrow" data-f="group"></p>
+        <p class="vd-map__title" data-f="name"></p>
+        <p data-f="teaser"></p>
+        <p class="vd-muted vd-map__kv">{% translate "Мотив на мапі" %}: <span data-f="motif"></span></p>
+        <div class="vd-swatches vd-map__swatches" data-f="colors"></div>
+        <a class="vd-map__go" data-f="url" href="#">{% translate "Відкрити сторінку регіону" %} →</a>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endwith %}
+{% endcache %}

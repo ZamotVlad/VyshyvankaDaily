@@ -5455,3 +5455,39 @@ msgstr "If you find a mistake"
 #, python-format
 msgid "Напишіть нам через <a href=\"%(contact_url)s\">сторінку контактів</a>. Ми перевіримо й виправимо текст, а на сторінці з'явиться нова дата «Оновлено». Будемо вдячні, якщо додасте посилання на джерело."
 msgstr "Write to us via the <a href=\"%(contact_url)s\">contact page</a>. We will check and correct the text, and the page will show a new \"Updated\" date. A link to your source is very welcome."
+
+msgid "Мапа вишиванок регіонів"
+msgstr "Embroidery map of the regions"
+
+msgid "Кожна область вишита своїм мотивом у своїх кольорах. Наведіть, щоб побачити назву, натисніть, щоб відкрити картку регіону."
+msgstr "Each region is stitched with its own motif in its own colours. Hover to see the name, click to open the region card."
+
+msgid "Частини України"
+msgstr "Parts of Ukraine"
+
+msgid "Уся Україна"
+msgstr "All of Ukraine"
+
+msgid "Мапа регіонів України"
+msgstr "Map of Ukraine's regions"
+
+msgid "Регіон дня"
+msgstr "Region of the day"
+
+msgid "Як користуватись"
+msgstr "How to use"
+
+msgid "Оберіть регіон"
+msgstr "Choose a region"
+
+msgid "Наведення показує назву, клік відкриває картку регіону. Кнопки над мапою наближують частину України."
+msgstr "Hovering shows the name, a click opens the region card. The buttons above the map zoom into a part of Ukraine."
+
+msgid "Червона мітка - регіон, якому присвячено орнамент дня."
+msgstr "The red marker shows the region of today's ornament."
+
+msgid "Мотив на мапі"
+msgstr "Motif on the map"
+
+msgid "Відкрити сторінку регіону"
+msgstr "Open the region page"

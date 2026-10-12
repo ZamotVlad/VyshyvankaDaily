@@ -1216,3 +1216,50 @@ class StripeColorsTests(TestCase):
             accent_colors=["#D00000", "#C8913A"],
         )
         self.assertEqual(region.stripe_colors, ["#FFFFFF", "#D00000", "#C8913A"])
+
+
+class RegionMapTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        cache.clear()
+
+    def test_regions_page_keeps_list_and_adds_map_links(self):
+        html = self.client.get("/regions/").content.decode()
+        verified = Region.objects.verified().count()
+        self.assertIn("data-vd-map", html)
+        self.assertEqual(html.count('class="vd-map__rg'), verified)
+        self.assertGreaterEqual(html.count('class="vd-card"'), verified)
+        self.assertIn('href="/regions/poltavska-oblast/"', html)
+
+    def test_svg_numbers_are_not_localized(self):
+        html = self.client.get("/regions/").content.decode()
+        self.assertIsNone(re.search(r'c[xy]="\d+,\d', html))
+        self.assertIsNone(re.search(r"translate\(\d+,\d", html))
+
+    def test_english_map(self):
+        html = self.client.get("/en/regions/").content.decode()
+        self.assertIn("All of Ukraine", html)
+        self.assertIn('href="/en/regions/poltavska-oblast/"', html)
+
+    def test_pick_motif_prefers_most_stitches(self):
+        from apps.patterns.services.region_map import motif_pattern, pick_motif
+
+        region = make_region("Регіон М", 77)
+        small = Motif.objects.create(
+            name="Малий",
+            geometry_parameters={"format": "pixel_grid_v1", "grid": ["#."], "palette": {"#": 0}},
+        )
+        big = Motif.objects.create(
+            name="Великий",
+            geometry_parameters={
+                "format": "pixel_grid_v1",
+                "grid": ["##", "#o"],
+                "palette": {"#": 0, "o": 1},
+            },
+        )
+        region.compatible_motifs.add(small, big)
+        self.assertEqual(pick_motif(region), big)
+        pattern = motif_pattern("x", big, ["#000000", "#FFFFFF"])
+        self.assertIn('stroke="#000000"', pattern)
+        self.assertIn('stroke="#FFFDF8"', pattern)

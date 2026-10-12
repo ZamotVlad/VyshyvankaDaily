@@ -18,6 +18,8 @@
   <p>{% translate "Якщо цікавить конкретний орнамент вишиванки по областях - відкрий картку регіону: там повний опис кольорів, мотивів і джерел, на які ми спираємось." %}</p>
 </div>
 
+{% include "includes/regions_map.html" %}
+
 {% for group in region_groups %}
   <h2 class="vd-section-title">{{ group.label }}</h2>
   <div class="vd-grid">

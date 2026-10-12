@@ -1714,3 +1714,292 @@ main:focus {
 .vd-prose aside.vd-callout li:last-child {
   margin-bottom: 0;
 }
+
+/* ---------- Мапа регіонів (/regions/) ---------- */
+
+.vd-map {
+  margin: 8px 0 40px;
+}
+.vd-map__lede {
+  max-width: 62ch;
+}
+.vd-map__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+.vd-map__chip {
+  font: inherit;
+  font-size: 15px;
+  color: var(--vd-cream);
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: 999px;
+  padding: 6px 15px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.vd-map__chip:hover {
+  border-color: var(--vd-red);
+}
+.vd-map__chip[aria-pressed="true"] {
+  background: var(--vd-red);
+  border-color: var(--vd-red);
+  color: #fff;
+}
+.vd-map__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 24px;
+  align-items: start;
+}
+.vd-map__box {
+  position: relative;
+  perspective: 1400px;
+}
+.vd-map__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.vd-map__rg {
+  cursor: pointer;
+  outline: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vd-map-drop 0.75s cubic-bezier(0.2, 0.9, 0.25, 1.15) both;
+  animation-delay: calc(var(--i) * 50ms);
+  transition: opacity 0.35s, filter 0.35s;
+}
+.vd-map__linen {
+  fill: url(#vd-linen);
+  stroke: var(--vd-bg);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+}
+.vd-map__rg.is-raw .vd-map__linen {
+  fill: url(#vd-linen-raw);
+}
+.vd-map__motif {
+  opacity: 0.92;
+  animation: vd-map-stitch 1s steps(16) both;
+  animation-delay: calc(var(--i) * 50ms + 450ms);
+}
+.vd-map__seam {
+  fill: none;
+  stroke: #6b5a48;
+  stroke-opacity: 0.55;
+  stroke-width: 1.6;
+  stroke-dasharray: 3.2 2.4;
+}
+.vd-map__pin {
+  fill: #e7decf;
+  stroke: var(--vd-bg);
+  stroke-width: 2;
+}
+.vd-map__pin-dot {
+  fill: var(--vd-red);
+}
+.vd-map.is-ready .vd-map__rg,
+.vd-map.is-ready .vd-map__motif {
+  animation: none;
+}
+.vd-map__rg.is-on {
+  transform: translateY(-6px) scale(1.045);
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.55));
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.25, 1.2), opacity 0.35s, filter 0.35s;
+}
+.vd-map__rg.is-on .vd-map__seam {
+  stroke: var(--vd-red);
+  stroke-opacity: 1;
+  stroke-width: 2.2;
+  animation: vd-map-march 1.2s linear infinite;
+}
+.vd-map__svg.is-dim .vd-map__rg:not(.is-on) {
+  opacity: 0.45;
+  filter: saturate(0.5);
+}
+.vd-map__svg.is-grouped .vd-map__rg:not(.is-in) {
+  opacity: 0.18;
+  filter: grayscale(1);
+}
+.vd-map__labels {
+  pointer-events: none;
+}
+.vd-map__lbl {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.vd-map__lbl rect {
+  fill: rgba(28, 24, 21, 0.9);
+  stroke: rgba(237, 230, 220, 0.18);
+}
+.vd-map__lbl text {
+  font-family: var(--vd-font-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  fill: var(--vd-cream);
+  text-anchor: middle;
+}
+.vd-map__lbl.is-show,
+.vd-map__lbl.is-today,
+.vd-map__lbl--today {
+  opacity: 1;
+}
+.vd-map__lbl--today rect {
+  fill: var(--vd-red);
+  stroke: none;
+}
+.vd-map__lbl--today text {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  fill: #fff;
+}
+.vd-map__today-ring {
+  fill: none;
+  stroke: var(--vd-red);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vd-map-pulse 2.2s ease-out infinite;
+}
+.vd-map__tip {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--vd-surface-2);
+  border: 1px solid var(--vd-border);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 15px;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  transform: translate(-50%, calc(-100% - 14px));
+}
+.vd-map__tip small {
+  display: block;
+  color: var(--vd-muted);
+  font-size: 13px;
+}
+.vd-map__panel {
+  position: sticky;
+  top: 16px;
+  min-height: 260px;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 16px;
+}
+.vd-map__panel p {
+  margin: 0 0 10px;
+}
+.vd-map__eyebrow {
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vd-red-text);
+}
+.vd-map__title {
+  font-family: var(--vd-font-display);
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--vd-cream);
+}
+.vd-map__kv span {
+  color: var(--vd-cream);
+}
+.vd-map__swatches {
+  margin: 4px 0 16px;
+}
+.vd-map__go {
+  display: inline-block;
+  background: var(--vd-red);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--vd-radius);
+  padding: 9px 16px;
+  font-size: 15px;
+}
+.vd-map__go:hover {
+  background: var(--vd-red-dim);
+  color: #fff;
+}
+.vd-map__close {
+  float: right;
+  background: none;
+  border: 0;
+  color: var(--vd-muted);
+  font-size: 24px;
+  line-height: 1;
+  padding: 0 4px;
+  cursor: pointer;
+}
+@keyframes vd-map-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.94);
+  }
+}
+@keyframes vd-map-stitch {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+@keyframes vd-map-march {
+  to {
+    stroke-dashoffset: -11.2;
+  }
+}
+@keyframes vd-map-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+@media (max-width: 860px) {
+  .vd-map__stage {
+    grid-template-columns: 1fr;
+  }
+  .vd-map__panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    top: auto;
+    z-index: 1040;
+    min-height: 0;
+    transform: translateY(130%);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.25, 1);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+  }
+  .vd-map__panel.is-open {
+    transform: none;
+  }
+  .vd-map__idle,
+  .vd-map__tip {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vd-map__rg,
+  .vd-map__motif,
+  .vd-map__today-ring,
+  .vd-map__rg.is-on .vd-map__seam {
+    animation: none;
+  }
+  .vd-map__svg {
+    transform: none;
+  }
+}

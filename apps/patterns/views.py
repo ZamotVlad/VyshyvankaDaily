@@ -25,6 +25,8 @@ from apps.patterns.services.generation import (
     generate_daily_pattern,
 )
 from apps.patterns.services.pattern_builder import build_svg_for_date
+from apps.patterns.services.region_map import build_region_map
+from apps.patterns.services.rotation import get_region_for_date
 
 logger = logging.getLogger(__name__)
 
@@ -340,10 +342,25 @@ def region_list_view(request):
     способу переглянути їх усі не було).
     """
     regions = list(Region.objects.verified().order_by("name"))
+    try:
+        today_slug = get_region_for_date(timezone.localdate()).slug
+    except Region.DoesNotExist:
+        today_slug = ""
+
+    def region_map():
+        # Викликається лише з шаблону, коли кешу мапи ще немає.
+        with_motifs = Region.objects.verified().prefetch_related("compatible_motifs")
+        return build_region_map(with_motifs, today_slug)
+
     return render(
         request,
         "patterns/region_list.html",
-        {"regions": regions, "region_groups": grouped_regions(regions)},
+        {
+            "regions": regions,
+            "region_groups": grouped_regions(regions),
+            "region_map": region_map,
+            "today_slug": today_slug,
+        },
     )
 
 
