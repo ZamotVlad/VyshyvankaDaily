@@ -70,6 +70,19 @@ document.addEventListener("DOMContentLoaded", function () {
     update();
   }
 
+  // Посилання всередині сторінки: прокрутка без зміни адреси
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href^='#']");
+    if (!a || a.hasAttribute("data-bs-toggle") || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var id = decodeURIComponent(a.getAttribute("href").slice(1));
+    var target = id && document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ block: "start" });
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  });
+
   // Кнопка «нагору» на довгих сторінках
   var toTop = document.querySelector("[data-to-top]");
   if (toTop && document.documentElement.scrollHeight > window.innerHeight * 3) {

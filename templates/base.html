@@ -1,4 +1,4 @@
-{% load i18n static seo_tags %}
+{% load i18n static seo_tags assets_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -17,17 +17,10 @@
 <link rel="publisher" href="{% url 'patterns:home' %}">
 <link rel="icon" type="image/svg+xml" href="{% static 'logo/favicon.svg' %}">
 <link rel="apple-touch-icon" href="{% static 'favicon/apple-touch-icon.png' %}">
-{% if LANGUAGE_CODE == "en" %}
-<link rel="preload" href="{% static 'fonts/unbounded-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{% static 'fonts/ptserif-400-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
-{% else %}
-<link rel="preload" href="{% static 'fonts/unbounded-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{% static 'fonts/ptserif-400-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
-{% endif %}
+<link rel="preload" href="{% static 'fonts/unbounded.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{% static 'fonts/vdserif-400.woff2' %}" as="font" type="font/woff2" crossorigin>
 <style>{% include "includes/fonts_css.html" %}</style>
-<link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static 'logo/logo.css' %}">
-<link rel="stylesheet" href="{% static 'css/vd.css' %}">
+{% inline_css "vendor/bootstrap/bootstrap.min.css" "logo/logo.css" "css/vd.css" %}
 {% jsonld_site %}
 <meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:site_name" content="VyshyvankaDaily">

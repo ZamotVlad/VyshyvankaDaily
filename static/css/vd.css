@@ -17,7 +17,7 @@
 
   /* Типографіка */
   --vd-font-display: "Unbounded", system-ui, sans-serif;
-  --vd-font-body: "PT Serif", Georgia, serif;
+  --vd-font-body: "VD Serif", Georgia, serif;
 
   /* Простір */
   --vd-gap: 24px;
@@ -2016,11 +2016,9 @@ main:focus {
   margin: 0 0 8px;
 }
 .vd-sym-hero h1 {
-  max-width: 22ch;
   text-wrap: balance;
 }
 .vd-sym-hero__lede {
-  max-width: 68ch;
   color: var(--vd-cream);
   font-size: 18px;
 }
@@ -2041,8 +2039,6 @@ main:focus {
   height: 84px;
   display: grid;
   place-items: center;
-  animation: vd-sym-stitch 0.9s steps(12) both;
-  animation-delay: calc(var(--i) * 70ms);
 }
 .vd-sym-hero__tile svg {
   width: 100%;
@@ -2107,11 +2103,6 @@ main:focus {
 .vd-sym-table {
   overflow-x: auto;
 }
-@keyframes vd-sym-stitch {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-}
 @media (max-width: 576px) {
   .vd-sym {
     grid-template-columns: 1fr;
@@ -2124,8 +2115,7 @@ main:focus {
     height: 64px;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .vd-sym-hero__tile {
-    animation: none;
-  }
+
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none;
 }

@@ -18,7 +18,7 @@
   <h1>{{ page.title }}</h1>
   <p class="vd-sym-hero__lede">{{ page.lead }}</p>
   <div class="vd-sym-hero__strip" aria-hidden="true">
-    {% for group in page.groups %}{% for s in group.symbols|slice:":3" %}<span class="vd-sym-hero__tile" style="--i:{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}">{{ s.art }}</span>{% endfor %}{% endfor %}
+    {% for group in page.groups %}{% for s in group.symbols|slice:":3" %}<span class="vd-sym-hero__tile">{{ s.art }}</span>{% endfor %}{% endfor %}
   </div>
 </header>
 

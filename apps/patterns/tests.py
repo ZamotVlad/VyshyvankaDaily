@@ -1212,7 +1212,7 @@ class RegionPhotosTests(TestCase):
             thumbnail_url="https://example.org/t.jpg",
         )
 
-        html = self.client.get(f"/regions/{region.slug}/").content.decode()
+        html = self.client.get(f"/regions/{region.slug}/").content.decode().split("<body", 1)[1]
         self.assertIn('id="gallery"', html)
         self.assertIn('class="vd-photo-strip__badge"', html)
         self.assertEqual(html.count("vd-photo-strip__badge"), 1)

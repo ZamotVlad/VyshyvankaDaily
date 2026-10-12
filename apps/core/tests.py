@@ -477,9 +477,10 @@ class SecurityHeadersMiddlewareTests(TestCase):
         html = response.content.decode()
         self.assertNotIn("fonts.googleapis.com", html)
         self.assertRegex(html, r"@font-face \{ font-family: \"Unbounded\";")
-        self.assertIn("fonts/unbounded-cyrillic.woff2", html)
+        self.assertIn('rel="preload" href="/static/fonts/unbounded.woff2"', html)
+        self.assertIn('rel="preload" href="/static/fonts/vdserif-400.woff2"', html)
         en = self.client.get("/en/").content.decode()
-        self.assertIn("fonts/unbounded-latin.woff2", en)
+        self.assertIn('rel="preload" href="/static/fonts/unbounded.woff2"', en)
 
     def test_admin_keeps_google_fonts_for_its_theme(self):
         csp = self.client.get("/vd/login/")["Content-Security-Policy"]
@@ -491,8 +492,15 @@ class SecurityHeadersMiddlewareTests(TestCase):
         self.assertIn('js/site.js" defer>', html)
         self.assertIn('rel="apple-touch-icon"', html)
 
+    def test_css_is_inlined_without_render_blocking_links(self):
+        html = self.client.get("/").content.decode()
+        self.assertNotIn('rel="stylesheet"', html)
+        head = html.split("</head>", 1)[0]
+        self.assertIn(".vd-sym-hero{", head)
+        self.assertNotIn("/*", head.split("</style>", 1)[1])
+
     def test_font_files_are_served(self):
-        for name in ("unbounded-cyrillic.woff2", "ptserif-400-latin.woff2"):
+        for name in ("unbounded.woff2", "vdserif-400.woff2", "vdserif-700.woff2"):
             self.assertEqual(self.client.get(f"/static/fonts/{name}").status_code, 200)
 
     def test_html_is_gzip_compressed_when_client_accepts_it(self):
@@ -906,7 +914,7 @@ class TableOfContentsTests(TestCase):
             status="published",
             published_at=timezone.now(),
         )
-        html = self.client.get(f"/blog/{post.slug}/").content.decode()
+        html = self.client.get(f"/blog/{post.slug}/").content.decode().split("<body", 1)[1]
         self.assertIn('<h2 id="odin">', html)
         self.assertNotIn("data-toc", html)
         self.assertNotIn("vd-pagetoc--compact", html)
