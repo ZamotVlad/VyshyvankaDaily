@@ -124,7 +124,8 @@ class TemplateDetailTests(TestCase):
         footer = html[html.index("<footer") :]
         self.assertIn("Проєкт", footer)
         self.assertNotIn("Компанія", footer)
-        self.assertIn('href="/symbols/"', footer)
+        self.assertIn('href="/regions/lvivska-oblast/"', footer)
+        self.assertIn('href="/regions/"', footer)
 
     def test_svg_label_is_escaped(self):
         svg = stitch_svg(["#"], label='Ромб "зірка"')
@@ -141,3 +142,27 @@ class TemplateDetailTests(TestCase):
         js = Path(finders.find("js/site.js")).read_text(encoding="utf-8")
         self.assertNotIn(".vd-lang select", js)
         self.assertIn('r.classList.contains("is-small")', js)
+
+
+class CollaborationPageTests(TestCase):
+    def test_formats_listed_and_saved(self):
+        from apps.blog.models import GuestPostSubmission
+
+        html = self.client.get("/blog/propose/").content.decode()
+        self.assertIn("Спонсорський матеріал", html)
+        self.assertIn('name="collaboration_type"', html)
+        self.client.post(
+            "/blog/propose/",
+            {
+                "contact_name": "Бренд",
+                "email": "brand@example.com",
+                "brand_name": "Етнобренд",
+                "collaboration_type": "sponsored",
+                "proposed_topic": "Колекція сорочок",
+                "proposal_description": "Хочемо розповісти про колекцію.",
+                "honeypot": "",
+            },
+        )
+        self.assertEqual(GuestPostSubmission.objects.get().collaboration_type, "sponsored")
+        en = self.client.get("/en/blog/propose/").content.decode()
+        self.assertIn("Ways to collaborate", en)

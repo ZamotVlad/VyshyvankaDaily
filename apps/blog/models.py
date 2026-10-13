@@ -238,11 +238,24 @@ class GuestPostSubmission(TimeStampedModel):
         APPROVED = "approved", "Схвалено"
         REJECTED = "rejected", "Відхилено"
 
+    class CollaborationType(models.TextChoices):
+        GUEST = "guest", gettext_lazy("Гостьова стаття")
+        SPONSORED = "sponsored", gettext_lazy("Спонсорський матеріал")
+        PARTNERSHIP = "partnership", gettext_lazy("Партнерство")
+        SPONSORSHIP = "sponsorship", gettext_lazy("Спонсорство проєкту")
+        OTHER = "other", gettext_lazy("Інше")
+
     contact_name = models.CharField(gettext_lazy("Ваше ім'я"), max_length=255)
     email = models.EmailField(gettext_lazy("Email"))
     brand_name = models.CharField(gettext_lazy("Бренд або організація"), max_length=255, blank=True)
-    proposed_topic = models.CharField(gettext_lazy("Тема"), max_length=255)
-    proposal_description = models.TextField(gettext_lazy("Коротко про матеріал"))
+    collaboration_type = models.CharField(
+        gettext_lazy("Формат співпраці"),
+        max_length=20,
+        choices=CollaborationType.choices,
+        default=CollaborationType.GUEST,
+    )
+    proposed_topic = models.CharField(gettext_lazy("Тема або проєкт"), max_length=255)
+    proposal_description = models.TextField(gettext_lazy("Коротко про пропозицію"))
     # Приховане поле проти автоматичного спаму - має лишатись порожнім.
     # Без help_text: aria-describedby вказував би на текст, якого немає на сторінці.
     honeypot = models.CharField(max_length=255, blank=True)

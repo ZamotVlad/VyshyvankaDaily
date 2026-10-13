@@ -254,7 +254,8 @@ class GuestPostFormLabelTests(TestCase):
         self.assertIn("Ваше ім&#x27;я", uk)
         self.assertNotIn("Contact name", uk)
         self.assertIn("Your name", en)
-        self.assertIn("About your article", en)
+        self.assertIn("About your proposal", en)
+        self.assertIn("Type of collaboration", en)
 
 
 class GuestPostAdminTests(TestCase):

@@ -128,14 +128,22 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
 
 @admin.register(GuestPostSubmission)
 class GuestPostSubmissionAdmin(ModelAdmin):
-    list_display = ("proposed_topic", "contact_name", "email", "review_status", "created_at")
-    list_filter = ("review_status", "created_at")
+    list_display = (
+        "proposed_topic",
+        "collaboration_type",
+        "contact_name",
+        "email",
+        "review_status",
+        "created_at",
+    )
+    list_filter = ("review_status", "collaboration_type", "created_at")
     list_editable = ("review_status",)
     search_fields = ("proposed_topic", "contact_name", "email", "brand_name")
     readonly_fields = (
         "contact_name",
         "email",
         "brand_name",
+        "collaboration_type",
         "proposed_topic",
         "proposal_description",
         "submitter_ip",

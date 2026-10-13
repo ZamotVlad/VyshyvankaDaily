@@ -134,19 +134,19 @@
       <p class="mb-0">{% translate "Щодня - новий орнамент твоєї землі." %}</p>
     </div>
     <div class="col-md-3 mb-4">
-      <p class="vd-footer__title">{% translate "Розділи" %}</p>
+      <p class="vd-footer__title">{% translate "Регіони" %}</p>
       <ul>
-        <li><a href="{% url 'patterns:home' %}">{% translate "Орнамент дня" %}</a></li>
-        <li><a href="{% url 'patterns:region_list' %}">{% translate "Вишиванки по регіонах" %}</a></li>
-        <li><a href="{% url 'patterns:symbols' %}">{% translate "Символи вишиванки" %}</a></li>
-        <li><a href="{% url 'blog:list' %}">{% translate "Блог" %}</a></li>
+        <li><a href="{% url 'patterns:region_detail' 'lvivska-oblast' %}">{% translate "Львівська область" %}</a></li>
+        <li><a href="{% url 'patterns:region_detail' 'poltavska-oblast' %}">{% translate "Полтавська область" %}</a></li>
+        <li><a href="{% url 'patterns:region_detail' 'm-kyiv' %}">{% translate "м. Київ" %}</a></li>
+        <li><a href="{% url 'patterns:region_list' %}"><strong>{% translate "Усі 27 регіонів →" %}</strong></a></li>
       </ul>
     </div>
     <div class="col-md-3 mb-4">
       <p class="vd-footer__title">{% translate "Проєкт" %}</p>
       <ul>
         <li><a href="{% url 'pages:faq' %}">FAQ</a></li>
-        <li><a href="{% url 'blog:propose' %}">{% translate "Запропонувати матеріал" %}</a></li>
+        <li><a href="{% url 'blog:propose' %}">{% translate "Співпраця" %}</a></li>
         <li><a href="{% url 'pages:sources' %}">{% translate "Як ми працюємо з джерелами" %}</a></li>
       </ul>
     </div>

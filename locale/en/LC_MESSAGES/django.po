@@ -5540,3 +5540,66 @@ msgstr "Project"
 
 msgid "Символи вишиванки"
 msgstr "Vyshyvanka symbols"
+
+msgid "Гостьова стаття"
+msgstr "Guest article"
+
+msgid "Спонсорський матеріал"
+msgstr "Sponsored article"
+
+msgid "Партнерство"
+msgstr "Partnership"
+
+msgid "Спонсорство проєкту"
+msgstr "Project sponsorship"
+
+msgid "Інше"
+msgstr "Other"
+
+msgid "Формат співпраці"
+msgstr "Type of collaboration"
+
+msgid "Тема або проєкт"
+msgstr "Topic or project"
+
+msgid "Коротко про пропозицію"
+msgstr "About your proposal"
+
+msgid "Співпраця і гостьові матеріали"
+msgstr "Collaboration and guest articles"
+
+msgid "Співпраця з VyshyvankaDaily: гостьові статті про вишивку, спонсорські матеріали, партнерства з етнобрендами й музеями та спонсорство проєкту."
+msgstr "Collaborate with VyshyvankaDaily: guest articles on embroidery, sponsored articles, partnerships with ethnic brands and museums, and project sponsorship."
+
+msgid "VyshyvankaDaily читають люди, яким цікава українська вишивка: в Україні й за кордоном. Якщо ваш текст, бренд чи проєкт пов'язаний з українською культурою, оберіть формат і коротко опишіть ідею. Ми відповімо на пошту."
+msgstr "VyshyvankaDaily is read by people interested in Ukrainian embroidery, in Ukraine and abroad. If your text, brand or project is connected with Ukrainian culture, choose a format and briefly describe your idea. We will reply by email."
+
+msgid "Формати співпраці"
+msgstr "Ways to collaborate"
+
+msgid "Гостьова стаття."
+msgstr "Guest article."
+
+msgid "Ваш текст про сорочки, рушники, майстринь, техніки чи музейні колекції свого краю."
+msgstr "Your text about shirts, rushnyky, embroiderers, techniques or museum collections of your region."
+
+msgid "Спонсорський матеріал."
+msgstr "Sponsored article."
+
+msgid "Стаття про ваш бренд, майстерню, виставку чи курс, пов'язані з вишивкою. Такі матеріали ми чесно позначаємо як партнерські."
+msgstr "An article about your embroidery-related brand, workshop, exhibition or course. We clearly label such articles as partner content."
+
+msgid "Партнерство."
+msgstr "Partnership."
+
+msgid "Спільні проєкти з етнобрендами, музеями, майстринями, освітніми й культурними ініціативами."
+msgstr "Joint projects with ethnic brands, museums, embroiderers, and educational and cultural initiatives."
+
+msgid "Спонсорство проєкту."
+msgstr "Project sponsorship."
+
+msgid "Підтримка сайту в обмін на згадку спонсора. Формат обговоримо окремо."
+msgstr "Support for the site in exchange for a sponsor mention. We will agree on the format separately."
+
+msgid "Тема пов'язана з українською вишивкою чи культурою. Рекламу поза цією темою ми не публікуємо."
+msgstr "The topic is related to Ukrainian embroidery or culture. We do not publish advertising outside this theme."
