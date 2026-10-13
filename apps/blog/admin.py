@@ -99,13 +99,27 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
                 '<span style="color: #3A7D2C;">{}</span>',
                 obj.target_keyword,
             )
-        return mark_safe('<span style="color: #C23B2E;">—</span>')
+        return mark_safe('<span style="color: #C23B2E;">-</span>')
 
 
 @admin.register(GuestPostSubmission)
 class GuestPostSubmissionAdmin(ModelAdmin):
-    # Навмисно мінімальна конфігурація: я не маю певності щодо точних
-    # назв полів цієї моделі (писалась на початку Stage 4). Так вона
-    # гарантовано не впаде на manage.py check. Коли скинеш мені реальні
-    # поля з models.py - допишу list_display, фільтри й пошук за один раз.
+    list_display = ("proposed_topic", "contact_name", "email", "review_status", "created_at")
+    list_filter = ("review_status", "created_at")
+    list_editable = ("review_status",)
+    search_fields = ("proposed_topic", "contact_name", "email", "brand_name")
+    readonly_fields = (
+        "contact_name",
+        "email",
+        "brand_name",
+        "proposed_topic",
+        "proposal_description",
+        "submitter_ip",
+        "created_at",
+    )
+    fields = ("review_status", *readonly_fields)
+    date_hierarchy = "created_at"
     list_per_page = 30
+
+    def has_add_permission(self, request):
+        return False

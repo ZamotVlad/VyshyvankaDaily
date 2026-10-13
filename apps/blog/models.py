@@ -2,7 +2,7 @@ import re
 
 from django.conf import settings
 from django.db import models
-from django.utils.translation import get_language
+from django.utils.translation import get_language, gettext_lazy
 from django.utils.translation import gettext as _
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -216,22 +216,17 @@ class GuestPostSubmission(TimeStampedModel):
         APPROVED = "approved", "Схвалено"
         REJECTED = "rejected", "Відхилено"
 
-    contact_name = models.CharField(max_length=255)
-    email = models.EmailField()
-    brand_name = models.CharField(max_length=255, blank=True)
-    proposed_topic = models.CharField(max_length=255)
-    proposal_description = models.TextField()
+    contact_name = models.CharField(gettext_lazy("Ваше ім'я"), max_length=255)
+    email = models.EmailField(gettext_lazy("Email"))
+    brand_name = models.CharField(gettext_lazy("Бренд або організація"), max_length=255, blank=True)
+    proposed_topic = models.CharField(gettext_lazy("Тема"), max_length=255)
+    proposal_description = models.TextField(gettext_lazy("Коротко про матеріал"))
     # Приховане поле проти автоматичного спаму - має лишатись порожнім.
-    # Навмисно без help_text: Django сам додає aria-describedby на віджет
-    # для нього, а сам текст ніде не рендериться (шаблон виключає honeypot
-    # зі стандартного циклу полів) - без help_text немає й зламаного
-    # ARIA-посилання.
-    honeypot = models.CharField(
-        max_length=255,
-        blank=True,
-    )
-    submitter_ip = models.GenericIPAddressField(null=True, blank=True)
+    # Без help_text: aria-describedby вказував би на текст, якого немає на сторінці.
+    honeypot = models.CharField(max_length=255, blank=True)
+    submitter_ip = models.GenericIPAddressField("IP", null=True, blank=True)
     review_status = models.CharField(
+        "Статус",
         max_length=20,
         choices=ReviewStatus.choices,
         default=ReviewStatus.NEW,
@@ -243,4 +238,4 @@ class GuestPostSubmission(TimeStampedModel):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.contact_name} — {self.proposed_topic}"
+        return f"{self.contact_name} - {self.proposed_topic}"

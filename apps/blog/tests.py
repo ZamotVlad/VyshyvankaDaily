@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.management import call_command
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from django.utils import timezone
 
 from apps.blog.models import BlogCategory, BlogPost, GuestPostSubmission
@@ -246,6 +247,53 @@ class GuestPostProposeViewTests(TestCase):
         self.assertFalse(GuestPostSubmission.objects.exists())
 
 
+class GuestPostFormLabelTests(TestCase):
+    def test_labels_follow_page_language(self):
+        uk = self.client.get("/blog/propose/").content.decode()
+        en = self.client.get("/en/blog/propose/").content.decode()
+        self.assertIn("Ваше ім&#x27;я", uk)
+        self.assertNotIn("Contact name", uk)
+        self.assertIn("Your name", en)
+        self.assertIn("About your article", en)
+
+
+class GuestPostAdminTests(TestCase):
+    def setUp(self):
+        user = get_user_model().objects.create_superuser("admin", "a@example.com", "pass")
+        self.client.force_login(user)
+        self.submission = GuestPostSubmission.objects.create(
+            contact_name="Spam Bot",
+            email="bot@example.com",
+            proposed_topic="Pdf Gratis",
+            proposal_description='<script>alert(1)</script><a href="https://spam.example">x</a>',
+        )
+
+    def test_changelist_shows_columns(self):
+        response = self.client.get(reverse("admin:blog_guestpostsubmission_changelist"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Pdf Gratis")
+        self.assertContains(response, "bot@example.com")
+
+    def test_change_page_escapes_submission_text(self):
+        response = self.client.get(
+            reverse("admin:blog_guestpostsubmission_change", args=[self.submission.pk])
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "<script>alert(1)</script>")
+        self.assertNotContains(response, 'href="https://spam.example"')
+
+    def test_only_status_is_editable(self):
+        url = reverse("admin:blog_guestpostsubmission_change", args=[self.submission.pk])
+        self.client.post(url, {"review_status": "rejected", "contact_name": "Змінено"})
+        self.submission.refresh_from_db()
+        self.assertEqual(self.submission.review_status, "rejected")
+        self.assertEqual(self.submission.contact_name, "Spam Bot")
+
+    def test_add_is_disabled(self):
+        response = self.client.get(reverse("admin:blog_guestpostsubmission_add"))
+        self.assertEqual(response.status_code, 403)
+
+
 class BlogFeedTests(TestCase):
     def test_feed_returns_200_and_lists_published_post(self):
         category = BlogCategory.objects.create(name="Категорія")
@@ -295,7 +343,7 @@ class BlogAdminTests(TestCase):
         )
         admin_instance = BlogPostAdmin(BlogPost, django_admin.site)
         badge = admin_instance.keyword_badge(post)
-        self.assertIn("—", badge)
+        self.assertIn(">-<", badge)
 
     def test_category_post_count(self):
         from django.contrib import admin as django_admin

@@ -5512,3 +5512,15 @@ msgstr "Patterns from the last 27 days, a full cycle of regions, stay on the sit
 
 msgid "Символи"
 msgstr "Symbols"
+
+msgid "Ваше ім'я"
+msgstr "Your name"
+
+msgid "Бренд або організація"
+msgstr "Brand or organisation"
+
+msgid "Тема"
+msgstr "Topic"
+
+msgid "Коротко про матеріал"
+msgstr "About your article"
