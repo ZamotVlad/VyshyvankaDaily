@@ -6,7 +6,7 @@ from functools import cache
 from pathlib import Path
 
 from django.urls import reverse
-from django.utils.html import strip_tags
+from django.utils.html import escape, strip_tags
 from django.utils.safestring import mark_safe
 
 from apps.patterns.models import Motif, Region
@@ -34,7 +34,7 @@ def stitch_svg(grid, palette=None, colors=None, label=""):
             by_color.setdefault(color, []).append(f"M{x + 0.15:g} {y + 0.15:g}l.7 .7m0-.7l-.7 .7")
     paths = "".join(f'<path stroke="{c}" d="{"".join(d)}"/>' for c, d in by_color.items())
     return mark_safe(
-        f'<svg viewBox="-1 -1 {cols + 2} {rows + 2}" role="img" aria-label="{label}" '
+        f'<svg viewBox="-1 -1 {cols + 2} {rows + 2}" role="img" aria-label="{escape(label)}" '
         f'class="vd-sym__art"><g fill="none" stroke-width=".32" stroke-linecap="round">'
         f"{paths}</g></svg>"
     )

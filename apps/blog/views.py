@@ -10,6 +10,7 @@ from django_ratelimit.decorators import ratelimit
 
 from apps.blog.forms import GuestPostSubmissionForm
 from apps.blog.models import Author, BlogCategory, BlogPost
+from apps.core.templatetags.assets_tags import hash_static_srcs
 from apps.core.toc import build_toc
 from apps.core.utils import client_ip
 
@@ -83,6 +84,7 @@ def blog_detail_view(request, slug):
     )
 
     body, toc = build_toc(post.localized_body, reserved=("sources", "regions"))
+    body = hash_static_srcs(body)
     if post.sources.exists():
         toc.append({"id": "sources", "title": _("Джерела")})
     mentioned_regions = _mentioned_regions(post, body)
@@ -104,16 +106,16 @@ def blog_detail_view(request, slug):
 @ratelimit(key="post:email", rate="3/h", method="POST", block=True)
 def guest_post_propose_view(request):
     """
-    Заявка на гостьовий пост (розділ 5.12, 6.4, 13.1 ТЗ).
+    Заявка на гостьовий пост.
 
-    Ключ обмеження — IP-адреса ТА email одночасно (розділ 13.1, таблиця):
-    два незалежні декоратори, кожен блокує самостійно — заблокує, якщо
+    Ключ обмеження - IP-адреса ТА email одночасно (розділ 13.1, таблиця):
+    два незалежні декоратори, кожен блокує самостійно - заблокує, якщо
     перевищено ліміт за будь-яким із двох вимірів. Підтверджено офіційною
     документацією django-ratelimit ("Use multiple keys by stacking
     decorators").
 
     Honeypot: якщо приховане поле заповнене (бот), тихо не зберігаємо
-    заявку, але показуємо той самий "успіх" — не видаємо боту, що його
+    заявку, але показуємо той самий "успіх" - не видаємо боту, що його
     спіймано.
     """
     if request.method == "POST":

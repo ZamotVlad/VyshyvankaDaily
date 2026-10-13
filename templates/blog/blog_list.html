@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n assets_tags %}
 
 {% block title %}{% translate "Блог" %} - VyshyvankaDaily{% endblock %}
 {% block meta_description %}{% translate "Статті про українську вишивку: техніки, символіка орнаментів, історії майстринь і музейних колекцій з різних регіонів України." %}{% endblock %}
@@ -32,7 +32,7 @@
     {% for post in page_obj %}
       <a href="{% url 'blog:detail' post.slug %}" class="vd-card">
         {% if post.cover_image_url %}
-          <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="vd-card__cover" width="400" height="180"{% if forloop.counter > 3 %} loading="lazy"{% endif %} decoding="async">
+          <img src="{{ post.cover_image_url|asset }}" alt="{{ post.cover_image_alt }}" class="vd-card__cover" width="400" height="180"{% if forloop.counter > 3 %} loading="lazy"{% endif %} decoding="async">
         {% endif %}
         <div class="vd-card__body">
           {% if post.post_type != "editorial" %}

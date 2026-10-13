@@ -8,9 +8,9 @@ from apps.accounts.models import Profile
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_profile_on_user_creation(sender, instance, created, raw, **kwargs):
     """
-    Автоматичне створення Profile при реєстрації (розділ 3.7 ТЗ).
+    Автоматичне створення Profile при реєстрації.
 
-    Перевірка `raw` обов'язкова — під час завантаження фікстур (loaddata)
+    Перевірка `raw` обов'язкова - під час завантаження фікстур (loaddata)
     сигнал спрацьовує без бажаного побічного ефекту, що може викликати
     IntegrityError чи дублікати записів.
     """

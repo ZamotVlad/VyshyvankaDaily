@@ -4,7 +4,7 @@ from apps.core.models import SlugModel, TimeStampedModel
 
 
 class StaticPage(TimeStampedModel, SlugModel):
-    """Статична сторінка (розділ 3.10 ТЗ) — перекладна, WYSIWYG-тіло."""
+    """Статична сторінка - перекладна, WYSIWYG-тіло."""
 
     title = models.CharField(verbose_name="Заголовок", max_length=255)
     body = models.TextField(verbose_name="Текст", help_text="HTML-розмітка.")
@@ -35,7 +35,7 @@ class FAQCategory(TimeStampedModel):
 
 
 class FAQItem(TimeStampedModel):
-    """Пункт частих запитань (розділ 3.10 ТЗ) — перекладний, згрупований, впорядкований."""
+    """Пункт частих запитань - перекладний, згрупований, впорядкований."""
 
     category = models.ForeignKey(
         FAQCategory, verbose_name="Категорія", on_delete=models.CASCADE, related_name="items"

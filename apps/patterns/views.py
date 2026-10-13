@@ -11,7 +11,10 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.formats import date_format
+from django.utils.html import strip_tags
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.text import Truncator
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
@@ -121,6 +124,16 @@ def pattern_svg_view(request, iso_date):
     return response
 
 
+def _pattern_description(pattern, limit=155):
+    prefix = _("Орнамент дня %(date)s: %(region)s.") % {
+        "date": date_format(pattern.date, "j E Y"),
+        "region": pattern.region.name,
+    }
+    region = pattern.region
+    rest = strip_tags(region.seo_description or region.symbolism_description)
+    return f"{prefix} {Truncator(rest).chars(limit - len(prefix) - 1)}"
+
+
 def pattern_detail_view(request, iso_date):
     pattern_date = _parse_iso_date(iso_date)
 
@@ -150,6 +163,7 @@ def pattern_detail_view(request, iso_date):
 
     context = {
         "pattern": pattern,
+        "meta_description": _pattern_description(pattern),
         "is_today": pattern_date == timezone.localdate(),
         "claim_type": pattern.region.get_claim_type(),
         "previous_pattern": previous_pattern,
@@ -163,9 +177,9 @@ def pattern_detail_view(request, iso_date):
 @require_POST
 def toggle_save_view(request, iso_date):
     """
-    Збереження/видалення патерну з колекції (розділ 5.1, 5.3, 9.1 ТЗ).
+    Збереження/видалення патерну з колекції.
 
-    Toggle через get_or_create/delete — покладаємось на UniqueConstraint
+    Toggle через get_or_create/delete - покладаємось на UniqueConstraint
     (user, pattern) із Stage 1, не перевіряємо існування вручну заздалегідь.
     """
     pattern_date = _parse_iso_date(iso_date)
@@ -191,11 +205,11 @@ def toggle_save_view(request, iso_date):
 @login_required
 def my_collection_view(request):
     """
-    Моя колекція (розділ 9.1, 9.3 ТЗ) — виключно приватна.
+    Моя колекція - виключно приватна.
 
-    Розділ 9.2 ТЗ + уточнення: "пройдений тур" рахує лише збереження
+    "Пройдений тур" рахує лише збереження
     день-в-день (SavedPattern.created_at, обрізане до дати за поточним
-    часовим поясом, == DailyPattern.date) — не всі збереження підряд.
+    часовим поясом, == DailyPattern.date) - не всі збереження підряд.
     Інакше людина могла б пройти "100% туру" за один прохід архіву,
     що суперечить суті щоденного ритуалу.
     """
@@ -270,7 +284,7 @@ def debug_pattern_view(request, iso_date):
 </style>
 </head>
 <body>
-<h1>{pattern.date} — {pattern.region}</h1>
+<h1>{pattern.date} - {pattern.region}</h1>
 <p>Статус: {pattern.generation_status}</p>
 <div class="pattern-wrap">{pattern.svg_content}</div>
 </body>
@@ -280,9 +294,7 @@ def debug_pattern_view(request, iso_date):
 
 def region_list_view(request):
     """
-    Перелік усіх верифікованих регіонів (не з ТЗ буквально — додано
-    для навігації, оскільки контент 27 регіонів готовий, а прямого
-    способу переглянути їх усі не було).
+    Перелік усіх верифікованих регіонів із мапою.
     """
     regions = list(Region.objects.verified().order_by("name"))
     try:
@@ -309,9 +321,8 @@ def region_list_view(request):
 
 def debug_all_regions_view(request):
     """
-    Галерея всіх регіонів одразу (не з ТЗ — зручність розробки для
-    Треку Б). Викликає build_svg_for_date напряму з конкретним
-    регіоном, минаючи ротацію й DailyPattern — нічого не зберігає
+    Галерея всіх регіонів одразу, для розробки. Викликає build_svg_for_date напряму з конкретним
+    регіоном, минаючи ротацію й DailyPattern - нічого не зберігає
     в базі, чистий перегляд.
     """
     if not settings.DEBUG:

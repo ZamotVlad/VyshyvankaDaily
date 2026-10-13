@@ -3,6 +3,7 @@ import re
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.formats import date_format
 from django.utils.translation import gettext as _
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -11,9 +12,9 @@ from apps.core.models import SlugModel, TimeStampedModel
 
 class Source(TimeStampedModel):
     """
-    Джерело достовірності контенту (розділ 3.4, 4.2 ТЗ).
+    Джерело достовірності контенту.
 
-    Не перекладна модель (розділ 3.11 ТЗ) — джерело існує мовою публікації,
+    Не перекладна модель - джерело існує мовою публікації,
     бібліографічні дані не мають сенсу дублювати різними мовами.
     """
 
@@ -76,9 +77,9 @@ def validate_hex_colors(value):
 class RegionQuerySet(models.QuerySet):
     def verified(self):
         """
-        Регіони, дозволені до показу в ротації генерації (розділ 4.4 ТЗ):
-        неверифікований запис не потрапляє в активну ротацію — і деактивований
-        регіон теж пропускається (розділ 8.3 ТЗ), навіть якщо формально верифікований.
+        Регіони, дозволені до показу в ротації генерації:
+        неверифікований запис не потрапляє в активну ротацію - і деактивований
+        регіон теж пропускається, навіть якщо формально верифікований.
         """
         return self.filter(
             verification_status=Region.VerificationStatus.VERIFIED,
@@ -88,12 +89,11 @@ class RegionQuerySet(models.QuerySet):
 
 class Region(TimeStampedModel, SlugModel):
     """
-    Регіон України (розділ 3.2 ТЗ). Перекладна назва й опис символіки
-    (реєстрація перекладних полів — окремим кроком у translation.py,
+    Регіон України. Перекладна назва й опис символіки
+    (реєстрація перекладних полів - окремим кроком у translation.py,
     разом із Motif).
 
-    Slug НЕ перекладається (явна вимога розділу 3.2 ТЗ) — уникнення
-    дублювання canonical-адрес.
+    Slug не перекладається, щоб не дублювати canonical-адреси.
     """
 
     class VerificationStatus(models.TextChoices):
@@ -206,9 +206,9 @@ class Region(TimeStampedModel, SlugModel):
 
     def get_claim_type(self) -> str:
         """
-        Тип твердження для позначки на сторінці (розділ 4.3 ТЗ):
+        Тип твердження для позначки на сторінці:
         "задокументоване", якщо є хоча б одне джерело високого рівня
-        довіри; інакше "за усною традицією". Не окреме поле моделі —
+        довіри; інакше "за усною традицією". Не окреме поле моделі -
         виводиться з наявних Source, щоб уникнути розсинхронізації
         між полем і реальними джерелами.
         """
@@ -278,7 +278,7 @@ class Region(TimeStampedModel, SlugModel):
 
 class MotifQuerySet(models.QuerySet):
     def verified(self):
-        """Мотиви, дозволені до використання в генерації (розділ 4.4 ТЗ)."""
+        """Мотиви, дозволені до використання в генерації."""
         return self.filter(
             verification_status=Motif.VerificationStatus.VERIFIED,
             is_active=True,
@@ -287,10 +287,9 @@ class MotifQuerySet(models.QuerySet):
 
 class Motif(TimeStampedModel):
     """
-    Довідник геометричних елементів орнаменту (розділ 3.3 ТЗ). Перекладна модель.
+    Довідник геометричних елементів орнаменту. Перекладна модель.
 
-    Без власного slug — ТЗ (розділ 3.3) не згадує ЧПУ-адресу для мотиву,
-    на відміну від Region.
+    Без власного slug: окремої сторінки в мотиву немає.
     """
 
     class VerificationStatus(models.TextChoices):
@@ -344,10 +343,10 @@ class Motif(TimeStampedModel):
 
 class DailyPattern(TimeStampedModel):
     """
-    Центральна модель проєкту (розділ 3.5 ТЗ) — щоденний згенерований патерн.
+    Центральна модель проєкту - щоденний згенерований патерн.
 
-    SVG зберігається як текст у базі, не файл (обґрунтування — розділ 3.5 ТЗ:
-    легкість бекапу, незалежність від файлової системи хостингу).
+    SVG зберігається як текст у базі, не файл: простий бекап і незалежність
+    від ефемерної файлової системи хостингу.
     """
 
     class GenerationStatus(models.TextChoices):
@@ -405,7 +404,7 @@ class DailyPattern(TimeStampedModel):
                 "label": self.region.name,
                 "url": reverse("patterns:region_detail", args=[self.region.slug]),
             },
-            {"label": str(self.date)},
+            {"label": date_format(self.date, "j E Y")},
         ]
 
     class Meta:
@@ -418,7 +417,7 @@ class DailyPattern(TimeStampedModel):
 
 
 class SavedPattern(TimeStampedModel):
-    """Збережений патерн користувача, колекція (розділ 3.6 ТЗ)."""
+    """Збережений патерн користувача, колекція."""
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

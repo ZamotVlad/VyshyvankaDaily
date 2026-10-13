@@ -45,6 +45,9 @@ h6 {
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--vd-cream);
+  /* Довгі слова (Кримськотатарський) на вузьких екранах переносяться */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 h1 {
@@ -617,6 +620,28 @@ a.vd-card:hover {
   color: var(--vd-muted);
   margin-bottom: 6px;
 }
+/* Чекбокс в одному рядку з підписом; підпис теж клікабельний - більша зона для пальця */
+.vd-form div:has(> input[type="checkbox"]),
+.vd-form p:has(> input[type="checkbox"]) {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+.vd-form div:has(> input[type="checkbox"]) > label,
+.vd-form p:has(> input[type="checkbox"]) > label {
+  margin: 0;
+  padding: 6px 0;
+  cursor: pointer;
+}
+.vd-form input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--vd-red);
+  cursor: pointer;
+}
 .vd-form input[type="text"],
 .vd-form input[type="email"],
 .vd-form input[type="password"],
@@ -1076,8 +1101,19 @@ html.vd-menu-open body {
 @media (max-width: 576px) {
   .vd-prose th,
   .vd-prose td {
-    padding: 6px 8px;
-    font-size: 15px;
+    padding: 6px 5px;
+    font-size: 14px;
+  }
+  .vd-prose th {
+    font-size: 13px;
+  }
+}
+/* На найвужчих екранах довге слово може не влізти - тоді прокрутка
+   лише всередині таблиці, а не всієї сторінки. */
+@media (max-width: 380px) {
+  .vd-prose table {
+    display: block;
+    overflow-x: auto;
   }
 }
 
@@ -1842,10 +1878,24 @@ main:focus {
 .vd-map.is-ready .vd-map__motif {
   animation: none;
 }
-.vd-map__rg.is-on {
+/* Піднімається лише малюнок; зона наведення (.vd-map__hit) стоїть на місці,
+   інакше маленький регіон "тікав" з-під курсора й тремтів. */
+.vd-map__lift {
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.25, 1.2), filter 0.35s;
+}
+.vd-map__hit {
+  fill: transparent;
+  stroke: none;
+}
+.vd-map__rg.is-on .vd-map__lift {
   transform: translateY(-6px) scale(1.045);
   filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.55));
-  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.25, 1.2), opacity 0.35s, filter 0.35s;
+}
+.vd-map__rg.is-small.is-on .vd-map__lift {
+  transform: scale(1.25);
 }
 .vd-map__rg.is-on .vd-map__seam {
   stroke: var(--vd-red);
@@ -1855,7 +1905,7 @@ main:focus {
 }
 @media (hover: none) {
   .vd-map__rg,
-  .vd-map__rg.is-on {
+  .vd-map__lift {
     transition: none;
   }
 }

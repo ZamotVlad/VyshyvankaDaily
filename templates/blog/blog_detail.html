@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static assets_tags %}
 {% load seo_tags %}
 
-{% block title %}{{ post.seo_title|default:post.title }} - VyshyvankaDaily{% endblock %}
+{% block title %}{{ post.seo_title|default:post.title|brand_title }}{% endblock %}
 
 {% block robots %}{% get_current_language as LANG %}{% if LANG == "en" and not post.has_english %}noindex, follow{% else %}index, follow{% endif %}{% endblock %}
 
@@ -26,7 +26,7 @@
 <article class="vd-prose vd-with-toc__main">
   {% if post.cover_image_url %}
     <div class="vd-article-cover">
-      <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" width="1600" height="900" fetchpriority="high">
+      <img src="{{ post.cover_image_url|asset }}" alt="{{ post.cover_image_alt }}" width="1600" height="900" fetchpriority="high">
     </div>
   {% endif %}
 
@@ -50,7 +50,7 @@
   {% if post.blog_author %}
     <a href="{% url 'blog:author_detail' post.blog_author.slug %}" class="vd-author-byline">
       {% if post.blog_author.avatar_url %}
-        <img src="{{ post.blog_author.avatar_url }}" alt="{{ post.blog_author.name }}" class="vd-author-byline__avatar" width="32" height="32">
+        <img src="{{ post.blog_author.avatar_url|asset:64 }}" alt="{{ post.blog_author.name }}" class="vd-author-byline__avatar" width="32" height="32" loading="lazy" decoding="async">
       {% endif %}
       <span class="vd-author-byline__name">{% translate "Автор" %}: {{ post.blog_author.name }}</span>
     </a>

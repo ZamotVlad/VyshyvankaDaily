@@ -6,7 +6,7 @@ from apps.core.models import TimeStampedModel
 
 
 class Profile(TimeStampedModel):
-    """Профіль користувача (розділ 3.7 ТЗ) — розширення User через 1:1."""
+    """Профіль користувача - розширення User через 1:1."""
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,

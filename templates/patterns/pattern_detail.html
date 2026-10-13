@@ -4,13 +4,15 @@
 
 {% block title %}{{ pattern.region.name }} - {{ pattern.date|date:"d E Y" }} - VyshyvankaDaily{% endblock %}
 
+{% block meta_description %}{{ meta_description }}{% endblock %}
+
 {% block robots %}{% if is_today %}index, follow{% else %}noindex, follow{% endif %}{% endblock %}
 
 {% block extra_head %}
 {% jsonld_pattern pattern %}
 {% jsonld_breadcrumbs pattern.breadcrumbs %}
 <meta property="og:title" content="{{ pattern.region.name }} - {{ pattern.date|date:'d E Y' }}">
-<meta property="og:description" content="{{ pattern.region.symbolism_description|truncatewords:25 }}">
+<meta property="og:description" content="{{ pattern.region.symbolism_description|striptags|truncatewords:25 }}">
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'og/fallback.png' %}">
 <meta property="og:type" content="article">
 {% endblock %}

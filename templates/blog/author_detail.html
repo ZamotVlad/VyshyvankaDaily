@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n seo_tags %}
+{% load i18n seo_tags assets_tags %}
 
 {% block title %}{{ author.name }} - VyshyvankaDaily{% endblock %}
 
@@ -12,7 +12,7 @@
 {% block content %}
 <div class="vd-author-page">
   {% if author.avatar_url %}
-    <img src="{{ author.avatar_url }}" alt="{{ author.name }}" class="vd-author-page__avatar">
+    <img src="{{ author.avatar_url|asset }}" alt="{{ author.name }}" class="vd-author-page__avatar">
   {% endif %}
   <h1>{{ author.name }}</h1>
   {% if author.bio %}<p class="vd-author-page__bio">{{ author.bio }}</p>{% endif %}

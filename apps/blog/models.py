@@ -38,7 +38,7 @@ class Author(TimeStampedModel, SlugModel):
 
 
 class BlogCategory(TimeStampedModel, SlugModel):
-    """Категорія блогу (розділ 3.8 ТЗ). Перекладна."""
+    """Категорія блогу. Перекладна."""
 
     name = models.CharField(verbose_name="Назва", max_length=255)
     description = models.TextField(verbose_name="Опис", blank=True)
@@ -55,7 +55,7 @@ class BlogCategory(TimeStampedModel, SlugModel):
 
 
 class BlogPost(TimeStampedModel, SlugModel):
-    """Стаття блогу (розділ 3.8 ТЗ). Перекладна, з WYSIWYG-тілом."""
+    """Стаття блогу. Перекладна, з WYSIWYG-тілом."""
 
     class Status(models.TextChoices):
         DRAFT = "draft", "Чернетка"
@@ -230,7 +230,7 @@ class BlogPost(TimeStampedModel, SlugModel):
 
 
 class GuestPostSubmission(TimeStampedModel):
-    """Заявка на гостьовий пост (розділ 3.9 ТЗ)."""
+    """Заявка на гостьовий пост."""
 
     class ReviewStatus(models.TextChoices):
         NEW = "new", "Нова"

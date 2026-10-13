@@ -301,3 +301,16 @@ def jsonld_symbols(context, page):
         ],
     }
     return _script(data)
+
+
+BRAND_SUFFIX = " - VyshyvankaDaily"
+TITLE_LIMIT = 70
+
+
+@register.filter
+def brand_title(title):
+    """Суфікс бренду, лише якщо заголовок не стане довшим за видиму в пошуку частину."""
+    title = str(title).strip()
+    if len(title) + len(BRAND_SUFFIX) > TITLE_LIMIT:
+        return title
+    return title + BRAND_SUFFIX

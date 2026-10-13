@@ -155,13 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Перемикач мови - автоматичне надсилання форми при виборі
-  document.querySelectorAll(".vd-lang select").forEach(function (select) {
-    select.addEventListener("change", function () {
-      select.form.submit();
-    });
-  });
-
   // Лайтбокс для фото регіону
   var lightbox = document.getElementById("photo-lightbox");
   if (lightbox) {
@@ -182,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function closeLightbox() {
       lightbox.hidden = true;
-      lightboxImg.src = "";
+      lightboxImg.removeAttribute("src");
     }
     closeBtn.addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", function (e) {
@@ -338,6 +331,12 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
     svg.classList.toggle("is-dim", !!(el || active));
     if (el && raise !== false && root.classList.contains("is-ready") && layer.lastElementChild !== el) {
       layer.appendChild(el);
+      // Міста лежать усередині областей - завжди поверх, інакше їх не навести.
+      if (!el.classList.contains("is-small")) {
+        regions.forEach(function (r) {
+          if (r.classList.contains("is-small")) layer.appendChild(r);
+        });
+      }
     }
   }
 

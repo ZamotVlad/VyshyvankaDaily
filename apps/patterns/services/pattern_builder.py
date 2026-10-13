@@ -9,10 +9,10 @@ def build_svg_for_date(pattern_date: date, region: Region):
     """
     generate_fn для generate_daily_pattern (Блок В).
 
-    .order_by("pk") — критично для детермінованості (виявлено рецензією):
+    .order_by("pk") - критично для детермінованості (виявлено рецензією):
     QuerySet без явного порядку не гарантує стабільну послідовність між
-    викликами чи СУБД (SQLite в dev може випадково "щастити", Postgres —
-    ні). rng.sample() бере елементи за позицією в списку — нестабільний
+    викликами чи СУБД (SQLite в dev може випадково "щастити", Postgres -
+    ні). rng.sample() бере елементи за позицією в списку - нестабільний
     порядок ламає детермінованість сервісу генерації непомітно.
     """
     motifs = list(region.compatible_motifs.verified().order_by("pk"))

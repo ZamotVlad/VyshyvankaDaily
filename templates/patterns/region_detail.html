@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static assets_tags %}
 {% load seo_tags source_tags %}
 
-{% block title %}{{ region.seo_title|default:region.name|add:" - VyshyvankaDaily" }}{% endblock %}
+{% block title %}{{ region.seo_title|default:region.name|brand_title }}{% endblock %}
 
 {% block meta_description %}{{ region.seo_description|default:region.symbolism_description|striptags|truncatewords:25 }}{% endblock %}
 
@@ -43,7 +43,7 @@
 {% if site_author %}
   <a href="{% url 'blog:author_detail' site_author.slug %}" class="vd-author-byline">
     {% if site_author.avatar_url %}
-      <img src="{{ site_author.avatar_url }}" alt="{{ site_author.name }}" class="vd-author-byline__avatar" width="32" height="32">
+      <img src="{{ site_author.avatar_url|asset:64 }}" alt="{{ site_author.name }}" class="vd-author-byline__avatar" width="32" height="32" loading="lazy" decoding="async">
     {% endif %}
     <span class="vd-author-byline__name">{% translate "Автор" %}: {{ site_author.name }}</span>
   </a>
@@ -53,8 +53,8 @@
   <h2 class="vd-section-title" id="gallery">{% translate "Галерея" %}</h2>
   <div class="vd-photo-strip">
     {% for photo in photos %}
-      <button type="button" class="vd-photo-strip__item" data-full="{{ photo.image_url }}" data-caption="{{ photo.caption }}">
-        <img src="{{ photo.thumbnail_url }}" alt="{{ photo.caption|default:region.name }}" width="360" height="270" loading="lazy" decoding="async">
+      <button type="button" class="vd-photo-strip__item" data-full="{{ photo.image_url|asset }}" data-caption="{{ photo.caption }}">
+        <img src="{{ photo.thumbnail_url|asset }}" alt="{{ photo.caption|default:region.name }}" width="360" height="270" loading="lazy" decoding="async">
         {% if photo.is_illustration %}<span class="vd-photo-strip__badge">{% translate "Ілюстрація" %}</span>{% endif %}
       </button>
     {% endfor %}
@@ -68,7 +68,7 @@
       {% for post in posts %}
         <a href="{% url 'blog:detail' post.slug %}" class="vd-card">
           {% if post.cover_image_url %}
-            <img src="{{ post.cover_image_url }}" alt="{{ post.cover_image_alt }}" class="vd-card__cover" width="400" height="180" loading="lazy" decoding="async">
+            <img src="{{ post.cover_image_url|asset }}" alt="{{ post.cover_image_alt }}" class="vd-card__cover" width="400" height="180" loading="lazy" decoding="async">
           {% endif %}
           <div class="vd-card__body">
             <h3 class="vd-card__title">{{ post.title }}</h3>

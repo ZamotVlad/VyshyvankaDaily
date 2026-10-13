@@ -155,7 +155,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-# Автентифікація через пошту (розділ 7.1 ТЗ)
+# Автентифікація через пошту
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
@@ -387,7 +387,7 @@ CKEDITOR_5_CONFIGS = {
 
 CKEDITOR_5_CUSTOM_CSS = "css/ckeditor5_admin_fix.css"
 CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "png"]
-CKEDITOR_5_MAX_FILE_SIZE = 5  # МБ (розділ 14.5 ТЗ — обмеження за розміром)
+CKEDITOR_5_MAX_FILE_SIZE = 5  # МБ
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -413,8 +413,8 @@ LOGGING = {
     },
 }
 
-# Дозволений перелік HTML-тегів/атрибутів для санітизації тіла статті
-# (розділ 14.5 ТЗ) — навмисно обмежений, не весь HTML5.
+# Дозволений перелік HTML-тегів/атрибутів для санітизації тіла статті:
+# навмисно обмежений, не весь HTML5.
 ALLOWED_BLOG_HTML_TAGS = [
     "p",
     "br",

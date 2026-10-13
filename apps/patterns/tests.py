@@ -1144,6 +1144,18 @@ class RegionMapTests(TestCase):
         self.assertGreaterEqual(html.count('class="vd-card"'), verified)
         self.assertIn('href="/regions/poltavska-oblast/"', html)
 
+    def test_hover_zone_does_not_move_and_cities_have_bigger_target(self):
+        html = self.client.get("/regions/").content.decode()
+        verified = Region.objects.verified().count()
+        self.assertEqual(html.count('class="vd-map__lift"'), verified)
+        self.assertEqual(html.count('class="vd-map__hit"'), verified)
+        cities = Region.objects.verified().filter(slug__in=["m-kyiv", "m-sevastopol"]).count()
+        self.assertEqual(len(re.findall(r'<circle class="vd-map__hit"[^>]+r="13"', html)), cities)
+        regions = re.findall(r'data-slug="([^"]+)"', html)
+        self.assertEqual(
+            regions[len(regions) - cities :], [s for s in regions if s.startswith("m-")]
+        )
+
     def test_svg_numbers_are_not_localized(self):
         html = self.client.get("/regions/").content.decode()
         self.assertIsNone(re.search(r'c[xy]="\d+,\d', html))
