@@ -141,7 +141,8 @@ class TemplateDetailTests(TestCase):
     def test_site_js_has_no_dead_language_select(self):
         js = Path(finders.find("js/site.js")).read_text(encoding="utf-8")
         self.assertNotIn(".vd-lang select", js)
-        self.assertIn('r.classList.contains("is-small")', js)
+        self.assertIn("parent.appendChild(el)", js)
+        self.assertNotIn("layer.appendChild(r)", js)
 
 
 class CollaborationPageTests(TestCase):

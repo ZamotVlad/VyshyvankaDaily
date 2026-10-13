@@ -224,7 +224,6 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
   var root = document.querySelector("[data-vd-map]");
   if (!root) return;
   var svg = root.querySelector(".vd-map__svg");
-  var layer = root.querySelector(".vd-map__regions");
   var box = root.querySelector(".vd-map__box");
   var panel = root.querySelector(".vd-map__panel");
   var regions = Array.prototype.slice.call(root.querySelectorAll(".vd-map__rg"));
@@ -329,14 +328,10 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
       if (l) l.classList.toggle("is-show", on || (group && r.getAttribute("data-group") === group));
     });
     svg.classList.toggle("is-dim", !!(el || active));
-    if (el && raise !== false && root.classList.contains("is-ready") && layer.lastElementChild !== el) {
-      layer.appendChild(el);
-      // Міста лежать усередині областей - завжди поверх, інакше їх не навести.
-      if (!el.classList.contains("is-small")) {
-        regions.forEach(function (r) {
-          if (r.classList.contains("is-small")) layer.appendChild(r);
-        });
-      }
+    // Міста в окремому шарі над областями, тож переставляти доводиться лише область.
+    var parent = el && el.parentNode;
+    if (el && raise !== false && root.classList.contains("is-ready") && parent.lastElementChild !== el) {
+      parent.appendChild(el);
     }
   }
 

@@ -5568,11 +5568,11 @@ msgstr "About your proposal"
 msgid "Співпраця і гостьові матеріали"
 msgstr "Collaboration and guest articles"
 
-msgid "Співпраця з VyshyvankaDaily: гостьові статті про вишивку, спонсорські матеріали, партнерства з етнобрендами й музеями та спонсорство проєкту."
-msgstr "Collaborate with VyshyvankaDaily: guest articles on embroidery, sponsored articles, partnerships with ethnic brands and museums, and project sponsorship."
+msgid "Співпраця з VyshyvankaDaily: гостьові статті про українську культуру, спонсорські матеріали, партнерства з українськими брендами й музеями та спонсорство."
+msgstr "Collaborate with VyshyvankaDaily: guest articles on Ukrainian culture, sponsored articles, partnerships with Ukrainian brands and museums, and sponsorship."
 
-msgid "VyshyvankaDaily читають люди, яким цікава українська вишивка: в Україні й за кордоном. Якщо ваш текст, бренд чи проєкт пов'язаний з українською культурою, оберіть формат і коротко опишіть ідею. Ми відповімо на пошту."
-msgstr "VyshyvankaDaily is read by people interested in Ukrainian embroidery, in Ukraine and abroad. If your text, brand or project is connected with Ukrainian culture, choose a format and briefly describe your idea. We will reply by email."
+msgid "VyshyvankaDaily читають люди в Україні й за кордоном, яким цікаві Україна та її культура: вишивка й ремесла, традиції, свята, історія. Якщо ваш текст, бренд чи проєкт пов'язаний з Україною, оберіть формат і коротко опишіть ідею. Ми відповімо на пошту."
+msgstr "VyshyvankaDaily is read by people in Ukraine and abroad who are interested in Ukraine and its culture: embroidery and crafts, traditions, holidays, history. If your text, brand or project is connected with Ukraine, choose a format and briefly describe your idea. We will reply by email."
 
 msgid "Формати співпраці"
 msgstr "Ways to collaborate"
@@ -5580,20 +5580,20 @@ msgstr "Ways to collaborate"
 msgid "Гостьова стаття."
 msgstr "Guest article."
 
-msgid "Ваш текст про сорочки, рушники, майстринь, техніки чи музейні колекції свого краю."
-msgstr "Your text about shirts, rushnyky, embroiderers, techniques or museum collections of your region."
+msgid "Ваш текст про українську культуру: вишивку й ремесла, традиції та свята, історію свого краю, музеї й майстрів."
+msgstr "Your text about Ukrainian culture: embroidery and crafts, traditions and holidays, the history of your region, museums and makers."
 
 msgid "Спонсорський матеріал."
 msgstr "Sponsored article."
 
-msgid "Стаття про ваш бренд, майстерню, виставку чи курс, пов'язані з вишивкою. Такі матеріали ми чесно позначаємо як партнерські."
-msgstr "An article about your embroidery-related brand, workshop, exhibition or course. We clearly label such articles as partner content."
+msgid "Стаття про ваш бренд, майстерню, виставку, курс чи подію, пов'язані з Україною та її культурою. Такі матеріали ми чесно позначаємо як партнерські."
+msgstr "An article about your brand, workshop, exhibition, course or event connected with Ukraine and its culture. We clearly label such articles as partner content."
 
 msgid "Партнерство."
 msgstr "Partnership."
 
-msgid "Спільні проєкти з етнобрендами, музеями, майстринями, освітніми й культурними ініціативами."
-msgstr "Joint projects with ethnic brands, museums, embroiderers, and educational and cultural initiatives."
+msgid "Спільні проєкти з українськими брендами, музеями, майстрами, освітніми й культурними ініціативами."
+msgstr "Joint projects with Ukrainian brands, museums, makers, and educational and cultural initiatives."
 
 msgid "Спонсорство проєкту."
 msgstr "Project sponsorship."
@@ -5601,5 +5601,5 @@ msgstr "Project sponsorship."
 msgid "Підтримка сайту в обмін на згадку спонсора. Формат обговоримо окремо."
 msgstr "Support for the site in exchange for a sponsor mention. We will agree on the format separately."
 
-msgid "Тема пов'язана з українською вишивкою чи культурою. Рекламу поза цією темою ми не публікуємо."
-msgstr "The topic is related to Ukrainian embroidery or culture. We do not publish advertising outside this theme."
+msgid "Тема пов'язана з Україною та її культурою. Якщо ваша пропозиція з іншої сфери, напишіть - обговоримо формат."
+msgstr "The topic is connected with Ukraine and its culture. If your proposal is from another field, write to us and we will discuss the format."

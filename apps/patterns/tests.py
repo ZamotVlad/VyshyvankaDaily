@@ -1155,6 +1155,8 @@ class RegionMapTests(TestCase):
         self.assertEqual(
             regions[len(regions) - cities :], [s for s in regions if s.startswith("m-")]
         )
+        cities_layer = html.split('vd-map__regions--cities">')[1].split("</g>\n")[0]
+        self.assertEqual(cities_layer.count('class="vd-map__rg'), cities)
 
     def test_svg_numbers_are_not_localized(self):
         html = self.client.get("/regions/").content.decode()
