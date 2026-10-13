@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy
 
 from apps.core.models import TimeStampedModel
 
@@ -9,23 +10,26 @@ class Profile(TimeStampedModel):
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
+        verbose_name="Користувач",
         on_delete=models.CASCADE,
         related_name="profile",
     )
     display_name = models.CharField(
+        verbose_name=gettext_lazy("Ім'я на сайті"),
         max_length=255,
         blank=True,
-        help_text="Порожнє значення означає використання імені користувача за замовчуванням.",
+        help_text=gettext_lazy("Якщо порожнє, показуємо ім'я користувача."),
     )
     default_language = models.CharField(
+        verbose_name=gettext_lazy("Мова"),
         max_length=10,
         blank=True,
         choices=settings.LANGUAGES,
-        help_text="Дублює вибір, збережений у сесії/cookie (необов'язково).",
+        help_text=gettext_lazy("Необов'язково."),
     )
 
-    current_streak = models.PositiveIntegerField(default=0)
-    last_active_date = models.DateField(null=True, blank=True)
+    current_streak = models.PositiveIntegerField(verbose_name="Серія днів", default=0)
+    last_active_date = models.DateField(verbose_name="Остання активність", null=True, blank=True)
 
     class Meta:
         verbose_name = "Профіль"

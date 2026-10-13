@@ -9,11 +9,7 @@ from apps.patterns.models import DailyPattern, Motif, Region, SavedPattern
 
 
 def dashboard_callback(request, context):
-    """
-    Дашборд адмінки (розділ 14.3 ТЗ) — 7 віджетів (пункт "непрочитані
-    звернення" видалений разом із ContactMessage, Частина 2 DECISIONS.md;
-    пункт "чернетки" доданий при закритті Stage 5).
-    """
+    """Дані для дашборду адмінки."""
     User = get_user_model()
     week_ago = timezone.now() - timedelta(days=7)
 
@@ -60,3 +56,10 @@ def dashboard_callback(request, context):
         }
     )
     return context
+
+
+def pending_guest_posts_badge(request):
+    count = GuestPostSubmission.objects.filter(
+        review_status=GuestPostSubmission.ReviewStatus.NEW
+    ).count()
+    return count or None

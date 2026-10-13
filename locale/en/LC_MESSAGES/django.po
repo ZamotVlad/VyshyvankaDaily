@@ -5524,3 +5524,15 @@ msgstr "Topic"
 
 msgid "Коротко про матеріал"
 msgstr "About your article"
+
+msgid "Ім'я на сайті"
+msgstr "Display name"
+
+msgid "Мова"
+msgstr "Language"
+
+msgid "Якщо порожнє, показуємо ім'я користувача."
+msgstr "If empty, your username is shown."
+
+msgid "Необов'язково."
+msgstr "Optional."

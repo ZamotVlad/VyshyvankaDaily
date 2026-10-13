@@ -25,32 +25,34 @@ class Source(TimeStampedModel):
         OTHER = "other", "Інше"
 
     name = models.CharField(
+        verbose_name="Назва",
         max_length=255,
-        help_text="Назва джерела — книга, музей, наукова публікація тощо.",
+        help_text="Книга, музей, наукова публікація тощо.",
     )
     source_type = models.CharField(
+        verbose_name="Тип джерела",
         max_length=20,
         choices=SourceType.choices,
-        help_text="Рівень довіри визначається типом джерела (розділ 4.2 ТЗ).",
+        help_text="Від типу залежить рівень довіри до джерела.",
     )
     author_or_institution = models.CharField(
+        verbose_name="Автор чи установа",
         max_length=255,
-        help_text="Автор чи установа.",
     )
     reference = models.TextField(
+        verbose_name="Посилання або бібліографічний запис",
         help_text="URL за наявності, або повний бібліографічний запис для друкованих видань.",
     )
     publication_year = models.PositiveIntegerField(
+        verbose_name="Рік",
         null=True,
         blank=True,
         help_text="Рік видання чи публікації (необов'язково).",
     )
     editor_note = models.TextField(
+        verbose_name="Примітка редактора",
         blank=True,
-        help_text=(
-            "Коротке пояснення чому саме це джерело використано, "
-            "чи є розбіжності з іншими джерелами (розділ 3.4 ТЗ)."
-        ),
+        help_text="Чому саме це джерело і чи є розбіжності з іншими.",
     )
 
     class Meta:
@@ -100,65 +102,78 @@ class Region(TimeStampedModel, SlugModel):
         NEEDS_REVIEW = "needs_review", "Потребує перегляду"
 
     name = models.CharField(
+        verbose_name="Назва",
         max_length=255,
         help_text="Назва регіону, наприклад «Полтавщина».",
     )
     symbolism_description = CKEditor5Field(
+        verbose_name="Опис символіки",
         help_text="Розгорнутий опис значення кольорів і мотивів саме цього регіону.",
         config_name="default",
     )
     target_keyword = models.CharField(
+        verbose_name="Ключове слово",
         max_length=255,
         blank=True,
         help_text="Цільове ключове слово/фраза для цієї сторінки (SEO).",
     )
     seo_title = models.CharField(
+        verbose_name="SEO title",
         max_length=70,
         blank=True,
         help_text="Заголовок сторінки для пошукових систем. Автоматично додає: - VyshyvankaDaily",
     )
     seo_description = models.CharField(
+        verbose_name="SEO description",
         max_length=160,
         blank=True,
         help_text="Опис сторінки для пошукових систем (SEO). Порожнє - береться з опису символіки.",
     )
     dominant_colors = models.JSONField(
+        verbose_name="Кольори генератора",
         validators=[validate_hex_colors],
         help_text='Список кольорових кодів (наприклад, ["#FF6B35", "#004E89"]).',
     )
     accent_colors = models.JSONField(
+        verbose_name="Також трапляються",
         default=list,
         blank=True,
         validators=[validate_hex_colors],
         help_text="Кольори, що також трапляються. Лише для показу, на генерацію не впливають.",
     )
     generator_only_colors = models.JSONField(
+        verbose_name="Лише в генераторі",
         default=list,
         blank=True,
         validators=[validate_hex_colors],
         help_text="Кольори генератора без підтвердження в джерелах: на сторінці не показуються.",
     )
     shirt_cut_type = models.CharField(
+        verbose_name="Крій сорочки",
         max_length=255,
         blank=True,
-        help_text="Особливості крою сорочки (наразі інформаційне поле).",
+        help_text="Лише інформаційне поле, на генерацію не впливає.",
     )
     rotation_order = models.IntegerField(
-        help_text="Позиція регіону в календарній послідовності ротації (розділ 8.3 ТЗ).",
+        verbose_name="Порядок у ротації",
+        help_text="Позиція регіону в щоденній ротації.",
     )
     is_active = models.BooleanField(
+        verbose_name="Активний",
         default=True,
         help_text="Дозволяє тимчасово виключити регіон з ротації без видалення даних.",
     )
     sources = models.ManyToManyField(
         "patterns.Source",
-        help_text="Обов'язкове — порожній перелік джерел блокує публікацію (розділ 4.4 ТЗ).",
+        verbose_name="Джерела",
+        help_text="Обов'язково: без джерел регіон не публікується.",
     )
     verification_status = models.CharField(
+        verbose_name="Статус перевірки",
         max_length=20,
         choices=VerificationStatus.choices,
         default=VerificationStatus.PENDING,
-        help_text="Редакційний статус (розділ 4.4 ТЗ).",
+        help_text="У ротацію потрапляють лише верифіковані регіони.",
     )
 
     slug_source_field = "name_uk"
@@ -214,6 +229,11 @@ class Region(TimeStampedModel, SlugModel):
             {"label": _("Регіони"), "url": reverse("patterns:region_list")},
             {"label": self.name},
         ]
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("patterns:region_detail", args=[self.slug])
 
     @property
     def short_name(self):
@@ -279,34 +299,38 @@ class Motif(TimeStampedModel):
         NEEDS_REVIEW = "needs_review", "Потребує перегляду"
 
     name = models.CharField(
+        verbose_name="Назва",
         max_length=255,
         help_text="Назва мотиву, наприклад «Ромб», «Барвінок».",
     )
     meaning_description = models.TextField(
+        verbose_name="Значення",
         help_text="Коротке пояснення що символізує мотив.",
     )
     geometry_parameters = models.JSONField(
-        help_text=(
-            "Базові координати, правила симетрії, застосовні групи симетрії (розділ 3.3, 8.4 ТЗ)."
-        ),
+        verbose_name="Геометрія",
+        help_text="Сітка мотиву у форматі pixel_grid_v1 (ключі grid і palette).",
     )
     compatible_regions = models.ManyToManyField(
         "patterns.Region",
+        verbose_name="Регіони",
         blank=True,
         related_name="compatible_motifs",
         help_text="Які регіони типово використовують цей мотив.",
     )
     sources = models.ManyToManyField(
         "patterns.Source",
-        help_text="Обов'язкове — той самий принцип, що й у Region (розділ 4.4 ТЗ).",
+        verbose_name="Джерела",
+        help_text="Обов'язково, як і в регіону.",
     )
     verification_status = models.CharField(
+        verbose_name="Статус перевірки",
         max_length=20,
         choices=VerificationStatus.choices,
         default=VerificationStatus.PENDING,
-        help_text="Той самий принцип, що й у Region (розділ 3.3, 4.4 ТЗ).",
+        help_text="У генерацію потрапляють лише верифіковані мотиви.",
     )
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(verbose_name="Активний", default=True)
 
     objects = MotifQuerySet.as_manager()
 
@@ -331,40 +355,44 @@ class DailyPattern(TimeStampedModel):
         FALLBACK = "fallback", "Помилка, застосовано резервний варіант"
 
     date = models.DateField(
+        verbose_name="Дата",
         unique=True,
         db_index=True,
         help_text="Один патерн на календарний день.",
     )
     region = models.ForeignKey(
         "patterns.Region",
+        verbose_name="Регіон",
         on_delete=models.PROTECT,
         related_name="daily_patterns",
-        help_text="Заборона видалення регіону поки є пов'язані патерни.",
+        help_text="Регіон не можна видалити, поки є пов'язані патерни.",
     )
     seed = models.CharField(
+        verbose_name="Seed",
         max_length=255,
-        help_text="Детермінований seed на основі дати (розділ 8.2 ТЗ).",
+        help_text="Детермінований seed на основі дати.",
     )
     algorithm_version = models.PositiveIntegerField(
-        help_text=(
-            "Критично для відтворюваності — історичні патерни лишаються "
-            "прив'язаними до версії, якою вони були створені (розділ 8.8 ТЗ)."
-        ),
+        verbose_name="Версія алгоритму",
+        help_text="Старі патерни лишаються на версії генератора, якою їх створено.",
     )
     svg_content = models.TextField(
-        help_text="Готовий результат генерації — текстовий XML-вміст SVG.",
+        verbose_name="SVG",
+        help_text="Готовий SVG, кеш генерації.",
     )
     motifs_used = models.ManyToManyField(
         "patterns.Motif",
+        verbose_name="Мотиви",
         blank=True,
         related_name="daily_patterns",
-        help_text="Які саме мотиви увійшли до патерну — для аналітики й фільтрів.",
+        help_text="Які мотиви увійшли до патерну.",
     )
     generation_status = models.CharField(
+        verbose_name="Статус генерації",
         max_length=20,
         choices=GenerationStatus.choices,
         default=GenerationStatus.SUCCESS,
-        help_text="Службове поле для діагностики (розділ 8.6 ТЗ).",
+        help_text="Резервний варіант означає помилку генерації.",
     )
 
     @property
@@ -386,7 +414,7 @@ class DailyPattern(TimeStampedModel):
         ordering = ["-date"]
 
     def __str__(self):
-        return f"{self.date} — {self.region}"
+        return f"{self.date} - {self.region}"
 
 
 class SavedPattern(TimeStampedModel):
@@ -394,11 +422,13 @@ class SavedPattern(TimeStampedModel):
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        verbose_name="Користувач",
         on_delete=models.CASCADE,
         related_name="saved_patterns",
     )
     pattern = models.ForeignKey(
         "patterns.DailyPattern",
+        verbose_name="Патерн",
         on_delete=models.CASCADE,
         related_name="saved_by",
     )
@@ -414,7 +444,7 @@ class SavedPattern(TimeStampedModel):
         ]
 
     def __str__(self):
-        return f"{self.user} — {self.pattern}"
+        return f"{self.user} - {self.pattern}"
 
 
 class RegionPhoto(TimeStampedModel):
@@ -427,23 +457,27 @@ class RegionPhoto(TimeStampedModel):
 
     region = models.ForeignKey(
         "patterns.Region",
+        verbose_name="Регіон",
         on_delete=models.CASCADE,
         related_name="photos",
     )
     thumbnail_url = models.URLField(
+        verbose_name="Мініатюра (URL)",
         help_text="Маленьке зображення для плівки мініатюр на сторінці регіону.",
     )
     image_url = models.URLField(
+        verbose_name="Зображення (URL)",
         help_text="Повнорозмірне зображення, що відкривається по кліку.",
     )
-    caption = models.CharField(max_length=255, blank=True)
+    caption = models.CharField(verbose_name="Підпис", max_length=255, blank=True)
     source_note = models.CharField(
+        verbose_name="Джерело",
         max_length=255,
         blank=True,
         help_text="Джерело/ліцензія фото - автор чи звідки взято. Перевір права на використання.",
     )
-    order = models.PositiveIntegerField(default=0)
-    is_active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(verbose_name="Порядок", default=0)
+    is_active = models.BooleanField(verbose_name="Показувати", default=True)
 
     class Meta:
         verbose_name = "Фото регіону"

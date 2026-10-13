@@ -482,9 +482,11 @@ class SecurityHeadersMiddlewareTests(TestCase):
         en = self.client.get("/en/").content.decode()
         self.assertIn('rel="preload" href="/static/fonts/unbounded.woff2"', en)
 
-    def test_admin_keeps_google_fonts_for_its_theme(self):
+    def test_admin_uses_self_hosted_fonts(self):
         csp = self.client.get("/vd/login/")["Content-Security-Policy"]
-        self.assertIn("https://fonts.gstatic.com", csp)
+        self.assertNotIn("googleapis", csp)
+        self.assertNotIn("gstatic", csp)
+        self.assertIn("font-src 'self';", csp)
 
     def test_scripts_are_deferred_and_touch_icon_linked(self):
         html = self.client.get("/").content.decode()

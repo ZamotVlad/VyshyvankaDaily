@@ -651,7 +651,7 @@ class RegionAdminTests(TestCase):
         region = make_region("Регіон без ключа", 2)
         admin_instance = RegionAdmin(Region, django_admin.site)
         badge = admin_instance.keyword_badge(region)
-        self.assertIn("—", badge)
+        self.assertIn(">-<", badge)
 
     def test_palette_preview_empty_returns_dash(self):
         from django.contrib import admin as django_admin

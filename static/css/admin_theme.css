@@ -3,14 +3,18 @@
    ============================================================ */
 
 /* Типографіка - той самий шрифт, що на сайті, для заголовків адмінки */
-@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&display=swap");
+@font-face {
+  font-family: "Unbounded";
+  src: url("../fonts/unbounded.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
 
+/* Лише заголовки розділів: на підписах полів і в хлібних крихтах
+   широкий Unbounded обрізав текст. */
 .unfold-heading,
-h1,
-h2,
-h3,
-.text-font-important-light,
-.text-font-important-dark {
+fieldset > h2,
+#content h1 {
   font-family: "Unbounded", system-ui, sans-serif !important;
   letter-spacing: -0.01em;
 }
@@ -50,16 +54,86 @@ h3,
   color: #1c1815 !important;
 }
 
-/* Узгодження типографіки адмінки з сайтом (Stage 5).
-   Кольори керуються через UNFOLD["COLORS"] у settings, тут лише шрифт. */
-@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&display=swap");
+/* fieldset за замовчуванням має min-width: min-content - на телефоні
+   тулбар CKEditor розпирав форму ширше за екран. */
+fieldset.module {
+  min-width: 0;
+}
 
-.unfold-heading,
-h1,
-h2,
-h3,
-.text-font-important-light,
-.text-font-important-dark {
-  font-family: "Unbounded", system-ui, sans-serif !important;
-  letter-spacing: -0.01em;
+.field-line > .grow {
+  min-width: 0;
+}
+
+/* Відступи між абзацами й заголовками в редакторі, як на сайті */
+.ck.ck-content p,
+.ck.ck-content ul,
+.ck.ck-content ol,
+.ck.ck-content blockquote,
+.ck.ck-content table {
+  margin: 0 0 0.85em;
+}
+
+.ck.ck-content h2 {
+  margin: 1.4em 0 0.5em;
+  font-size: 1.35em;
+  font-weight: 700;
+}
+
+.ck.ck-content h3 {
+  margin: 1.2em 0 0.4em;
+  font-size: 1.15em;
+  font-weight: 700;
+}
+
+.ck.ck-content li {
+  margin-bottom: 0.25em;
+}
+
+.ck.ck-content ul {
+  list-style: disc;
+  padding-left: 1.4em;
+}
+
+.ck.ck-content ol {
+  list-style: decimal;
+  padding-left: 1.4em;
+}
+
+.ck.ck-content blockquote {
+  border-left: 3px solid #c23b2e;
+  padding-left: 1em;
+  font-style: italic;
+}
+
+.ck.ck-content a {
+  color: #a3271c;
+  text-decoration: underline;
+}
+
+.ck.ck-content table td,
+.ck.ck-content table th {
+  border: 1px solid #d6cbbd;
+  padding: 0.35em 0.6em;
+}
+
+/* Лічильник SEO-полів (static/js/admin_seo_counter.js) */
+.vd-seo-counter {
+  margin-top: 4px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #8a7f72;
+}
+
+.vd-seo-counter[data-state="ok"] {
+  color: #3a7d2c;
+}
+
+.vd-seo-counter[data-state="over"],
+.vd-seo-counter[data-state="short"] {
+  color: #c23b2e;
+}
+
+.vd-pattern-preview {
+  background: #fff;
+  border-radius: 6px;
 }

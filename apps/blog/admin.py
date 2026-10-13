@@ -1,6 +1,6 @@
 from django.contrib import admin
+from django.db.models import Count
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin
 
@@ -13,9 +13,12 @@ class AuthorAdmin(TranslationAdmin, ModelAdmin):
     search_fields = ("name_uk", "name_en")
     prepopulated_fields = {"slug": ("name_uk",)}
 
-    @admin.display(description="Статей")
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(_posts=Count("posts"))
+
+    @admin.display(description="Статей", ordering="_posts")
     def post_count(self, obj):
-        return obj.posts.count()
+        return obj._posts
 
 
 @admin.register(BlogCategory)
@@ -25,9 +28,12 @@ class BlogCategoryAdmin(TranslationAdmin, ModelAdmin):
     search_fields = ("name_uk", "name_en")
     prepopulated_fields = {"slug": ("name_uk",)}
 
-    @admin.display(description="Статей")
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(_posts=Count("posts"))
+
+    @admin.display(description="Статей", ordering="_posts")
     def post_count(self, obj):
-        return BlogPost.objects.filter(category=obj).count()
+        return obj._posts
 
 
 @admin.register(BlogPost)
@@ -41,7 +47,9 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
         "keyword_badge",
     )
     list_filter = ("status", "post_type", "category")
-    search_fields = ("title_uk", "title_en")
+    list_select_related = ("category",)
+    date_hierarchy = "published_at"
+    search_fields = ("title_uk", "title_en", "slug", "target_keyword")
     prepopulated_fields = {"slug": ("title_uk",)}
     filter_horizontal = ("sources",)
     autocomplete_fields = ("related_region",)
@@ -65,7 +73,15 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
         (
             "Публікація",
             {
-                "fields": ("status", "post_type", "category", "published_at", "blog_author"),
+                "fields": (
+                    "status",
+                    "post_type",
+                    "category",
+                    "published_at",
+                    "blog_author",
+                    "guest_author_name",
+                    "submitter_contact",
+                ),
             },
         ),
         (
@@ -78,10 +94,18 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
             "SEO",
             {
                 "fields": ("seo_title", "seo_description", "target_keyword"),
-                "classes": ("collapse",),
             },
         ),
     )
+
+    class Media:
+        js = ("js/admin_seo_counter.js",)
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        field = super().formfield_for_dbfield(db_field, request, **kwargs)
+        if db_field.name.startswith(("excerpt", "seo_description")):
+            field.widget.attrs["rows"] = 3
+        return field
 
     @admin.display(description="Статус")
     def status_badge(self, obj):
@@ -99,7 +123,7 @@ class BlogPostAdmin(TranslationAdmin, ModelAdmin):
                 '<span style="color: #3A7D2C;">{}</span>',
                 obj.target_keyword,
             )
-        return mark_safe('<span style="color: #C23B2E;">-</span>')
+        return format_html('<span style="color: #C23B2E;">{}</span>', "-")
 
 
 @admin.register(GuestPostSubmission)
@@ -121,5 +145,17 @@ class GuestPostSubmissionAdmin(ModelAdmin):
     date_hierarchy = "created_at"
     list_per_page = 30
 
+    actions = ["mark_rejected", "mark_in_review"]
+
     def has_add_permission(self, request):
         return False
+
+    @admin.action(description="Позначити як «Відхилено»")
+    def mark_rejected(self, request, queryset):
+        updated = queryset.update(review_status=GuestPostSubmission.ReviewStatus.REJECTED)
+        self.message_user(request, f"Відхилено заявок: {updated}")
+
+    @admin.action(description="Позначити як «На розгляді»")
+    def mark_in_review(self, request, queryset):
+        updated = queryset.update(review_status=GuestPostSubmission.ReviewStatus.IN_REVIEW)
+        self.message_user(request, f"Оновлено заявок: {updated}")

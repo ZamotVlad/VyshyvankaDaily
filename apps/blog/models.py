@@ -17,12 +17,17 @@ class Author(TimeStampedModel, SlugModel):
     accounts.Profile (те, що бачить кожен зареєстрований відвідувач).
     """
 
-    name = models.CharField(max_length=255)
-    bio = models.TextField(blank=True)
-    avatar_url = models.URLField(blank=True)
-    website_url = models.URLField(blank=True)
+    name = models.CharField(verbose_name="Ім'я", max_length=255)
+    bio = models.TextField(verbose_name="Біографія", blank=True)
+    avatar_url = models.URLField(verbose_name="Фото (URL)", blank=True)
+    website_url = models.URLField(verbose_name="Сайт", blank=True)
 
     slug_source_field = "name_uk"
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("blog:author_detail", args=[self.slug])
 
     class Meta:
         verbose_name = "Автор"
@@ -35,9 +40,9 @@ class Author(TimeStampedModel, SlugModel):
 class BlogCategory(TimeStampedModel, SlugModel):
     """Категорія блогу (розділ 3.8 ТЗ). Перекладна."""
 
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    is_active = models.BooleanField(default=True)
+    name = models.CharField(verbose_name="Назва", max_length=255)
+    description = models.TextField(verbose_name="Опис", blank=True)
+    is_active = models.BooleanField(verbose_name="Активна", default=True)
 
     slug_source_field = "name_uk"
 
@@ -63,6 +68,7 @@ class BlogPost(TimeStampedModel, SlugModel):
 
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        verbose_name="Користувач",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -70,67 +76,77 @@ class BlogPost(TimeStampedModel, SlugModel):
     )
     blog_author = models.ForeignKey(
         "blog.Author",
+        verbose_name="Автор",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="posts",
         help_text="Публічно видимий автор статті (плашка на сторінці, сторінка автора).",
     )
-    title = models.CharField(max_length=255, db_index=True)
-    excerpt = models.TextField(help_text="Короткий опис для карток у списку статей.")
+    title = models.CharField(verbose_name="Заголовок (H1)", max_length=255, db_index=True)
+    excerpt = models.TextField(
+        verbose_name="Короткий опис", help_text="Короткий опис для карток у списку статей."
+    )
     body = CKEditor5Field(
+        verbose_name="Текст",
         help_text="HTML-вміст, санітизується при збереженні.",
         config_name="default",
     )
     body_en = CKEditor5Field(
+        verbose_name="Текст (EN)",
         blank=True,
         default="",
         help_text="Англійський текст статті. Порожній - EN-версія не індексується.",
         config_name="default",
     )
-    cover_image_url = models.URLField(blank=True)
+    cover_image_url = models.URLField(verbose_name="Обкладинка (URL)", blank=True)
     cover_image_alt = models.CharField(
+        verbose_name="Alt обкладинки",
         max_length=255,
         blank=True,
         help_text="Що зображено на обкладинці. Не повторювати заголовок статті.",
     )
     category = models.ForeignKey(
         BlogCategory,
+        verbose_name="Категорія",
         on_delete=models.PROTECT,
         related_name="posts",
     )
     status = models.CharField(
+        verbose_name="Статус",
         max_length=20,
         choices=Status.choices,
         default=Status.DRAFT,
     )
     post_type = models.CharField(
+        verbose_name="Тип",
         max_length=20,
         choices=PostType.choices,
         default=PostType.EDITORIAL,
         help_text="Визначає позначку «Партнерський матеріал» для непередакційного типу.",
     )
     guest_author_name = models.CharField(
+        verbose_name="Гостьовий автор",
         max_length=255,
         blank=True,
         help_text="Заповнюється лише для гостьових/спонсорованих публікацій.",
     )
     submitter_contact = models.CharField(
+        verbose_name="Контакт автора",
         max_length=255,
         blank=True,
         help_text="Службове поле, не публічне.",
     )
     sources = models.ManyToManyField(
         "patterns.Source",
+        verbose_name="Джерела",
         blank=True,
         related_name="blog_posts",
-        help_text=(
-            "Обов'язково для статей, що торкаються історичних/символічних "
-            "тверджень (розділ 4.6 ТЗ)."
-        ),
+        help_text="Обов'язково для статей з історичними чи символічними твердженнями.",
     )
     related_region = models.ForeignKey(
         "patterns.Region",
+        verbose_name="Регіон",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -140,10 +156,11 @@ class BlogPost(TimeStampedModel, SlugModel):
             "перелінкування (SEO-кластер)."
         ),
     )
-    published_at = models.DateTimeField(null=True, blank=True)
-    seo_title = models.CharField(max_length=255, blank=True)
-    seo_description = models.TextField(blank=True)
+    published_at = models.DateTimeField(verbose_name="Дата публікації", null=True, blank=True)
+    seo_title = models.CharField(verbose_name="SEO title", max_length=255, blank=True)
+    seo_description = models.TextField(verbose_name="SEO description", blank=True)
     target_keyword = models.CharField(
+        verbose_name="Ключове слово",
         max_length=255,
         blank=True,
         help_text="Цільове ключове слово/фраза для цієї статті (SEO).",
@@ -166,6 +183,11 @@ class BlogPost(TimeStampedModel, SlugModel):
                 ),
             )
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("blog:detail", args=[self.slug])
 
     @property
     def has_english(self):

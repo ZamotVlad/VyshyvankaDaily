@@ -358,7 +358,8 @@ class BlogAdminTests(TestCase):
             category=category,
         )
         admin_instance = BlogCategoryAdmin(BlogCategory, django_admin.site)
-        self.assertEqual(admin_instance.post_count(category), 1)
+        annotated = admin_instance.get_queryset(None).get(pk=category.pk)
+        self.assertEqual(admin_instance.post_count(annotated), 1)
 
 
 class BlogCoverAltTests(TestCase):

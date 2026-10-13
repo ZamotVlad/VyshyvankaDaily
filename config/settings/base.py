@@ -2,6 +2,7 @@ from pathlib import Path
 
 import environ
 from django.templatetags.static import static
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 # Шлях до кореня проєкту: config/settings/base.py -> 3 рівні вгору
@@ -184,6 +185,7 @@ SOCIALACCOUNT_PROVIDERS = {
 UNFOLD = {
     "SITE_TITLE": "VyshyvankaDaily - адміністрування",
     "SITE_HEADER": "VyshyvankaDaily",
+    "SITE_URL": "/",
     "SITE_ICON": lambda request: static("logo/admin_icon.svg"),
     "SITE_LOGO": lambda request: static("logo/admin_icon.svg"),
     "DASHBOARD_CALLBACK": "apps.core.dashboard.dashboard_callback",
@@ -224,43 +226,118 @@ UNFOLD = {
             {
                 "title": "Контент дня",
                 "items": [
-                    {"title": "Щоденні патерни", "link": "/vd/patterns/dailypattern/"},
+                    {
+                        "title": "Щоденні патерни",
+                        "icon": "today",
+                        "link": reverse_lazy("admin:patterns_dailypattern_changelist"),
+                    },
                 ],
             },
             {
                 "title": "Довідники",
                 "items": [
-                    {"title": "Регіони", "link": "/vd/patterns/region/"},
-                    {"title": "Мотиви", "link": "/vd/patterns/motif/"},
-                    {"title": "Джерела", "link": "/vd/patterns/source/"},
+                    {
+                        "title": "Регіони",
+                        "icon": "map",
+                        "link": reverse_lazy("admin:patterns_region_changelist"),
+                    },
+                    {
+                        "title": "Мотиви",
+                        "icon": "grid_view",
+                        "link": reverse_lazy("admin:patterns_motif_changelist"),
+                    },
+                    {
+                        "title": "Джерела",
+                        "icon": "menu_book",
+                        "link": reverse_lazy("admin:patterns_source_changelist"),
+                    },
                 ],
             },
             {
                 "title": "Блог",
                 "items": [
-                    {"title": "Статті", "link": "/vd/blog/blogpost/"},
-                    {"title": "Категорії статей", "link": "/vd/blog/blogcategory/"},
-                    {"title": "Автори", "link": "/vd/blog/author/"},
+                    {
+                        "title": "Статті",
+                        "icon": "article",
+                        "link": reverse_lazy("admin:blog_blogpost_changelist"),
+                    },
+                    {
+                        "title": "Категорії статей",
+                        "icon": "label",
+                        "link": reverse_lazy("admin:blog_blogcategory_changelist"),
+                    },
+                    {
+                        "title": "Автори",
+                        "icon": "person_edit",
+                        "link": reverse_lazy("admin:blog_author_changelist"),
+                    },
                     {
                         "title": "Заявки на гостьові пости",
-                        "link": "/vd/blog/guestpostsubmission/",
+                        "icon": "inbox",
+                        "link": reverse_lazy("admin:blog_guestpostsubmission_changelist"),
+                        "badge": "apps.core.dashboard.pending_guest_posts_badge",
                     },
                 ],
             },
             {
                 "title": "Спільнота",
                 "items": [
-                    {"title": "Користувачі", "link": "/vd/auth/user/"},
-                    {"title": "Профілі", "link": "/vd/accounts/profile/"},
-                    {"title": "Збережені патерни", "link": "/vd/patterns/savedpattern/"},
+                    {
+                        "title": "Користувачі",
+                        "icon": "group",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                    },
+                    {
+                        "title": "Профілі",
+                        "icon": "badge",
+                        "link": reverse_lazy("admin:accounts_profile_changelist"),
+                    },
+                    {
+                        "title": "Збережені патерни",
+                        "icon": "bookmark",
+                        "link": reverse_lazy("admin:patterns_savedpattern_changelist"),
+                    },
                 ],
             },
             {
                 "title": "Сторінки",
                 "items": [
-                    {"title": "Статичні сторінки", "link": "/vd/pages/staticpage/"},
-                    {"title": "Категорії FAQ", "link": "/vd/pages/faqcategory/"},
-                    {"title": "Пункти FAQ", "link": "/vd/pages/faqitem/"},
+                    {
+                        "title": "Статичні сторінки",
+                        "icon": "description",
+                        "link": reverse_lazy("admin:pages_staticpage_changelist"),
+                    },
+                    {
+                        "title": "Категорії FAQ",
+                        "icon": "folder",
+                        "link": reverse_lazy("admin:pages_faqcategory_changelist"),
+                    },
+                    {
+                        "title": "Пункти FAQ",
+                        "icon": "help",
+                        "link": reverse_lazy("admin:pages_faqitem_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Система",
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Вхід через Google",
+                        "icon": "key",
+                        "link": reverse_lazy("admin:socialaccount_socialapp_changelist"),
+                    },
+                    {
+                        "title": "Групи",
+                        "icon": "shield_person",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                    {
+                        "title": "Домен сайту",
+                        "icon": "language",
+                        "link": reverse_lazy("admin:sites_site_changelist"),
+                    },
                 ],
             },
         ],
