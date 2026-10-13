@@ -1,6 +1,10 @@
 from django import forms
+from django.core.validators import MaxLengthValidator
+from django.utils.translation import gettext_lazy
 
 from .models import GuestPostSubmission
+
+PROPOSAL_MAX_LENGTH = 500
 
 
 class GuestPostSubmissionForm(forms.ModelForm):
@@ -24,6 +28,11 @@ class GuestPostSubmissionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["collaboration_type"].required = False
+        description = self.fields["proposal_description"]
+        description.max_length = PROPOSAL_MAX_LENGTH
+        description.validators.append(MaxLengthValidator(PROPOSAL_MAX_LENGTH))
+        description.widget.attrs.update({"maxlength": PROPOSAL_MAX_LENGTH, "rows": 6})
+        description.help_text = gettext_lazy("До %(n)s символів.") % {"n": PROPOSAL_MAX_LENGTH}
 
     def clean_collaboration_type(self):
         return (

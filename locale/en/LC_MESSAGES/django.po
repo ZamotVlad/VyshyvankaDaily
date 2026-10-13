@@ -5603,3 +5603,6 @@ msgstr "Support for the site in exchange for a sponsor mention. We will agree on
 
 msgid "Тема пов'язана з Україною та її культурою. Якщо ваша пропозиція з іншої сфери, напишіть - обговоримо формат."
 msgstr "The topic is connected with Ukraine and its culture. If your proposal is from another field, write to us and we will discuss the format."
+
+msgid "До %(n)s символів."
+msgstr "Up to %(n)s characters."

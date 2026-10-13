@@ -660,6 +660,12 @@ a.vd-card:hover {
   transition: border-color 0.2s;
 }
 .vd-form input:focus,
+/* Тягнути можна лише вниз і в межах, а не нескінченно */
+.vd-form textarea {
+  resize: vertical;
+  min-height: 7em;
+  max-height: 22em;
+}
 .vd-form textarea:focus,
 .vd-form select:focus {
   outline: none;

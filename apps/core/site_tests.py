@@ -167,3 +167,41 @@ class CollaborationPageTests(TestCase):
         self.assertEqual(GuestPostSubmission.objects.get().collaboration_type, "sponsored")
         en = self.client.get("/en/blog/propose/").content.decode()
         self.assertIn("Ways to collaborate", en)
+
+
+class ProposalLengthTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        cache.clear()
+
+    def _post(self, text):
+        return self.client.post(
+            "/blog/propose/",
+            {
+                "contact_name": "Автор",
+                "email": "a@example.com",
+                "proposed_topic": "Тема",
+                "proposal_description": text,
+                "honeypot": "",
+            },
+        )
+
+    def test_description_limited_to_500_chars(self):
+        from apps.blog.models import GuestPostSubmission
+
+        html = self.client.get("/blog/propose/").content.decode()
+        self.assertIn('maxlength="500"', html)
+        self.assertIn("До 500 символів.", html)
+        response = self._post("я" * 501)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(GuestPostSubmission.objects.exists())
+        self.assertEqual(self._post("я" * 500).status_code, 302)
+        self.assertEqual(GuestPostSubmission.objects.count(), 1)
+        self.assertIn(
+            "Up to 500 characters.", self.client.get("/en/blog/propose/").content.decode()
+        )
+
+    def test_textarea_cannot_grow_endlessly(self):
+        css = Path(finders.find("css/vd.css")).read_text(encoding="utf-8")
+        self.assertIn("max-height: 22em;", css)
