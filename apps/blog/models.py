@@ -241,6 +241,7 @@ class GuestPostSubmission(TimeStampedModel):
     class CollaborationType(models.TextChoices):
         GUEST = "guest", gettext_lazy("Гостьова стаття")
         SPONSORED = "sponsored", gettext_lazy("Спонсорський матеріал")
+        WRITTEN_BY_US = "written_by_us", gettext_lazy("Текст під ключ (пишемо ми)")
         PARTNERSHIP = "partnership", gettext_lazy("Партнерство")
         SPONSORSHIP = "sponsorship", gettext_lazy("Спонсорство проєкту")
         OTHER = "other", gettext_lazy("Інше")

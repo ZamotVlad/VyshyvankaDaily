@@ -167,6 +167,8 @@ class CollaborationPageTests(TestCase):
         self.assertEqual(GuestPostSubmission.objects.get().collaboration_type, "sponsored")
         en = self.client.get("/en/blog/propose/").content.decode()
         self.assertIn("Ways to collaborate", en)
+        self.assertIn("Turnkey article", en)
+        self.assertIn('value="written_by_us"', html)
 
 
 class ProposalLengthTests(TestCase):

@@ -5606,3 +5606,12 @@ msgstr "The topic is connected with Ukraine and its culture. If your proposal is
 
 msgid "До %(n)s символів."
 msgstr "Up to %(n)s characters."
+
+msgid "Текст під ключ."
+msgstr "Turnkey article."
+
+msgid "Немає готового матеріалу? Ми самі напишемо статтю про ваш бренд, проєкт чи подію: розберемося в темі, підготуємо текст українською й англійською та погодимо його з вами перед публікацією."
+msgstr "No material of your own? We will write the article about your brand, project or event ourselves: research the topic, prepare the text in Ukrainian and English and agree it with you before publication."
+
+msgid "Текст під ключ (пишемо ми)"
+msgstr "Turnkey article (we write it)"
