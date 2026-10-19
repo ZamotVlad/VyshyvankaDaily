@@ -41,7 +41,7 @@ class RobotsTxtTests(TestCase):
     def test_blocks_private_sections_and_points_to_sitemap(self):
         body = self.client.get("/robots.txt").content.decode()
         self.assertIn("User-agent: *", body)
-        for private in ("/accounts/", "/profile/settings/", "/collection/", "/admin/"):
+        for private in ("/accounts/", "/profile/settings/", "/collection/"):
             self.assertIn(f"Disallow: {private}", body)
         self.assertIn("/sitemap.xml", body)
 
@@ -50,12 +50,17 @@ class RobotsTxtTests(TestCase):
         for private in ("/en/accounts/", "/en/profile/settings/", "/en/collection/"):
             self.assertIn(f"Disallow: {private}", body)
 
-    def test_blocks_blog_filters_but_not_blog(self):
+    def test_blocks_blog_search_but_not_blog_or_categories(self):
         body = self.client.get("/robots.txt").content.decode()
         for prefix in ("", "/en"):
-            self.assertIn(f"Disallow: {prefix}/blog/?category=", body)
             self.assertIn(f"Disallow: {prefix}/blog/?q=", body)
+            self.assertNotIn(f"Disallow: {prefix}/blog/?category=", body)
         self.assertNotIn("Disallow: /blog/\n", body)
+
+    def test_pattern_pages_crawlable_so_noindex_is_seen(self):
+        body = self.client.get("/robots.txt").content.decode()
+        self.assertNotIn("/pattern/", body)
+        self.assertNotIn("/admin/", body)
 
     def test_does_not_block_legal_pages(self):
         """Свідоме рішення: privacy/terms лишаються відкритими для індексації

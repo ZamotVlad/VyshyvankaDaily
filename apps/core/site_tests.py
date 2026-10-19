@@ -207,3 +207,30 @@ class ProposalLengthTests(TestCase):
     def test_textarea_cannot_grow_endlessly(self):
         css = Path(finders.find("css/vd.css")).read_text(encoding="utf-8")
         self.assertIn("max-height: 22em;", css)
+
+
+class PatternPagesNoindexTests(TestCase):
+    def test_every_pattern_page_is_noindex_in_both_languages_and_not_in_sitemap(self):
+        from django.utils import timezone
+
+        region = Region.objects.create(
+            name="Тестова область",
+            symbolism_description="<p>Опис.</p>",
+            dominant_colors=["#000000"],
+            rotation_order=1,
+            verification_status=Region.VerificationStatus.VERIFIED,
+        )
+        today = timezone.localdate()
+        for d in (today, date(2026, 10, 1)):
+            DailyPattern.objects.create(
+                date=d,
+                region=region,
+                seed=d.isoformat(),
+                algorithm_version=2,
+                svg_content="<svg></svg>",
+            )
+            for prefix in ("", "/en"):
+                with self.subTest(day=d, lang=prefix or "uk"):
+                    html = self.client.get(f"{prefix}/pattern/{d.isoformat()}/").content.decode()
+                    self.assertIn('<meta name="robots" content="noindex, follow">', html)
+        self.assertNotIn("/pattern/", self.client.get("/sitemap.xml").content.decode())

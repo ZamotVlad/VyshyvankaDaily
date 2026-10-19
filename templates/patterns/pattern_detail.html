@@ -6,7 +6,7 @@
 
 {% block meta_description %}{{ meta_description }}{% endblock %}
 
-{% block robots %}{% if is_today %}index, follow{% else %}noindex, follow{% endif %}{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
 
 {% block extra_head %}
 {% jsonld_pattern pattern %}

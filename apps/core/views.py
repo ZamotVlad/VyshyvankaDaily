@@ -72,31 +72,17 @@ def set_language_view(request):
 
 def robots_txt(request):
     """
-    Закриваємо від індексації приватне й службове. Архів із фільтрами
-    навмисно НЕ блокуємо тут - краще дозволити сканування й покластись
-    на canonical, інакше робот не побачить сам canonical-тег на
-    заблокованій сторінці.
+    Disallow лише для приватного й внутрішнього пошуку блогу.
 
-    /pattern/ - виняток: окремі сторінки днів тонкі за вмістом і не
-    потрібні в індексі (рішення власника проєкту, 27.09.2026). Уже
-    мають noindex на самій сторінці (views.py, is_today == False) -
-    той тег лишається активним і прибере з видачі те, що вже
-    проіндексовано раніше. Disallow тут - додатково, щоб зупинити
-    подальше сканування нових днів.
-
-    Фільтри блогу (?category=, ?q=) - дублі списку статей, не індексуємо.
+    Сторінки днів (/pattern/) і фільтри блогу (?category=) відкриті для
+    сканування: робот має побачити на них noindex або canonical, інакше
+    вже проіндексовані адреси не зникнуть з видачі.
     """
     private = ["/accounts/", "/profile/settings/", "/collection/", "/patterns/debug/"]
     lines = [
         "User-agent: *",
         *(f"Disallow: {prefix}{path}" for path in private for prefix in ("", "/en")),
-        *(f"Disallow: {prefix}/pattern/" for prefix in ("", "/en")),
-        *(
-            f"Disallow: {prefix}/blog/?{param}="
-            for prefix in ("", "/en")
-            for param in ("category", "q")
-        ),
-        "Disallow: /admin/",
+        *(f"Disallow: {prefix}/blog/?q=" for prefix in ("", "/en")),
         "",
         f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
     ]
