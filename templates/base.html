@@ -8,9 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}VyshyvankaDaily{% endblock %}</title>
 <link rel="canonical" href="{{ canonical_url }}">
-{% for code, url in hreflang_links %}
+{% block hreflang %}{% for code, url in hreflang_links %}
   <link rel="alternate" hreflang="{{ code }}" href="{{ url }}">
-{% endfor %}
+{% endfor %}{% endblock %}
 <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
 <meta name="author" content="{% block meta_author %}VyshyvankaDaily{% endblock %}">
 <meta name="description" content="{% block meta_description %}{% translate "Щоденний генератор орнаменту української вишиванки з реальними джерелами символіки й традицій усіх 27 регіонів." %}{% endblock %}">
@@ -78,7 +78,7 @@
           </ul>
         </div>
       {% else %}
-        <a href="{% url 'account_login' %}">{% translate "Увійти" %}</a>
+        <a href="{% url 'account_login' %}" rel="nofollow">{% translate "Увійти" %}</a>
       {% endif %}
     </div>
 
@@ -107,8 +107,8 @@
           <a href="{% url 'accounts:profile_settings' %}">{% translate "Налаштування" %}</a>
           <a href="{% url 'account_logout' %}">{% translate "Вийти" %}</a>
         {% else %}
-          <a href="{% url 'account_login' %}">{% translate "Увійти" %}</a>
-          <a href="{% url 'account_signup' %}" aria-label="{% translate 'Реєстрація - меню' %}">{% translate "Реєстрація" %}</a>
+          <a href="{% url 'account_login' %}" rel="nofollow">{% translate "Увійти" %}</a>
+          <a href="{% url 'account_signup' %}" rel="nofollow" aria-label="{% translate 'Реєстрація - меню' %}">{% translate "Реєстрація" %}</a>
         {% endif %}
       </div>
     </div>

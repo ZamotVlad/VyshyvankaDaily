@@ -1896,6 +1896,10 @@ main:focus {
   fill: transparent;
   stroke: none;
 }
+/* Текст посилання для краулерів; доступна назва - aria-label. */
+.vd-map__name {
+  display: none;
+}
 .vd-map__rg.is-on .vd-map__lift {
   transform: translateY(-6px) scale(1.045);
   filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.55));

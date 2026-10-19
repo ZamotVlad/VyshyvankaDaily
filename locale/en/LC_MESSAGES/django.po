@@ -5651,3 +5651,6 @@ msgstr "Crimea stands apart: in 2021 the Crimean Tatar ornament ornek was inscri
 
 msgid "На мапі вище кожна область вишита своїм мотивом у своїх кольорах. Натисніть на регіон або оберіть його зі списку нижче: на сторінці регіону - опис символіки, кольори, характерні мотиви, часті запитання й перелік музейних і наукових джерел. Що означають окремі знаки, як-от ромб чи дерево життя, пояснюємо на сторінці <a href=\"%(symbols_url)s\">символи вишиванки</a>, а крій сорочок - у статті <a href=\"%(types_url)s\">види вишиванок</a>."
 msgstr "On the map above, each oblast is embroidered with its own motif in its own colours. Click a region or choose it from the list below: each region page has the symbolism, colours, typical motifs, frequently asked questions and a list of museum and academic sources. What individual signs such as the rhombus or the tree of life mean is explained on the <a href=\"%(symbols_url)s\">vyshyvanka symbols</a> page, and shirt cuts in the article on <a href=\"%(types_url)s\">types of vyshyvanka</a>."
+
+msgid "Щоденний орнамент вишиванки різних регіонів України"
+msgstr "Daily Ukrainian Embroidery Patterns from Every Region"

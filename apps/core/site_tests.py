@@ -233,6 +233,7 @@ class PatternPagesNoindexTests(TestCase):
                 with self.subTest(day=d, lang=prefix or "uk"):
                     html = self.client.get(f"{prefix}/pattern/{d.isoformat()}/").content.decode()
                     self.assertIn('<meta name="robots" content="noindex, follow">', html)
+                    self.assertNotIn('<link rel="alternate" hreflang', html)
         self.assertNotIn("/pattern/", self.client.get("/sitemap.xml").content.decode())
 
 
@@ -261,3 +262,31 @@ class SnippetLengthTests(TestCase):
             brand_title("Про нас: як створюється VyshyvankaDaily"),
             "Про нас: як створюється VyshyvankaDaily",
         )
+
+
+class CrawlHygieneTests(TestCase):
+    def setUp(self):
+        from django.core.cache import cache
+
+        cache.clear()
+
+    def test_login_links_are_nofollow(self):
+        html = self.client.get("/regions/").content.decode()
+        links = re.findall(r'<a [^>]*href="/accounts/(?:login|signup)/[^"]*"[^>]*>', html)
+        self.assertTrue(links)
+        for link in links:
+            with self.subTest(link=link):
+                self.assertIn('rel="nofollow"', link)
+
+    def test_map_links_have_text_and_indexable_pages_keep_hreflang(self):
+        html = self.client.get("/regions/").content.decode()
+        self.assertEqual(html.count('<text class="vd-map__name">'), html.count('class="vd-map__rg'))
+        self.assertIn('<text class="vd-map__name">Полтавська область</text>', html)
+        self.assertIn('<link rel="alternate" hreflang="en"', html)
+
+    def test_home_title_differs_from_h1(self):
+        html = self.client.get("/").content.decode()
+        title = re.search(r"<title>(.*?)</title>", html, re.S).group(1).strip()
+        h1 = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.S).group(1).strip()
+        self.assertNotEqual(title, h1)
+        self.assertIn(h1.lower(), title.lower())

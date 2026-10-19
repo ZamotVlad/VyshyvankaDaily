@@ -10,7 +10,7 @@
     {% endif %}
   </form>
 {% else %}
-  <a href="{% url 'account_login' %}?next={{ request.path }}" class="vd-btn {{ save_class|default:'vd-btn--primary' }}">
+  <a href="{% url 'account_login' %}?next={{ request.path }}" rel="nofollow" class="vd-btn {{ save_class|default:'vd-btn--primary' }}">
     {% if save_class %}{% translate "Зберегти орнамент" %}{% else %}{% translate "Увійти, щоб зберегти" %}{% endif %}
   </a>
 {% endif %}

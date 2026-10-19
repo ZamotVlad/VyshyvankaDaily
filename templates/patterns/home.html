@@ -2,7 +2,7 @@
 {% load seo_tags %}
 {% load i18n static %}
 
-{% block title %}{% filter brand_title %}{% translate "Орнамент вишиванки різних регіонів України" %}{% endfilter %}{% endblock %}
+{% block title %}{% filter brand_title %}{% translate "Щоденний орнамент вишиванки різних регіонів України" %}{% endfilter %}{% endblock %}
 
 {% block meta_description %}{% translate "Орнамент вишиванки кожної області України: значення візерунків, кольори й історія з джерел. Новий орнамент щодня - зберіть колекцію!" %}{% endblock %}
 
@@ -83,7 +83,7 @@
 {% if not user.is_authenticated %}
 <div class="vd-status-bar vd-status-bar--soft">
   <span>{% translate "Заходьте щодня й збирайте власну колекцію орнаментів" %}</span>
-  <a href="{% url 'account_signup' %}" class="vd-btn vd-btn--ghost ms-auto">{% translate "Створити акаунт" %}</a>
+  <a href="{% url 'account_signup' %}" rel="nofollow" class="vd-btn vd-btn--ghost ms-auto">{% translate "Створити акаунт" %}</a>
 </div>
 {% endif %}
 

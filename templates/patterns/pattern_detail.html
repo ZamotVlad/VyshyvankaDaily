@@ -8,6 +8,8 @@
 
 {% block robots %}noindex, follow{% endblock %}
 
+{% block hreflang %}{% endblock %}
+
 {% block extra_head %}
 {% jsonld_pattern pattern %}
 {% jsonld_breadcrumbs pattern.breadcrumbs %}
