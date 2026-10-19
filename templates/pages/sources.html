@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load seo_tags %}
 {% load i18n %}
 
-{% block title %}{% translate "Як ми працюємо з джерелами" %} - VyshyvankaDaily{% endblock %}
-{% block meta_description %}{% translate "Звідки VyshyvankaDaily бере факти про вишивку: рівні джерел, музеї й наукові видання, тлумачення символів, кольори регіонів і виправлення помилок." %}{% endblock %}
+{% block title %}{% filter brand_title %}{% translate "Як ми працюємо з джерелами" %}{% endfilter %}{% endblock %}
+{% block meta_description %}{% translate "Звідки VyshyvankaDaily бере факти про вишивку: рівні джерел, музеї й наукові видання, тлумачення символів і виправлення помилок." %}{% endblock %}
 
 {% block content %}
 <div class="vd-page-head">

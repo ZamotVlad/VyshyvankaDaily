@@ -292,6 +292,15 @@ def debug_pattern_view(request, iso_date):
     return HttpResponse(html)
 
 
+def _types_article_url():
+    from apps.blog.models import BlogPost
+
+    slug = "vydy-vyshyvanok"
+    if BlogPost.objects.filter(slug=slug, status=BlogPost.Status.PUBLISHED).exists():
+        return reverse("blog:detail", args=[slug])
+    return reverse("blog:list")
+
+
 def region_list_view(request):
     """
     Перелік усіх верифікованих регіонів із мапою.
@@ -315,6 +324,8 @@ def region_list_view(request):
             "region_groups": grouped_regions(regions),
             "region_map": region_map,
             "today_slug": today_slug,
+            "symbols_url": reverse("patterns:symbols"),
+            "types_url": _types_article_url(),
         },
     )
 

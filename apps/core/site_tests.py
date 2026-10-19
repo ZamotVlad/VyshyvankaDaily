@@ -234,3 +234,30 @@ class PatternPagesNoindexTests(TestCase):
                     html = self.client.get(f"{prefix}/pattern/{d.isoformat()}/").content.decode()
                     self.assertIn('<meta name="robots" content="noindex, follow">', html)
         self.assertNotIn("/pattern/", self.client.get("/sitemap.xml").content.decode())
+
+
+class SnippetLengthTests(TestCase):
+    """Межі, у які вкладаються сніпети в пошуку (кирилиця ширша за латиницю)."""
+
+    def test_region_titles_and_descriptions_fit_search_snippets(self):
+        import json
+
+        for r in json.loads(Path(settings.BASE_DIR, "region_content.json").read_text("utf-8")):
+            with self.subTest(region=r["slug"]):
+                self.assertLessEqual(len(r["seo_title"]), 55)
+                self.assertLessEqual(len(r["seo_description"]), 140)
+                self.assertLessEqual(len(r["en"]["seo_title"]), 60)
+                self.assertLessEqual(len(r["en"]["seo_description"]), 155)
+                words = r["seo_title"].split()[1:]
+                capitalized = [w for w in words if len(w) > 3 and w[0].isupper()]
+                proper = {"Полтавщини", "Києва", "Тернополя", "Тернопільщини", "Запоріжжя"}
+                self.assertLessEqual(len([w for w in capitalized if w not in proper]), 2)
+
+    def test_brand_suffix_respects_cyrillic_limit(self):
+        self.assertEqual(brand_title("Часті запитання"), "Часті запитання - VyshyvankaDaily")
+        long_uk = "Вишиванки по регіонах України: орнаменти всіх областей"
+        self.assertEqual(brand_title(long_uk), long_uk)
+        self.assertEqual(
+            brand_title("Про нас: як створюється VyshyvankaDaily"),
+            "Про нас: як створюється VyshyvankaDaily",
+        )

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load seo_tags %}
 {% load i18n assets_tags %}
 
-{% block title %}{% translate "Блог" %} - VyshyvankaDaily{% endblock %}
+{% block title %}{% filter brand_title %}{% translate "Блог про вишиванку й українську культуру" %}{% endfilter %}{% endblock %}
 {% block meta_description %}{% translate "Статті про українську вишивку: техніки, символіка орнаментів, історії майстринь і музейних колекцій з різних регіонів України." %}{% endblock %}
 
 {% block content %}

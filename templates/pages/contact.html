@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load seo_tags %}
 {% load i18n %}
 
-{% block title %}{% translate "Контакти" %} - VyshyvankaDaily{% endblock %}
-{% block meta_description %}{% translate "Контакти VyshyvankaDaily: напишіть про неточність в описі регіону, співпрацю з музеєм чи майстринею, технічну помилку або питання щодо даних." %}{% endblock %}
+{% block title %}{% filter brand_title %}{% translate "Контакти: як зв'язатися з VyshyvankaDaily" %}{% endfilter %}{% endblock %}
+{% block meta_description %}{% translate "Контакти VyshyvankaDaily: напишіть про неточність в описі регіону, співпрацю з музеєм чи майстринею або технічну помилку." %}{% endblock %}
 
 {% block content %}
 <div class="vd-page-head">

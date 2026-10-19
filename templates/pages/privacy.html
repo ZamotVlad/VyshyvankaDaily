@@ -1,19 +1,20 @@
 {% extends "base.html" %}
+{% load seo_tags %}
 {% load i18n %}
 
-{% block title %}{% translate "Політика конфіденційності" %} - VyshyvankaDaily{% endblock %}
-{% block meta_description %}{% translate "Як VyshyvankaDaily обробляє персональні дані: що збираємо, навіщо, скільки зберігаємо, кому передаємо, які кукі використовуємо і які у вас права." %}{% endblock %}
+{% block title %}{% filter brand_title %}{% translate "Політика конфіденційності" %}{% endfilter %}{% endblock %}
+{% block meta_description %}{% translate "Як VyshyvankaDaily обробляє персональні дані: що збираємо, навіщо, скільки зберігаємо, кому передаємо і які у вас права." %}{% endblock %}
 
 {% block content %}
 <div class="vd-page-head">
   <span class="vd-page-head__eyebrow">{% translate "Правове" %}</span>
   <h1>{% translate "Політика конфіденційності" %}</h1>
-  <p class="vd-page-head__lede">{% translate "Як VyshyvankaDaily обробляє персональні дані: що збираємо, навіщо, скільки зберігаємо, кому передаємо, які кукі використовуємо і які у вас права." %}</p>
+  <p class="vd-page-head__lede">{% translate "Як VyshyvankaDaily обробляє персональні дані: що збираємо, навіщо, скільки зберігаємо, кому передаємо і які у вас права." %}</p>
   <div class="vd-stitch-rule vd-stitch-rule--short"></div>
 </div>
 
 <nav class="vd-toc" aria-label="{% translate 'Зміст сторінки' %}">
-  <h2>{% translate "Зміст" %}</h2>
+  <h2>{% translate "Зміст політики" %}</h2>
   <ol>
     <li><a href="#p1">{% translate "1. Хто обробляє ваші дані" %}</a></li>
     <li><a href="#p2">{% translate "2. Які дані ми збираємо" %}</a></li>

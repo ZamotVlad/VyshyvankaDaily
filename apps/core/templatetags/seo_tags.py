@@ -1,4 +1,5 @@
 import json
+import re
 
 from django import template
 from django.templatetags.static import static
@@ -304,13 +305,16 @@ def jsonld_symbols(context, page):
 
 
 BRAND_SUFFIX = " - VyshyvankaDaily"
-TITLE_LIMIT = 70
+# Видима в пошуку частина: ~60 символів латиницею, кирилиця ширша.
+TITLE_LIMIT = 60
+TITLE_LIMIT_CYRILLIC = 55
 
 
 @register.filter
 def brand_title(title):
     """Суфікс бренду, лише якщо заголовок не стане довшим за видиму в пошуку частину."""
     title = str(title).strip()
-    if len(title) + len(BRAND_SUFFIX) > TITLE_LIMIT:
+    limit = TITLE_LIMIT_CYRILLIC if re.search("[а-яіїєґ]", title, re.I) else TITLE_LIMIT
+    if "VyshyvankaDaily" in title or len(title) + len(BRAND_SUFFIX) > limit:
         return title
     return title + BRAND_SUFFIX

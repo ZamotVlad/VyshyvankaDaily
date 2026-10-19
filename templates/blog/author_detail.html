@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load i18n seo_tags assets_tags %}
 
-{% block title %}{{ author.name }} - VyshyvankaDaily{% endblock %}
+{% block title %}{% filter brand_title %}{{ author.name }}{% endfilter %}{% endblock %}
 
-{% block meta_description %}{{ author.bio|truncatewords:25 }}{% endblock %}
+{% block meta_description %}{{ author.bio|striptags|truncatechars:130 }}{% endblock %}
 
 {% block extra_head %}
 {% jsonld_person author %}
@@ -12,7 +12,7 @@
 {% block content %}
 <div class="vd-author-page">
   {% if author.avatar_url %}
-    <img src="{{ author.avatar_url|asset }}" alt="{{ author.name }}" class="vd-author-page__avatar">
+    <img src="{{ author.avatar_url|asset }}" alt="{{ author.name }}" class="vd-author-page__avatar" width="96" height="96">
   {% endif %}
   <h1>{{ author.name }}</h1>
   {% if author.bio %}<p class="vd-author-page__bio">{{ author.bio }}</p>{% endif %}

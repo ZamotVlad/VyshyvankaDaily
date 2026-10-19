@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load seo_tags %}
 {% load i18n %}
 
-{% block title %}{% translate "Співпраця і гостьові матеріали" %} - VyshyvankaDaily{% endblock %}
-{% block meta_description %}{% translate "Співпраця з VyshyvankaDaily: гостьові статті про українську культуру, спонсорські матеріали, партнерства з українськими брендами й музеями та спонсорство." %}{% endblock %}
+{% block title %}{% filter brand_title %}{% translate "Співпраця і гостьові матеріали" %}{% endfilter %}{% endblock %}
+{% block meta_description %}{% translate "Співпраця з VyshyvankaDaily: гостьові й спонсорські статті, тексти під ключ, партнерства з українськими брендами й музеями." %}{% endblock %}
 
 {% block content %}
 <h1>{% translate "Співпраця і гостьові матеріали" %}</h1>

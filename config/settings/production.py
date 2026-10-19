@@ -38,7 +38,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
-SECURE_REFERRER_POLICY = "same-origin"
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
 # Heroku router термінує TLS і проксує до dyno по HTTP, підставляючи
 # X-Forwarded-Proto. Без SECURE_PROXY_SSL_HEADER request.is_secure()

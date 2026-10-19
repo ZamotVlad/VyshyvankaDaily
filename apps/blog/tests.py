@@ -512,8 +512,10 @@ class FirstArticleSeoTests(TestCase):
         for lang in ("uk", "en"):
             title = getattr(self.post, f"title_{lang}")
             seo_title = getattr(self.post, f"seo_title_{lang}")
+            keyword = getattr(self.post, f"target_keyword_{lang}")
             self.assertTrue(seo_title)
-            self.assertNotIn(seo_title.split(":")[0], title)
+            self.assertNotEqual(seo_title, title)
+            self.assertIn(keyword.lower(), seo_title.lower())
 
     def test_cover_sits_in_fixed_ratio_frame(self):
         html = self.client.get(f"/blog/{self.post.slug}/").content.decode()

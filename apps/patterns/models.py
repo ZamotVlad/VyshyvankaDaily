@@ -487,5 +487,14 @@ class RegionPhoto(TimeStampedModel):
         return f"{self.region.name} - фото {self.pk}"
 
     @property
+    def alt_text(self):
+        """Короткий alt з першого речення підпису; повний підпис лишається під фото."""
+        label, sep, rest = self.caption.partition(": ")
+        first = (rest if sep and len(label) < 40 else self.caption).split(". ")[0].rstrip(".")
+        prefix = f"{label.split()[0]}: " if sep and self.is_illustration else ""
+        text = f"{prefix}{first}"
+        return text if len(text) <= 100 else text[:97].rsplit(" ", 1)[0] + "..."
+
+    @property
     def is_illustration(self):
         return self.source_note.startswith("Ілюстрація")

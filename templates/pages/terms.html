@@ -1,19 +1,20 @@
 {% extends "base.html" %}
+{% load seo_tags %}
 {% load i18n %}
 
-{% block title %}{% translate "Умови використання" %} - VyshyvankaDaily{% endblock %}
-{% block meta_description %}{% translate "Умови використання VyshyvankaDaily: що робить сайт, характер контенту, обліковий запис, права на контент, ваші матеріали й обмеження відповідальності." %}{% endblock %}
+{% block title %}{% filter brand_title %}{% translate "Умови використання" %}{% endfilter %}{% endblock %}
+{% block meta_description %}{% translate "Умови використання VyshyvankaDaily: що робить сайт, характер контенту, обліковий запис, права на контент і відповідальність." %}{% endblock %}
 
 {% block content %}
 <div class="vd-page-head">
   <span class="vd-page-head__eyebrow">{% translate "Правове" %}</span>
   <h1>{% translate "Умови використання" %}</h1>
-  <p class="vd-page-head__lede">{% translate "Умови використання VyshyvankaDaily: що робить сайт, характер контенту, обліковий запис, права на контент, ваші матеріали й обмеження відповідальності." %}</p>
+  <p class="vd-page-head__lede">{% translate "Умови використання VyshyvankaDaily: що робить сайт, характер контенту, обліковий запис, права на контент і відповідальність." %}</p>
   <div class="vd-stitch-rule vd-stitch-rule--short"></div>
 </div>
 
 <nav class="vd-toc" aria-label="{% translate 'Зміст сторінки' %}">
-  <h2>{% translate "Зміст" %}</h2>
+  <h2>{% translate "Зміст умов" %}</h2>
   <ol>
     <li><a href="#t1">{% translate "1. Про ці умови" %}</a></li>
     <li><a href="#t2">{% translate "2. Що робить сайт" %}</a></li>

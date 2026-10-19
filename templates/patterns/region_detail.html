@@ -54,7 +54,7 @@
   <div class="vd-photo-strip">
     {% for photo in photos %}
       <button type="button" class="vd-photo-strip__item" data-full="{{ photo.image_url|asset }}" data-caption="{{ photo.caption }}">
-        <img src="{{ photo.thumbnail_url|asset }}" alt="{{ photo.caption|default:region.name }}" width="360" height="270" loading="lazy" decoding="async">
+        <img src="{{ photo.thumbnail_url|asset }}" alt="{{ photo.alt_text|default:region.name }}" width="360" height="270" loading="lazy" decoding="async">
         {% if photo.is_illustration %}<span class="vd-photo-strip__badge">{% translate "Ілюстрація" %}</span>{% endif %}
       </button>
     {% endfor %}

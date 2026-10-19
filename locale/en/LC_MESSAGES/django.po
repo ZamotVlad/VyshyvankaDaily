@@ -640,8 +640,8 @@ msgstr ""
 msgid "Розділ поки наповнюється."
 msgstr "This section is still being filled in."
 
-msgid "Як VyshyvankaDaily обробляє персональні дані: що збираємо, навіщо, скільки зберігаємо, кому передаємо, які кукі використовуємо і які у вас права."
-msgstr "How VyshyvankaDaily handles personal data: what we collect and why, how long we keep it, who we share it with, which cookies we use and your rights."
+msgid "Як VyshyvankaDaily обробляє персональні дані: що збираємо, навіщо, скільки зберігаємо, кому передаємо і які у вас права."
+msgstr "How VyshyvankaDaily handles personal data: what we collect and why, how long we keep it, who we share it with and your rights."
 
 #: .\templates\pages\privacy.html:14 .\templates\pages\terms.html:14
 msgid "Зміст сторінки"
@@ -993,8 +993,8 @@ msgstr "Write to Us"
 msgid "Останнє оновлення: 5 серпня 2026 року."
 msgstr "Last updated: August 5, 2026."
 
-msgid "Умови використання VyshyvankaDaily: що робить сайт, характер контенту, обліковий запис, права на контент, ваші матеріали й обмеження відповідальності."
-msgstr "VyshyvankaDaily terms of use: what the site does, the nature of its content, accounts, rights to content, materials you send and limits of liability."
+msgid "Умови використання VyshyvankaDaily: що робить сайт, характер контенту, обліковий запис, права на контент і відповідальність."
+msgstr "VyshyvankaDaily terms of use: what the site does, the nature of its content, accounts, rights to content and limits of liability."
 
 #: .\templates\pages\terms.html:17
 msgid "1. Про ці умови"
@@ -5182,8 +5182,8 @@ msgstr "Profile updated."
 msgid "Орнамент вишиванки різних регіонів України"
 msgstr "Ukrainian Embroidery Patterns from Every Region"
 
-msgid "Шукаєте орнамент вишиванки своєї області? Дізнавайтесь значення візерунків та їх історію з VyshyvankaDaily! Новий орнамент щодня - зберіть свою колекцію!"
-msgstr "Find your region's vyshyvanka pattern and learn the meaning and history of Ukrainian embroidery ornaments. A new pattern every day - build your collection!"
+msgid "Орнамент вишиванки кожної області України: значення візерунків, кольори й історія з джерел. Новий орнамент щодня - зберіть колекцію!"
+msgstr "Find your region's vyshyvanka pattern: the meaning and history of Ukrainian embroidery ornaments. A new pattern every day for your collection."
 
 msgid "Щоденний генератор орнаменту української вишиванки з реальними джерелами символіки й традицій усіх 27 регіонів."
 msgstr "A daily Ukrainian embroidery pattern generator with real sources on the symbolism and traditions of all 27 regions."
@@ -5204,8 +5204,8 @@ msgstr "Available at:"
 msgid "Вишиванки по регіонах України: орнаменти всіх областей"
 msgstr "Vyshyvanka by Region: Ukrainian Embroidery Patterns"
 
-msgid "Орнамент вишиванки по областях: символіка, кольори й техніки всіх 27 регіонів України, від Полтавщини до Криму, з музейними та науковими джерелами."
-msgstr "Embroidery patterns by oblast: the symbolism, colours and techniques of all 27 regions of Ukraine, from Poltava to Crimea, with museum and academic sources."
+msgid "Орнамент вишиванки по областях: символіка, кольори й техніки всіх 27 регіонів України з музейними та науковими джерелами."
+msgstr "Embroidery patterns by oblast: symbolism, colours and techniques of all 27 regions of Ukraine, with museum and academic sources."
 
 msgid "Статті про українську вишивку: техніки, символіка орнаментів, історії майстринь і музейних колекцій з різних регіонів України."
 msgstr "Articles on Ukrainian embroidery: techniques, ornament symbolism and the stories of craftswomen and museum collections from across Ukraine."
@@ -5214,7 +5214,7 @@ msgid "Архів орнаментів вишиванки: кожен згене
 msgstr "An archive of vyshyvanka patterns: every generated day since the project began, with its region and date. Filter by region and period."
 
 msgid "Часті запитання про VyshyvankaDaily: як обирається орнамент дня, звідки описи символіки, навіщо акаунт і колекція."
-msgstr "Frequently asked questions about VyshyvankaDaily: how the pattern of the day is chosen, where the symbolism descriptions come from, and what the account is for."
+msgstr "Frequently asked questions about VyshyvankaDaily: how the pattern of the day is chosen, where descriptions come from and what the account is for."
 
 msgid "Також трапляються"
 msgstr "Also found"
@@ -5282,8 +5282,8 @@ msgstr "Vyshyvanka: %(name)s"
 msgid "Про VyshyvankaDaily: щоденний орнамент вишиванки з 27 регіонів України, місія проєкту, принципи роботи з джерелами і хто його веде."
 msgstr "About VyshyvankaDaily: a daily vyshyvanka pattern from Ukraine's 27 regions, the project's mission, how we work with sources and who runs it."
 
-msgid "Контакти VyshyvankaDaily: напишіть про неточність в описі регіону, співпрацю з музеєм чи майстринею, технічну помилку або питання щодо даних."
-msgstr "Contact VyshyvankaDaily: tell us about an error in a region description, a museum or craftswoman collaboration, a technical issue or a data question."
+msgid "Контакти VyshyvankaDaily: напишіть про неточність в описі регіону, співпрацю з музеєм чи майстринею або технічну помилку."
+msgstr "Contact VyshyvankaDaily: tell us about an error in a region description, a museum or craftswoman collaboration or a technical issue."
 
 msgid "Запропонуйте статтю про вишивку свого краю для блогу VyshyvankaDaily: історії сорочок і майстринь, музейні колекції, локальні техніки."
 msgstr "Propose an article about the embroidery of your region for the VyshyvankaDaily blog: stories of shirts and craftswomen, museum collections, local techniques."
@@ -5372,8 +5372,8 @@ msgstr "Updated"
 msgid "Як ми працюємо з джерелами"
 msgstr "How we work with sources"
 
-msgid "Звідки VyshyvankaDaily бере факти про вишивку: рівні джерел, музеї й наукові видання, тлумачення символів, кольори регіонів і виправлення помилок."
-msgstr "Where VyshyvankaDaily gets its facts on embroidery: source levels, museums and academic works, symbol interpretations, regional colours and corrections."
+msgid "Звідки VyshyvankaDaily бере факти про вишивку: рівні джерел, музеї й наукові видання, тлумачення символів і виправлення помилок."
+msgstr "Where VyshyvankaDaily gets its facts on embroidery: source levels, museums and academic works, symbol interpretations and corrections."
 
 msgid "Усе, що ви читаєте на сторінках регіонів і в статтях, має джерело. Тут пояснюємо, які джерела ми використовуємо, як перевіряємо факти і що робимо з помилками."
 msgstr "Everything you read on the region pages and in the articles has a source. This page explains which sources we use, how we check facts and what we do about mistakes."
@@ -5568,8 +5568,8 @@ msgstr "About your proposal"
 msgid "Співпраця і гостьові матеріали"
 msgstr "Collaboration and guest articles"
 
-msgid "Співпраця з VyshyvankaDaily: гостьові статті про українську культуру, спонсорські матеріали, партнерства з українськими брендами й музеями та спонсорство."
-msgstr "Collaborate with VyshyvankaDaily: guest articles on Ukrainian culture, sponsored articles, partnerships with Ukrainian brands and museums, and sponsorship."
+msgid "Співпраця з VyshyvankaDaily: гостьові й спонсорські статті, тексти під ключ, партнерства з українськими брендами й музеями."
+msgstr "Collaborate with VyshyvankaDaily: guest and sponsored articles, turnkey texts, partnerships with Ukrainian brands and museums."
 
 msgid "VyshyvankaDaily читають люди в Україні й за кордоном, яким цікаві Україна та її культура: вишивка й ремесла, традиції, свята, історія. Якщо ваш текст, бренд чи проєкт пов'язаний з Україною, оберіть формат і коротко опишіть ідею. Ми відповімо на пошту."
 msgstr "VyshyvankaDaily is read by people in Ukraine and abroad who are interested in Ukraine and its culture: embroidery and crafts, traditions, holidays, history. If your text, brand or project is connected with Ukraine, choose a format and briefly describe your idea. We will reply by email."
@@ -5615,3 +5615,39 @@ msgstr "No material of your own? We will write the article about your brand, pro
 
 msgid "Текст під ключ (пишемо ми)"
 msgstr "Turnkey article (we write it)"
+
+msgid "Блог про вишиванку й українську культуру"
+msgstr "Blog about the vyshyvanka and Ukrainian culture"
+
+msgid "Про нас: як створюється VyshyvankaDaily"
+msgstr "About us: how VyshyvankaDaily is made"
+
+msgid "Контакти: як зв'язатися з VyshyvankaDaily"
+msgstr "Contact VyshyvankaDaily: how to reach us"
+
+msgid "Зміст політики"
+msgstr "Policy contents"
+
+msgid "Зміст умов"
+msgstr "Terms contents"
+
+msgid "Вишиванки по регіонах України"
+msgstr "Vyshyvanka by region of Ukraine"
+
+msgid "Якщо цікавить конкретний орнамент вишиванки по областях, відкрийте картку регіону: там повний опис кольорів, мотивів і джерел, на які ми спираємось."
+msgstr "If you are interested in a specific region's embroidery pattern, open its card: it has the full description of colours, motifs and the sources we rely on."
+
+msgid "Чим відрізняються вишиванки регіонів"
+msgstr "How vyshyvankas differ from region to region"
+
+msgid "Вишиванки регіонів України відрізняються кольором, технікою й мотивами: на Полтавщині вишивають білим по білому полотну, у борщівській сорочці Тернопільщини домінує чорний і вовняні нитки, а буковинську вишивку Чернівеччини вирізняють бісер і лелітки."
+msgstr "Vyshyvankas from different regions of Ukraine differ in colour, technique and motifs: in the Poltava region they embroider white on white linen, the Borshchiv shirt of the Ternopil region is dominated by black and woollen thread, and Bukovynian embroidery from the Chernivtsi region stands out for beads and sequins."
+
+msgid "Навіть одна область рідко має одну традицію. На Київщині їх чотири: поліська геометрія занизуванням на півночі, брокарівський червоно-чорний хрестик на Правобережжі, геометрія гладдю й вирізування на лівому березі. Для гуцульської вишивки Івано-Франківщини Володимир Шухевич описав дванадцять технік, серед яких домінувала низинка, а подільську низь на Вінниччині шиють навиворіт."
+msgstr "Even a single oblast rarely has a single tradition. The Kyiv region has four: Polissian geometry in zanyzuvannia stitch in the north, red and black Brocard cross-stitch on the Right Bank, and satin-stitch geometry with cutwork on the Left Bank. For the Hutsul embroidery of the Ivano-Frankivsk region, Volodymyr Shukhevych described twelve techniques, dominated by nyzynka, while Podillia nyz in the Vinnytsia region is stitched from the reverse side."
+
+msgid "Окремо стоїть Крим: кримськотатарський орнамент орьнек у 2021 році внесли до Репрезентативного списку нематеріальної культурної спадщини людства ЮНЕСКО."
+msgstr "Crimea stands apart: in 2021 the Crimean Tatar ornament ornek was inscribed on UNESCO's Representative List of the Intangible Cultural Heritage of Humanity."
+
+msgid "На мапі вище кожна область вишита своїм мотивом у своїх кольорах. Натисніть на регіон або оберіть його зі списку нижче: на сторінці регіону - опис символіки, кольори, характерні мотиви, часті запитання й перелік музейних і наукових джерел. Що означають окремі знаки, як-от ромб чи дерево життя, пояснюємо на сторінці <a href=\"%(symbols_url)s\">символи вишиванки</a>, а крій сорочок - у статті <a href=\"%(types_url)s\">види вишиванок</a>."
+msgstr "On the map above, each oblast is embroidered with its own motif in its own colours. Click a region or choose it from the list below: each region page has the symbolism, colours, typical motifs, frequently asked questions and a list of museum and academic sources. What individual signs such as the rhombus or the tree of life mean is explained on the <a href=\"%(symbols_url)s\">vyshyvanka symbols</a> page, and shirt cuts in the article on <a href=\"%(types_url)s\">types of vyshyvanka</a>."
