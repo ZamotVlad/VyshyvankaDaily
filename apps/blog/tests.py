@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.management import call_command
@@ -567,3 +569,77 @@ class FirstArticleSeoTests(TestCase):
                 self.assertIn('rel="noopener"', attrs)
             self.assertNotIn('href="https://www.instagram.com', body)
             self.assertNotIn('href="http://instagram.com', body)
+
+
+class HomeLatestPostsTests(TestCase):
+    def setUp(self):
+        self.category = BlogCategory.objects.create(name_uk="Гіди", name_en="Guides", slug="guides")
+
+    def _post(self, slug, days_ago, status=BlogPost.Status.PUBLISHED, **extra):
+        return BlogPost.objects.create(
+            title_uk=f"Стаття {slug}",
+            title_en=f"Article {slug}",
+            slug=slug,
+            excerpt_uk="Короткий опис.",
+            body="<p>" + "слово " * 450 + "</p>",
+            category=self.category,
+            status=status,
+            published_at=timezone.now() - timezone.timedelta(days=days_ago),
+            **extra,
+        )
+
+    def _block(self, path="/"):
+        html = self.client.get(path).content.decode()
+        if 'class="vd-latest"' not in html:
+            return ""
+        return html.split('class="vd-latest"')[1].split("</section>")[0]
+
+    def test_no_block_without_published_posts(self):
+        self._post("draft", 1, status=BlogPost.Status.DRAFT)
+        self.assertEqual(self._block(), "")
+
+    def test_three_newest_published_posts_in_order(self):
+        for slug, days in (("a", 9), ("b", 1), ("c", 5), ("d", 3)):
+            self._post(slug, days)
+        self._post("draft", 0, status=BlogPost.Status.DRAFT)
+        block = self._block()
+        slugs = re.findall(r'href="/blog/([a-z]+)/"', block)
+        self.assertEqual(slugs, ["b", "d", "c"])
+        self.assertIn("vd-latest__grid--n3", block)
+        self.assertEqual(block.count("vd-post--lead"), 1)
+
+    def test_post_without_date_does_not_take_the_lead(self):
+        self._post("old", 30)
+        undated = self._post("undated", 0)
+        BlogPost.objects.filter(pk=undated.pk).update(published_at=None)
+        slugs = re.findall(r'href="/blog/([a-z]+)/"', self._block())
+        self.assertEqual(slugs, ["old", "undated"])
+        self.assertIn("vd-latest__grid--n2", self._block())
+
+    def test_reading_time_cover_fallback_and_english(self):
+        self._post("a", 1, cover_image_url="/static/og/fallback.png", cover_image_alt_uk="Сорочка")
+        self._post("b", 2)
+        block = self._block()
+        self.assertIn("2 хв читання", block)
+        self.assertIn('alt="Сорочка"', block)
+        self.assertIn("vd-post__media--empty", block)
+        self.assertIn('loading="lazy"', block)
+        en = self._block("/en/")
+        self.assertIn("Latest articles", en)
+        self.assertIn("min read", en)
+        self.assertIn("Article a", en)
+        self.assertIn('href="/en/blog/a/"', en)
+
+    def test_home_query_count_does_not_grow_with_posts(self):
+        from django.db import connection
+        from django.test.utils import CaptureQueriesContext
+
+        self._post("a", 1)
+        self.client.get("/")
+        with CaptureQueriesContext(connection) as one:
+            self.client.get("/")
+        for slug, days in (("b", 2), ("c", 3), ("d", 4)):
+            self._post(slug, days)
+        with CaptureQueriesContext(connection) as many:
+            self.client.get("/")
+        self.assertEqual(len(many), len(one))

@@ -1,0 +1,27 @@
+{% load i18n assets_tags %}
+<section class="vd-latest" aria-labelledby="latest-posts-title" data-reveal>
+  <h2 class="vd-section-title" id="latest-posts-title">{% translate "Останні статті" %}</h2>
+  <div class="vd-latest__grid vd-latest__grid--n{{ latest_posts|length }}">
+    {% for post in latest_posts %}
+    <article class="vd-post{% if forloop.first %} vd-post--lead{% endif %}" style="--i:{{ forloop.counter0 }}">
+      <a href="{{ post.get_absolute_url }}" class="vd-post__link">
+        <div class="vd-post__media{% if not post.cover_image_url %} vd-post__media--empty{% endif %}">
+          {% if post.cover_image_url %}<img src="{{ post.cover_image_url|asset }}" alt="{{ post.cover_image_alt|default:post.title }}" width="1200" height="675" loading="lazy" decoding="async">{% endif %}
+        </div>
+        <div class="vd-post__body">
+          <span class="vd-post__cat">{{ post.category.name }}</span>
+          <h3 class="vd-post__title">{{ post.title }}</h3>
+          {% if forloop.first and post.excerpt %}<span class="vd-post__excerpt">{{ post.excerpt|truncatewords:26 }}</span>{% endif %}
+          <span class="vd-post__meta">
+            {% if post.published_at %}<time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"j E Y" }}</time>
+            <span aria-hidden="true">·</span>{% endif %}
+            {% blocktranslate with n=post.reading_minutes %}{{ n }} хв читання{% endblocktranslate %}
+            <span class="vd-post__go" aria-hidden="true">→</span>
+          </span>
+        </div>
+      </a>
+    </article>
+    {% endfor %}
+  </div>
+  <a href="{% url 'blog:list' %}" class="vd-btn vd-btn--ghost vd-latest__all">{% translate "Усі статті" %} →</a>
+</section>

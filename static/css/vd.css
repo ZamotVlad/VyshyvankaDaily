@@ -2202,3 +2202,303 @@ main:focus {
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: none;
 }
+
+/* ---------- Останні статті (головна) ---------- */
+.vd-latest {
+  margin-top: 56px;
+}
+.vd-latest__grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 18px;
+}
+.vd-post {
+  position: relative;
+  min-width: 0;
+}
+.vd-post--lead {
+  grid-row: span 2;
+}
+.vd-post__link {
+  position: relative;
+  display: flex;
+  height: 100%;
+  background: var(--vd-surface);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius);
+  overflow: hidden;
+  color: inherit;
+  isolation: isolate;
+  transition:
+    border-color 0.3s,
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.4s;
+}
+.vd-post__link:hover,
+.vd-post__link:focus-visible {
+  color: inherit;
+  border-color: var(--vd-red-dim);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.9);
+}
+/* Рамка-шов: пунктир «бігає» по краю, як голка зі стібками */
+.vd-post__link::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, var(--vd-red) 0 7px, transparent 7px 13px) top left / 100% 1.5px no-repeat,
+    repeating-linear-gradient(90deg, var(--vd-red) 0 7px, transparent 7px 13px) bottom left / 100% 1.5px no-repeat,
+    repeating-linear-gradient(0deg, var(--vd-red) 0 7px, transparent 7px 13px) top left / 1.5px 100% no-repeat,
+    repeating-linear-gradient(0deg, var(--vd-red) 0 7px, transparent 7px 13px) top right / 1.5px 100% no-repeat;
+  opacity: 0;
+  clip-path: inset(0 100% 100% 0);
+  transition:
+    opacity 0.2s,
+    clip-path 0.6s cubic-bezier(0.6, 0, 0.2, 1);
+}
+.vd-post__link:hover::after,
+.vd-post__link:focus-visible::after {
+  opacity: 0.85;
+  clip-path: inset(0 0 0 0);
+}
+.vd-post__media {
+  position: relative;
+  flex: 0 0 40%;
+  overflow: hidden;
+  background: var(--vd-surface-2);
+}
+.vd-post__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85);
+  transition:
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.5s;
+}
+.vd-post__link:hover .vd-post__media img {
+  transform: scale(1.07);
+  filter: saturate(1.05);
+}
+.vd-post__body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  min-width: 0;
+}
+.vd-post__cat {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--vd-font-display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vd-red-text);
+}
+.vd-post__cat::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--vd-red);
+  transform: rotate(45deg);
+  transition: transform 0.5s;
+}
+.vd-post__link:hover .vd-post__cat::before {
+  transform: rotate(225deg);
+}
+.vd-post__title {
+  position: relative;
+  font-size: 16px;
+  line-height: 1.35;
+  margin: 0;
+  padding-bottom: 12px;
+}
+/* Хрестикова лінія під заголовком «вишивається» при наведенні */
+.vd-post__title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  max-width: 100%;
+  height: 6px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M2 1l4 4M6 1L2 5' stroke='%23c23b2e' stroke-width='1.4'/%3E%3C/svg%3E")
+    left center / 10px 6px repeat-x;
+  transition: width 0.7s steps(16);
+}
+.vd-post__link:hover .vd-post__title::after,
+.vd-post__link:focus-visible .vd-post__title::after {
+  width: 160px;
+}
+.vd-post__excerpt {
+  color: var(--vd-muted);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.vd-post__meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--vd-muted);
+}
+.vd-post__go {
+  margin-left: auto;
+  color: var(--vd-red-text);
+  font-family: var(--vd-font-display);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.vd-post__link:hover .vd-post__go {
+  transform: translateX(5px);
+}
+
+/* Головна стаття: фото на всю картку, текст поверх градієнта */
+.vd-post--lead .vd-post__link {
+  min-height: 420px;
+}
+.vd-post--lead .vd-post__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.vd-post--lead .vd-post__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(28, 24, 21, 0.1) 0%,
+    rgba(28, 24, 21, 0.5) 30%,
+    rgba(28, 24, 21, 0.88) 55%,
+    #1c1815 100%
+  );
+}
+.vd-post--lead .vd-post__media img {
+  filter: saturate(0.85) brightness(0.85);
+}
+.vd-post--lead .vd-post__link:hover .vd-post__media img {
+  filter: saturate(1.05) brightness(0.92);
+}
+.vd-post--lead .vd-post__cat {
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  background: rgba(28, 24, 21, 0.85);
+  border: 1px solid rgba(194, 59, 46, 0.45);
+}
+.vd-post--lead .vd-post__title {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+}
+.vd-post--lead .vd-post__body {
+  margin-top: auto;
+  padding: 28px 28px 24px;
+  gap: 12px;
+}
+.vd-post--lead .vd-post__title {
+  font-size: clamp(20px, 2.2vw, 26px);
+}
+.vd-post--lead .vd-post__excerpt {
+  color: #cfc5b8;
+  max-width: 52ch;
+}
+.vd-latest__all {
+  margin-top: 22px;
+}
+/* Менше трьох статей: сітка не лишає порожніх клітинок */
+.vd-latest__grid--n1 {
+  grid-template-columns: 1fr;
+  grid-template-rows: none;
+}
+.vd-latest__grid--n2 {
+  grid-template-rows: none;
+}
+.vd-latest__grid--n1 .vd-post--lead,
+.vd-latest__grid--n2 .vd-post--lead {
+  grid-row: auto;
+}
+.vd-latest__grid--n2 .vd-post:not(.vd-post--lead) .vd-post__link {
+  flex-direction: column;
+}
+.vd-latest__grid--n2 .vd-post:not(.vd-post--lead) .vd-post__media {
+  flex: 0 0 200px;
+}
+/* Без обкладинки - вишите полотно замість фото */
+.vd-post__media--empty {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M8 8l8 8M16 8l-8 8' stroke='%23c23b2e' stroke-width='1.6' opacity='.55'/%3E%3C/svg%3E")
+      center / 24px 24px,
+    var(--vd-surface-2);
+}
+.vd-post:not(.vd-post--lead) .vd-post__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+/* Поява секції: лише з JS і без reduce-motion, інакше видно одразу */
+@media (prefers-reduced-motion: no-preference) {
+  .vd-latest.is-armed .vd-post {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  .vd-latest.is-in .vd-post {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.6s ease,
+      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: calc(var(--i) * 110ms);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vd-post__link,
+  .vd-post__link::after,
+  .vd-post__media img,
+  .vd-post__title::after {
+    transition: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .vd-latest__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 14px;
+  }
+  .vd-post--lead {
+    grid-row: auto;
+  }
+  .vd-post--lead .vd-post__link {
+    min-height: 360px;
+  }
+  .vd-post--lead .vd-post__body {
+    padding: 22px 20px 18px;
+  }
+  .vd-post:not(.vd-post--lead) .vd-post__media {
+    flex-basis: 112px;
+  }
+  .vd-post:not(.vd-post--lead) .vd-post__body {
+    padding: 14px 16px;
+    gap: 6px;
+  }
+  .vd-post:not(.vd-post--lead) .vd-post__title {
+    font-size: 14px;
+  }
+  .vd-latest__grid--n2 .vd-post:not(.vd-post--lead) .vd-post__link {
+    flex-direction: row;
+  }
+  .vd-latest__grid--n2 .vd-post:not(.vd-post--lead) .vd-post__media {
+    flex: 0 0 112px;
+  }
+}

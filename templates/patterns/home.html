@@ -80,6 +80,8 @@
 </section>
 {% endif %}
 
+{% if latest_posts %}{% include "includes/latest_posts.html" %}{% endif %}
+
 {% if not user.is_authenticated %}
 <div class="vd-status-bar vd-status-bar--soft">
   <span>{% translate "Заходьте щодня й збирайте власну колекцію орнаментів" %}</span>

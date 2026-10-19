@@ -2,6 +2,7 @@ import re
 
 from django.conf import settings
 from django.db import models
+from django.utils.html import strip_tags
 from django.utils.translation import get_language, gettext_lazy
 from django.utils.translation import gettext as _
 from django_ckeditor_5.fields import CKEditor5Field
@@ -206,6 +207,11 @@ class BlogPost(TimeStampedModel, SlugModel):
         if (get_language() or "").startswith("en") and self.has_english:
             return self.body_en
         return self.body
+
+    @property
+    def reading_minutes(self):
+        words = len(strip_tags(self.localized_body or "").split())
+        return max(1, round(words / 200))
 
     @property
     def breadcrumbs(self):

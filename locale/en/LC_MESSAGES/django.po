@@ -5654,3 +5654,13 @@ msgstr "On the map above, each oblast is embroidered with its own motif in its o
 
 msgid "Щоденний орнамент вишиванки різних регіонів України"
 msgstr "Daily Ukrainian Embroidery Patterns from Every Region"
+
+msgid "Останні статті"
+msgstr "Latest articles"
+
+msgid "Усі статті"
+msgstr "All articles"
+
+#, python-format
+msgid "%(n)s хв читання"
+msgstr "%(n)s min read"

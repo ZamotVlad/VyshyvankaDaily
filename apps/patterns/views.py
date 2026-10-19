@@ -57,6 +57,8 @@ def _tour_progress(user):
     return len(tour_region_ids), Region.objects.verified().count()
 
 
+LATEST_POSTS = 3
+
 FAQ_HOME_QUESTIONS = [
     "Звідки береться орнамент, який показує сайт щодня?",
     "Чому орнамент змінюється, якщо регіон повторюється?",
@@ -87,12 +89,21 @@ def home_view(request):
     faq_highlights = list(FAQItem.objects.filter(question_uk__in=FAQ_HOME_QUESTIONS))
     faq_highlights.sort(key=lambda item: FAQ_HOME_QUESTIONS.index(item.question_uk))
 
+    from apps.blog.models import BlogPost
+
+    latest_posts = list(
+        BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED)
+        .select_related("category")
+        .order_by(F("published_at").desc(nulls_last=True), "-pk")[:LATEST_POSTS]
+    )
+
     context = {
         "pattern": pattern,
         "claim_type": pattern.region.get_claim_type(),
         "ribbon": ribbon,
         "is_saved": _is_saved_by(request.user, pattern),
         "faq_highlights": faq_highlights,
+        "latest_posts": latest_posts,
         "region_groups": grouped_regions(Region.objects.verified().order_by("rotation_order")),
     }
 

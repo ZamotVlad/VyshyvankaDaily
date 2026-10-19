@@ -431,3 +431,20 @@ document.querySelectorAll('input[type="password"]').forEach(function (input) {
     });
   }
 })();
+
+// Поява блоку «Останні статті» при прокрутці
+document.addEventListener("DOMContentLoaded", function () {
+  var section = document.querySelector(".vd-latest[data-reveal]");
+  if (!section || !("IntersectionObserver" in window)) return;
+  if (section.getBoundingClientRect().top < window.innerHeight) return;
+  section.classList.add("is-armed");
+  var io = new IntersectionObserver(
+    function (entries) {
+      if (!entries[0].isIntersecting) return;
+      section.classList.add("is-in");
+      io.disconnect();
+    },
+    { rootMargin: "0px 0px -15% 0px" }
+  );
+  io.observe(section);
+});
