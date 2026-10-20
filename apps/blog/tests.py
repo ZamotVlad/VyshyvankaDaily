@@ -643,3 +643,23 @@ class HomeLatestPostsTests(TestCase):
         with CaptureQueriesContext(connection) as many:
             self.client.get("/")
         self.assertEqual(len(many), len(one))
+
+
+class BlogMetaVsH1Tests(TestCase):
+    """H1 і мета-title просувають різні варіанти ключа, тому не повторюють одне одного."""
+
+    def test_h1_and_seo_title_differ_in_every_post(self):
+        import json
+        from pathlib import Path
+
+        for entry in json.loads(Path("blog_posts.json").read_text(encoding="utf-8")):
+            for lang in ("uk", "en"):
+                data = entry[lang]
+                with self.subTest(post=entry["slug"], lang=lang):
+                    h1 = re.findall(r"[\w']+", data["title"].lower())
+                    meta = re.findall(r"[\w']+", data["seo_title"].lower())
+                    self.assertNotEqual(h1[:3], meta[:3])
+                    self.assertLessEqual(len(set(h1) & set(meta)) / len(set(meta)), 0.7)
+                    self.assertIn(data["target_keyword"].lower(), data["seo_title"].lower())
+                    self.assertLessEqual(len(data["seo_title"]), 60)
+                    self.assertLessEqual(len(data["seo_description"]), 155)
