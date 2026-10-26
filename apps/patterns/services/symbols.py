@@ -6,13 +6,17 @@ from functools import cache
 from pathlib import Path
 
 from django.urls import reverse
-from django.utils.html import escape, strip_tags
+from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 
-from apps.patterns.models import Motif, Region
+from apps.patterns.models import Region
+from apps.patterns.services.gen2 import motifs as M
+from apps.patterns.services.gen2 import regional as R
+from apps.patterns.services.gen2.grid import Pattern, from_rows
+from apps.patterns.services.gen2.tiles import smooth_tile, stitch_tile
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "symbols.json"
-THREAD = ["#B3261E", "#231C18"]
+THREAD = ["#B3261E", "#231C18", "#C9A227", "#2E6B3A", "#1E5128", "#7D0F18", "#D9444C"]
 
 
 @cache
@@ -20,35 +24,36 @@ def data():
     return json.loads(DATA_FILE.read_text(encoding="utf-8"))
 
 
-def stitch_svg(grid, palette=None, colors=None, label=""):
-    """Схема мотиву: кожна клітинка - хрестик, один <path> на колір."""
-    colors = colors or THREAD
-    palette = palette or {"#": 0}
-    rows, cols = len(grid), len(grid[0])
-    by_color = {}
-    for y, row in enumerate(grid):
-        for x, ch in enumerate(row):
-            if ch == ".":
-                continue
-            color = colors[palette.get(ch, 0) % len(colors)]
-            by_color.setdefault(color, []).append(f"M{x + 0.15:g} {y + 0.15:g}l.7 .7m0-.7l-.7 .7")
-    paths = "".join(f'<path stroke="{c}" d="{"".join(d)}"/>' for c, d in by_color.items())
-    return mark_safe(
-        f'<svg viewBox="-1 -1 {cols + 2} {rows + 2}" role="img" aria-label="{escape(label)}" '
-        f'class="vd-sym__art"><g fill="none" stroke-width=".32" stroke-linecap="round">'
-        f"{paths}</g></svg>"
-    )
+# символ -> мотив генератора 2.0 (той самий хрестик, що й на сорочках)
+SYMBOL_MOTIFS = {
+    "romb": lambda: M.rich(10, "rhomb"),
+    "zirka": lambda: M.star(10),
+    "sontse": lambda: M.sun(10),
+    "kryvulka": lambda: Pattern(R.kryv_rows((0, 1)), 24, 24),
+    "derevo": lambda: M.tree(25, 39, pot=False),
+    "vazon": M.lily,
+    "ruzha": M.rose_branch,
+    "kalyna": M.kalyna,
+    "vynohrad": M.grapes,
+    "sosonka": lambda: M.sosonka(24),
+    "ptakh": M.bird,
+    "orel": M.orlyk,
+    "svitove": M.birds_tree,
+}
 
 
-def _art(key, label, motifs):
+def _art(key, label, css="vd-sym__art", prefix="s"):
     spec = data()["art"].get(key, {})
+    pid = f"{prefix}{key}"
+    if key == "ornek":
+        return mark_safe(smooth_tile("ornek", spec.get("colors") or THREAD, label, pid, css))
     if "grid" in spec:
-        return stitch_svg(spec["grid"], colors=spec.get("colors"), label=label)
-    motif = motifs.get(spec.get("motif"))
-    geo = (motif.geometry_parameters or {}) if motif else {}
-    if geo.get("format") != "pixel_grid_v1":
+        pattern = from_rows(spec["grid"], {"#": 0, "o": 1})
+    elif key in SYMBOL_MOTIFS:
+        pattern = SYMBOL_MOTIFS[key]()
+    else:
         return ""
-    return stitch_svg(geo["grid"], geo["palette"], spec.get("colors"), label)
+    return mark_safe(stitch_tile(pattern, spec.get("colors") or THREAD, label, pid, css=css))
 
 
 def _regions(slugs, by_slug):
@@ -67,8 +72,6 @@ def _regions(slugs, by_slug):
 
 def build_page(lang):
     content = data()["en" if lang == "en" else "uk"]
-    names = [spec["motif"] for spec in data()["art"].values() if "motif" in spec]
-    motifs = {m.name_uk: m for m in Motif.objects.filter(name_uk__in=names)}
     by_slug = {r.slug: r for r in Region.objects.verified()}
     names_by_key = {}
     groups = []
@@ -79,7 +82,8 @@ def build_page(lang):
             symbols.append(
                 {
                     **sym,
-                    "art": _art(sym["key"], sym["name"], motifs),
+                    "art": _art(sym["key"], sym["name"]),
+                    "hero_art": _art(sym["key"], sym["name"], prefix="h"),
                     "region_links": _regions(sym["regions"], by_slug),
                 }
             )
@@ -113,7 +117,7 @@ def build_page(lang):
         "groups": groups,
         "table": rows,
         "toc": toc,
-        "ornek_art": _art("ornek", content["ornek_title"], motifs),
+        "ornek_art": _art("ornek", content["ornek_title"]),
         "ornek_region_links": _regions(content["ornek_regions"], by_slug),
         "terms": [
             {"key": s["key"], "name": s["name"], "description": " ".join(s["text"])}

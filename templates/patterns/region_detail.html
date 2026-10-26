@@ -79,6 +79,7 @@
     </div>
   {% endif %}
 {% endwith %}
+{% include "patterns/_region_motifs.html" %}
 <h2 class="vd-section-title" id="colors">{% translate "Домінуючі кольори" %}</h2>
 <div class="vd-swatches mb-2">
   {% for color in region.shown_colors %}

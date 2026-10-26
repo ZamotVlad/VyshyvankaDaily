@@ -2502,3 +2502,59 @@ main:focus {
     flex: 0 0 112px;
   }
 }
+
+/* Мотиви вишивки на сторінці регіону */
+.vd-motifs__title {
+  font-family: var(--vd-font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  margin: 18px 0 10px;
+}
+.vd-motifs {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 12px;
+}
+.vd-motif__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.vd-motif__tile {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  background: #e7decf url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='1.1' fill='%23d9cfbd' opacity='.6'/%3E%3Crect width='1.1' height='4' fill='%23fff' opacity='.25'/%3E%3C/svg%3E");
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+.vd-motif__art {
+  width: 100%;
+  height: 100%;
+}
+.vd-motif__name {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--vd-cream);
+}
+.vd-motif__link:hover .vd-motif__tile,
+.vd-motif__link:focus-visible .vd-motif__tile {
+  transform: translateY(-2px);
+}
+.vd-motif__link:hover .vd-motif__name {
+  color: var(--vd-red-text);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vd-motif__tile {
+    transition: none;
+  }
+}

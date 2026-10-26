@@ -161,3 +161,46 @@ class RegeneratePatternsCommandTests(TestCase):
         self.assertEqual(self.old.date, date(2026, 10, 1))
         self.assertEqual(list(self.old.motifs_used.all()), [self.motif])
         self.assertEqual(self.fresh.svg_content, "<svg>fresh</svg>")
+
+
+class RegionMotifTilesTests(TestCase):
+    def test_every_region_has_valid_tiles(self):
+        from apps.patterns.services.gen2.catalog import region_tiles
+
+        for slug in REGIONS:
+            with self.subTest(slug=slug):
+                groups = region_tiles(slug, "uk")
+                self.assertTrue(groups)
+                svgs = [svg for _, tiles in groups for svg, _, _ in tiles]
+                ids = []
+                for svg in svgs:
+                    ET.fromstring(svg)
+                    ids += re.findall(r'\sid="([^"]+)"', svg)
+                self.assertEqual(len(ids), len(set(ids)))
+
+    def test_symbol_anchors_exist_on_symbols_page(self):
+        from apps.patterns.services.gen2.catalog import NAMES
+
+        html = self.client.get("/symbols/").content.decode()
+        for anchor in {a for _, _, a in NAMES.values() if a}:
+            with self.subTest(anchor=anchor):
+                self.assertIn(f'id="{anchor}"', html)
+
+    def test_region_page_shows_motifs_ua_and_en(self):
+        html = self.client.get("/regions/chernivetska-oblast/").content.decode()
+        self.assertIn('id="motifs"', html)
+        self.assertIn('href="#motifs"', html)
+        self.assertIn('class="vd-motif__art"', html)
+        self.assertIn('href="/symbols/#symbol-', html)
+        en = self.client.get("/en/regions/chernivetska-oblast/").content.decode()
+        self.assertIn('href="/en/symbols/#symbol-', en)
+        ids = re.findall(r'\sid="([^"]+)"', html)
+        self.assertEqual(len(ids), len(set(ids)))
+
+
+class SymbolsPageArtTests(TestCase):
+    def test_symbol_art_ids_unique_on_page(self):
+        html = self.client.get("/symbols/").content.decode()
+        self.assertIn('class="vd-sym__art"', html)
+        ids = re.findall(r'\sid="([^"]+)"', html)
+        self.assertEqual(len(ids), len(set(ids)))

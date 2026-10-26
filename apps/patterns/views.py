@@ -15,6 +15,7 @@ from django.utils.formats import date_format
 from django.utils.html import strip_tags
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.text import Truncator
+from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
@@ -22,6 +23,7 @@ from apps.blog.models import Author
 from apps.core.toc import build_toc
 from apps.patterns.models import DailyPattern, Region, SavedPattern
 from apps.patterns.region_groups import grouped_regions
+from apps.patterns.services.gen2.catalog import region_tiles
 from apps.patterns.services.generation import (
     CURRENT_ALGORITHM_VERSION,
     NoFallbackAvailable,
@@ -246,11 +248,16 @@ def region_detail_view(request, slug):
     region = get_object_or_404(Region, slug=slug)
 
     body, toc = build_toc(
-        region.symbolism_description, reserved=("articles", "colors", "sources", "gallery")
+        region.symbolism_description,
+        reserved=("articles", "motifs", "colors", "sources", "gallery"),
     )
     region_posts = list(region.published_blog_posts)
     if region_posts:
         toc.append({"id": "articles", "title": _("Статті про цей регіон")})
+    lang = "en" if (get_language() or "").startswith("en") else "uk"
+    motif_groups = region_tiles(region.slug, lang)
+    if motif_groups:
+        toc.append({"id": "motifs", "title": _("Мотиви вишивки")})
     toc.append({"id": "colors", "title": _("Домінуючі кольори")})
     if region.sources.exists():
         toc.append({"id": "sources", "title": _("Джерела")})
@@ -263,6 +270,8 @@ def region_detail_view(request, slug):
         "claim_type": region.get_claim_type(),
         "photos": [p for p in region.photos.all() if p.is_active],
         "site_author": Author.objects.first(),
+        "motif_groups": motif_groups,
+        "symbols_url": reverse("patterns:symbols"),
     }
     return render(request, "patterns/region_detail.html", context)
 

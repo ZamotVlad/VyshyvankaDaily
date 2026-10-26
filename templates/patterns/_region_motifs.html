@@ -1,0 +1,17 @@
+{% load i18n %}{% if motif_groups %}
+<h2 class="vd-section-title" id="motifs">{% translate "Мотиви вишивки" %}</h2>
+<p class="vd-muted vd-small">{% translate "З цих мотивів генератор складає вишиванку регіону: щодня інше поєднання." %} <a href="{{ symbols_url }}">{% translate "Що означають символи" %}</a></p>
+{% for title, tiles in motif_groups %}
+  <h3 class="vd-motifs__title">{{ title }}</h3>
+  <ul class="vd-motifs">
+    {% for svg, name, anchor in tiles %}
+      <li class="vd-motif">
+        {% if anchor %}<a class="vd-motif__link" href="{{ symbols_url }}#{{ anchor }}">{% endif %}
+        <span class="vd-motif__tile">{{ svg|safe }}</span>
+        <span class="vd-motif__name">{{ name }}</span>
+        {% if anchor %}</a>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+{% endif %}

@@ -10,6 +10,10 @@ from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 
 from apps.patterns.region_groups import GROUPS
+from apps.patterns.services.gen2 import REGIONS
+from apps.patterns.services.gen2.catalog import flap_motif
+from apps.patterns.services.gen2.catalog import palette as catalog_palette
+from apps.patterns.services.gen2.motifs import star
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "region_map.json"
 CELL = 3
@@ -53,24 +57,27 @@ def pick_motif(region):
     return best
 
 
-def motif_pattern(slug, motif, colors):
-    """SVG <pattern> з хрестиків: один <path> на колір."""
-    geo = _grid(motif) if motif else None
-    if not geo or not colors:
+def motif_pattern(slug, colors):
+    """SVG <pattern> з хрестиків мотиву регіону (як на кінцях коміра): один <path> на колір."""
+    if slug in REGIONS:
+        motif, colors = flap_motif(slug), catalog_palette(slug)
+    elif colors:
+        motif = star(9)
+    else:
         return ""
-    grid, palette = geo["grid"], geo["palette"]
     by_color = {}
-    for y, row in enumerate(grid):
-        for x, ch in enumerate(row):
-            if ch == ".":
+    for y in range(motif.h):
+        for x in range(motif.w):
+            k = motif(y, x)
+            if k is None:
                 continue
-            color = colors[palette[ch] % len(colors)]
+            color = colors[k % len(colors)]
             if color.upper() == WHITE:
                 color = "#FFFDF8"
             x0, y0 = x * CELL + 0.45, y * CELL + 0.45
             by_color.setdefault(color, []).append(f"M{x0:g} {y0:g}l2.1 2.1m0-2.1l-2.1 2.1")
-    w = (len(grid[0]) + 3) * CELL
-    h = (len(grid) + 3) * CELL
+    w = (motif.w + 3) * CELL
+    h = (motif.h + 3) * CELL
     shift = sum(map(ord, slug))
     paths = "".join(f'<path stroke="{c}" d="{"".join(d)}"/>' for c, d in by_color.items())
     return (
@@ -126,7 +133,7 @@ def build_region_map(regions, today_slug=None):
                 "colors_attr": " ".join(colors),
                 "motif": motif.name.split(" (")[0] if motif else "",
                 "teaser": _teaser(region),
-                "pattern": mark_safe(motif_pattern(region.slug, motif, colors)),
+                "pattern": mark_safe(motif_pattern(region.slug, colors)),
                 "d": shape["d"],
                 # Рядками: локалізація шаблону інакше ставить кому замість крапки.
                 "cx": f"{shape['cx']:g}",

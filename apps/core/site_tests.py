@@ -13,7 +13,8 @@ from apps.core.llms import html_to_markdown
 from apps.core.templatetags.assets_tags import hash_static_srcs, local_static
 from apps.core.templatetags.seo_tags import brand_title
 from apps.patterns.models import DailyPattern, Region
-from apps.patterns.services.symbols import stitch_svg
+from apps.patterns.services.gen2.grid import from_rows
+from apps.patterns.services.gen2.tiles import stitch_tile
 
 
 class HtmlToMarkdownTests(TestCase):
@@ -128,7 +129,7 @@ class TemplateDetailTests(TestCase):
         self.assertIn('href="/regions/"', footer)
 
     def test_svg_label_is_escaped(self):
-        svg = stitch_svg(["#"], label='Ромб "зірка"')
+        svg = stitch_tile(from_rows(["#"], {"#": 0}), ["#000000"], 'Ромб "зірка"', "t")
         self.assertIn('aria-label="Ромб &quot;зірка&quot;"', svg)
 
     def test_mobile_tables_and_checkbox_css(self):

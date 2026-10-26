@@ -1,5 +1,5 @@
 {% load i18n cache %}
-{% cache 86400 vd_regions_map_v4 LANGUAGE_CODE today_slug %}
+{% cache 86400 vd_regions_map_v5 LANGUAGE_CODE today_slug %}
 {% with m=region_map %}
 <section class="vd-map" data-vd-map aria-labelledby="vd-map-title">
   <h2 class="vd-section-title" id="vd-map-title">{% translate "Мапа вишиванок регіонів" %}</h2>

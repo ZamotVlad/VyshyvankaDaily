@@ -209,20 +209,7 @@ class FallbackRetryTests(TestCase):
 
 
 class RealGenerationDeterminismTests(TestCase):
-    """
-    Gap 2 з рецензії: попередні тести генерації використовували підставну
-    функцію, не реальну геометрію. Цей тест викликає build_svg_for_date
-    напряму — справжня apply_symmetry + render_pattern_svg разом.
-
-    Це також непрямий, але реальний regression-тест на Gap 1 (порядок
-    мотивів): render_pattern_svg кодує порядок у самому SVG — індекс
-    мотиву визначає його зону й колір (zone_names[i % len]). Якби
-    .order_by("pk") зник чи порядок став нестабільним, svg1 != svg2
-    міг би статись навіть із тим самим seed. Попередній варіант цього
-    файлу містив окремий тест test_motif_order_is_explicit_not_incidental,
-    який ніби мав перевіряти саме це, але по суті нічого не звіряв між
-    двома викликами (хибне покриття) — видалений за рецензією.
-    """
+    """Реальна генерація (build_svg_for_date): та сама дата - той самий SVG і порядок мотивів."""
 
     def setUp(self):
         self.region = make_region("Регіон А", rotation_order=1)
@@ -1186,9 +1173,18 @@ class RegionMapTests(TestCase):
         )
         region.compatible_motifs.add(small, big)
         self.assertEqual(pick_motif(region), big)
-        pattern = motif_pattern("x", big, ["#000000", "#FFFFFF"])
+        pattern = motif_pattern("x", ["#000000", "#FFFFFF"])
         self.assertIn('stroke="#000000"', pattern)
         self.assertIn('stroke="#FFFDF8"', pattern)
+
+    def test_map_pattern_uses_generator_motif(self):
+        from apps.patterns.services.gen2.catalog import flap_motif, palette
+        from apps.patterns.services.region_map import motif_pattern
+
+        pattern = motif_pattern("chernivetska-oblast", ["#000000"])
+        self.assertIn('id="vd-m-chernivetska-oblast"', pattern)
+        self.assertIn(f'stroke="{palette("chernivetska-oblast")[0]}"', pattern)
+        self.assertGreater(flap_motif("chernivetska-oblast").w, 10)
 
 
 class RegionPhotosTests(TestCase):

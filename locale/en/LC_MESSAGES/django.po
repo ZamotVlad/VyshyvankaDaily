@@ -5664,3 +5664,12 @@ msgstr "All articles"
 #, python-format
 msgid "%(n)s хв читання"
 msgstr "%(n)s min read"
+
+msgid "Мотиви вишивки"
+msgstr "Embroidery motifs"
+
+msgid "З цих мотивів генератор складає вишиванку регіону: щодня інше поєднання."
+msgstr "The generator builds this region's vyshyvanka from these motifs, combining them differently every day."
+
+msgid "Що означають символи"
+msgstr "What the symbols mean"

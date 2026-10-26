@@ -11,6 +11,7 @@ import random
 from collections.abc import Callable
 
 from . import motifs as M
+from . import regional as R
 from .grid import (
     Pattern,
     b_chain,
@@ -75,34 +76,13 @@ def _tiled(m: Pattern, nx=2, ny=2, gap=1) -> Pattern:
 
 
 def vinnytska(sh: Shirt, rng: random.Random):
-    def nyz(r, c):
-        y, x = r - 9, (c % 18) - 9
-        d = abs(x) + abs(y)
-        if abs(y) > 8:
-            return None
-        if d in (4, 8) or d < 2:
-            return 2 if d < 2 else None
-        return 0
-
     us = stack(
-        (1, b_dots(0)), (2, b_teeth(2, 0)), (1, None), (17, nyz), (1, None),
+        (1, b_dots(0)), (2, b_teeth(2, 0)), (1, None), (17, R.nyz), (1, None),
         (2, b_teeth(2, 0, flip=True)), (1, b_dots(0)),
     )  # fmt: skip
     y = sh.ustavka(us, 66, 1.44, "satin")
-    curl = M.curl()
 
-    def vine(r, c):
-        t = r % 14
-        if c == 2 + (t if t < 7 else 14 - t) // 2:
-            return 0
-        rr = r % 28
-        if 3 <= rr < 10 and 6 <= c < 13:
-            return curl(rr - 3, c - 6)
-        if 17 <= rr < 24 and 0 <= c < 7 and curl(rr - 17, 6 - c) is not None:
-            return 0
-        return None
-
-    sh.stripes(vine, 13, (-0.5, 0.5), y + 8, END, 1.36)
+    sh.stripes(R.curly_vine, 13, (-0.5, 0.5), y + 8, END, 1.36)
     big = rng.choice([M.rich(10, "rhomb"), M.rich(10, "star")]).recolor({0: 0, 2: 3, 3: 2})
     strip = (
         lambda r, c: 0 if abs(r % 6 - 3) == abs(c - 2) or (c in (0, 4) and r % 2 == 0) else None,
@@ -112,7 +92,7 @@ def vinnytska(sh: Shirt, rng: random.Random):
     sh.pazukha(column(big, side=0), big.w + 4, 68, 280, 1.44, 34, tech="satin", strip=strip)
     sh.cuffs(
         stack(
-            (1, b_line(0)), (1, None), (7, lambda r, c: nyz(r + 6, c)), (1, None), (1, b_line(0))
+            (1, b_line(0)), (1, None), (7, lambda r, c: R.nyz(r + 6, c)), (1, None), (1, b_line(0))
         ),
         1.52,
         "satin",
@@ -271,13 +251,7 @@ def ivano_frankivska(sh: Shirt, rng: random.Random):
         1.36,
     )
 
-    def chevron(r, c):
-        if c in (0, 19):
-            return 1
-        v = (r + abs(c - 10)) % 8
-        return 3 if v < 3 else (0 if v < 6 else (2 if v == 6 else None))
-
-    sh.pazukha(_cells(chevron, 20), 20, 68, 286, 1.44, 34)
+    sh.pazukha(_cells(R.chevron, 20), 20, 68, 286, 1.44, 34)
     for side in (-1, 1):
         for i in range(5):
             sh.knot(223.5 + side * (60 + i * 5), 74 + i * 9, 3.2, roles[i % 3])
@@ -314,25 +288,16 @@ def kirovohradska(sh: Shirt, rng: random.Random):
 
 
 def luhanska(sh: Shirt, rng: random.Random):
-    def sq(r, c):
-        tr, tc, y, x = r // 11, c // 11, r % 11 - 5, c % 11 - 5
-        m = max(abs(y), abs(x))
-        if m == 5:
-            return 1
-        if m in (4, 3):
-            return 0 if (tr + tc) % 2 else 2
-        if abs(x) + abs(y) <= 2:
-            return 3 if (tr + tc) % 2 else 0
-        return None
-
-    y = sh.ustavka(stack((1, b_line(1)), (1, None), (22, sq), (1, None), (1, b_line(1))), 60, 1.28)
+    y = sh.ustavka(
+        stack((1, b_line(1)), (1, None), (22, R.squares), (1, None), (1, b_line(1))), 60, 1.28
+    )
     sh.scatter(M.small_star().recolor({3: 2}), y + 14, END, 1.44, 28, n=2)
     if rng.random() < 0.5:
-        sh.pazukha(_cells(sq, 22), 22, 68, 286, 1.44, 34)
+        sh.pazukha(_cells(R.squares, 22), 22, 68, 286, 1.44, 34)
     else:
         lily = M.lily().recolor({4: 2})
         sh.pazukha(column(lily, gap=2, side=1), lily.w + 4, 68, 286, 1.28, 34)
-    sh.cuffs(stack((11, sq)), 1.52)
+    sh.cuffs(stack((11, R.squares)), 1.52)
     sh.flap_fill = M.lily().recolor({4: 2})
 
 
@@ -435,14 +400,11 @@ def rivnenska(sh: Shirt, rng: random.Random):
     hk = M.hook(9).recolor({1: 0, 2: 2, 3: 0})
     sh.ustavka(_band(hk, 0, 0, gap=2), 60, 1.28)
 
-    def zav(r, c):
-        return 0 if (abs(c % 20 - 10) + abs(r % 20 - 10)) % 5 in (0, 1) else None
-
-    sh.ustavka(stack((1, b_line(0)), (20, zav), (1, b_line(0))), END - 44, 1.44, "satin")
+    sh.ustavka(stack((1, b_line(0)), (20, R.zavolikannia), (1, b_line(0))), END - 44, 1.44, "satin")
     main = rng.choice([M.rich(11, "star"), M.rich(11, "rhomb")]).recolor({1: 0, 2: 0, 3: 2})
     sh.pazukha(column(main, side=0), main.w + 4, 68, 286, 1.28, 34)
-    sh.cuffs(stack((1, b_line(0)), (8, zav), (1, b_line(0))), 1.52, "satin")
-    sh.hem(stack((1, b_line(0)), (14, zav), (1, b_line(0))), 1.52, "satin")
+    sh.cuffs(stack((1, b_line(0)), (8, R.zavolikannia), (1, b_line(0))), 1.52, "satin")
+    sh.hem(stack((1, b_line(0)), (14, R.zavolikannia), (1, b_line(0))), 1.52, "satin")
     sh.flap_fill = M.hook(8).recolor({1: 0, 2: 2, 3: 0})
 
 
@@ -470,14 +432,7 @@ def sumska(sh: Shirt, rng: random.Random):
 
 
 def ternopilska(sh: Shirt, rng: random.Random):
-    order = rng.choice([(2, 4, 3), (3, 2, 4)])
-
-    def borsh(r, c):
-        y, x = r % 12 - 6, c % 12 - 6
-        d = abs(x) + abs(y)
-        if d == 4:
-            return order[(r // 12 + c // 12) % 3]
-        return 4 if d == 0 else 0
+    borsh = R.borsh(rng.choice([(2, 4, 3), (3, 2, 4)]))
 
     y = sh.ustavka(
         stack((1, b_line(2)), (24, borsh), (1, b_line(2)), (1, None), (5, b_chain(2, 4))),
@@ -543,14 +498,8 @@ def khersonska(sh: Shirt, rng: random.Random):
 
 
 def khmelnytska(sh: Shirt, rng: random.Random):
-    def saw(r, c):
-        y, v = r % 8, abs(c % 8 - 4) * 2
-        if r // 8 % 2 == 0:
-            return 0 if y >= v else None
-        return 0 if y <= 7 - v else (2 if y == 7 and c % 8 == 4 else None)
-
     y = sh.ustavka(
-        stack((1, b_line(2)), (24, saw), (1, b_line(2)), (1, None), (5, b_chain(0, 2))),
+        stack((1, b_line(2)), (24, R.saw), (1, b_line(2)), (1, None), (5, b_chain(0, 2))),
         60,
         1.36,
         "satin",
@@ -564,7 +513,7 @@ def khmelnytska(sh: Shirt, rng: random.Random):
     sh.stripes(stripe, 7, (-0.45, 0.45), y + 10, END, 1.36)
     if rng.random() < 0.5:
         sh.pazukha(
-            _cells(lambda r, c: 2 if c in (0, 21) else saw(r, c - 1), 22),
+            _cells(lambda r, c: 2 if c in (0, 21) else R.saw(r, c - 1), 22),
             22,
             68,
             286,
@@ -575,27 +524,22 @@ def khmelnytska(sh: Shirt, rng: random.Random):
     else:
         rh = M.rich(10, "rhomb").recolor({2: 2, 3: 3})
         sh.pazukha(column(rh, side=2), rh.w + 4, 68, 286, 1.28, 34)
-    sh.cuffs(stack((8, saw), (1, b_line(2))), 1.6, "satin")
+    sh.cuffs(stack((8, R.saw), (1, b_line(2))), 1.6, "satin")
     sh.flap_fill = M.rich(8, "rhomb").recolor({2: 2, 3: 3})
 
 
 def cherkaska(sh: Shirt, rng: random.Random):
-    def lat(r, c):
-        y, x = r % 18 - 9, c % 18 - 9
-        d, ax, ay = abs(x) + abs(y), abs(x), abs(y)
-        if d in (8, 9) or (d == 11 and (x + y) % 2 == 0):
-            return 1
-        if (ax <= 1 and ay <= 5) or (ay <= 1 and ax <= 5) or (abs(ax - ay) <= 1 and ax <= 3):
-            return 1 if ax == ay == 0 else 0
-        if d >= 13 and (ax == 9 or ay == 9):
-            return 0
-        return None
-
-    sh.bib(lambda r, c: 1 if r in (0, 73) or c in (0, 55) else lat(r + 4, c - 1), 56, 74, 66, 1.28)
-    sh.stripes(lambda r, c: 1 if c in (0, 10) else lat(r, c + 4), 11, (0,), 120, END, 1.28)
-    sh.ustavka(stack((1, b_line(1)), (18, lat), (1, b_line(1))), 60, 1.28)
+    sh.bib(
+        lambda r, c: 1 if r in (0, 73) or c in (0, 55) else R.lattice(r + 4, c - 1),
+        56,
+        74,
+        66,
+        1.28,
+    )
+    sh.stripes(lambda r, c: 1 if c in (0, 10) else R.lattice(r, c + 4), 11, (0,), 120, END, 1.28)
+    sh.ustavka(stack((1, b_line(1)), (18, R.lattice), (1, b_line(1))), 60, 1.28)
     if rng.random() < 0.5:
-        sh.cuffs(stack((1, b_line(1)), (9, lambda r, c: lat(r + 4, c)), (1, b_line(1))), 1.52)
+        sh.cuffs(stack((1, b_line(1)), (9, lambda r, c: R.lattice(r + 4, c)), (1, b_line(1))), 1.52)
     else:
         sh.cuffs(stack((1, b_line(1)), (5, b_chain(0, 1)), (1, b_line(1))), 1.6)
     sh.flap_fill = _tiled(M.small_rhomb().recolor({2: 1, 1: 0}), 2, 2)
