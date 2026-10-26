@@ -23,7 +23,7 @@ def prune_old_patterns(today: date) -> int:
 
 GenerateFn = Callable[[date, Region], tuple]
 
-CURRENT_ALGORITHM_VERSION = 2
+CURRENT_ALGORITHM_VERSION = 3
 
 
 class NoFallbackAvailable(Exception):

@@ -18,3 +18,4 @@ python_files = ["test_*.py", "*_tests.py", "tests.py"]
 
 [tool.ruff.lint.per-file-ignores]
 "apps/patterns/services/svg_render.py" = ["E501"]
+"apps/patterns/services/gen2/*.py" = ["E501"]
