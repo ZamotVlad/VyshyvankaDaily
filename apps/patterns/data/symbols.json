@@ -1,6 +1,6 @@
 {
  "date_published": "2026-10-12",
- "date_modified": "2026-10-12",
+ "date_modified": "2026-10-28",
  "art": {
   "romb": {
    "motif": "Ромб із засіяним полем"
@@ -79,7 +79,7 @@
  "uk": {
   "title": "Символи на вишиванці: що означають орнаменти української вишивки",
   "seo_title": "Символи на вишиванці: значення орнаментів",
-  "seo_description": "Що означають символи на вишиванці: ромб, хрест, зірка, дерево життя, ружа, калина, птахи й орьнек - за музеями та дослідниками.",
+  "seo_description": "Що означають орнаменти на вишиванці: ромб, хрест, зірка, дерево життя, ружа, калина, птахи й орьнек - за музеями та дослідниками.",
   "eyebrow": "Довідник",
   "lead": "Символи на вишиванці - це геометричні, рослинні й зооморфні мотиви: ромб, хрест, зірка, дерево життя, вазон, ружа, калина, птахи. Їхні значення - тлумачення музеїв, дослідників і самих майстринь, і в різних регіонах той самий знак пояснюють по-різному. Тут зібрано головні символи української вишивки, значення яких ми можемо підтвердити джерелами, і регіони, де вони трапляються.",
   "short_title": "Коротко",
@@ -439,6 +439,10 @@
   ],
   "faq_title": "Часті питання про символи на вишиванці",
   "faq": [
+   [
+    "Що означають орнаменти на вишиванці?",
+    "Орнаменти на вишиванці складаються з символів трьох груп: геометричних (ромб, хрест, зірка), рослинних (дерево життя, вазон, ружа, калина) і зооморфних (птахи, тварини). Більшість тлумачень пов'язує їх із сонцем, землею, родючістю, родом і захистом. Точне значення знака залежить від регіону й від того, хто його пояснює: музей, дослідник чи майстриня."
+   ],
    [
     "Що означає ромб на вишиванці?",
     "За поясненням Вінницького обласного художнього музею, ромб означає союз Сонця й Землі та родючість. Дослідниця Олександра Голосна тлумачить хрести й ромби у вишивці Сумщини як символи небесних світил і вогню. Ромб - один із найпоширеніших знаків: на Одещині його середину майже завжди заповнюють хрестиком, ромбиком чи квадратом."
@@ -843,6 +847,10 @@
   ],
   "faq_title": "FAQ about Ukrainian embroidery symbols",
   "faq": [
+   [
+    "What do the patterns on a vyshyvanka mean?",
+    "The patterns on a vyshyvanka are built from three groups of symbols: geometric (rhombus, cross, star), plant (tree of life, flowerpot, rose, guelder rose) and zoomorphic (birds, animals). Most interpretations link them to the sun, the earth, fertility, family and protection. The exact meaning of a sign depends on the region and on who explains it: a museum, a researcher or an embroiderer."
+   ],
    [
     "What does the rhombus mean on a vyshyvanka?",
     "According to the Vinnytsia Regional Art Museum, the rhombus stands for the union of Sun and Earth and for fertility. Researcher Oleksandra Holosna reads crosses and rhombuses in Sumy region embroidery as symbols of the heavenly bodies and fire. The rhombus is one of the most common signs: in the Odesa region its centre is almost always filled with a cross, a smaller rhombus or a square."
