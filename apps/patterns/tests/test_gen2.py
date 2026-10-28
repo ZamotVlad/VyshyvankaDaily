@@ -81,6 +81,13 @@ class Gen2RenderTests(SimpleTestCase):
         svgs = {_render(slug) for slug in REGIONS}
         self.assertEqual(len(svgs), 27)
 
+    def test_neck_stays_short_above_collar(self):
+        from apps.patterns.services.gen2 import geometry as G
+
+        top = min(y for _, y in G.STAND)
+        self.assertLessEqual(top - G.NECK_TOP, 16)
+        self.assertIn(f"M{G.NECK_X - 1:g},{G.NECK_TOP:g}", G.neck_path())
+
     def test_unknown_slug_uses_generic_recipe_with_region_colors(self):
         svg = render_region("nova-oblast", random.Random(1), "Орнамент", ["#FFFFFF", "#123456"])
         ET.fromstring(svg)

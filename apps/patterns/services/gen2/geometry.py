@@ -173,7 +173,7 @@ def _inset(p: Point, q: Point, d: float) -> list[Point]:
 
 FLAP_BORDER_SIDE = _inset((168.9, 46), FLAP_BL, 4.4)
 FLAP_BORDER_BOTTOM = _inset((FLAP_TIP[0] - 6, FLAP_TIP[1] + 2.6), FLAP_BL, 4.4)
-NECK_TOP = -6.0
+NECK_TOP = 9.0
 V_TIP = _u(512, 452)
 
 
