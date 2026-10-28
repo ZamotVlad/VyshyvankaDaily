@@ -558,13 +558,15 @@ class FirstArticleSeoTests(TestCase):
         html = self.client.get(f"/en/blog/{self.post.slug}/").content.decode()
         self.assertIn('<meta name="author" content="Vladyslav Zamotailo">', html)
 
-    def test_only_museum_and_fashion_week_links_are_external(self):
+    def test_only_museum_link_is_external(self):
         import re
 
         for body in (self.post.body, self.post.body_en):
             external = re.findall(r'<a href="(https?://[^"]+)"([^>]*)>', body)
             hosts = {re.sub(r"https?://([^/]+)/.*", r"\1", href) for href, _ in external}
-            self.assertEqual(hosts, {"museum.mincult.gov.ua", "fashionweek.ua"})
+            self.assertEqual(hosts, {"museum.mincult.gov.ua"})
+            # Ukrainian Fashion Week - лише текстом (сторінка показу не відповідає)
+            self.assertIn("Ukrainian Fashion Week", body)
             for _, attrs in external:
                 self.assertIn('rel="noopener"', attrs)
             self.assertNotIn('href="https://www.instagram.com', body)

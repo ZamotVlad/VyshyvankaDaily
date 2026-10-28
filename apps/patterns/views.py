@@ -85,6 +85,7 @@ def home_view(request):
     ribbon = (
         DailyPattern.objects.filter(date__lte=today, date__gt=today - timedelta(days=RIBBON_DAYS))
         .select_related("region")
+        .defer("svg_content")
         .order_by("-date")
     )
 
@@ -167,9 +168,10 @@ def pattern_detail_view(request, iso_date):
             raise Http404 from None
         return redirect("patterns:region_detail", slug=region.slug)
 
-    previous_pattern = DailyPattern.objects.filter(date__lt=pattern_date).order_by("-date").first()
+    neighbours = DailyPattern.objects.defer("svg_content")
+    previous_pattern = neighbours.filter(date__lt=pattern_date).order_by("-date").first()
     next_pattern = (
-        DailyPattern.objects.filter(date__gt=pattern_date, date__lte=timezone.localdate())
+        neighbours.filter(date__gt=pattern_date, date__lte=timezone.localdate())
         .order_by("date")
         .first()
     )
@@ -229,6 +231,7 @@ def my_collection_view(request):
     saved_patterns = (
         SavedPattern.objects.filter(user=request.user)
         .select_related("pattern", "pattern__region")
+        .defer("pattern__svg_content")
         .order_by("-created_at")
     )
 

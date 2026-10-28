@@ -731,6 +731,12 @@ class ListPaginationTests(TestCase):
         self.assertEqual(response.context["total_saved"], 15)
         self.assertEqual(len(self.client.get("/collection/?page=2").context["saved_patterns"]), 3)
 
+    def test_collection_does_not_load_svg_content(self):
+        # SVG картки йде окремим <img>, тож важкий текст із бази не тягнемо
+        self.client.force_login(self.user)
+        saved = self.client.get("/collection/").context["saved_patterns"][0]
+        self.assertIn("svg_content", saved.pattern.get_deferred_fields())
+
     def test_invalid_page_falls_back_gracefully(self):
         response = self.client.get(f"/regions/{self.region.slug}/?page=abc")
         self.assertEqual(response.status_code, 200)
