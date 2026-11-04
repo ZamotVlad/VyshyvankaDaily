@@ -42,6 +42,18 @@ def make_region(name, rotation_order, is_active=True, verified=True):
         return _create_region(name, rotation_order, is_active, verified)
 
 
+def give_motif(region):
+    """Тестовий регіон теж може випасти днем ротації: без мотиву головна віддасть 503."""
+    motif = Motif.objects.create(
+        name=f"Мотив {region.name}",
+        meaning_description="Тест.",
+        geometry_parameters={"format": "pixel_grid_v1", "grid": ["#"], "palette": {"#": 0}},
+        verification_status=Motif.VerificationStatus.VERIFIED,
+    )
+    motif.compatible_regions.add(region)
+    return region
+
+
 def _create_region(name, rotation_order, is_active, verified):
     return Region.objects.create(
         name=name,
@@ -525,7 +537,7 @@ class BreadcrumbsTests(TestCase):
 
 class HomepageStatusBarTests(TestCase):
     def setUp(self):
-        self.region = make_region("Регіон В", rotation_order=51)
+        self.region = give_motif(make_region("Регіон В", rotation_order=51))
         self.user = get_user_model().objects.create_user(username="visitor", password="pass12345")
 
     def test_anonymous_sees_signup_call_not_streak_numbers(self):
@@ -1046,7 +1058,7 @@ class GeneratorOnlyColorsTests(TestCase):
 
 class HomepageStructureTests(TestCase):
     def setUp(self):
-        self.region = make_region("Регіон Г", rotation_order=52)
+        self.region = give_motif(make_region("Регіон Г", rotation_order=52))
 
     def test_single_keyword_h1_and_region_of_day_in_h2(self):
         import re
@@ -1292,6 +1304,7 @@ class SymbolsPageTests(TestCase):
     def test_symbols_page_ua_and_en(self):
         html = self.client.get("/symbols/").content.decode()
         self.assertIn("<h1>Символи на вишиванці", html)
+        self.assertIn("що означають орнаменти на вишиванці", html)
         self.assertIn('"@type": "DefinedTermSet"', html)
         self.assertIn('href="/regions/vinnytska-oblast/"', html)
         self.assertIn('class="vd-sym__art"', html)
@@ -1300,8 +1313,8 @@ class SymbolsPageTests(TestCase):
         self.assertIn("<h1>Ukrainian embroidery symbols", en)
         self.assertIn('"@id": "http://testserver/symbols/#symbol-romb"', html)
         self.assertIn('id="symbol-romb"', html)
-        self.assertIn('"dateModified": "2026-10-28"', html)
-        self.assertIn('<time datetime="2026-10-28">', html)
+        self.assertIn('"dateModified": "2026-11-04"', html)
+        self.assertIn('<time datetime="2026-11-04">', html)
         self.assertIn('href="/en/regions/vinnytska-oblast/"', en)
 
     def test_symbols_in_nav_sitemap_and_llms(self):

@@ -867,6 +867,12 @@ class LocalizedMetaTests(TestCase):
 
 
 class PageSpecificMetaTests(TestCase):
+    def test_home_title_from_seo_sheet(self):
+        self.assertContains(
+            self.client.get("/"),
+            "<title>Орнамент вишиванки різних регіонів України | VyshyvankaDaily</title>",
+        )
+
     def test_list_pages_have_their_own_description(self):
         default = "Щоденний генератор орнаменту української вишиванки"
         for path in ["/regions/", "/blog/", "/faq/"]:
