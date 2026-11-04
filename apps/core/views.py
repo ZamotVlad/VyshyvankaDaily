@@ -135,6 +135,23 @@ def _plain_description(text):
     return " ".join(s for s in sentences if "VyshyvankaDaily" not in s).strip()
 
 
+def _post_dates(post):
+    """Дати статті для AI: опубліковано і, якщо була правка пізніше, оновлено."""
+    text = f"опубліковано {post.published_at:%Y-%m-%d}"
+    if post.updated_at.date() > post.published_at.date():
+        text += f", оновлено {post.updated_at:%Y-%m-%d}"
+    return text
+
+
+def _source_line(source):
+    line = f"- {source.name}"
+    if source.author_or_institution:
+        line += f" - {source.author_or_institution}"
+    if source.publication_year:
+        line += f" ({source.publication_year})"
+    return line
+
+
 def llms_txt(request):
     """Опис сайту для AI-пошуку (llmstxt.org): що це, регіони, статті."""
     from apps.blog.models import BlogPost
@@ -162,8 +179,6 @@ def llms_txt(request):
         f"- [Символи на вишиванці]({base}/symbols/) / [Ukrainian embroidery symbols]"
         f"({base}/en/symbols/): значення ромба, хреста, зірки, дерева життя й інших мотивів",
         f"- [Блог]({base}/blog/) / [Blog]({base}/en/blog/)",
-        f"- [Часті питання]({base}/faq/) / [FAQ]({base}/en/faq/)",
-        f"- [Про проєкт]({base}/about/) / [About]({base}/en/about/)",
         f"- [Як ми працюємо з джерелами]({base}/sources/) / [How we work with sources]"
         f"({base}/en/sources/): рівні джерел, тлумачення, кольори, зображення, виправлення",
         f"- [Повні тексти для AI / Full texts]({base}/llms-full.txt)",
@@ -181,10 +196,15 @@ def llms_txt(request):
         for post in posts:
             desc = _plain_description(post.seo_description_uk or post.excerpt_uk)
             en = f" / [{post.title_en}]({base}/en/blog/{post.slug}/)" if post.title_en else ""
-            lines.append(
-                f"- [{post.title_uk}]({base}/blog/{post.slug}/){en}" + (f": {desc}" if desc else "")
-            )
-    lines.append("")
+            notes = " ".join(x for x in (desc, f"({_post_dates(post)})") if x)
+            lines.append(f"- [{post.title_uk}]({base}/blog/{post.slug}/){en}: {notes}")
+    lines += [
+        "",
+        "## Optional",
+        f"- [Часті питання]({base}/faq/) / [FAQ]({base}/en/faq/)",
+        f"- [Про проєкт]({base}/about/) / [About]({base}/en/about/)",
+        "",
+    ]
     return HttpResponse("\n".join(lines), content_type="text/plain; charset=utf-8")
 
 
@@ -203,6 +223,11 @@ def llms_full_txt(request):
     from apps.patterns.models import Region
 
     base = f"{request.scheme}://{request.get_host()}"
+    regions = list(Region.objects.prefetch_related("sources").order_by("name_uk"))
+    posts = list(
+        BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED, published_at__isnull=False)
+    )
+    updated = max(x.updated_at for x in regions + posts) if regions or posts else None
     parts = [
         "# VyshyvankaDaily: повні тексти / full texts",
         "",
@@ -210,22 +235,27 @@ def llms_full_txt(request):
         "Кожен розділ - окрема сторінка сайту українською, а потім англійською. Короткий "
         f"перелік сторінок: {base}/llms.txt. Як ми працюємо з джерелами: {base}/sources/.",
     ]
+    if updated:
+        parts += ["", f"Оновлено / Updated: {updated:%Y-%m-%d}"]
     from apps.patterns.services.symbols import data as symbols_data
     from apps.patterns.services.symbols import page_markdown
 
     for lang, prefix in (("uk", ""), ("en", "/en")):
         parts += ["", f"## {symbols_data()[lang]['title']}", f"URL: {base}{prefix}/symbols/", ""]
         parts.append(page_markdown(lang))
-    for r in Region.objects.order_by("name_uk"):
+    for r in regions:
         parts += ["", f"## {r.name_uk}", f"URL: {base}/regions/{r.slug}/", ""]
         parts.append(html_to_markdown(r.symbolism_description_uk))
+        sources = [_source_line(s) for s in r.sources.all()]
+        if sources:
+            parts += ["", "### Джерела / Sources", *sources]
         if r.symbolism_description_en:
             parts += ["", f"## {r.name_en or r.name_uk} (English)"]
             parts += [f"URL: {base}/en/regions/{r.slug}/", ""]
             parts.append(html_to_markdown(r.symbolism_description_en))
-    posts = BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED, published_at__isnull=False)
     for post in posts:
-        parts += ["", f"## {post.title_uk}", f"URL: {base}/blog/{post.slug}/", ""]
+        parts += ["", f"## {post.title_uk}", f"URL: {base}/blog/{post.slug}/"]
+        parts += [_post_dates(post), ""]
         parts.append(html_to_markdown(post.body))
         if post.body_en and post.title_en:
             parts += ["", f"## {post.title_en} (English)", f"URL: {base}/en/blog/{post.slug}/", ""]

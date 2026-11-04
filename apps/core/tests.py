@@ -100,6 +100,10 @@ class LlmsTxtTests(TestCase):
         self.assertIn("/en/blog/rushnyk/)", text)
         self.assertNotIn("chernetka", text)
         self.assertNotIn("на VyshyvankaDaily", text)
+        self.assertRegex(text, r"/blog/rushnyk/\).*\(опубліковано \d{4}-\d{2}-\d{2}\)")
+        # другорядне - в кінці, у розділі Optional (llmstxt.org)
+        self.assertGreater(text.index("## Optional"), text.index("## Статті"))
+        self.assertIn("/faq/", text.split("## Optional")[1])
 
     def test_region_page_shows_updated_date(self):
         region = Region.objects.first()
@@ -172,6 +176,18 @@ class LlmsFullTxtTests(TestCase):
         self.assertIn(f"## {region.name_uk}", text)
         self.assertIn(f"/regions/{region.slug}/", text)
         self.assertNotIn("<p>", text)
+        self.assertRegex(text, r"Оновлено / Updated: \d{4}-\d{2}-\d{2}")
+
+    def test_region_sources_listed_once(self):
+        region = Region.objects.filter(sources__isnull=False).distinct().first()
+        source = region.sources.first()
+        text = self.client.get("/llms-full.txt").content.decode()
+        section = text.split(f"## {region.name_uk}\n", 1)[1].split("\n## ", 1)[0]
+        self.assertIn("### Джерела / Sources", section)
+        self.assertIn(f"- {source.name}", section)
+        self.assertEqual(
+            text.count(f"- {source.name} -"), Region.objects.filter(sources=source).count()
+        )
 
 
 class SourcesPageTests(TestCase):
