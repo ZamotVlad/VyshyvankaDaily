@@ -1299,3 +1299,12 @@ msgstr ""
 #: venv/Lib/site-packages/modeltranslation/widgets.py:32
 msgid "None"
 msgstr ""
+
+#: templates/patterns/home.html:16
+#, python-format
+msgid "%(counter)s день поспіль"
+msgid_plural "%(counter)s днів поспіль"
+msgstr[0] "%(counter)s день поспіль"
+msgstr[1] "%(counter)s дні поспіль"
+msgstr[2] "%(counter)s днів поспіль"
+msgstr[3] "%(counter)s дня поспіль"

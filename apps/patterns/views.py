@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import F
-from django.db.models.functions import TruncDate
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -48,15 +47,15 @@ def _is_saved_by(user, pattern):
 
 
 def _tour_progress(user):
-    """Спільний розрахунок для home_view і my_collection_view - див. ADR 29."""
-    tour_region_ids = (
-        SavedPattern.objects.filter(user=user)
-        .annotate(saved_date=TruncDate("created_at"))
-        .filter(saved_date=F("pattern__date"))
-        .values_list("pattern__region_id", flat=True)
+    """Різні регіони в колекції з усіх, що є в ротації (і з архіву теж)."""
+    verified = Region.objects.verified()
+    collected = (
+        SavedPattern.objects.filter(user=user, pattern__region__in=verified)
+        .values("pattern__region_id")
         .distinct()
+        .count()
     )
-    return len(tour_region_ids), Region.objects.verified().count()
+    return collected, verified.count()
 
 
 LATEST_POSTS = 3
@@ -220,13 +219,7 @@ def toggle_save_view(request, iso_date):
 @login_required
 def my_collection_view(request):
     """
-    Моя колекція - виключно приватна.
-
-    "Пройдений тур" рахує лише збереження
-    день-в-день (SavedPattern.created_at, обрізане до дати за поточним
-    часовим поясом, == DailyPattern.date) - не всі збереження підряд.
-    Інакше людина могла б пройти "100% туру" за один прохід архіву,
-    що суперечить суті щоденного ритуалу.
+    Моя колекція - виключно приватна. Лічильник регіонів - див. _tour_progress.
     """
     saved_patterns = (
         SavedPattern.objects.filter(user=request.user)

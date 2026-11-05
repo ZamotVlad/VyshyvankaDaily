@@ -1397,8 +1397,8 @@ msgid "днів поспіль"
 msgstr "day streak"
 
 #: .\templates\patterns\home.html:18
-msgid "регіонів пройдено"
-msgstr "regions completed"
+msgid "регіонів зібрано"
+msgstr "regions collected"
 
 #: .\templates\patterns\home.html:24
 msgid "Почни свій стрік - заходь щодня й зберігай улюблені орнаменти"
@@ -1511,8 +1511,8 @@ msgid "Збережено орнаментів"
 msgstr "Patterns saved"
 
 #: .\templates\patterns\my_collection.html:22
-msgid "Пройдено живих днів"
-msgstr "Live days completed"
+msgid "Регіонів зібрано"
+msgstr "Regions collected"
 
 #: .\templates\patterns\my_collection.html:32
 msgid "Днів поспіль"
@@ -5673,3 +5673,10 @@ msgstr "The generator builds this region's vyshyvanka from these motifs, combini
 
 msgid "Що означають символи"
 msgstr "What the symbols mean"
+
+#: templates/patterns/home.html:16
+#, python-format
+msgid "%(counter)s день поспіль"
+msgid_plural "%(counter)s днів поспіль"
+msgstr[0] "%(counter)s-day streak"
+msgstr[1] "%(counter)s-day streak"

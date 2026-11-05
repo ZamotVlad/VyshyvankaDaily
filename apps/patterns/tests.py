@@ -413,7 +413,7 @@ class TourIndicatorTests(TestCase):
         response = self.client.get("/collection/")
         self.assertEqual(response.context["tour_completed"], 1)
 
-    def test_backdated_archive_save_does_not_count_toward_tour(self):
+    def test_archive_save_counts_toward_regions(self):
         old_pattern = DailyPattern.objects.create(
             date=date(2026, 1, 1),
             region=self.region,
@@ -426,34 +426,28 @@ class TourIndicatorTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get("/collection/")
         self.assertEqual(response.context["total_saved"], 1)
-        self.assertEqual(response.context["tour_completed"], 0)
+        self.assertEqual(response.context["tour_completed"], 1)
 
-    def test_mixed_saves_count_only_valid_tour_entries(self):
-        """Один користувач має і 'живе' збереження, і заднім числом —
-        tour_completed рахує лише перше, не змішує й не подвоює."""
+    def test_regions_counted_once_live_and_archive(self):
+        """Два дні одного регіону - один регіон; архівне збереження теж рахується."""
         other_region = make_region("Регіон Б", rotation_order=2)
-
-        live_pattern = DailyPattern.objects.create(
-            date=timezone.localdate(),
-            region=self.region,
-            seed="s3",
-            algorithm_version=1,
-            svg_content="<svg>3</svg>",
-        )
-        backdated_pattern = DailyPattern.objects.create(
-            date=date(2026, 1, 1),
-            region=other_region,
-            seed="s4",
-            algorithm_version=1,
-            svg_content="<svg>4</svg>",
-        )
-        SavedPattern.objects.create(user=self.user, pattern=live_pattern)
-        SavedPattern.objects.create(user=self.user, pattern=backdated_pattern)
+        for i, (d, region) in enumerate(
+            [
+                (timezone.localdate(), self.region),
+                (date(2026, 1, 1), self.region),
+                (date(2026, 1, 2), other_region),
+            ]
+        ):
+            pattern = DailyPattern.objects.create(
+                date=d, region=region, seed=f"m{i}", algorithm_version=1, svg_content="<svg></svg>"
+            )
+            SavedPattern.objects.create(user=self.user, pattern=pattern)
 
         self.client.force_login(self.user)
         response = self.client.get("/collection/")
-        self.assertEqual(response.context["total_saved"], 2)
-        self.assertEqual(response.context["tour_completed"], 1)
+        self.assertEqual(response.context["total_saved"], 3)
+        self.assertEqual(response.context["tour_completed"], 2)
+        self.assertContains(response, "Регіонів зібрано")
 
 
 class StreakTests(TestCase):
@@ -550,7 +544,21 @@ class HomepageStatusBarTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get("/")
         self.assertContains(response, "днів поспіль")
-        self.assertContains(response, "регіонів пройдено")
+        self.assertContains(response, "регіонів зібрано")
+
+    def test_streak_word_agrees_with_number(self):
+        profile = self.user.profile
+        profile.last_active_date = timezone.localdate()
+        self.client.force_login(self.user)
+        for n, text in (
+            (1, "1 день поспіль"),
+            (2, "2 дні поспіль"),
+            (5, "5 днів поспіль"),
+            (21, "21 день поспіль"),
+        ):
+            profile.current_streak = n
+            profile.save()
+            self.assertContains(self.client.get("/"), text)
 
     def test_anonymous_page_does_not_crash_without_profile(self):
         """AnonymousUser не має profile - шаблон не повинен на цьому падати."""
