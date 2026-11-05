@@ -586,7 +586,7 @@ class RegionListViewTests(TestCase):
 @override_settings(DEBUG=True)
 class DebugViewsEnabledTests(TestCase):
     def setUp(self):
-        self.region = make_region("Дебаг регіон", 1)
+        self.region = give_motif(make_region("Дебаг регіон", 1))
 
     def test_debug_pattern_view_returns_200(self):
         response = self.client.get(f"/patterns/debug/{timezone.localdate().isoformat()}/")

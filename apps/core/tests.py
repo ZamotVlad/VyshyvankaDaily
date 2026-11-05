@@ -896,7 +896,11 @@ class PageSpecificMetaTests(TestCase):
             desc = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
             self.assertNotIn(default, desc, path)
             self.assertLessEqual(len(desc), 160, path)
-        self.assertContains(self.client.get("/regions/"), "<title>Вишиванки по регіонах України")
+        regions = self.client.get("/regions/")
+        self.assertContains(regions, "<title>Карта вишиванок України")
+        self.assertContains(regions, "<h1>Вишиванки по регіонах України</h1>")
+        self.assertContains(regions, 'id="vd-map-title">Карта вишиванок України</h2>')
+        self.assertContains(regions, "<p>Карта вишиванок України нижче")
 
 
 class TableOfContentsTests(TestCase):

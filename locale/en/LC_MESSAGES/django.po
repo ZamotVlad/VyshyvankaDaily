@@ -5201,11 +5201,11 @@ msgstr "Available at:"
 msgid "Доступно:"
 msgstr "Available at:"
 
-msgid "Вишиванки по регіонах України: орнаменти всіх областей"
-msgstr "Vyshyvanka by Region: Ukrainian Embroidery Patterns"
+msgid "Карта вишиванок України: орнаменти по регіонах"
+msgstr "Map of Ukrainian Vyshyvankas: Patterns by Region"
 
-msgid "Орнамент вишиванки по областях: символіка, кольори й техніки всіх 27 регіонів України з музейними та науковими джерелами."
-msgstr "Embroidery patterns by oblast: symbolism, colours and techniques of all 27 regions of Ukraine, with museum and academic sources."
+msgid "Карта вишиванок України: орнамент кожної з 27 областей - символіка, кольори й техніки з музейними та науковими джерелами."
+msgstr "Map of Ukrainian vyshyvankas: the embroidery of all 27 regions, with symbolism, colours and techniques from museum and academic sources."
 
 msgid "Статті про українську вишивку: техніки, символіка орнаментів, історії майстринь і музейних колекцій з різних регіонів України."
 msgstr "Articles on Ukrainian embroidery: techniques, ornament symbolism and the stories of craftswomen and museum collections from across Ukraine."
@@ -5448,8 +5448,8 @@ msgstr "If you find a mistake"
 msgid "Напишіть нам через <a href=\"%(contact_url)s\">сторінку контактів</a>. Ми перевіримо й виправимо текст, а на сторінці з'явиться нова дата «Оновлено». Будемо вдячні, якщо додасте посилання на джерело."
 msgstr "Write to us via the <a href=\"%(contact_url)s\">contact page</a>. We will check and correct the text, and the page will show a new \"Updated\" date. A link to your source is very welcome."
 
-msgid "Мапа вишиванок регіонів"
-msgstr "Embroidery map of the regions"
+msgid "Карта вишиванок України"
+msgstr "Map of Ukrainian vyshyvankas"
 
 msgid "Кожна область вишита своїм мотивом у своїх кольорах. Наведіть, щоб побачити назву, натисніть, щоб відкрити картку регіону."
 msgstr "Each region is stitched with its own motif in its own colours. Hover to see the name, click to open the region card."
@@ -5680,3 +5680,7 @@ msgid "%(counter)s день поспіль"
 msgid_plural "%(counter)s днів поспіль"
 msgstr[0] "%(counter)s-day streak"
 msgstr[1] "%(counter)s-day streak"
+
+#: templates/patterns/region_list.html
+msgid "Карта вишиванок України нижче збирає всі 27 регіонів на одному полотні, тож сусідні традиції легко порівняти між собою."
+msgstr "The map of Ukrainian vyshyvankas below brings all 27 regions together on one canvas, so neighbouring traditions are easy to compare."
