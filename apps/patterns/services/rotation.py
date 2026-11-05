@@ -23,3 +23,9 @@ def get_region_for_date(pattern_date: date) -> Region:
     days_passed = (pattern_date - ROTATION_EPOCH).days
     index = days_passed % len(regions)
     return regions[index]
+
+
+def region_cycle(pattern_date: date) -> int:
+    """Номер кола ротації: у сусідніх появах регіону відрізняється на 1."""
+    count = Region.objects.verified().count() or 1
+    return (pattern_date - ROTATION_EPOCH).days // count

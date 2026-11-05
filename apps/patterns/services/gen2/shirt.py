@@ -19,6 +19,13 @@ class Shirt:
         self.tie = tie or palette[0]
         self.layers = {name: Layer() for name in LAYERS}
         self.flap_fill: Pattern | None = None
+        self.cycle = 0  # номер кола регіону в ротації: різний головний мотив у сусідніх колах
+        self.has_hem = False
+        self.cuff_spec: tuple | None = None
+
+    def pick(self, options):
+        """Варіант за колом: сусідні кола регіону гарантовано різні."""
+        return options[self.cycle % len(options)]
 
     # ---------- базове заповнення сітки ----------
     def field(self, fn, x0, y0, cols, rows, s, tech="x", layer="body", c0=0, cmin=None, cmax=None):
@@ -162,6 +169,7 @@ class Shirt:
         self.field(fn, G.AXC - cols * s / 2, y0, cols, rows, s, tech)
 
     def hem(self, band: Pattern, s, tech="x"):
+        self.has_hem = True
         cols = int(198 / s)
         self.field(
             band,
@@ -175,6 +183,7 @@ class Shirt:
         )
 
     def cuffs(self, band: Pattern, s, tech="x"):
+        self.cuff_spec = (band, s, tech)
         rows = band.h
         cols = int((G.CUFF_W - 3) / s)
         y0 = G.SL_LEN + G.CUFF_H / 2 - rows * s / 2

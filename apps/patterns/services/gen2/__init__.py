@@ -7,10 +7,14 @@ from .render import render_shirt
 
 
 def render_region(
-    slug: str, rng: random.Random, label: str, colors: list[str] | None = None
+    slug: str,
+    rng: random.Random,
+    label: str,
+    colors: list[str] | None = None,
+    cycle: int = 0,
 ) -> str:
-    """SVG сорочки регіону; варіанти визначає rng (детермінований за датою)."""
-    return render_shirt(build_shirt(slug, rng, colors), label)
+    """SVG сорочки регіону; варіанти - rng дати, головний мотив - номер кола."""
+    return render_shirt(build_shirt(slug, rng, colors, cycle), label)
 
 
 __all__ = ["REGIONS", "render_region"]

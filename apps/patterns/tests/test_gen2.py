@@ -119,6 +119,42 @@ def _region(slug="chernivetska-oblast"):
     return region, motif
 
 
+class Gen2VarietyTests(SimpleTestCase):
+    """Сусідні кола регіону (через 27 днів) не повторюють одну сорочку."""
+
+    def test_neighbouring_cycles_differ_for_every_region(self):
+        for slug in REGIONS:
+            for cycle in range(6):
+                a = render_region(slug, random.Random(7), "x", cycle=cycle)
+                b = render_region(slug, random.Random(7), "x", cycle=cycle + 1)
+                self.assertNotEqual(a, b, f"{slug}: коло {cycle} == {cycle + 1}")
+
+    def test_same_date_and_cycle_is_deterministic(self):
+        for slug in REGIONS:
+            a = render_region(slug, random.Random(3), "x", cycle=4)
+            self.assertEqual(a, render_region(slug, random.Random(3), "x", cycle=4), slug)
+
+    def test_variants_stay_valid_svg(self):
+        for slug in REGIONS:
+            for seed, cycle in ((1, 0), (2, 1), (3, 2), (4, 3)):
+                ET.fromstring(render_region(slug, random.Random(seed), "x", cycle=cycle))
+
+
+class RegionCycleTests(TestCase):
+    def test_cycle_grows_by_one_each_rotation(self):
+        from apps.patterns.services.rotation import (
+            ROTATION_EPOCH,
+            get_region_for_date,
+            region_cycle,
+        )
+
+        n = Region.objects.verified().count()
+        self.assertGreater(n, 1)
+        d = ROTATION_EPOCH + timedelta(days=300)
+        self.assertEqual(get_region_for_date(d), get_region_for_date(d + timedelta(days=n)))
+        self.assertEqual(region_cycle(d + timedelta(days=n)), region_cycle(d) + 1)
+
+
 class Gen2BuilderTests(TestCase):
     def test_build_svg_for_date_uses_region_recipe(self):
         region, motif = _region()

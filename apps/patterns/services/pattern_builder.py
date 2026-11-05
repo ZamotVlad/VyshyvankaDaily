@@ -2,6 +2,7 @@ from datetime import date
 
 from apps.patterns.models import Region
 from apps.patterns.services.gen2 import render_region
+from apps.patterns.services.rotation import region_cycle
 from apps.patterns.services.seed import get_rng
 
 
@@ -24,6 +25,10 @@ def build_svg_for_date(pattern_date: date, region: Region):
     rng = get_rng(pattern_date)
     selected = rng.sample(motifs, k=min(len(motifs), 3))
     svg = render_region(
-        region.slug, rng, f"Орнамент {region.name}", list(region.dominant_colors or [])
+        region.slug,
+        rng,
+        f"Орнамент {region.name}",
+        list(region.dominant_colors or []),
+        cycle=region_cycle(pattern_date),
     )
     return svg, selected
