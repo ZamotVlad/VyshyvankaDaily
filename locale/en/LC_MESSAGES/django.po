@@ -5684,3 +5684,7 @@ msgstr[1] "%(counter)s-day streak"
 #: templates/patterns/region_list.html
 msgid "Карта вишиванок України нижче збирає всі 27 регіонів на одному полотні, тож сусідні традиції легко порівняти між собою."
 msgstr "The map of Ukrainian vyshyvankas below brings all 27 regions together on one canvas, so neighbouring traditions are easy to compare."
+
+#: templates/404.html
+msgid "Можливо, ви шукали:"
+msgstr "Perhaps you were looking for:"

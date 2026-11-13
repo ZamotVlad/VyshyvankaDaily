@@ -1,3 +1,4 @@
+import difflib
 import re
 from datetime import timedelta
 
@@ -262,3 +263,37 @@ def llms_full_txt(request):
             parts.append(html_to_markdown(post.body_en))
     parts.append("")
     return HttpResponse("\n".join(parts), content_type="text/plain; charset=utf-8")
+
+
+def _guess_page(path):
+    """Найближча стаття чи регіон для адреси з друкарською помилкою."""
+    from apps.blog.models import BlogPost
+    from apps.patterns.models import Region
+
+    parts = [p for p in path.lower().split("/") if p and p != "en"]
+    if not parts:
+        return None
+    slug = parts[-1]
+    if parts[0] == "blog":
+        pages = {p.slug: p for p in BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED)}
+    elif parts[0] == "regions":
+        pages = {r.slug: r for r in Region.objects.verified()}
+    else:
+        return None
+    match = difflib.get_close_matches(slug, list(pages), n=1, cutoff=0.75)
+    return pages[match[0]] if match else None
+
+
+def page_not_found(request, exception=None):
+    """404 з підказкою схожої сторінки й останніми статтями."""
+    from django.db.models import F
+
+    from apps.blog.models import BlogPost
+
+    latest_posts = list(
+        BlogPost.objects.filter(status=BlogPost.Status.PUBLISHED)
+        .select_related("category")
+        .order_by(F("published_at").desc(nulls_last=True), "-pk")[:3]
+    )
+    context = {"latest_posts": latest_posts, "suggestion": _guess_page(request.path)}
+    return render(request, "404.html", context, status=404)

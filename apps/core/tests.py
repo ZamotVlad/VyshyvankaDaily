@@ -1069,3 +1069,34 @@ class RegionImageSitemapTests(TestCase):
         self.assertIn("<image:loc>https://example.org/real-shirt.webp</image:loc>", body)
         self.assertNotIn("hidden.webp", body)
         self.assertNotIn("example.org/t.webp", body)
+
+
+class NotFoundPageTests(TestCase):
+    def setUp(self):
+        from apps.blog.models import BlogCategory, BlogPost
+
+        category = BlogCategory.objects.create(name="Тест 404", slug="test-404")
+        self.post = BlogPost.objects.create(
+            category=category,
+            title="Історія вишиванки тест",
+            slug="istoriia-vyshyvanky-test",
+            status=BlogPost.Status.PUBLISHED,
+            published_at=timezone.now(),
+        )
+
+    def test_404_status_and_latest_posts(self):
+        response = self.client.get("/zovsim-nemaie-takoi-storinky/")
+        self.assertEqual(response.status_code, 404)
+        self.assertContains(response, "Цю нитку обірвано", status_code=404)
+        self.assertContains(response, "Історія вишиванки тест", status_code=404)
+        self.assertNotContains(response, "Можливо, ви шукали", status_code=404)
+
+    def test_typo_in_blog_slug_suggests_article(self):
+        response = self.client.get("/blog/istoriia-vyshyvnky-test/")
+        self.assertEqual(response.status_code, 404)
+        self.assertContains(response, "Можливо, ви шукали", status_code=404)
+        self.assertContains(response, 'href="/blog/istoriia-vyshyvanky-test/"', status_code=404)
+
+    def test_typo_in_region_slug_suggests_region(self):
+        response = self.client.get("/regions/poltavska-oblst/")
+        self.assertContains(response, 'href="/regions/poltavska-oblast/"', status_code=404)
